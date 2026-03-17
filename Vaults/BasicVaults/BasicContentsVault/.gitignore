@@ -2,6 +2,7 @@
 # Obsidian — 플러그인·캐시·UI 상태
 # ═══════════════════════════════════════════
 .obsidian/plugins/*/data.json
+!.obsidian/plugins/obsidian-shellcommands/data.json
 .obsidian/plugins/mcp-tools/
 .obsidian/workspace.json
 
