@@ -42,11 +42,14 @@ agent: claude
 
 모든 편집은 아래 모드 중 하나를 **명시적으로 선언**한 후 수행한다. 모드 혼합 금지.
 
-- **`[Contents/Domain]`**: `Contents/Domain/**` 지식 축적 작업
-- **`[Contents/Project]`**: `Contents/Project/**` 작업 관리
-- **`[workspace]`**: `_Standards/`, `_tools/`, `.claude/`, 볼트 루트 파일 수정 (AIHubVault 전용)
+### Contents 모드 (콘텐츠 작업)
 
-### Contents 모드 참조 순서
+- **`[Contents/Domain]`**: `Contents/Domain/**` 지식 축적 (가이드, 리서치, 프롬프트)
+- **`[Contents/Project]`**: `Contents/Project/**` 작업 관리 (아이디어, 계획, 이슈)
+- **금지**: `_Standards/`, `_tools/`, `.claude/`, `.codex/`, `_forge/`, 볼트 루트 파일 수정
+- **예외**: `_VAULT-INDEX.md` 새 문서 등록, `_STATUS.md` 상태 업데이트는 허용
+
+#### Contents 모드 참조 순서
 
 Contents 작업 시작 전 아래 순서로 참조:
 1. `_Standards/CONTENTS_SPEC.md` — 볼트 목적·범위
@@ -56,8 +59,17 @@ Contents 작업 시작 전 아래 순서로 참조:
 
 ### workspace 모드 (AIHubVault 전용)
 
+- **대상**: `_Standards/`, `_tools/`, `.claude/`, `.codex/`, `_forge/`, `Tags/`, `Juggl_StyleGuide/`, 볼트 루트 파일
+- **금지**: `Contents/**` 본문 콘텐츠 수정
+- **예외**: `Contents/` 내 frontmatter 태그/메타데이터 일괄 갱신은 workspace 작업으로 허용
 - 수정 후 `_WORKSPACE_VERSION.md`에 버전 기록 필수 (형식: `YYYYMMDDNNNN`)
 - 버전 기록 없이 workspace 작업 완료 보고 금지
+
+### 모드 운용 규칙
+
+1. **작업 시작 시 모드 선언 필수**: `[Contents/Domain]`, `[Contents/Project]`, 또는 `[workspace]`를 명시
+2. **모드 전환 시 명시적 선언**: 이전 모드 편집이 완결된 후 전환
+3. **사용자 지시가 모드를 넘나드는 경우**: 모드별로 분리하여 순차 실행
 
 ---
 
@@ -134,6 +146,6 @@ powershell -ExecutionPolicy Bypass -File _tools\cli\post_note_edit_review.ps1
 ## 상세 규칙 참조
 
 위 규칙의 상세 내용은 아래 경로에서 확인:
+- `_Standards/Core/AI_Rules_Index.md` — AI 에이전트 규칙 전체 인덱스
 - `_Standards/Core/` — 공통 운영 표준
 - `_WORKFLOW.md` — 전체 운용 규칙
-- `_Standards/Core/NoteProperties.md` — Frontmatter 필드 정의
