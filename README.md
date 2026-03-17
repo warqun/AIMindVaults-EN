@@ -38,12 +38,28 @@ AIMindVaults/                        ← AI 에이전트 프로젝트 루트
 
 ## 빠른 시작
 
-1. ZIP 다운로드 → 드라이브 루트 가까이에 압축 해제 (예: `C:\AIMindVaults/`)
-2. Obsidian에서 `Vaults/BasicVaults/AIHubVault/`를 볼트로 등록
-3. Shell Commands 플러그인에서 `syncworkspace` 명령 + `on-layout-ready` 이벤트 확인
-4. AI 에이전트 프로젝트 루트를 `AIMindVaults/`로 설정
+### 1. AI 에이전트에 등록
 
-자세한 설치·설정은 → `Vaults/BasicVaults/AIHubVault/README.md`
+ZIP을 받아서 드라이브 루트 가까이에 압축 해제합니다 (예: `C:\AIMindVaults/`). 사용하는 로컬 AI 에이전트 (Claude Code, Cursor, Windsurf 등)의 프로젝트 루트를 이 `AIMindVaults/` 폴더로 설정하세요. 에이전트가 루트의 `CLAUDE.md`나 `CODEX.md`를 읽으면서 시스템 구조를 파악합니다.
+
+### 2. Obsidian에 볼트 등록
+
+Obsidian에서 **Open folder as vault**로 아래 두 폴더를 각각 볼트로 등록합니다:
+
+- `Vaults/BasicVaults/AIHubVault/` — 작업환경 원본 (Hub)
+- `Vaults/BasicVaults/BasicContentsVault/` — 범용 콘텐츠 저장소
+
+플러그인 설정은 이미 포함되어 있으므로 별도 설정이 필요 없습니다. 첫 실행 시 **Turn on community plugins**만 클릭하면 됩니다.
+
+### 3. 에이전트에게 물어보기
+
+등록이 끝나면 AI 에이전트에게 진입점부터 확인하라고 지시하세요. 에이전트가 `CLAUDE.md` → 볼트 구조 → 규칙 체계 순으로 파악하고, 어떤 기능이 있는지 알려줍니다.
+
+### 이후에는?
+
+새 주제가 생기면 볼트를 복제해서 추가하면 됩니다. 복제 방법은 아래 "볼트 추가하기" 참조.
+
+자세한 설치 가이드, 플러그인 목록 → `Vaults/BasicVaults/AIHubVault/README.md`
 
 ---
 
