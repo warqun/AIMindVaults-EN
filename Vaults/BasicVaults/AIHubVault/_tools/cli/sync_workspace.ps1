@@ -313,9 +313,95 @@ function Sync-BatchTargets {
     $script:currentBatchFailed = ($script:failedFiles.Count -gt $initialFailures)
 }
 
+# ── 플러그인 병합 동기화 함수 (Batch 0 전용) ──
+function Sync-PluginBatch {
+    param(
+        [string]$SourceRoot,
+        [string]$TargetRoot
+    )
+    $sourcePlugins = Join-Path $SourceRoot ".obsidian\plugins"
+    $targetPlugins = Join-Path $TargetRoot ".obsidian\plugins"
+
+    if (-not (Test-Path $sourcePlugins)) {
+        Write-Host "  [SKIP] 소스에 .obsidian/plugins/ 없음" -ForegroundColor DarkGray
+        return
+    }
+    if (-not (Test-Path $targetPlugins)) {
+        New-Item -ItemType Directory -Path $targetPlugins -Force | Out-Null
+    }
+
+    # 1) 플러그인 폴더 병합: Hub에 있는 것만 추가/업데이트 (타겟 고유 플러그인은 유지)
+    $hubPluginDirs = Get-ChildItem -Path $sourcePlugins -Directory
+    foreach ($pluginDir in $hubPluginDirs) {
+        $pluginId = $pluginDir.Name
+        $targetPluginDir = Join-Path $targetPlugins $pluginId
+
+        $sourceFiles = Get-ChildItem -Path $pluginDir.FullName -File
+        foreach ($file in $sourceFiles) {
+            # data.json은 타겟에 이미 있으면 건드리지 않음 (볼트별 설정 보존)
+            if ($file.Name -eq "data.json" -and (Test-Path (Join-Path $targetPluginDir "data.json"))) {
+                continue
+            }
+            $targetFile = Join-Path $targetPluginDir $file.Name
+            $displayName = ".obsidian\plugins\$pluginId\$($file.Name)"
+            $synced = Sync-SingleFile -SourceFile $file.FullName -TargetFile $targetFile -DisplayName $displayName -IsDryRun:$DryRun
+            if ($synced) { $script:syncCount++ }
+        }
+    }
+
+    # 2) community-plugins.json 병합 (텍스트 기반 — PowerShell JSON 파이프라인 미사용)
+    $sourceCpFile = Join-Path $SourceRoot ".obsidian\community-plugins.json"
+    $targetCpFile = Join-Path $TargetRoot ".obsidian\community-plugins.json"
+
+    if ((Test-Path $sourceCpFile) -and (Test-Path $targetCpFile)) {
+        try {
+            $sourceContent = [System.IO.File]::ReadAllText($sourceCpFile, [System.Text.Encoding]::UTF8)
+            $targetContent = [System.IO.File]::ReadAllText($targetCpFile, [System.Text.Encoding]::UTF8)
+
+            # 정규식으로 플러그인 ID 추출
+            $sourceIds = [regex]::Matches($sourceContent, '"([^"]+)"') | ForEach-Object { $_.Groups[1].Value }
+            $targetIds = [regex]::Matches($targetContent, '"([^"]+)"') | ForEach-Object { $_.Groups[1].Value }
+
+            # 합집합 계산
+            $merged = @($targetIds)
+            $added = @()
+            foreach ($id in $sourceIds) {
+                if ($id -notin $merged) {
+                    $merged += $id
+                    $added += $id
+                }
+            }
+
+            if ($added.Count -gt 0) {
+                # 텍스트로 직접 JSON 배열 생성
+                $jsonLines = $merged | ForEach-Object { "  `"$_`"" }
+                $newJson = "[$([Environment]::NewLine)" + ($jsonLines -join ",$([Environment]::NewLine)") + "$([Environment]::NewLine)]"
+
+                if ($DryRun) {
+                    Write-Host "  [DRY] community-plugins.json += $($added -join ', ')" -ForegroundColor DarkGray
+                } else {
+                    [System.IO.File]::WriteAllText($targetCpFile, $newJson, [System.Text.Encoding]::UTF8)
+                    Write-Host "  [MERGE] community-plugins.json += $($added -join ', ')" -ForegroundColor Green
+                    $script:syncCount++
+                }
+            }
+        } catch {
+            Write-Host "  [WARN] community-plugins.json 병합 실패: $_" -ForegroundColor DarkYellow
+        }
+    }
+}
+
 # ── 동기화 실행 ──
 $syncCount = 0
 $pruneCount = 0
+
+# Batch 0: 플러그인 병합 (Merge 방식 — 타겟 고유 플러그인 보존)
+Write-Host "`n--- Batch 0: Obsidian 플러그인 병합 ---" -ForegroundColor Cyan
+if ($direction -eq "PULL" -or $direction -eq "VERIFY") {
+    Sync-PluginBatch -SourceRoot $source -TargetRoot $target
+} else {
+    Write-Host "  [SKIP] PUSH 방향에서는 플러그인 동기화를 수행하지 않습니다." -ForegroundColor DarkGray
+}
 
 Write-Host "`n--- Batch 1: 문서 및 가이드 ---" -ForegroundColor Cyan
 Sync-BatchTargets -Targets $batch1Targets

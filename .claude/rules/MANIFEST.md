@@ -26,6 +26,7 @@
 | temp-file-management.md | 임시 파일 관리 |
 | token-optimization.md | 토큰 절약 |
 | vault-routing.md | 볼트 라우팅 |
+| obsidian-config-safety.md | Obsidian 설정 파일 안전 편집 |
 
 ## custom/ — 사용자 규칙 (동기화 미대상)
 
