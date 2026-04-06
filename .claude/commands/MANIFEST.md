@@ -27,6 +27,7 @@
 | open-vault.md | Obsidian 볼트 열기 |
 | open-note.md | Obsidian 노트 열기 |
 | reindex.md | 볼트 콘텐츠 인덱스 재빌드 |
+| open-notes.md | 복수 Obsidian 노트 새 탭 열기 (local-rest-api) |
 
 ## custom/ — 사용자 스킬 (동기화 미대상)
 
