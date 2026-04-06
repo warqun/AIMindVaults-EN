@@ -13,12 +13,61 @@
 | AIHubVault | `Vaults/BasicVaults/AIHubVault/` | **작업환경 원본(Hub)** — AI 작업환경 설계·개선·배포 허브 | active |
 | BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | 범용 콘텐츠 저장소 | active |
 
-> 새 볼트는 `/create-vault` 스킬로 생성한다. Domain, Lab, Project 등 용도별 카테고리로 자동 배치된다.
+### Domains (도메인 지식 볼트)
+
+| 볼트 ID | 경로 | 역할 | 상태 |
+|---------|------|------|------|
+| Unity | `Vaults/Domains_Game/Unity/` | Unity 엔진 도메인 지식 | active |
+| CapCut | `Vaults/Domains_Video/CapCut/` | CapCut 영상편집 도메인 지식 | active |
+| Notion | `Vaults/Domains_Infra/Notion/` | Notion 워크스페이스 운영 도메인 지식 | active |
+| CICD | `Vaults/Domains_Infra/CICD/` | CI/CD 및 배포 동기화 도메인 지식 | active |
+| Search | `Vaults/Domains_Infra/Search/` | 검색 엔진, 인덱싱, 텍스트 매칭 도메인 지식 | active |
+| AI | `Vaults/Domains_Infra/AI/` | AI 활용 기술 도메인 지식 (에이전트, 프롬프트, 도구 가이드) | active |
+| AppFlowy | `Vaults/Domains_Infra/AppFlowy/` | AppFlowy 셀프호스트 설치·운영·이관 도메인 지식 | active |
+| GameArt | `Vaults/Domains_Game/GameArt/` | 게임 아트/비주얼 프로덕션 기법 도메인 지식 | active |
+
+### Labs (도메인+프로젝트 복합 볼트)
+
+| 볼트 ID | 경로 | 역할 | 상태 |
+|---------|------|------|------|
+| ObsidianDev | `Vaults/Lab_Infra/ObsidianDev/` | Obsidian 플러그인 개발 (지식 축적 + 실제 개발) | active |
+
+### Projects_GameTool (게임 개발 도구)
+
+| 볼트 ID | 경로 | 역할 | 상태 |
+|---------|------|------|------|
+| CombatToolKit | `Vaults/Projects_GameTool/CombatToolKit/` | 게임 전투 시스템 개발 툴킷 | active |
+| TileMapToolKit | `Vaults/Projects_GameTool/TileMapToolKit/` | 타일맵 시스템 개발 툴킷 | active |
+
+### Projects_Game (게임 개발 프로젝트)
+
+| 볼트 ID | 경로 | 역할 | 상태 |
+|---------|------|------|------|
+| JissouGame | `Vaults/Projects_Game/JissouGame/` | Unity 기반 게임 개발 프로젝트 | active |
+
+### Projects_Infra (인프라 프로젝트)
+
+| 볼트 ID | 경로 | 역할 | 상태 |
+|---------|------|------|------|
+| Project_AIMindVaults | `Vaults/Projects_Infra/Project_AIMindVaults/` | AIMindVaults 멀티볼트 시스템 프로젝트 | active |
+
+### Personal (개인 기록)
+
+| 볼트 ID | 경로 | 역할 | 상태 |
+|---------|------|------|------|
+| Diary | `Vaults/Personal/Diary/` | 개인 다이어리, 회고, 성장 로그 | active |
+
+### References (참조 전용)
+
+| 볼트 ID | 경로 | 역할 | 상태 |
+|---------|------|------|------|
+| Unity_Documentation | `References/Unity_Documentation/` | Unity 6.3 공식 매뉴얼·스크립트 API (조회 전용) | readonly |
 
 ### 기타 루트 폴더
 
 | 폴더 | 용도 |
 |------|------|
+| `Archives/` | 볼트 형태가 아닌 일반 자료 보관 |
 | `Backup/` | 백업 |
 
 ## 볼트 진입 프로토콜 (강제)
@@ -26,13 +75,29 @@
 1. **대상 볼트 식별**
    - 명시적 지정: "AIHubVault에서 ~", "BasicContentsVault ~"
    - 키워드 추론:
-     - "AI 워크플로우", "에이전트", "_Standards", "_forge", "workspace" → AIHubVault (workspace 전용 Hub)
+     - "_Standards", ".forge", "workspace", "동기화 스크립트" → AIHubVault (workspace 전용 Hub)
      - "콘텐츠", "노트 작성", "지식 관리" → BasicContentsVault
-     - 기타 도메인/프로젝트 키워드 → `_STATUS.md` 볼트 레지스트리에서 대상 볼트 확인. 없으면 `/create-vault`로 생성 안내.
+     - "Unity", "유니티 엔진" → Vaults/Domains_Game/Unity
+     - "CapCut", "영상편집" → Vaults/Domains_Video/CapCut
+     - "Notion", "노션 운영" → Vaults/Domains_Infra/Notion
+     - "CI/CD", "배포 동기화", "파이프라인" → Vaults/Domains_Infra/CICD
+     - "검색", "인덱싱", "인덱서", "텍스트 매칭", "Search" → Vaults/Domains_Infra/Search
+     - "AI 활용", "에이전트 활용법", "프롬프트", "AI 도구" → Vaults/Domains_Infra/AI
+     - "AppFlowy", "셀프호스트", "Notion 이관" → Vaults/Domains_Infra/AppFlowy
+     - "AIMindVaults 프로젝트", "멀티볼트 계획", "배포 계획" → Vaults/Projects_Infra/Project_AIMindVaults
+     - "Obsidian 플러그인", "플러그인 개발" → Vaults/Lab_Infra/ObsidianDev
+     - "전투 시스템", "CombatToolKit", "스킬 시스템", "이펙트 패키지", "뱀서" → Vaults/Projects_GameTool/CombatToolKit
+     - "타일맵", "TileMap", "맵 생성", "청크", "절차적 생성" → Vaults/Projects_GameTool/TileMapToolKit
+     - "JissouGame", "지쏘우", "jissou" → Vaults/Projects_Game/JissouGame
+     - "게임 아트", "비주얼 기법", "Fake 2D", "렌더링 스타일", "셰이더 스타일" → Vaults/Domains_Game/GameArt
+     - "다이어리", "회고", "성장 기록", "개인 메모" → Vaults/Personal/Diary
+     - "Unity 매뉴얼", "스크립트 API", "Unity 문서" → References/Unity_Documentation (readonly)
    - 파일 경로 포함 시 → 경로에서 볼트 추출
    - 모호하면 → 사용자에게 확인
 
 2. **볼트 진입 시 필수 읽기** (순서대로)
+   - `_SESSION_HANDOFF_CLAUDE.md` (루트) — Claude 이전 세션 맥락, 변경 파일, 미완료 항목 파악
+   - `_SESSION_HANDOFF_CODEX.md` (루트) — Codex 이전 세션 맥락 (충돌/연계 확인)
    - `_STATUS.md` (루트) — 전체 볼트 현황 파악 + 다른 볼트 작업과 충돌/연계 확인
    - `{볼트경로}/CLAUDE.md` — 볼트 전용 규칙
    - `{볼트경로}/_STATUS.md` — 현재 진행 상황
@@ -76,6 +141,17 @@
 - 배포 동기화 (`distribution-sync.md`)
 - Obsidian 설정 안전 편집 (`obsidian-config-safety.md`)
 - 볼트 개별화 (`vault-individualization.md`)
+
+### 사용자 개인화 규칙
+
+아래 규칙은 `.claude/rules/custom/`에 정의. 배포 동기화 대상 아님:
+- 멀티볼트 개인화 (`multivault-personalization.md`) — 에이전트/플러그인/스킬 커스텀 설정
+
+### 에이전트 필수 준수 사항
+
+- **볼트 생성 시**: `vault-individualization.md` 규칙을 따라 이름/분류/CLAUDE.md/태그를 구체화한다.
+- **멀티볼트 커스텀 설정 시**: `multivault-personalization.md`를 참조하여 사용자의 에이전트/플러그인 선택을 반영한다.
+- **에이전트 진입점 파일** (`CLAUDE.md`, `CODEX.md`, `AGENT_STATUS.md`)은 볼트 개별 파일이므로 배포 동기화에 포함하지 않는다.
 
 ### 네임스페이스 구조
 

@@ -102,10 +102,10 @@
     {
       "id": "syncworkspace",
       "platform_specific_commands": {
-        "default": "powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File \"{{vault_path}}\\_tools\\cli\\sync_workspace.ps1\""
+        "default": "powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File \"{{vault_path}}\\_tools\\cli\\pre_sync.ps1\""
       },
       "shells": {},
-      "alias": "Sync Workspace (Hub-Sync)",
+      "alias": "Pre-Sync + Workspace Sync",
       "icon": null,
       "confirm_execution": false,
       "ignore_error_codes": [],

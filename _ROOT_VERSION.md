@@ -3,7 +3,7 @@ type: version-log
 tags:
   - AIMindVault
   - root
-updated: 2026-04-01
+updated: 2026-04-06
 ---
 
 # Root Version Log
@@ -12,6 +12,11 @@ updated: 2026-04-01
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
+| R034 | 2026-04-06 | `AGENT_ONBOARDING.md` 신규 — 에이전트 범용 온보딩 문서. 환경 개요, 핵심 규약 14개 압축, 규칙 파일 경로 참조 |
+| R033 | 2026-04-06 | `distribution-sync.md` Juggl_StyleGuide 배포 제거, `juggl-style-sync.md` 볼트별 개별 관리로 변경. 전체 볼트 `docs/` → `.docs/` 리네임, `recent_files.txt` 삭제, `Juggl_StyleGuide/` 볼트별 `Contents/`로 이동 |
+| R032 | 2026-04-05 | `/reindex` 스킬 신설 (`.claude/commands/core/reindex.md`) — 단일/전체 볼트 콘텐츠 인덱스 재빌드. MANIFEST 등록 |
+| R031 | 2026-04-05 | `/open-notes` 스킬 신설 (`.claude/commands/custom/open-notes.md`) — local-rest-api로 복수 노트 새 탭 열기. 글로벌 CLAUDE.md 스킬 목록에 등록 |
+| R030 | 2026-04-02 | `session-exit.md` — 볼트별 핸드오프 작성 시 루트 핸드오프에 참조 남기기 규칙 추가 |
 | R029 | 2026-04-01 | 세션 핸드오프 에이전트별 분리. `_SESSION_HANDOFF.md` → `_SESSION_HANDOFF_CLAUDE.md` + `_SESSION_HANDOFF_CODEX.md`. `session-exit.md` 규칙 갱신, `CLAUDE.md` 진입 프로토콜 갱신 |
 | R028 | 2026-04-01 | JissouGame 신규 볼트 생성. `Projects_Game` 카테고리 신설, 루트 `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`, `.claude/rules/core/vault-individualization.md` 갱신 |
 | R027 | 2026-04-01 | TileMapToolKit 신규 볼트 생성. 루트 `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`에 레지스트리/라우팅 추가 |

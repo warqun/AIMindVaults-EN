@@ -2,6 +2,26 @@
 
 > 모든 볼트 생성 시 적용. 볼트의 용도와 주제에 맞게 개별 설정을 구체화하는 규칙.
 
+## 볼트 생성 방법 (강제)
+
+**모든 새 볼트는 `clone_vault.ps1`로 BasicContentsVault를 클론하여 생성한다.**
+
+- 소스: `Vaults/BasicVaults/BasicContentsVault/` (범용 볼트 템플릿)
+- 도구: `BasicContentsVault/_tools/clone_vault.ps1`
+- 폴더를 수동 복사(`Copy-Item`, `cp`, `xcopy` 등)하지 않는다.
+- AIHubVault는 소스로 사용하지 않는다 (작업환경 허브라 구조가 무거움).
+
+```
+powershell -ExecutionPolicy Bypass -File "<BasicContentsVault경로>/_tools/clone_vault.ps1" -TargetPath "<대상경로>" -ProjectName "<볼트명>"
+```
+
+이 스크립트가 처리하는 항목:
+- `.git`, 캐시, 동기화 폴더 제외 복사 (robocopy)
+- 디바이스별 플러그인 설정 자동 제거 (obsidian-git, claudian)
+- make-md systemName 자동 갱신
+
+클론 완료 후 아래 **필수 결정 항목**과 **필수 작업**을 수행한다.
+
 ## 볼트 생성 시 필수 결정 항목
 
 ### 1. 볼트명
@@ -19,7 +39,8 @@
 | Domains_Game | `Vaults/Domains_Game/` | 게임 관련 도메인 지식 |
 | Domains_Video | `Vaults/Domains_Video/` | 영상/미디어 도메인 지식 |
 | Domains_Infra | `Vaults/Domains_Infra/` | 인프라/도구 도메인 지식 |
-| Projects_Game | `Vaults/Projects_Game/` | 게임 프로젝트 작업물 |
+| Projects_GameTool | `Vaults/Projects_GameTool/` | 게임 개발 도구/툴킷 프로젝트 |
+| Projects_Game | `Vaults/Projects_Game/` | 게임 개발 프로젝트 |
 | Projects_Infra | `Vaults/Projects_Infra/` | 인프라 프로젝트 작업물 |
 | Lab_Infra | `Vaults/Lab_Infra/` | 도메인+프로젝트 복합 (플러그인 개발 등) |
 | Personal | `Vaults/Personal/` | 개인 기록 |

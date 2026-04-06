@@ -8,7 +8,9 @@ tags:
   - Codex
 ---
 
-# CODEX.md
+# CODEX.md (DEPRECATED)
+
+> **DEPRECATED (2026-03-21)**: 이 파일은 볼트 루트의 `AGENTS.md`로 대체됨.
 
 > This is a Codex-specific support note.
 > The primary auto-loaded project entry is `CODEX.md`.
