@@ -1,7 +1,14 @@
-# AIMindVaults — 에이전트 온보딩
+# AIMindVaults — 에이전트 온보딩 (공통)
 
 > 이 환경에 처음 접근하는 AI 에이전트가 읽는 문서.
 > 로컬 파일 읽기/쓰기가 가능한 에이전트라면 어떤 것이든 사용 가능하다.
+> 에이전트별 상세 온보딩은 아래 문서를 참조한다.
+
+| 에이전트 | 전용 온보딩 | 진입점 |
+|----------|------------|--------|
+| Claude Code | `AGENT_ONBOARDING_CLAUDE.md` | `CLAUDE.md` |
+| Codex | `AGENT_ONBOARDING_CODEX.md` | `AGENTS.md` |
+| 기타 | 이 문서 + 진입점 중 택1 | `CLAUDE.md` 또는 `AGENTS.md` |
 
 ---
 
@@ -9,25 +16,45 @@
 
 AIMindVaults는 Obsidian 기반 멀티볼트 지식 관리 시스템이다.
 
-- 20개 이상의 볼트가 용도별로 분류되어 있다 (도메인 지식, 프로젝트, 개인 기록 등).
+- 볼트가 용도별로 분류되어 있다 (도메인 지식, 프로젝트, 개인 기록 등).
 - AIHubVault가 단일 원본(Hub)으로, 모든 볼트의 작업환경(규칙, 스크립트, 표준)을 동기화한다.
-- 에이전트는 `CLAUDE.md` (루트)를 진입점으로 환경 전체를 인식한다.
+- 사용자가 볼트를 추가하면 레지스트리에 등록하고, `clone_vault.ps1`로 BasicContentsVault를 클론하여 생성한다.
 
 ---
 
-## 2. 핵심 파일 구조
+## 2. 기본 볼트 구성
+
+| 볼트 ID | 경로 | 역할 |
+|---------|------|------|
+| AIHubVault | `Vaults/BasicVaults/AIHubVault/` | **작업환경 원본(Hub)** — 규칙·스크립트·표준 설계 및 배포 |
+| BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | 범용 콘텐츠 저장소 (클론 템플릿 전용 — 직접 편집 금지) |
+
+사용자가 새 볼트를 생성하면 여기에 추가된다. 볼트를 만들지 않아도 기본 2개로 시작할 수 있다.
+
+---
+
+## 3. 핵심 파일 구조
 
 ```
 AIMindVaults/                    ← 멀티볼트 루트
-├── CLAUDE.md                    ← 라우팅 허브 (볼트 레지스트리 + 진입 프로토콜)
-├── AGENT_ONBOARDING.md          ← 이 문서
+├── CLAUDE.md                    ← Claude Code 진입점
+├── AGENTS.md                    ← Codex 진입점
+├── AGENT_ONBOARDING.md          ← 이 문서 (공통)
+├── AGENT_ONBOARDING_CLAUDE.md   ← Claude Code 전용 온보딩
+├── AGENT_ONBOARDING_CODEX.md    ← Codex 전용 온보딩
 ├── _STATUS.md                   ← 볼트 레지스트리 (타입, 작업 에이전트, 날짜)
 ├── _SESSION_HANDOFF_{에이전트}.md ← 이전 세션 맥락
-├── .claude/rules/core/          ← 강제 규칙 14개 (아래 §3~§12)
-├── .claude/rules/custom/        ← 개인 규칙 (배포 미대상)
-├── .claude/commands/core/       ← 스킬 13개 (/명령어)
-├── .claude/commands/custom/     ← 개인 스킬
-└── Vaults/                      ← 볼트 모음
+├── .claude/
+│   ├── rules/core/              ← 강제 규칙 14개
+│   ├── rules/custom/            ← 개인 규칙 (배포 미대상)
+│   ├── commands/core/           ← 스킬 17개
+│   └── commands/custom/         ← 개인 스킬
+├── .codex/
+│   ├── CODEX.md                 ← Codex 내부 라우팅 허브
+│   ├── AGENT_STATUS.md          ← Codex 상태
+│   ├── rules/                   ← Codex 전용 규칙 4개
+│   └── skills/                  ← Codex 전용 스킬 7개
+└── Vaults/
     └── {볼트}/
         ├── Contents/            ← 콘텐츠 (노트)
         ├── _STATUS.md           ← 볼트 상태
@@ -42,18 +69,18 @@ AIMindVaults/                    ← 멀티볼트 루트
 
 ---
 
-## 3. 볼트 라우팅
+## 4. 볼트 라우팅
 
 콘텐츠를 생성하기 전에 `_STATUS.md` 볼트 레지스트리를 확인하여 적절한 볼트를 선택한다.
 
-- 키워드 기반 자동 라우팅: `CLAUDE.md`의 볼트 진입 프로토콜 참조.
-- 명시적 지정: "AIHubVault에서 ~", "Unity 볼트에 ~"
+- 키워드 기반 자동 라우팅: 진입점 문서(`CLAUDE.md` 또는 `AGENTS.md`)의 라우팅 규칙 참조.
+- 명시적 지정: "AIHubVault에서 ~"
 - 적합한 볼트가 없으면 사용자에게 확인. 임의 판단으로 부적합한 볼트에 넣지 않는다.
 - BasicContentsVault는 클론 템플릿 전용. 직접 콘텐츠 작업 금지.
 
 ---
 
-## 4. 볼트 진입 프로토콜
+## 5. 볼트 진입 프로토콜
 
 대상 볼트에서 작업을 시작하기 전, 아래 순서로 읽는다:
 
@@ -66,7 +93,7 @@ AIMindVaults/                    ← 멀티볼트 루트
 
 ---
 
-## 5. 편집 모드 분리
+## 6. 편집 모드 분리
 
 모든 편집은 두 모드 중 하나를 선언한 후 수행한다. 모드 혼합 금지.
 
@@ -84,15 +111,15 @@ AIMindVaults/                    ← 멀티볼트 루트
 
 ---
 
-## 6. 노트 작성 규약
+## 7. 노트 작성 규약
 
 ### Frontmatter 필수
 ```yaml
 ---
 type: domain          # 또는 plan, idea, meta 등
 tags: [볼트태그, 주제태그]
-agent: claude         # 작업한 에이전트 누적 기록
-updated: 2026-04-06
+agent: claude         # 작업한 에이전트 누적 기록 (claude, codex 등)
+updated: 2026-04-08
 ---
 ```
 
@@ -113,7 +140,7 @@ local: 파일명_without_extension
 
 ---
 
-## 7. 세션 종료 규약
+## 8. 세션 종료 규약
 
 세션 종료 시 아래를 **모두** 수행해야 한다. 하나라도 빠지면 세션 종료 불가.
 
@@ -134,28 +161,33 @@ local: 파일명_without_extension
 
 ---
 
-## 8. Hub-Sync 동기화
+## 9. Hub-Sync 동기화
 
 - AIHubVault가 단일 원본(Hub). `.sync/` 폴더 안의 모든 파일이 동기화 대상.
 - Hub 식별: `.sync/.hub_marker` 파일 존재 여부.
 - 동기화 실행: `pre_sync.ps1` → 버전 비교 → `.sync/` 미러링 → 플러그인 머지.
+- Obsidian에서 볼트를 열면 `on-layout-ready` 이벤트로 `pre_sync.ps1`이 자동 실행된다 (Shell Commands 플러그인).
 - workspace 편집은 반드시 AIHubVault에서 수행 → 동기화로 전파.
 
 ---
 
-## 9. Post-Edit Review
+## 10. Post-Edit Review
 
 노트 편집 완료 직후 실행:
 ```powershell
-powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\post_note_edit_review.ps1
+powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\post_note_edit_review.ps1 -Root {볼트경로} -Scope Contents
 ```
 - 검증: frontmatter 무결성, 인코딩 안전, WikiLink 존재.
 - `POST_EDIT_REVIEW_BAD=0` 확인 전 완료 보고 금지.
-- 통과 시 콘텐츠 인덱서 증분 빌드 자동 호출.
+- 통과 시 콘텐츠 인덱서 증분 빌드 자동 호출 (`vault_index_build.ps1 -Incremental`).
+- `POST_EDIT_INDEX_UPDATED=1` 확인이 완료 조건. 실패 시 수동 인덱싱:
+```powershell
+powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\vault_index_build.ps1 -VaultRoot {볼트경로} -Incremental
+```
 
 ---
 
-## 10. 콘텐츠 인덱서
+## 11. 콘텐츠 인덱서
 
 각 볼트의 `Contents/**/*.md`를 크롤링하여 `.sync/_tools/data/`에 JSON 인덱스 생성.
 
@@ -165,16 +197,16 @@ powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\post_no
 
 ---
 
-## 11. 스크립트 관리
+## 12. 스크립트 관리
 
-- 새 스크립트 생성 전 `_Standards/Core/Script_Registry.md`에서 중복 확인.
+- 새 스크립트 생성 전 `.sync/_Standards/Core/Script_Registry.md`에서 중복 확인.
 - **생성 전 사용자 승인 필수.** 목적, 경로, 영향 범위, 일회성 여부를 보고.
 - 경로 하드코딩 금지 — 스크립트 위치 기반 자동탐지 사용.
 - 생성 후 Script_Registry.md에 등록.
 
 ---
 
-## 12. 인코딩 안전
+## 13. 인코딩 안전
 
 - `Contents` 대량 수정 전 인코딩 검증 필수.
 - 대량 수정은 UTF-8 고정 I/O만 허용.
@@ -183,7 +215,7 @@ powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\post_no
 
 ---
 
-## 13. 토큰 절약
+## 14. 토큰 절약
 
 - **핀포인트 접근**: 필요한 파일만 정확히 지정. 광범위 검색 금지.
 - 경로를 모르면 사용자에게 먼저 확인.
@@ -193,7 +225,7 @@ powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\post_no
 
 ---
 
-## 14. 임시 파일 관리
+## 15. 임시 파일 관리
 
 - CLI 명령 실행 시 임시 파일은 `$env:TEMP` 하위에만 생성.
 - 볼트 내에 임시 파일(`.vtt`, `.json`, `.tmp`, `.log` 등) 방치 금지.
@@ -201,9 +233,22 @@ powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\post_no
 
 ---
 
-## 규칙 상세 참조
+## 16. Obsidian 노트 열기
 
-위 내용의 전문은 아래 경로에 있다:
+이 환경의 `.md` 노트는 Obsidian 볼트 안에 있다. 노트를 열 때는 Obsidian URI를 사용한다.
+
+```powershell
+Start-Process 'obsidian://open?vault=볼트명&file=볼트루트기준_상대경로'
+```
+
+- `vault`: Obsidian에 등록된 볼트 폴더명 (예: `AIHubVault`)
+- `file`: 볼트 루트 기준 상대 경로, `.md` 확장자 생략 (예: `Contents/Domain/Example_Note`)
+- 경로 구분자: `/` 사용. 한글 파일명 그대로 사용 가능.
+- `Start-Process <파일경로.md>`, `code`, `Invoke-Item` 등은 VS Code로 열리므로 금지.
+
+---
+
+## 규칙 상세 참조
 
 | 규칙 | 파일 |
 |------|------|
