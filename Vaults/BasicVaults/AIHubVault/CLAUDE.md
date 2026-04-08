@@ -118,7 +118,7 @@ local: 노트_제목
 
 노트 편집 완료 후 반드시 실행:
 ```powershell
-powershell -ExecutionPolicy Bypass -File _tools\cli\post_note_edit_review.ps1
+powershell -ExecutionPolicy Bypass -File .sync\_tools\cli\post_note_edit_review.ps1
 ```
 `POST_EDIT_REVIEW_BAD=0` 확인 전 완료 보고 금지.
 

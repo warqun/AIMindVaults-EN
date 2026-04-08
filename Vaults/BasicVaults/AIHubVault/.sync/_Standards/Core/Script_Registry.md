@@ -22,15 +22,15 @@ agent: claude
 
 | 스크립트 | 위치 | 용도 | 생성자 | 사용자 |
 |---------|------|------|--------|--------|
-| `post_note_edit_review.ps1` | `_tools/cli/` | 노트 편집 후 인코딩·frontmatter 검증 | codex | claude, codex, antigravity |
-| `obsidian_ai_bridge.ps1` | `_tools/cli/` | Obsidian CLI 래퍼 (조회/검색/히스토리/post-review) | codex | claude, codex, antigravity |
-| `task_router.ps1` | `_tools/cli/` | 작업 설명 → 에이전트 라우팅 추천 | codex | user (수동) |
-| `sync_workspace.ps1` | `_tools/cli/` | 볼트 간 작업환경 동기화 (Hub-Sync) — 버전 비교·파일 복사 | antigravity | claude, codex, antigravity |
-| `vault_index_build.ps1` | `_tools/cli/` | 볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성 | claude | claude, user, AI agents |
-| `vault_index_search.ps1` | `_tools/cli/` | 볼트 콘텐츠 검색 — JSON 인덱스 기반 키워드/태그/타입 검색 | claude | claude, user, AI agents |
-| `clone_vault.ps1` | `_tools/` | 볼트 전체 미러 복사 (robocopy) | codex | user |
-| `check_standards.ps1` | `_tools/` | `_Standards/` 디렉토리 구조 확인 | codex | codex, user |
-| `verify_structure.ps1` | `_tools/` | `_Standards/` 상세 구조 출력 | codex | codex, user |
+| `post_note_edit_review.ps1` | `.sync/_tools/cli/` | 노트 편집 후 인코딩·frontmatter 검증 | codex | claude, codex |
+| `obsidian_ai_bridge.ps1` | `.sync/_tools/cli/` | Obsidian CLI 래퍼 (조회/검색/히스토리/post-review) | codex | claude, codex |
+| `task_router.ps1` | `.sync/_tools/cli/` | 작업 설명 → 에이전트 라우팅 추천 | codex | user (수동) |
+| `sync_workspace.ps1` | `.sync/` | 볼트 간 작업환경 동기화 (Hub-Sync) — 버전 비교·파일 복사 | claude | claude, codex |
+| `vault_index_build.ps1` | `.sync/_tools/cli/` | 볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성 | claude | claude, user, AI agents |
+| `vault_index_search.ps1` | `.sync/_tools/cli/` | 볼트 콘텐츠 검색 — JSON 인덱스 기반 키워드/태그/타입 검색 | claude | claude, user, AI agents |
+| `clone_vault.ps1` | `.sync/` | 볼트 전체 미러 복사 (robocopy) | codex | user |
+| `check_standards.ps1` | `.sync/_tools/` | `_Standards/` 디렉토리 구조 확인 | codex | codex, user |
+| `verify_structure.ps1` | `.sync/_tools/` | `_Standards/` 상세 구조 출력 | codex | codex, user |
 ---
 
 ## 일회성/완료 스크립트 (One-time)

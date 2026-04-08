@@ -17,8 +17,30 @@ param(
 
 $ErrorActionPreference='Stop'
 
+# NOTE: .sync\_tools\cli\ 기준 3단계(..\..\..),  레거시 _tools\cli\ 기준 2단계(..\..),
+#       순서대로 시도하며 Contents/ 폴더 존재로 볼트 루트를 검증한다.
 $_ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$_VaultRoot = (Resolve-Path "$_ScriptDir\..\..").Path
+$_VaultRoot = $null
+$_rootCandidates = @(
+    (Join-Path $_ScriptDir "..\..\.."),   # .sync\_tools\cli → 볼트루트
+    (Join-Path $_ScriptDir "..\..")        # _tools\cli → 볼트루트 (레거시)
+)
+foreach ($_candidate in $_rootCandidates) {
+    if (-not (Test-Path $_candidate)) { continue }
+    $_resolved = (Resolve-Path $_candidate).Path
+    if (
+        (Test-Path (Join-Path $_resolved "Contents")) -or
+        (Test-Path (Join-Path $_resolved "Project")) -or
+        (Test-Path (Join-Path $_resolved "docs"))
+    ) {
+        $_VaultRoot = $_resolved
+        break
+    }
+}
+if (-not $_VaultRoot) {
+    Write-Error "Vault root auto-detect failed from $_ScriptDir"
+    exit 1
+}
 if (-not $VaultName) {
     $VaultName = Split-Path -Leaf $_VaultRoot
 }
@@ -26,7 +48,7 @@ if (-not $Scope) {
     if (Test-Path (Join-Path $_VaultRoot "Contents"))      { $Scope = "Contents" }
     elseif (Test-Path (Join-Path $_VaultRoot "Project"))  { $Scope = "Project" }
     elseif (Test-Path (Join-Path $_VaultRoot "docs"))     { $Scope = "docs" }
-    else { Write-Error "Content folder not found"; exit 1 }
+    else { Write-Error "Content folder not found under $_VaultRoot"; exit 1 }
 }
 
 function Invoke-Obsidian {

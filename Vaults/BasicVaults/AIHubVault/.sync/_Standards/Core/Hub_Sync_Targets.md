@@ -60,7 +60,7 @@ Runs only if all previous batches succeed.
 
 ## Authoritative Source
 
-The batch definitions live in `_tools/cli/sync_workspace.ps1` (lines 79–89).
+The batch definitions live in `.sync/sync_workspace.ps1`.
 If this document and the script disagree, **the script is authoritative**.
 
 ---

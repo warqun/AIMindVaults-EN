@@ -71,7 +71,7 @@ powershell -ExecutionPolicy Bypass -File .\_tools\cli\post_note_edit_review.ps1
 
 ## Obsidian CLI 우선 사용 규칙
 
-- 조회/검색/히스토리 복구는 먼저 `_tools/cli/obsidian_ai_bridge.ps1`을 사용.
+- 조회/검색/히스토리 복구는 먼저 `.sync/_tools/cli/obsidian_ai_bridge.ps1`을 사용.
 - 파일 직접 파싱은 CLI 결과로 부족할 때만 사용.
 - 편집 후 `-Action post-review`로 검토 완료.
 - 상세: [[_Standards/Core/AI_ObsidianCLI_Usage]]

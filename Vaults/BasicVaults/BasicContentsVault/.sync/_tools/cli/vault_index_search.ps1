@@ -12,6 +12,7 @@
 #>
 
 param(
+    [string]$VaultRoot,
     [string]$Query = "",
     [string]$Tag = "",
     [string]$Type = "",
@@ -23,9 +24,33 @@ param(
 $ErrorActionPreference = "Stop"
 
 # Path auto-detect
+# NOTE: .sync\_tools\cli\ 기준 3단계(..\..\..),  레거시 _tools\cli\ 기준 2단계(..\..),
+#       순서대로 시도하며 Contents/ 폴더 존재로 볼트 루트를 검증한다.
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$VaultRoot = (Resolve-Path (Join-Path $ScriptDir "..\..")).Path
-$DataDir = Join-Path $VaultRoot "_tools\data"
+if (-not $VaultRoot) {
+    $rootCandidates = @(
+        (Join-Path $ScriptDir "..\..\.."),   # .sync\_tools\cli → 볼트루트
+        (Join-Path $ScriptDir "..\..")        # _tools\cli → 볼트루트 (레거시)
+    )
+    foreach ($candidate in $rootCandidates) {
+        if (-not (Test-Path $candidate)) { continue }
+        $resolved = (Resolve-Path $candidate).Path
+        if (Test-Path (Join-Path $resolved "Contents")) {
+            $VaultRoot = $resolved
+            break
+        }
+    }
+}
+if (-not $VaultRoot) {
+    Write-Host "[ERROR] Vault root auto-detect failed from: $ScriptDir"
+    exit 1
+}
+$VaultRoot = (Resolve-Path $VaultRoot).Path
+$DataDir = if (Test-Path (Join-Path $VaultRoot ".sync")) {
+    Join-Path $VaultRoot ".sync\_tools\data"
+} else {
+    Join-Path $VaultRoot "_tools\data"
+}
 $IndexPath = Join-Path $DataDir "vault_index.json"
 
 if (-not (Test-Path $IndexPath)) {

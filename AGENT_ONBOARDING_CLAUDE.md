@@ -36,7 +36,7 @@
 | 영역 | Claude Code | Codex |
 |------|-------------|-------|
 | 멀티볼트 구조 변경 (볼트 생성, 폴더 재구조화) | O | X |
-| 스크립트 개발/수정 (`_tools/cli/`) | O | X |
+| 스크립트 개발/수정 (`.sync/_tools/cli/`) | O | X |
 | 규칙/스킬 작성 (`.claude/rules/`, `.claude/commands/`) | O | X |
 | `.obsidian/` 설정 변경 | O | X |
 | 복수 볼트에 걸치는 작업 | O | X |

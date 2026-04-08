@@ -3,8 +3,10 @@
     볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성
 .DESCRIPTION
     현재 볼트의 Contents/**/*.md 파일에서 frontmatter, 제목, 헤딩, 요약,
-    WikiLink를 추출하여 _tools/data/vault_index.json으로 저장한다.
+    WikiLink를 추출하여 .sync/_tools/data/vault_index.json으로 저장한다.
     AI 에이전트가 관련 노트를 빠르게 찾을 수 있는 메타데이터 인덱스.
+.PARAMETER VaultRoot
+    인덱싱 대상 볼트 루트 경로. 생략 시 스크립트 위치에서 자동 탐지.
 .PARAMETER Incremental
     증분 빌드 — mtime/hash 비교 후 변경분만 재파싱 (기본: 전체 빌드)
 .PARAMETER Verbose
@@ -15,6 +17,7 @@
 #>
 
 param(
+    [string]$VaultRoot,
     [switch]$Incremental,
     [switch]$VerboseLog
 )
@@ -23,10 +26,34 @@ $ErrorActionPreference = "Continue"
 $startTime = Get-Date
 
 # ── 경로 자동탐지 ──
+# NOTE: .sync\_tools\cli\ 기준 3단계(..\..\..),  레거시 _tools\cli\ 기준 2단계(..\..),
+#       순서대로 시도하며 Contents/ 폴더 존재로 볼트 루트를 검증한다.
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$VaultRoot = (Resolve-Path (Join-Path $ScriptDir "..\..")).Path
+if (-not $VaultRoot) {
+    $rootCandidates = @(
+        (Join-Path $ScriptDir "..\..\.."),   # .sync\_tools\cli → 볼트루트
+        (Join-Path $ScriptDir "..\..")        # _tools\cli → 볼트루트 (레거시)
+    )
+    foreach ($candidate in $rootCandidates) {
+        if (-not (Test-Path $candidate)) { continue }
+        $resolved = (Resolve-Path $candidate).Path
+        if (Test-Path (Join-Path $resolved "Contents")) {
+            $VaultRoot = $resolved
+            break
+        }
+    }
+}
+if (-not $VaultRoot) {
+    Write-Host "[ERROR] Vault root auto-detect failed from: $ScriptDir"
+    exit 1
+}
+$VaultRoot = (Resolve-Path $VaultRoot).Path
 $ContentsDir = Join-Path $VaultRoot "Contents"
-$DataDir = Join-Path $VaultRoot "_tools\data"
+$DataDir = if (Test-Path (Join-Path $VaultRoot ".sync")) {
+    Join-Path $VaultRoot ".sync\_tools\data"
+} else {
+    Join-Path $VaultRoot "_tools\data"
+}
 $IndexPath = Join-Path $DataDir "vault_index.json"
 
 # 볼트명 추출

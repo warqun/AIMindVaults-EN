@@ -22,7 +22,7 @@ AIMindVaults는 Obsidian 기반 멀티볼트 지식 관리 시스템이다.
 
 ### 환경 설정
 
-- 새 환경에서는 `_tools/setup_new_environment.ps1`을 실행하여 볼트 등록, 동기화, 인덱스 빌드를 자동화할 수 있다.
+- 새 환경에서는 각 볼트를 Obsidian 볼트 매니저에서 등록한 뒤, 동기화와 인덱스 빌드가 자동 실행된다.
 - 외부 소프트웨어 설치 가이드: `SETUP_GUIDE.md` 참조.
 - 환경 진단 결과에서 미설치 항목이 있으면 `SETUP_GUIDE.md`의 설치 방법을 안내한다.
 
@@ -75,8 +75,8 @@ AIMindVaults/                    ← 멀티볼트 루트
         ├── CLAUDE.md            ← 볼트 전용 규칙
         └── .sync/               ← 동기화 미러 (Hub에서 전파)
             ├── _Standards/Core/ ← 운영 표준
-            ├── _tools/cli/      ← CLI 도구 (검증, 인덱서)
-            └── _tools/data/     ← 인덱스 데이터
+            ├── _tools/cli/      ← CLI 도구 (검증, 인덱서, 런처)
+            └── _tools/data/     ← 인덱스 데이터 (vault_index.json)
 ```
 
 ---
