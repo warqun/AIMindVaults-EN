@@ -22,7 +22,7 @@ $normalizedVault = (Resolve-Path $VaultRoot).Path.TrimEnd('\')
 
 # 1차: 스크립트 위치 기반
 $HubFromScript = (Resolve-Path "$ScriptDir\..").Path.TrimEnd('\')
-if ($HubFromScript -ne $normalizedVault -and (Test-Path (Join-Path $HubFromScript "_forge"))) {
+if ($HubFromScript -ne $normalizedVault -and (Test-Path (Join-Path $HubFromScript ".sync\.hub_marker"))) {
     $HubPath = $HubFromScript
 }
 
@@ -45,7 +45,7 @@ if (-not $HubPath) {
             Where-Object {
                 $candidatePath = (Resolve-Path $_.FullName).Path.TrimEnd('\')
                 ($candidatePath -ne $normalizedVault) -and
-                (Test-Path (Join-Path $_.FullName "_forge"))
+                (Test-Path (Join-Path $_.FullName ".sync\.hub_marker"))
             } | Select-Object -First 1
         if ($hubCandidate) { $HubPath = $hubCandidate.FullName }
     }

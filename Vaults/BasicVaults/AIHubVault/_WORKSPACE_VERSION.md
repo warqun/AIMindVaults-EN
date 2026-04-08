@@ -4,7 +4,7 @@ tags:
   - AIMindVault
   - TileMapToolKit
   - Meta
-updated: 2026-04-08
+updated: 2026-04-09
 ---
 
 # Workspace Version
@@ -15,6 +15,7 @@ updated: 2026-04-08
 
 | 버전           | 변경 내용 |
 | ------------ | ----- |
+| 202604090003 | pre_sync.ps1 Hub 탐지 마커를 _forge → .sync/.hub_marker로 수정. Hub에서 Obsidian 열 때 자기참조 예외가 동작하지 않던 버그 수정 |
 | 202604090002 | vault_trash_clean.ps1 신규 추가 — 볼트 .trash/ 일괄 정리 CLI (단일/복수/전체, DryRun). Script_Registry 등록 |
 | 202604090001 | obsidian_ai_bridge.ps1, open_vault.ps1 경로 하드코딩(..\..\) → candidate 자동탐지 시스템 적용. open_vault의 pre_sync.ps1 참조도 .sync/ 기준 candidate로 수정. 기존 수정 완료 스크립트 3개에 candidate 로직 설명 코멘트 추가 |
 | 202604080003 | Shell Commands 플러그인에 sync_workspace.ps1 자동 실행 등록 (Obsidian 시작 이벤트). coreForceDataJson에 obsidian-shellcommands 추가하여 설정 강제 전파 |
