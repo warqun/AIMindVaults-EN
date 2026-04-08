@@ -16,20 +16,36 @@
 
 AIMindVaults는 Obsidian 기반 멀티볼트 지식 관리 시스템이다.
 
-- 볼트가 용도별로 분류되어 있다 (도메인 지식, 프로젝트, 개인 기록 등).
+- 22개 이상의 볼트가 용도별로 분류되어 있다 (도메인 지식, 프로젝트, 개인 기록, 참조 문서 등).
 - AIHubVault가 단일 원본(Hub)으로, 모든 볼트의 작업환경(규칙, 스크립트, 표준)을 동기화한다.
-- 사용자가 볼트를 추가하면 레지스트리에 등록하고, `clone_vault.ps1`로 BasicContentsVault를 클론하여 생성한다.
+- 볼트 추가 시 `BasicContentsVault/.sync/clone_vault.ps1`로 BasicContentsVault를 클론하여 생성한다.
+
+### 환경 설정
+
+- 새 환경에서는 `_tools/setup_new_environment.ps1`을 실행하여 볼트 등록, 동기화, 인덱스 빌드를 자동화할 수 있다.
+- 외부 소프트웨어 설치 가이드: `SETUP_GUIDE.md` 참조.
+- 환경 진단 결과에서 미설치 항목이 있으면 `SETUP_GUIDE.md`의 설치 방법을 안내한다.
 
 ---
 
-## 2. 기본 볼트 구성
+## 2. 볼트 구성
 
-| 볼트 ID | 경로 | 역할 |
-|---------|------|------|
-| AIHubVault | `Vaults/BasicVaults/AIHubVault/` | **작업환경 원본(Hub)** — 규칙·스크립트·표준 설계 및 배포 |
-| BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | 범용 콘텐츠 저장소 (클론 템플릿 전용 — 직접 편집 금지) |
+전체 레지스트리는 `CLAUDE.md` 또는 `AGENTS.md`에 있다. 주요 카테고리:
 
-사용자가 새 볼트를 생성하면 여기에 추가된다. 볼트를 만들지 않아도 기본 2개로 시작할 수 있다.
+| 카테고리 | 경로 패턴 | 예시 |
+|----------|----------|------|
+| BasicVaults | `Vaults/BasicVaults/` | AIHubVault (Hub), BasicContentsVault (템플릿) |
+| Domains_Game | `Vaults/Domains_Game/` | Unity, GameDesign, GameArt |
+| Domains_Video | `Vaults/Domains_Video/` | CapCut |
+| Domains_Infra | `Vaults/Domains_Infra/` | Notion, CICD, Search, AI, AppFlowy |
+| Domain_Art | `Vaults/Domain_Art/` | LightAndColor |
+| Domains_Business | `Vaults/Domains_Business/` | Funding |
+| Lab_Infra | `Vaults/Lab_Infra/` | ObsidianDev |
+| Lab_Game | `Vaults/Lab_Game/` | CombatToolKit, TileMapToolKit |
+| Projects_Game | `Vaults/Projects_Game/` | JissouGame |
+| Projects_Infra | `Vaults/Projects_Infra/` | Project_AIMindVaults |
+| Personal | `Vaults/Personal/` | Diary |
+| References | `References/` | Unity_Documentation (readonly) |
 
 ---
 
@@ -74,7 +90,7 @@ AIMindVaults/                    ← 멀티볼트 루트
 콘텐츠를 생성하기 전에 `_STATUS.md` 볼트 레지스트리를 확인하여 적절한 볼트를 선택한다.
 
 - 키워드 기반 자동 라우팅: 진입점 문서(`CLAUDE.md` 또는 `AGENTS.md`)의 라우팅 규칙 참조.
-- 명시적 지정: "AIHubVault에서 ~"
+- 명시적 지정: "AIHubVault에서 ~", "Unity 볼트에 ~"
 - 적합한 볼트가 없으면 사용자에게 확인. 임의 판단으로 부적합한 볼트에 넣지 않는다.
 - BasicContentsVault는 클론 템플릿 전용. 직접 콘텐츠 작업 금지.
 
@@ -233,7 +249,7 @@ powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\vault_i
 
 ---
 
-## 16. Obsidian 노트 열기
+## 16. Obsidian 노트/볼트 열기
 
 이 환경의 `.md` 노트는 Obsidian 볼트 안에 있다. 노트를 열 때는 Obsidian URI를 사용한다.
 
@@ -241,10 +257,22 @@ powershell -ExecutionPolicy Bypass -File {볼트경로}\.sync\_tools\cli\vault_i
 Start-Process 'obsidian://open?vault=볼트명&file=볼트루트기준_상대경로'
 ```
 
-- `vault`: Obsidian에 등록된 볼트 폴더명 (예: `AIHubVault`)
+- `vault`: Obsidian에 등록된 볼트 폴더명 (예: `AIHubVault`, `Unity`, `JissouGame`)
 - `file`: 볼트 루트 기준 상대 경로, `.md` 확장자 생략 (예: `Contents/Domain/Example_Note`)
 - 경로 구분자: `/` 사용. 한글 파일명 그대로 사용 가능.
 - `Start-Process <파일경로.md>`, `code`, `Invoke-Item` 등은 VS Code로 열리므로 금지.
+
+### 새 볼트를 Obsidian에 등록하여 열기
+
+새로 생성한 볼트를 Obsidian에서 처음 여는 경우, **반드시 사용자가 직접 Obsidian 볼트 매니저에서 등록**하도록 안내한다.
+
+**안내 문구:**
+> Obsidian 볼트 매니저 → "보관함 폴더 열기" → `{볼트 경로}` 선택
+
+**`obsidian://open?path=` URI로 미등록 볼트를 여는 것을 금지한다.**
+- URI 방식은 앱 상태 전환 + 등록 + 플러그인 로드를 동시 처리하여 로딩이 매우 느리다.
+- 볼트 매니저에서 직접 열면 Obsidian이 이미 준비된 상태에서 열리므로 빠르다.
+- URI는 **이미 등록된 볼트 전환** (`obsidian://open?vault=볼트명`) 용도로만 사용한다.
 
 ---
 
@@ -283,3 +311,4 @@ Start-Process 'obsidian://open?vault=볼트명&file=볼트루트기준_상대경
 | Juggl 스타일 | `.claude/rules/core/juggl-style-sync.md` |
 | Obsidian 설정 | `.claude/rules/core/obsidian-config-safety.md` |
 | 볼트 개별화 | `.claude/rules/core/vault-individualization.md` |
+| 유저 가이드 | `.claude/rules/core/user-guidance.md` |

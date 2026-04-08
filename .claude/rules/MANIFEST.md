@@ -28,6 +28,7 @@
 | vault-routing.md | 볼트 라우팅 |
 | obsidian-config-safety.md | Obsidian 설정 파일 안전 편집 |
 | vault-individualization.md | 볼트 개별화 (생성 시 이름/분류/역할 구체화) |
+| user-guidance.md | 유저 가이드 (코어 기능 사용 시 에이전트 안내 룰북) |
 
 ## custom/ — 사용자 규칙 (동기화 미대상)
 
