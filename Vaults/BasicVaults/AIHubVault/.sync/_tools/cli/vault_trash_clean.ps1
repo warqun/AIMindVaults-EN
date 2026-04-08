@@ -110,8 +110,12 @@ foreach ($trash in $trashDirs) {
     if ($DryRun) {
         Write-Host "  [DRY] $vaultName — $fileCount files, ${sizeKB}KB" -ForegroundColor DarkYellow
     } else {
-        Remove-Item -Path $trash.FullName -Recurse -Force
-        Write-Host "  [DEL] $vaultName — $fileCount files, ${sizeKB}KB" -ForegroundColor Green
+        try {
+            Remove-Item -Path $trash.FullName -Recurse -Force -ErrorAction Stop
+            Write-Host "  [DEL] $vaultName — $fileCount files, ${sizeKB}KB" -ForegroundColor Green
+        } catch {
+            Write-Host "  [ERR] $vaultName — $($_.Exception.Message)" -ForegroundColor Red
+        }
     }
 }
 
