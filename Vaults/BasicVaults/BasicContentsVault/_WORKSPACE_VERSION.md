@@ -4,7 +4,7 @@ tags:
   - AIMindVault
   - TileMapToolKit
   - Meta
-updated: 2026-04-01
+updated: 2026-04-08
 ---
 
 # Workspace Version
@@ -15,7 +15,14 @@ updated: 2026-04-01
 
 | 버전           | 변경 내용 |
 | ------------ | ----- |
-| 202604060001 | _sync/ 폴더구조 재편 — sync_workspace.ps1 폴더 미러링 리팩토링, pre_sync.ps1 경로 갱신, 배치 배열 제거, .obsidian/app.json userIgnoreFilters 추가 |
+| 202604090002 | vault_trash_clean.ps1 신규 추가 — 볼트 .trash/ 일괄 정리 CLI (단일/복수/전체, DryRun). Script_Registry 등록 |
+| 202604090001 | obsidian_ai_bridge.ps1, open_vault.ps1 경로 하드코딩(..\..\) → candidate 자동탐지 시스템 적용. open_vault의 pre_sync.ps1 참조도 .sync/ 기준 candidate로 수정. 기존 수정 완료 스크립트 3개에 candidate 로직 설명 코멘트 추가 |
+| 202604080003 | Shell Commands 플러그인에 sync_workspace.ps1 자동 실행 등록 (Obsidian 시작 이벤트). coreForceDataJson에 obsidian-shellcommands 추가하여 설정 강제 전파 |
+| 202604080002 | 콘텐츠 인덱싱 완료 판정 보강 — `.sync/_tools/cli/post_note_edit_review.ps1`가 `vault_index_build.ps1`를 별도 PowerShell 프로세스로 실행해 종료 코드를 안정적으로 판정하고, Codex 노트 스킬 3종에 `POST_EDIT_INDEX_UPDATED=1` 확인을 완료 조건으로 명시 |
+| 202604080001 | 콘텐츠 인덱서 경로 자동탐지 수정 — `.sync/_tools/cli/` 기준으로 post_note_edit_review, vault_index_build/search 연결 복구. 노트 추가/편집 후 인덱싱 필수 규칙 반영 |
+| 202604060003 | _WORKSPACE_VERSION.md를 .sync/ 내부에서 볼트 루트로 복원 (Obsidian 노출 필요), sync 경로 참조 갱신 |
+| 202604060002 | Hub 식별 마커 _forge → .sync/.hub_marker 변경, _forge → .forge 리네임 (전체 볼트), 참조 경로 갱신 |
+| 202604060001 | .sync/ 폴더구조 재편 — sync_workspace.ps1 폴더 미러링 리팩토링, pre_sync.ps1 경로 갱신, 배치 배열 제거, dot-prefix 자동 숨김 |
 | 202604050001 | post_note_edit_review.ps1에 인덱서 증분 빌드 자동 호출 추가 (기능 A) |
 | 202604010001 | TileMapToolKit 볼트 초기 개별화 — 진입점/상태/인덱스/태그 규칙 정렬, `Contents/` 구조 초기화 |
 | 202603230004 | Core 플러그인 data.json 선택적 강제 — Linter만 강제, local-rest-api는 민감 데이터(API키/인증서) 포함으로 보존 |

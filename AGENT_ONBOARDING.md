@@ -127,6 +127,7 @@ AIMindVaults/                    ← 멀티볼트 루트
 - **문서-실제 불일치**: 규칙/온보딩이 참조하는 경로에 실제 파일이 없으면 보고
 - **인덱스 부재**: 대상 볼트에 `vault_index.json`이 없으면 `/reindex` 실행 제안
 - **구경로 잔재**: 스크립트/설정에서 `.sync/` 구조 이전의 경로(`_tools/cli/` 등)를 발견하면 보고
+- **JSON 설정 파일**: `.obsidian/` 하위 JSON(특히 `obsidian-shellcommands/data.json`)은 구조가 깊다. **부분 읽기로 "비어 있다"고 판단하지 않는다.** 전체를 읽거나, §10의 정상 상태 기준 3가지를 직접 확인한다.
 
 ### 점검 원칙
 
@@ -211,6 +212,17 @@ local: 파일명_without_extension
 - 동기화 실행: `pre_sync.ps1` → 버전 비교 → `.sync/` 미러링 → 플러그인 머지.
 - Obsidian에서 볼트를 열면 `on-layout-ready` 이벤트로 `pre_sync.ps1`이 자동 실행된다 (Shell Commands 플러그인).
 - workspace 편집은 반드시 AIHubVault에서 수행 → 동기화로 전파.
+
+### Shell Commands 설정 확인 시 주의
+
+`.obsidian/plugins/obsidian-shellcommands/data.json`을 점검할 때, `shell_commands` 배열의 실제 내용을 끝까지 읽어야 한다. 이 JSON은 구조가 깊고(약 70줄), 부분만 읽으면 "비어 있다" 또는 "경로가 다르다"고 오판하기 쉽다.
+
+**정상 상태 기준** (모든 볼트 공통):
+- `shell_commands[0].id` = `"syncworkspace"`
+- `shell_commands[0].platform_specific_commands.default`에 `{{vault_path}}\\.sync\\pre_sync.ps1` 포함
+- `shell_commands[0].events.on-layout-ready.enabled` = `true`
+
+위 3가지가 확인되면 자동 동기화 설정은 정상이다. `_tools\cli\pre_sync.ps1`(구경로)이 아닌 `.sync\pre_sync.ps1`(현재 경로)인지 주의.
 
 ---
 
