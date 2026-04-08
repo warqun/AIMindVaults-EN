@@ -28,6 +28,7 @@ agent: claude
 | `sync_workspace.ps1` | `.sync/` | 볼트 간 작업환경 동기화 (Hub-Sync) — 버전 비교·파일 복사 | claude | claude, codex |
 | `vault_index_build.ps1` | `.sync/_tools/cli/` | 볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성 | claude | claude, user, AI agents |
 | `vault_index_search.ps1` | `.sync/_tools/cli/` | 볼트 콘텐츠 검색 — JSON 인덱스 기반 키워드/태그/타입 검색 | claude | claude, user, AI agents |
+| `vault_trash_clean.ps1` | `.sync/_tools/cli/` | 볼트 .trash/ 일괄 정리 (단일/복수/전체, DryRun 지원) | claude | claude, user |
 | `clone_vault.ps1` | `.sync/` | 볼트 전체 미러 복사 (robocopy) | codex | user |
 | `check_standards.ps1` | `.sync/_tools/` | `_Standards/` 디렉토리 구조 확인 | codex | codex, user |
 | `verify_structure.ps1` | `.sync/_tools/` | `_Standards/` 상세 구조 출력 | codex | codex, user |
