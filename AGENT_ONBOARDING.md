@@ -16,7 +16,7 @@
 
 AIMindVaults는 Obsidian 기반 멀티볼트 지식 관리 시스템이다.
 
-- 22개 이상의 볼트가 용도별로 분류되어 있다 (도메인 지식, 프로젝트, 개인 기록, 참조 문서 등).
+- 기본 2개 볼트(AIHubVault, BasicContentsVault)가 제공되며, 용도별로 볼트를 추가하여 확장한다.
 - AIHubVault가 단일 원본(Hub)으로, 모든 볼트의 작업환경(규칙, 스크립트, 표준)을 동기화한다.
 - 볼트 추가 시 `BasicContentsVault/.sync/clone_vault.ps1`로 BasicContentsVault를 클론하여 생성한다.
 
@@ -32,20 +32,16 @@ AIMindVaults는 Obsidian 기반 멀티볼트 지식 관리 시스템이다.
 
 전체 레지스트리는 `CLAUDE.md` 또는 `AGENTS.md`에 있다. 주요 카테고리:
 
-| 카테고리 | 경로 패턴 | 예시 |
+| 카테고리 | 경로 패턴 | 설명 |
 |----------|----------|------|
-| BasicVaults | `Vaults/BasicVaults/` | AIHubVault (Hub), BasicContentsVault (템플릿) |
-| Domains_Game | `Vaults/Domains_Game/` | Unity, GameDesign, GameArt |
-| Domains_Video | `Vaults/Domains_Video/` | CapCut |
-| Domains_Infra | `Vaults/Domains_Infra/` | Notion, CICD, Search, AI, AppFlowy |
-| Domain_Art | `Vaults/Domain_Art/` | LightAndColor |
-| Domains_Business | `Vaults/Domains_Business/` | Funding |
-| Lab_Infra | `Vaults/Lab_Infra/` | ObsidianDev |
-| Lab_Game | `Vaults/Lab_Game/` | CombatToolKit, TileMapToolKit |
-| Projects_Game | `Vaults/Projects_Game/` | JissouGame |
-| Projects_Infra | `Vaults/Projects_Infra/` | Project_AIMindVaults |
-| Personal | `Vaults/Personal/` | Diary |
-| References | `References/` | Unity_Documentation (readonly) |
+| BasicVaults | `Vaults/BasicVaults/` | AIHubVault (Hub), BasicContentsVault (클론 템플릿) |
+| Domains_* | `Vaults/Domains_*/` | 도메인 지식 볼트 (Game, Infra, Video, Art 등) |
+| Lab_* | `Vaults/Lab_*/` | 도메인+프로젝트 복합 볼트 |
+| Projects_* | `Vaults/Projects_*/` | 프로젝트 작업물 볼트 |
+| Personal | `Vaults/Personal/` | 개인 기록 |
+| References | `References/` | 참조 전용 (readonly) |
+
+기본 제공: AIHubVault + BasicContentsVault. 필요에 따라 `/create-vault`로 볼트를 추가한다.
 
 ---
 
@@ -61,7 +57,7 @@ AIMindVaults/                    ← 멀티볼트 루트
 ├── _STATUS.md                   ← 볼트 레지스트리 (타입, 작업 에이전트, 날짜)
 ├── _SESSION_HANDOFF_{에이전트}.md ← 이전 세션 맥락
 ├── .claude/
-│   ├── rules/core/              ← 강제 규칙 14개
+│   ├── rules/core/              ← 강제 규칙 15개
 │   ├── rules/custom/            ← 개인 규칙 (배포 미대상)
 │   ├── commands/core/           ← 스킬 17개
 │   └── commands/custom/         ← 개인 스킬
