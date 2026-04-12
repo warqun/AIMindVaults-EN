@@ -15,6 +15,7 @@ updated: 2026-04-13
 
 | 버전           | 변경 내용 |
 | ------------ | ----- |
+| 202604130011 | cli-node Phase 6: 보조 도구 4개 포팅 (trash-clean, open-vault, obsidian-bridge, task-router). 전체 마이그레이션 완료 |
 | 202604130010 | cli-node Phase 5: clone-vault, hub-broadcast 포팅. aimv clone/broadcast 커맨드 등록 |
 | 202604130009 | cli-node Phase 4: sync 엔진 포팅 (sync-workspace, pre-sync). fs-mirror에 noPrune 옵션 추가. aimv sync/pre-sync 커맨드 등록 |
 | 202604130008 | cli-node Phase 3: post-edit-review 포팅 (UTF-8 검증 + 자동 인덱서 호출). aimv review 커맨드 등록 |

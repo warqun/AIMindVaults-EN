@@ -129,4 +129,59 @@ program
     await hubBroadcast({ relativePath: opts.relativePath, dryRun: opts.dryRun, force: opts.force, exclude: opts.exclude, vaultsRoot: opts.vaultsRoot });
   });
 
+// Phase 6: utility commands
+program
+  .command('trash-clean')
+  .description('Clean .trash/ folders across vaults')
+  .option('-v, --vault <names...>', 'Filter by vault names')
+  .option('-d, --dry-run', 'Preview without deleting')
+  .option('--vaults-root <path>', 'Vaults/ folder path')
+  .action(async (opts) => {
+    const { trashClean } = await import('../src/commands/trash-clean.js');
+    await trashClean({ vault: opts.vault, dryRun: opts.dryRun, vaultsRoot: opts.vaultsRoot });
+  });
+
+program
+  .command('open')
+  .description('Pre-sync then open Obsidian vault')
+  .option('-r, --vault-root <path>', 'Vault root path')
+  .action(async (opts) => {
+    const { openVault } = await import('../src/commands/open-vault.js');
+    await openVault({ vaultRoot: opts.vaultRoot });
+  });
+
+program
+  .command('bridge')
+  .description('Obsidian CLI bridge')
+  .requiredOption('-a, --action <action>', 'Action: vault-info|search|read|open|append|create|history|plugins-list|post-review|...')
+  .option('-r, --vault-root <path>', 'Vault root path')
+  .option('--vault-name <name>', 'Vault name')
+  .option('-p, --path <path>', 'Note path')
+  .option('-q, --query <query>', 'Search query')
+  .option('-c, --content <text>', 'Content for append/create')
+  .option('--version <n>', 'History version', '1')
+  .option('--from <n>', 'Diff from version', '2')
+  .option('--to <n>', 'Diff to version', '1')
+  .option('-l, --limit <n>', 'Search result limit', '50')
+  .option('--plugin-id <id>', 'Plugin ID for install')
+  .option('-s, --scope <name>', 'Content scope folder')
+  .action(async (opts) => {
+    const { obsidianBridge } = await import('../src/commands/obsidian-bridge.js');
+    await obsidianBridge({
+      action: opts.action, vaultRoot: opts.vaultRoot, vaultName: opts.vaultName,
+      path: opts.path, query: opts.query, content: opts.content,
+      version: parseInt(opts.version), from: parseInt(opts.from), to: parseInt(opts.to),
+      limit: parseInt(opts.limit), pluginId: opts.pluginId, scope: opts.scope,
+    });
+  });
+
+program
+  .command('route')
+  .description('Task-to-agent routing')
+  .requiredOption('-t, --task <description>', 'Task description')
+  .action(async (opts) => {
+    const { taskRouter } = await import('../src/commands/task-router.js');
+    taskRouter({ task: opts.task });
+  });
+
 program.parse();
