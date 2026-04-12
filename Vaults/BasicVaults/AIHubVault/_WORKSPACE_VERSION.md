@@ -15,6 +15,9 @@ updated: 2026-04-09
 
 | 버전           | 변경 내용 |
 | ------------ | ----- |
+| 202604130006 | cli-node Phase 0+1: Node.js CLI 스캐폴딩 + lib 유틸리티 (vault-path, config, fs-mirror, frontmatter, logger). commander + gray-matter 의존성 |
+| 202604130005 | nul 쓰레기 파일 Hub + 전체 위성 볼트에서 삭제 |
+| 202604130004 | master_index_build.ps1 Resolve-Path trailing backslash 버그 수정 (TrimEnd 추가). vault_index_build.ps1 excludeFiles에 README.md 추가 (이전 세션 미기록분) |
 | 202604130003 | master_index_build.ps1, master_index_search.ps1 신규. 22볼트 974노트 크로스볼트 검색 지원. vault_index_build.ps1에 부분 갱신 자동 호출 추가 |
 | 202604130002 | 인덱서 출력 경로를 .sync\_tools\data\ → .vault_data\로 이전. 볼트별 산출물을 동기화 폴더 밖으로 분리하여 Hub 오염 근본 해결. vault_index_build/search/post_note_edit_review 3개 스크립트 경로 변경. sync_workspace.ps1의 ExcludeDirs 임시 조치 제거 |
 | 202604130001 | sync_workspace.ps1에 ExcludeDirs 파라미터 추가. _tools\data\ 폴더를 Hub 동기화 제외 대상으로 설정하여 위성 볼트의 vault_index.json 오염 방지 (→ 202604130002에서 근본 해결로 대체) |
