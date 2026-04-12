@@ -15,6 +15,9 @@ updated: 2026-04-09
 
 | 버전           | 변경 내용 |
 | ------------ | ----- |
+| 202604130003 | master_index_build.ps1, master_index_search.ps1 신규. 22볼트 974노트 크로스볼트 검색 지원. vault_index_build.ps1에 부분 갱신 자동 호출 추가 |
+| 202604130002 | 인덱서 출력 경로를 .sync\_tools\data\ → .vault_data\로 이전. 볼트별 산출물을 동기화 폴더 밖으로 분리하여 Hub 오염 근본 해결. vault_index_build/search/post_note_edit_review 3개 스크립트 경로 변경. sync_workspace.ps1의 ExcludeDirs 임시 조치 제거 |
+| 202604130001 | sync_workspace.ps1에 ExcludeDirs 파라미터 추가. _tools\data\ 폴더를 Hub 동기화 제외 대상으로 설정하여 위성 볼트의 vault_index.json 오염 방지 (→ 202604130002에서 근본 해결로 대체) |
 | 202604090003 | pre_sync.ps1 Hub 탐지 마커를 _forge → .sync/.hub_marker로 수정. Hub에서 Obsidian 열 때 자기참조 예외가 동작하지 않던 버그 수정 |
 | 202604090002 | vault_trash_clean.ps1 신규 추가 — 볼트 .trash/ 일괄 정리 CLI (단일/복수/전체, DryRun). Script_Registry 등록 |
 | 202604090001 | obsidian_ai_bridge.ps1, open_vault.ps1 경로 하드코딩(..\..\) → candidate 자동탐지 시스템 적용. open_vault의 pre_sync.ps1 참조도 .sync/ 기준 candidate로 수정. 기존 수정 완료 스크립트 3개에 candidate 로직 설명 코멘트 추가 |

@@ -3,7 +3,7 @@
     볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성
 .DESCRIPTION
     현재 볼트의 Contents/**/*.md 파일에서 frontmatter, 제목, 헤딩, 요약,
-    WikiLink를 추출하여 .sync/_tools/data/vault_index.json으로 저장한다.
+    WikiLink를 추출하여 .vault_data/vault_index.json으로 저장한다.
     AI 에이전트가 관련 노트를 빠르게 찾을 수 있는 메타데이터 인덱스.
 .PARAMETER VaultRoot
     인덱싱 대상 볼트 루트 경로. 생략 시 스크립트 위치에서 자동 탐지.
@@ -49,11 +49,7 @@ if (-not $VaultRoot) {
 }
 $VaultRoot = (Resolve-Path $VaultRoot).Path
 $ContentsDir = Join-Path $VaultRoot "Contents"
-$DataDir = if (Test-Path (Join-Path $VaultRoot ".sync")) {
-    Join-Path $VaultRoot ".sync\_tools\data"
-} else {
-    Join-Path $VaultRoot "_tools\data"
-}
+$DataDir = Join-Path $VaultRoot ".vault_data"
 $IndexPath = Join-Path $DataDir "vault_index.json"
 
 # 볼트명 추출
@@ -64,7 +60,7 @@ if (-not (Test-Path $ContentsDir)) {
     exit 1
 }
 
-# _tools/data/ 폴더 생성
+# .vault_data/ 폴더 생성
 if (-not (Test-Path $DataDir)) {
     New-Item -ItemType Directory -Path $DataDir -Force | Out-Null
 }
@@ -378,3 +374,16 @@ Write-Host " Tags     : $($tagIndex.Count)"
 Write-Host " Time     : $([math]::Round($elapsed, 2))s"
 Write-Host " Output   : $IndexPath"
 Write-Host "======================================"
+
+# ── 마스터 인덱스 부분 갱신 ──
+$masterBuilder = Join-Path $ScriptDir "master_index_build.ps1"
+if (Test-Path $masterBuilder) {
+    try {
+        $powershellExe = (Get-Process -Id $PID).Path
+        & $powershellExe -ExecutionPolicy Bypass -File $masterBuilder -VaultName $VaultName 2>&1 | Out-Null
+        Write-Host " Master   : partial update ($VaultName)"
+    }
+    catch {
+        Write-Host " Master   : update failed — $_"
+    }
+}

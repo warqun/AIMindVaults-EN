@@ -46,11 +46,7 @@ if (-not $VaultRoot) {
     exit 1
 }
 $VaultRoot = (Resolve-Path $VaultRoot).Path
-$DataDir = if (Test-Path (Join-Path $VaultRoot ".sync")) {
-    Join-Path $VaultRoot ".sync\_tools\data"
-} else {
-    Join-Path $VaultRoot "_tools\data"
-}
+$DataDir = Join-Path $VaultRoot ".vault_data"
 $IndexPath = Join-Path $DataDir "vault_index.json"
 
 if (-not (Test-Path $IndexPath)) {

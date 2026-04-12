@@ -36,3 +36,9 @@ powershell -ExecutionPolicy Bypass -File "{볼트경로}/.sync/_tools/cli/vault_
 - AI 작업환경 설계·운영 → `Vaults/BasicVaults/AIHubVault/`
 - 프로젝트 작업물 → 해당 `Vaults/Projects_*/` 볼트
 - 적합한 볼트가 없으면 → 사용자에게 확인 후 배치. 임의 판단으로 부적합한 볼트에 넣지 않는다.
+
+## 라우팅 판단 시 볼트 CLAUDE.md 참조 (강제)
+
+- 카테고리만으로 대상 볼트가 명확하지 않을 때, **후보 볼트의 CLAUDE.md에서 수집 범위와 경계**를 읽고 판단한다.
+- 특히 인접 도메인 간 경계가 모호한 경우 (예: GameArt vs LightAndColor, AI vs AI_Coding) CLAUDE.md의 "수집하지 않는 것" 항목을 확인한다.
+- CLAUDE.md에 수집 범위가 명시되지 않은 볼트는 "이 볼트의 역할"로 판단하되, 작업 완료 후 수집 범위 보강을 권장한다.

@@ -12,7 +12,7 @@
 - AIHubVault는 소스로 사용하지 않는다 (작업환경 허브라 구조가 무거움).
 
 ```
-powershell -ExecutionPolicy Bypass -File "<BasicContentsVault경로>/_tools/clone_vault.ps1" -TargetPath "<대상경로>" -ProjectName "<볼트명>"
+powershell -ExecutionPolicy Bypass -File "<BasicContentsVault경로>/.sync/clone_vault.ps1" -TargetPath "<대상경로>" -ProjectName "<볼트명>"
 ```
 
 이 스크립트가 처리하는 항목:
@@ -53,6 +53,8 @@ powershell -ExecutionPolicy Bypass -File "<BasicContentsVault경로>/_tools/clon
 볼트 역할에 맞게 CLAUDE.md를 개별 작성:
 
 - **이 볼트의 역할**: 1~2줄로 명확히
+- **수집 범위**: 이 볼트에 들어와야 하는 콘텐츠의 종류와 기준
+- **수집하지 않는 것**: 유사하지만 다른 볼트로 라우팅해야 하는 경계. 혼동 가능한 인접 볼트를 명시 (예: "셰이더 스타일링은 여기, 색채 이론은 LightAndColor로")
 - **디렉토리 구조**: Contents/ 하위 폴더 구조
 - **태그 규칙**: 볼트 식별 태그 지정
 - **세션 진입 규칙**: _STATUS.md 선독 필수 포함

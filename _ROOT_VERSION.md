@@ -3,7 +3,7 @@ type: version-log
 tags:
   - AIMindVault
   - root
-updated: 2026-04-06
+updated: 2026-04-08
 ---
 
 # Root Version Log
@@ -12,6 +12,16 @@ updated: 2026-04-06
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
+| R044 | 2026-04-13 | `vault-individualization.md` CLAUDE.md 필수 항목에 수집 범위·경계 추가. `vault-routing.md` 라우팅 판단 시 후보 볼트 CLAUDE.md 수집 범위 참조 규칙 추가 |
+| R043 | 2026-04-08 | `user-guidance.md` 코어 규칙 신설. 12개 코어 기능별 유저 혼란 상황 + 에이전트 안내 지침. MANIFEST 등록. `create-vault.md`, `open-vault.md`에 Obsidian 미등록 볼트 URI 금지 규칙 추가. `AGENT_ONBOARDING.md` §16에 볼트 등록 안내 추가 |
+| R042 | 2026-04-08 | `temp-file-management.md`에 "무한 재귀 경로 삭제 (Incident Rule)" 섹션 추가. PowerShell flatten-and-delete 1순위, robocopy mirror 2순위. 실패하는 방법(7z, Remove-Item, rd, .NET Delete) 명시 |
+| R041 | 2026-04-08 | `Vaults/Domain_Art/ArtInsight/` 신규 볼트 생성. 루트 `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`에 ArtInsight 레지스트리와 라우팅 키워드 추가, ArtInsight 개별 진입 문서/상태 문서/콘텐츠 규칙 개별화, 첫 노트 `20260408_미적_안목을_기르는_분별의_기준.md` 작성 |
+| R040 | 2026-04-08 | 콘텐츠 인덱서 우선 검색 강제 규칙 추가. `token-optimization.md` §0 신설 (인덱서 → fallback 순서), `vault-routing.md`에 첫 접근 시 인덱스 빌드 강제, `vault-individualization.md`에 생성 후 초기 빌드 단계 추가 |
+| R039 | 2026-04-08 | 볼트명 변경 CodeStyle → AI_Coding. 루트 CLAUDE.md 레지스트리/라우팅, 루트 _STATUS.md 레지스트리 갱신. 볼트 내부 태그 전체 AI_Coding으로 교체 |
+| R038 | 2026-04-08 | 콘텐츠 인덱싱 완료 강제 보강. AIHub `.sync/_tools/cli/post_note_edit_review.ps1`가 인덱서를 별도 PowerShell 프로세스로 실행해 성공 판정을 안정화하고, root `.codex/skills/create-video-note`, `create-article-note`, `create-pdf-note`에 `POST_EDIT_INDEX_UPDATED=1` 확인과 수동 fallback 절차를 명시 |
+| R037 | 2026-04-08 | 콘텐츠 인덱싱 규칙 강화. `post-edit-review.md`에 노트 추가/편집 후 인덱싱 필수 조건(`POST_EDIT_INDEX_UPDATED=1`) 추가, `/reindex` 스킬 경로를 `.sync/_tools/cli/` 구조에 맞게 갱신 |
+| R036 | 2026-04-08 | Codex 전용 소스 노트 파이프라인 추가. root `.codex/skills/create-article-note/`, `.codex/skills/create-pdf-note/` 신규 생성, `.codex/skills/create-video-note/`를 동일 기준으로 확장 |
+| R035 | 2026-04-06 | `/open-notes` 스킬 custom/ → core/ 격상. 활성 볼트 판별·경로 변환·파일 존재 확인 3단계 안전장치 추가. MANIFEST 등록 |
 | R034 | 2026-04-06 | `AGENT_ONBOARDING.md` 신규 — 에이전트 범용 온보딩 문서. 환경 개요, 핵심 규약 14개 압축, 규칙 파일 경로 참조 |
 | R033 | 2026-04-06 | `distribution-sync.md` Juggl_StyleGuide 배포 제거, `juggl-style-sync.md` 볼트별 개별 관리로 변경. 전체 볼트 `docs/` → `.docs/` 리네임, `recent_files.txt` 삭제, `Juggl_StyleGuide/` 볼트별 `Contents/`로 이동 |
 | R032 | 2026-04-05 | `/reindex` 스킬 신설 (`.claude/commands/core/reindex.md`) — 단일/전체 볼트 콘텐츠 인덱스 재빌드. MANIFEST 등록 |

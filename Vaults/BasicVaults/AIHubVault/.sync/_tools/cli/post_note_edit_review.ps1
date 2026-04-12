@@ -87,11 +87,7 @@ $indexerCandidates = @(
 )
 $indexerPath = $indexerCandidates | Where-Object { Test-Path $_ } | Select-Object -First 1
 if ($indexerPath) {
-    $dataDir = if (Test-Path (Join-Path $Root ".sync")) {
-        Join-Path $Root ".sync\_tools\data"
-    } else {
-        Join-Path $Root "_tools\data"
-    }
+    $dataDir = Join-Path $Root ".vault_data"
     $indexPath = Join-Path $dataDir "vault_index.json"
     try {
         $powershellExe = (Get-Process -Id $PID).Path
