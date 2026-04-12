@@ -104,4 +104,29 @@ program
     await preSync({ vaultRoot: opts.vaultRoot });
   });
 
+// Phase 5: clone/broadcast commands
+program
+  .command('clone')
+  .description('Clone vault to a new location')
+  .requiredOption('-t, --target-path <path>', 'Destination path for the new vault')
+  .option('-n, --project-name <name>', 'Display name (defaults to folder name)')
+  .option('-s, --source-path <path>', 'Source vault (auto-detect if omitted)')
+  .action(async (opts) => {
+    const { cloneVault } = await import('../src/commands/clone-vault.js');
+    await cloneVault({ targetPath: opts.targetPath, projectName: opts.projectName, sourcePath: opts.sourcePath });
+  });
+
+program
+  .command('broadcast')
+  .description('Broadcast file from Hub .sync/ to all satellite vaults')
+  .requiredOption('-p, --relative-path <path>', 'Path relative to .sync/')
+  .option('-d, --dry-run', 'Preview without executing')
+  .option('-f, --force', 'Create file even if it does not exist in target')
+  .option('-e, --exclude <patterns...>', 'Vault name patterns to skip')
+  .option('--vaults-root <path>', 'Vaults/ folder path')
+  .action(async (opts) => {
+    const { hubBroadcast } = await import('../src/commands/hub-broadcast.js');
+    await hubBroadcast({ relativePath: opts.relativePath, dryRun: opts.dryRun, force: opts.force, exclude: opts.exclude, vaultsRoot: opts.vaultsRoot });
+  });
+
 program.parse();
