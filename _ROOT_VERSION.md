@@ -12,6 +12,7 @@ updated: 2026-04-08
 
 | 버전 | 날짜 | 변경 내용 |
 |------|------|----------|
+| R053 | 2026-04-13 | PS1 잔존 참조 전면 제거. Codex 스킬 3개, CODEX.md 28개, .codex/rules/ 84개, .codex/skills/session-end 27개, .github/copilot-instructions 28개, .antigravity/SESSION_RULES 28개, AGENT_ONBOARDING_CLAUDE/CODEX, .codex/rules/edit-scope, agent-ownership, Hub _WORKFLOW, Hub_Sync_Targets, TOOLS_INDEX 전면 개편 — 총 200+ 파일 Node.js CLI 참조로 전환 |
 | R052 | 2026-04-13 | `docs/` 신설 (architecture, cli-reference, customization). core commands 6개 PS1→Node.js CLI 전환. AGENT_ONBOARDING.md PS1 참조 전환 + docs 연동. README.md docs 참조 추가 |
 | R051 | 2026-04-13 | core/custom rules 8개 PS1→Node.js CLI 참조 전환. PS1 전체 제거. standards 커맨드 추가. Script_Registry 전면 개편 |
 | R050 | 2026-04-13 | TestVault 삭제. GameDesign, Blender, Git, AI_Gen4Game 4개 볼트 루트 `CLAUDE.md` 레지스트리 + 라우팅 키워드 등록. `Domains_3D`, `Domains_VCS`, `Domains_AI_Asset` 카테고리 신설 |

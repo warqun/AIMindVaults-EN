@@ -7,7 +7,7 @@
 
 ## 1. 진입점
 
-- **루트 진입점**: `AGENTS.md` — 볼트 레지스트리, 라우팅 규칙, 스킬 목록
+- **루트 진입점**: `AGENTS.md` — 볼트 레지스트리 (22볼트), 라우팅 규칙, 스킬 목록
 - **레거시**: `CODEX.md` → `AGENTS.md`로 리다이렉트
 - **내부 라우팅**: `.codex/CODEX.md` — Codex 규칙 참조 허브
 
@@ -89,7 +89,7 @@
 
 | 규칙 | 핵심 |
 |------|------|
-| `vault-routing.md` | AIHubVault → workspace, BasicContentsVault → content, 명시 없으면 확인 |
+| `vault-routing.md` | AIHubVault → workspace, 기타 → 키워드 추론 또는 사용자 확인 |
 | `edit-scope.md` | 루트 스코프 정의, workspace는 AIHubVault 전용, 세션 종료 절차 |
 | `status-sync.md` | 루트 상태 vs 볼트 상태 분리 원칙 |
 | `encoding-safety.md` | UTF-8 안전, Get-Content 파이프라인 금지, mojibake 발생 시 즉시 중단 |
@@ -130,10 +130,27 @@ Codex도 `.claude/rules/core/`의 강제 규칙 14개를 모두 따른다.
 
 | 규칙 | Codex 적용 시 핵심 |
 |------|-------------------|
-| Post-Edit Review | 노트 편집 후 `post_note_edit_review.ps1` 실행 + 인덱싱 완료 |
+| Post-Edit Review | 노트 편집 후 `aimv review` 실행 + 인덱싱 완료 |
 | 편집 모드 분리 | Contents 모드로 노트 편집, workspace 편집은 AIHubVault 전용 |
 | 세션 종료 | 볼트 + 루트 `_STATUS.md` 양쪽 갱신 + 핸드오프 파일 작성 |
 | 토큰 절약 | 핀포인트 접근, 반복 읽기 금지, 고비용 작업 사전 승인 |
 | 스크립트 생성 | 사용자 승인 없이 생성 금지 |
 
 전체 목록: `AGENT_ONBOARDING.md` §규칙 상세 참조 테이블.
+
+---
+
+## 10. Serena MCP — 시맨틱 코드 분석 (사용자 환경에 따라)
+
+Serena MCP 서버가 연결되어 있는 경우, C# 코드를 심볼 단위로 탐색·수정할 수 있다.
+
+| 도구 | 용도 |
+|------|------|
+| `get_symbols_overview` | 파일 내 클래스/메서드 목록 조회 |
+| `find_symbol` | 심볼 이름으로 검색 |
+| `find_referencing_symbols` | 특정 심볼을 참조하는 곳 찾기 |
+| `search_for_pattern` | 코드 패턴 검색 |
+| `replace_symbol_body` | 심볼 본문 교체 |
+
+파일 전체 읽기 전에 `get_symbols_overview`로 구조를 먼저 파악한다.
+상세: `AGENTS.md` §Serena MCP 또는 `.claude/rules/custom/serena-mcp.md`

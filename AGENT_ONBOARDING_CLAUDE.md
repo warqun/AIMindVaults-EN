@@ -7,7 +7,7 @@
 
 ## 1. 진입점
 
-- **루트 진입점**: `CLAUDE.md` — 볼트 레지스트리, 라우팅 키워드, 진입 프로토콜
+- **루트 진입점**: `CLAUDE.md` — 볼트 레지스트리 (22볼트), 라우팅 키워드, 진입 프로토콜
 - **볼트 진입점**: `{볼트}/CLAUDE.md` — 볼트 전용 규칙, 편집 모드, 세션 규칙
 
 ## 2. 세션 시작 순서
@@ -36,7 +36,7 @@
 | 영역 | Claude Code | Codex |
 |------|-------------|-------|
 | 멀티볼트 구조 변경 (볼트 생성, 폴더 재구조화) | O | X |
-| 스크립트 개발/수정 (`.sync/_tools/cli/`) | O | X |
+| 스크립트 개발/수정 (`_tools/cli-node/`) | O | X |
 | 규칙/스킬 작성 (`.claude/rules/`, `.claude/commands/`) | O | X |
 | `.obsidian/` 설정 변경 | O | X |
 | 복수 볼트에 걸치는 작업 | O | X |
@@ -88,7 +88,7 @@
 
 ### core vs custom 규칙
 
-- **core/**: 모든 사용자에게 적용되는 제품 규칙. `sync_workspace.ps1`로 자동 전파.
+- **core/**: 모든 사용자에게 적용되는 제품 규칙. `aimv sync`로 자동 전파.
 - **custom/**: 사용자 개인 규칙. 배포 동기화 대상 아님. 자유롭게 추가/수정.
 - 신규 규칙은 custom/에 우선 생성 → 검증 후 core/로 격상.
 
@@ -111,21 +111,31 @@
 | `distribution-sync.md` | 배포 반영 대상 변경 시 변경 로그 기록 |
 | `juggl-style-sync.md` | Juggl 스타일 변경 시 graph.css 갱신 |
 | `obsidian-config-safety.md` | .obsidian/ 편집은 AIHubVault에서만, Read→Edit 방식 |
-| `vault-individualization.md` | 볼트 생성 시 clone_vault.ps1 사용, 이름/분류/태그 구체화 |
+| `vault-individualization.md` | 볼트 생성 시 `aimv clone` 사용, 이름/분류/태그 구체화 |
 
 ---
 
-## 8. MCP 서버 연동 (사용자 환경에 따라 다름)
+## 8. MCP 서버 연동
 
-Claude Code는 MCP(Model Context Protocol) 서버를 통해 외부 도구와 연동할 수 있다.
+Claude Code는 MCP(Model Context Protocol) 서버를 통해 외부 도구와 연동한다.
 설정: `~/.claude/settings.json` 또는 프로젝트별 `.claude/settings.local.json`.
 
-일반적으로 유용한 MCP 서버:
+### 이 환경에 연결된 MCP 서버
 
-| 서버 | 용도 |
-|------|------|
-| Notion MCP | Notion 페이지 읽기/쓰기 |
-| Google Calendar MCP | 일정 관리 |
-| Gmail MCP | 이메일 |
+| 서버 | 용도 | 상세 |
+|------|------|------|
+| Serena | 시맨틱 코드 분석 (C# 심볼 기반) | `.claude/rules/custom/serena-mcp.md` |
+| mcp-unity | Unity 에디터 조작 | 사용하지 않음 (unity-cli 우선) |
+| Notion | Notion 페이지 읽기/쓰기 | `.claude/rules/custom/notion-sync.md` |
+| Blender | Blender 3D 조작 | `.claude/rules/custom/blender-mcp.md` |
+| Google Calendar | 일정 관리 | — |
+| Gmail | 이메일 | — |
+| Claude in Chrome | 브라우저 자동화 | — |
 
-MCP 서버 설정은 사용자 환경에 따라 다르므로, 필요 시 사용자에게 확인한다.
+### Unity 도구 우선순위 (강제)
+
+1. **unity-cli** — 최우선 (`unity-cli console`, `unity-cli editor refresh --compile`)
+2. **Serena MCP** — C# 코드 심볼 탐색/수정
+3. **mcp-unity** — unity-cli 없는 프로젝트에서만 대체
+
+상세: `.claude/rules/custom/unity-tools.md`, `.claude/rules/custom/serena-mcp.md`

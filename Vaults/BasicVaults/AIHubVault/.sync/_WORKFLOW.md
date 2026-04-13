@@ -52,7 +52,7 @@ agent: claude
 ## 4) Obsidian CLI 브리지 규칙
 
 - 도구 목록: `_tools/TOOLS_INDEX.md`
-- 원칙: 가능한 작업은 Obsidian CLI(`obsidian_ai_bridge.ps1`)로 우선 수행하고, 미지원 작업만 플러그인/MCP로 보완한다.
+- 원칙: 가능한 작업은 Obsidian CLI(`aimv bridge`)로 우선 수행하고, 미지원 작업만 플러그인/MCP로 보완한다.
 - 사용 가능 액션: `vault-info`, `search`, `search-context`, `read`, `open`, `append`, `create`, `history`, `history-read`, `history-restore`, `diff`, `plugins-list`, `plugin-install`, `post-review`
 
 ## 5) 편집 모드 분리 (강제)
@@ -93,7 +93,7 @@ agent: claude
 
 #### workspace 모드 — AIHubVault 전용 (강제)
 
-- **workspace 편집은 AIHubVault에서만 수행한다.** 다른 볼트의 workspace 파일은 `sync_workspace.ps1`로 자동 전파된다.
+- **workspace 편집은 AIHubVault에서만 수행한다.** 다른 볼트의 workspace 파일은 `aimv sync`로 자동 전파된다.
 - workspace 파일 수정 후 반드시 `_WORKSPACE_VERSION.md`에 버전을 기록한다.
 
 1. 당일 최대 버전 번호 확인 → +1로 새 버전 생성 (형식: `YYYYMMDDNNNN`)

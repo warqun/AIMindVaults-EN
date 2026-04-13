@@ -86,14 +86,15 @@ ZIP 다운로드 후 원하는 위치에 압축 해제.
 
 AI 에이전트(Claude Code, Codex 등)의 **프로젝트 루트를 `AIMindVaults/` 디렉토리**로 설정합니다.
 
-- 루트의 `CLAUDE.md` / `CODEX.md`가 볼트 라우팅 허브 역할을 합니다.
+- Claude Code → 루트 `CLAUDE.md`가 볼트 라우팅 허브 역할
+- Codex → 루트 `AGENTS.md`가 진입점 (구 `CODEX.md`는 `.codex/CODEX.md`로 리다이렉트)
 - 에이전트는 사용자의 작업 대상에 따라 적절한 볼트로 자동 라우팅됩니다.
 
 ---
 
 ## 새 볼트 추가하기
 
-1. `_forge/clone_vault.ps1`로 AIHubVault를 복제하거나 수동으로 볼트 폴더 생성
+1. `BasicContentsVault/_tools/clone_vault.ps1`로 BasicContentsVault를 클론하여 새 볼트 생성
 2. `Vaults/` 하위 적절한 위치에 배치 (카테고리 폴더 자유롭게 추가 가능)
 3. Obsidian에서 볼트 등록
 4. Shell Commands 플러그인에 `syncworkspace` 등록 (`on-layout-ready` 활성화)

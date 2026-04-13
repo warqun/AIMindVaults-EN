@@ -37,7 +37,7 @@ Get-ChildItem Domain/**/*.md | ForEach { ... Set-Content ... }
 2. Sample 3개 파일에만 먼저 적용
 3. Obsidian에서 샘플 시각 확인
 4. 이상 없을 때 전체 실행
-5. post_note_edit_review.ps1 실행 → BAD_COUNT=0 확인
+5. aimv review 실행 → BAD_COUNT=0 확인
 
 ---
 

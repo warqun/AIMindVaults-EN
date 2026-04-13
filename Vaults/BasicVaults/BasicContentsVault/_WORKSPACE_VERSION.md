@@ -4,7 +4,7 @@ tags:
   - AIMindVault
   - TileMapToolKit
   - Meta
-updated: 2026-04-09
+updated: 2026-04-13
 ---
 
 # Workspace Version
@@ -15,6 +15,13 @@ updated: 2026-04-09
 
 | 버전           | 변경 내용 |
 | ------------ | ----- |
+| 202604130013 | PS1 전체 제거 + 규칙 Node.js CLI 전환. standards 커맨드 추가. Script_Registry Node.js 기준 전면 개편 |
+| 202604130012 | Shell Commands: pre_sync.ps1 → node cli.js pre-sync 전환. 크로스플랫폼 CLI 완전 전환 |
+| 202604130011 | cli-node Phase 6: 보조 도구 4개 포팅 (trash-clean, open-vault, obsidian-bridge, task-router). 전체 마이그레이션 완료 |
+| 202604130010 | cli-node Phase 5: clone-vault, hub-broadcast 포팅. aimv clone/broadcast 커맨드 등록 |
+| 202604130009 | cli-node Phase 4: sync 엔진 포팅 (sync-workspace, pre-sync). fs-mirror에 noPrune 옵션 추가. aimv sync/pre-sync 커맨드 등록 |
+| 202604130008 | cli-node Phase 3: post-edit-review 포팅 (UTF-8 검증 + 자동 인덱서 호출). aimv review 커맨드 등록 |
+| 202604130007 | cli-node Phase 2: 인덱서 4개 커맨드 포팅 (index-build, index-search, master-index-build, master-index-search). bin/cli.js에 index 서브커맨드 등록 |
 | 202604130006 | cli-node Phase 0+1: Node.js CLI 스캐폴딩 + lib 유틸리티 (vault-path, config, fs-mirror, frontmatter, logger). commander + gray-matter 의존성 |
 | 202604130005 | nul 쓰레기 파일 Hub + 전체 위성 볼트에서 삭제 |
 | 202604130004 | master_index_build.ps1 Resolve-Path trailing backslash 버그 수정 (TrimEnd 추가). vault_index_build.ps1 excludeFiles에 README.md 추가 (이전 세션 미기록분) |

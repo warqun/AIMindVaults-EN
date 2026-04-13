@@ -20,7 +20,7 @@ agent: claude
 
 ## 파생 인스턴스 규칙
 
-이 볼트는 `clone_vault.ps1`로 복제되어 다른 용도의 볼트로 사용될 수 있다.
+이 볼트는 `aimv clone`으로 복제되어 다른 용도의 볼트로 사용될 수 있다.
 
 1. **복제된 볼트도 이 CLAUDE.md의 공통 규칙(§ 아래)을 모두 따른다.**
 2. **workspace 모드 편집은 이 볼트(AIHubVault)에서만 수행한다.** 다른 볼트의 `_Standards/`, `_tools/`, `Juggl_StyleGuide/`는 Hub-Sync로 자동 배포되므로 읽기 전용.
@@ -117,8 +117,8 @@ local: 노트_제목
 ## 편집 완료 게이트
 
 노트 편집 완료 후 반드시 실행:
-```powershell
-powershell -ExecutionPolicy Bypass -File .sync\_tools\cli\post_note_edit_review.ps1
+```bash
+node .sync/_tools/cli-node/bin/cli.js review
 ```
 `POST_EDIT_REVIEW_BAD=0` 확인 전 완료 보고 금지.
 

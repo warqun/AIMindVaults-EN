@@ -3,7 +3,6 @@ type: meta
 tags:
   - forge
   - staging
-  - AIMindVault
 agent: claudian
 updated: 2026-03-06
 ---

@@ -1,7 +1,6 @@
 ---
 type: meta
 tags:
-  - (볼트 태그)
 updated: (날짜)
 ---
 

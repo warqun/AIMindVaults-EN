@@ -1,7 +1,6 @@
 ---
 type: tag-taxonomy
 tags:
-  - (볼트 태그)
 updated: (날짜)
 ---
 

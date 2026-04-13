@@ -52,7 +52,7 @@ $t = [System.IO.File]::ReadAllText($p, [Text.Encoding]::UTF8)
 
 모든 노트 편집 후:
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\_tools\cli\post_note_edit_review.ps1
+node ".sync/_tools/cli-node/bin/cli.js" review -r . -s Contents
 ```
 `POST_EDIT_REVIEW_BAD=0` 확인 전 완료 보고 금지.
 

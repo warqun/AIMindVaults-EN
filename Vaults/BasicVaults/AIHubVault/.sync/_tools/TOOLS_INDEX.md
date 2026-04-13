@@ -4,32 +4,27 @@
 
 ---
 
-## 사용자용 도구
+## Node.js CLI (`cli-node/`)
 
-> 사용자가 직접 실행하는 도구. 더블클릭 또는 PowerShell에서 수동 호출.
+> 모든 자동화 도구의 통합 진입점. Node.js 기반 크로스플랫폼 CLI.
 
-| 파일                                          | 용도                           | 실행 방법                                |
-| ------------------------------------------- | ---------------------------- | ------------------------------------ |
-| `MakeCloneVault.bat`                        | 볼트 복제 런처 (부모경로 + 볼트명 입력)     | 더블클릭                                 |
-| `clone_vault.ps1`                           | Obsidian 볼트 미러 복제 (robocopy) | `.\clone_vault.ps1 -TargetPath <경로>` |
-| `cli_launchers/RUN_CLAUDE.bat`              | Claude CLI 실행                | 더블클릭                                 |
-| `cli_launchers/RUN_CODEX.bat`               | Codex CLI 실행                 | 더블클릭                                 |
-| `cli_launchers/RUN_GEMINI.bat`              | Gemini CLI 실행                | 더블클릭                                 |
+**실행**: `node ".sync/_tools/cli-node/bin/cli.js" <command> [options]`
 
----
+| 커맨드 | 용도 | 예시 |
+|--------|------|------|
+| `review` | 노트 편집 후 품질 검증 (frontmatter, 인코딩) | `aimv review -r . -s Contents` |
+| `bridge` | Obsidian local-rest-api 래퍼 (검색, 읽기, 열기) | `aimv bridge -a search -q "keyword"` |
+| `sync` | AIHubVault → 위성 볼트 workspace 동기화 | `aimv sync -r .` |
+| `pre-sync` | Obsidian 기동 시 자동 동기화 (트램펄린) | `aimv pre-sync -r .` |
+| `broadcast` | Hub 특정 파일을 전체 위성 볼트에 즉시 전파 | `aimv broadcast -p "file.md"` |
+| `index build` | 볼트 콘텐츠 인덱스 빌드 | `aimv index build -r .` |
+| `index search` | 인덱스 기반 키워드/태그/타입 검색 | `aimv index search -q "검색어"` |
+| `route` | 작업 텍스트 기반 볼트/에이전트 라우팅 | `aimv route -t "task"` |
+| `clone` | 볼트 미러 복제 (robocopy 기반) | `aimv clone -t <path> -n <name>` |
+| `standards` | `_Standards/` 구조 검증 | `aimv standards -r .` |
+| `trash-clean` | Obsidian 휴지통 정리 | `aimv trash-clean -r .` |
 
-## AI 에이전트 전용 도구
-
-> AI 에이전트(Claude Code, Claudian, Codex 등)가 작업 중 자동으로 호출하는 도구. 사용자가 직접 실행할 필요 없음.
-
-| 파일 | 용도 | 호출 예시 |
-|------|------|----------|
-| `cli/obsidian_ai_bridge.ps1` | Obsidian CLI 래퍼 — 검색, 읽기, 열기, 생성, 플러그인 관리 | `-Action open -Path "Contents/note.md"` |
-| `cli/post_note_edit_review.ps1` | 노트 편집 후 품질 검증 (frontmatter, 인코딩 등) | 편집 완료 후 자동 실행 |
-| `cli/sync_workspace.ps1` | AIHubVault → 다른 볼트 workspace 동기화 | `-NoPrune` (삭제 동기화 비활성화) |
-| `cli/task_router.ps1` | 작업 텍스트 기반 담당 에이전트 추천 | `-Task "볼트 구조 검증"` |
-
-### obsidian_ai_bridge.ps1 액션 목록
+### bridge 액션 목록
 
 | 액션 | 권한 | 설명 |
 |------|------|------|
@@ -50,11 +45,18 @@
 
 ---
 
-## 참조 파일
+## 사용자용 도구
 
-| 파일 | 설명 |
-|------|------|
-| `antigravity.exe.txt` | Antigravity 실행 파일 경로 참조 |
-| `open_agents.ps1` | (폐지됨) 멀티볼트 루트 IDE 1회 실행으로 대체 |
-| `check_standards.ps1` | `_Standards/` 구조 확인 (디버그용) |
-| `verify_structure.ps1` | `_Standards/` 파일 목록 출력 (디버그용) |
+> 사용자가 직접 실행하는 런처.
+
+| 파일 | 용도 | 실행 방법 |
+|------|------|----------|
+| `cli_launchers/RUN_CLAUDE.bat` | Claude CLI 실행 | 더블클릭 |
+| `cli_launchers/RUN_CODEX.bat` | Codex CLI 실행 | 더블클릭 |
+| `cli_launchers/RUN_GEMINI.bat` | Gemini CLI 실행 | 더블클릭 |
+
+---
+
+## 상세 CLI 레퍼런스
+
+전체 14개 커맨드 상세: `docs/cli-reference.md` (루트)

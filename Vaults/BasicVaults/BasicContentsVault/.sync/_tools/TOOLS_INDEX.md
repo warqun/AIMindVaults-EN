@@ -28,6 +28,7 @@
 | `cli/post_note_edit_review.ps1` | 노트 편집 후 품질 검증 (frontmatter, 인코딩 등) | 편집 완료 후 자동 실행 |
 | `cli/sync_workspace.ps1` | AIHubVault → 다른 볼트 workspace 동기화 | `-NoPrune` (삭제 동기화 비활성화) |
 | `cli/task_router.ps1` | 작업 텍스트 기반 담당 에이전트 추천 | `-Task "볼트 구조 검증"` |
+| `cli/hub_broadcast.ps1` | Hub .sync/ 특정 파일을 전체 위성 볼트에 즉시 전파 | `-RelativePath "clone_vault.ps1" -Exclude TestVault` |
 
 ### obsidian_ai_bridge.ps1 액션 목록
 
