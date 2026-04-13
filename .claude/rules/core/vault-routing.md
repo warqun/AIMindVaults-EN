@@ -21,12 +21,12 @@
 
 에이전트가 볼트에 처음 접근할 때 (신규 생성이든, 사용자가 만든 볼트든) `vault_index.json`이 없으면 **콘텐츠 인덱스를 빌드**한다.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File "{볼트경로}/.sync/_tools/cli/vault_index_build.ps1" -VaultRoot "{볼트경로}"
+```bash
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index build -r "{볼트경로}"
 ```
 
-- 인덱서 스크립트(`.sync/_tools/cli/vault_index_build.ps1`)가 없으면 스킵하고 로그 남김
-- 빌드 완료 후 `vault_index_search.ps1`를 통한 검색이 가능해진다
+- CLI 스크립트(`.sync/_tools/cli-node/bin/cli.js`)가 없으면 스킵하고 로그 남김
+- 빌드 완료 후 `node cli.js index search`를 통한 검색이 가능해진다
 - 이후 노트 탐색/점검 시 인덱서 우선 검색 규칙(`token-optimization.md` § 0) 적용
 
 ## 라우팅 규칙

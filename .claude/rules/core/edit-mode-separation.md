@@ -12,7 +12,7 @@
 
 ## [workspace] 모드 — AIHubVault 전용 (강제)
 
-- **workspace 편집은 AIHubVault에서만 수행한다.** 다른 볼트의 workspace 파일은 `sync_workspace.ps1`로 자동 전파된다.
+- **workspace 편집은 AIHubVault에서만 수행한다.** 다른 볼트의 workspace 파일은 `node cli.js sync`로 자동 전파된다.
 - **Obsidian 플러그인 설치/설정도 workspace 편집이다.** `.obsidian/plugins/` 변경은 AIHubVault에서 수행 → 동기화로 전파한다. 개별 볼트에 직접 플러그인을 설치하지 않는다.
 - workspace 파일을 수정하면 **즉시** AIHubVault의 `_WORKSPACE_VERSION.md`에 버전을 기록한다. 테스트·배포·후속 작업보다 버전 기록이 먼저다.
 

@@ -4,15 +4,15 @@
 
 ## 볼트 생성 방법 (강제)
 
-**모든 새 볼트는 `clone_vault.ps1`로 BasicContentsVault를 클론하여 생성한다.**
+**모든 새 볼트는 `node cli.js clone`으로 BasicContentsVault를 클론하여 생성한다.**
 
 - 소스: `Vaults/BasicVaults/BasicContentsVault/` (범용 볼트 템플릿)
-- 도구: `BasicContentsVault/_tools/clone_vault.ps1`
+- 도구: `.sync/_tools/cli-node/bin/cli.js clone`
 - 폴더를 수동 복사(`Copy-Item`, `cp`, `xcopy` 등)하지 않는다.
 - AIHubVault는 소스로 사용하지 않는다 (작업환경 허브라 구조가 무거움).
 
-```
-powershell -ExecutionPolicy Bypass -File "<BasicContentsVault경로>/.sync/clone_vault.ps1" -TargetPath "<대상경로>" -ProjectName "<볼트명>"
+```bash
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" clone -t "<대상경로>" -n "<볼트명>"
 ```
 
 이 스크립트가 처리하는 항목:
@@ -78,10 +78,10 @@ powershell -ExecutionPolicy Bypass -File "<BasicContentsVault경로>/.sync/clone
 2. 루트 `_STATUS.md` 볼트 레지스트리에 등록
 3. 루트 `CLAUDE.md` 볼트 진입 프로토콜에 키워드 추가
 4. **초기 콘텐츠 인덱스 빌드** (강제):
-```powershell
-powershell -ExecutionPolicy Bypass -File "{볼트경로}/.sync/_tools/cli/vault_index_build.ps1" -VaultRoot "{볼트경로}"
+```bash
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index build -r "{볼트경로}"
 ```
-   - 인덱서 스크립트가 없으면 workspace 동기화가 안 된 것이므로 1번부터 재확인
+   - CLI 스크립트가 없으면 workspace 동기화가 안 된 것이므로 1번부터 재확인
    - 빌드 완료 후 `vault_index.json` 생성을 확인
 
 ## 배포 동기화 대상 제외 항목

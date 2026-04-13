@@ -5,7 +5,7 @@ tags:
   - Standards
   - AIMindVault
   - script-management
-updated: 2026-03-17
+updated: 2026-04-13
 agent: claude
 ---
 
@@ -16,22 +16,37 @@ agent: claude
 
 ---
 
-## 활성 스크립트 (Active)
+## 활성 스크립트 (Active) — Node.js CLI
 
-현재 운영에 사용 중인 스크립트.
+2026-04-13 PS1 → Node.js 전면 전환 완료. 모든 CLI 도구는 `.sync/_tools/cli-node/` 하위에 위치.
 
-| 스크립트 | 위치 | 용도 | 생성자 | 사용자 |
-|---------|------|------|--------|--------|
-| `post_note_edit_review.ps1` | `.sync/_tools/cli/` | 노트 편집 후 인코딩·frontmatter 검증 | codex | claude, codex |
-| `obsidian_ai_bridge.ps1` | `.sync/_tools/cli/` | Obsidian CLI 래퍼 (조회/검색/히스토리/post-review) | codex | claude, codex |
-| `task_router.ps1` | `.sync/_tools/cli/` | 작업 설명 → 에이전트 라우팅 추천 | codex | user (수동) |
-| `sync_workspace.ps1` | `.sync/` | 볼트 간 작업환경 동기화 (Hub-Sync) — 버전 비교·파일 복사 | claude | claude, codex |
-| `vault_index_build.ps1` | `.sync/_tools/cli/` | 볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성 | claude | claude, user, AI agents |
-| `vault_index_search.ps1` | `.sync/_tools/cli/` | 볼트 콘텐츠 검색 — JSON 인덱스 기반 키워드/태그/타입 검색 | claude | claude, user, AI agents |
-| `vault_trash_clean.ps1` | `.sync/_tools/cli/` | 볼트 .trash/ 일괄 정리 (단일/복수/전체, DryRun 지원) | claude | claude, user |
-| `clone_vault.ps1` | `.sync/` | 볼트 전체 미러 복사 (robocopy) | codex | user |
-| `check_standards.ps1` | `.sync/_tools/` | `_Standards/` 디렉토리 구조 확인 | codex | codex, user |
-| `verify_structure.ps1` | `.sync/_tools/` | `_Standards/` 상세 구조 출력 | codex | codex, user |
+| 커맨드 | 파일 | 용도 | 생성자 |
+|--------|------|------|--------|
+| `aimv index build` | `src/commands/index-build.js` | 볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성 | claude |
+| `aimv index search` | `src/commands/index-search.js` | 볼트 콘텐츠 검색 — JSON 인덱스 기반 키워드/태그/타입 검색 | claude |
+| `aimv index master-build` | `src/commands/master-index-build.js` | 크로스볼트 마스터 인덱스 빌드 | claude |
+| `aimv index master-search` | `src/commands/master-index-search.js` | 크로스볼트 마스터 인덱스 검색 | claude |
+| `aimv review` | `src/commands/post-edit-review.js` | 노트 편집 후 UTF-8·frontmatter 검증 + 자동 인덱싱 | claude |
+| `aimv sync` | `src/commands/sync-workspace.js` | 볼트 간 작업환경 동기화 (Hub-Sync) | claude |
+| `aimv pre-sync` | `src/commands/pre-sync.js` | 트램펄린: cli-node 자동 최신화 + sync 실행 | claude |
+| `aimv clone` | `src/commands/clone-vault.js` | 볼트 클론 (BasicContentsVault 기반) | claude |
+| `aimv broadcast` | `src/commands/hub-broadcast.js` | Hub .sync/ 파일을 전체 위성 볼트에 전파 | claude |
+| `aimv trash-clean` | `src/commands/trash-clean.js` | 볼트 .trash/ 일괄 정리 | claude |
+| `aimv open` | `src/commands/open-vault.js` | pre-sync 후 Obsidian 볼트 열기 | claude |
+| `aimv bridge` | `src/commands/obsidian-bridge.js` | Obsidian CLI 래퍼 (조회/검색/히스토리/post-review) | claude |
+| `aimv route` | `src/commands/task-router.js` | 작업 설명 → 에이전트 라우팅 추천 | claude |
+| `aimv standards` | `src/commands/check-standards.js` | `_Standards/` 디렉토리 구조 확인 | claude |
+
+### 공유 라이브러리
+
+| 파일 | 용도 |
+|------|------|
+| `src/lib/vault-path.js` | 볼트/AIMindVaults 루트 자동탐지 |
+| `src/lib/frontmatter.js` | YAML frontmatter 파서 |
+| `src/lib/fs-mirror.js` | 디렉토리 미러링 (sync 엔진) |
+| `src/lib/config.js` | 설정 상수 |
+| `src/lib/logger.js` | 로그 출력 |
+
 ---
 
 ## 일회성/완료 스크립트 (One-time)
@@ -49,31 +64,28 @@ agent: claude
 
 | 스크립트 | 삭제일 | 사유 |
 |---------|--------|------|
-| `init_vault.ps1` | 2026-03-10 | 콘텐츠 폴더 하드코딩으로 유연성 부족. 사용자 수동 세팅으로 대체. `.forge/staging/`에 참고용 보관 |
-| `preflight_docs_encoding.ps1` | 2026-03-09 | `post_note_edit_review.ps1`과 기능 중복. 의존 파일(`VERIFY_ENCODING_AFTER_RESTORE.ps1`) 부재 |
+| `post_note_edit_review.ps1` | 2026-04-13 | Node.js CLI `aimv review`로 대체 |
+| `obsidian_ai_bridge.ps1` | 2026-04-13 | Node.js CLI `aimv bridge`로 대체 |
+| `task_router.ps1` | 2026-04-13 | Node.js CLI `aimv route`로 대체 |
+| `sync_workspace.ps1` | 2026-04-13 | Node.js CLI `aimv sync`로 대체 |
+| `pre_sync.ps1` | 2026-04-13 | Node.js CLI `aimv pre-sync`로 대체 |
+| `vault_index_build.ps1` | 2026-04-13 | Node.js CLI `aimv index build`로 대체 |
+| `vault_index_search.ps1` | 2026-04-13 | Node.js CLI `aimv index search`로 대체 |
+| `vault_trash_clean.ps1` | 2026-04-13 | Node.js CLI `aimv trash-clean`으로 대체 |
+| `clone_vault.ps1` | 2026-04-13 | Node.js CLI `aimv clone`으로 대체 |
+| `check_standards.ps1` | 2026-04-13 | Node.js CLI `aimv standards`로 대체 |
+| `verify_structure.ps1` | 2026-04-13 | Node.js CLI `aimv standards -d`로 대체 |
+| `init_vault.ps1` | 2026-03-10 | 콘텐츠 폴더 하드코딩으로 유연성 부족. 사용자 수동 세팅으로 대체 |
+| `preflight_docs_encoding.ps1` | 2026-03-09 | `post_note_edit_review.ps1`과 기능 중복 |
 | `delegate-run.md` (skill) | 2026-03-09 | 위임 워크플로우 폐지 |
 | `delegate-analyze.md` (skill) | 2026-03-09 | 위임 워크플로우 폐지 |
-| `open_agents.ps1` | 2026-03-11 | 멀티볼트 루트에서 IDE를 한 번만 열면 되므로 볼트별 자동 실행 불필요. Shell Commands 이벤트(on-layout-ready) 해제 권장 |
-| `create_domain.ps1` | 2026-03-17 | 배포 정리 — 일회성 스크립트 제거. `_Standards/Domain/` 초기 생성은 수동으로 대체 |
-| `migrate_standards.ps1` | 2026-03-17 | 배포 정리 — `_Standards/` Core/Domain 구조 재편 완료, 재사용 불필요 |
-| `migrate_standards2.ps1` | 2026-03-17 | 배포 정리 — `_Standards/` 하위 폴더 이동 완료, 재사용 불필요 |
-| `create_MakeCloneVault.bat` | 2026-03-17 | 배포 정리 — 일회성 배치 파일 제거. clone_vault.ps1로 대체 |
-| `GitMirrorSync_DecisionPoints.md` | 2026-03-17 | 배포 정리 — Git 미러 동기화 결정 문서, 참조 완료 |
-| `RUN_OBSIDIAN_VAMSURLIKE.bat` | 2026-03-17 | 하드코딩 절대경로(`C:\Dev_Game\...`), Hub 배포 부적합. cli_launchers/ 정리 |
-
----
-
-## 하드코딩 경고 이력
-
-| 스크립트 | 문제 | 해결 | 해결일 |
-|---------|------|------|--------|
-| `post_note_edit_review.ps1` | Root/Scope 하드코딩 | Plan B 자동탐지 적용 | 2026-03-09 |
-| `obsidian_ai_bridge.ps1` | VaultName/Scope 하드코딩 | Plan B 자동탐지 적용 | 2026-03-09 |
-| `fix_false_positives.ps1` | VaultRoot 하드코딩 | Plan B 자동탐지 적용 | 2026-03-09 |
-| `migrate_standards.ps1` | Root 하드코딩 | 일회성이라 미수정 | — |
-| `check_standards.ps1` | Root 하드코딩 | 일회성이라 미수정 | — |
-| `verify_structure.ps1` | Root 하드코딩 | 일회성이라 미수정 | — |
-| `create_domain.ps1` | Root 하드코딩 | 일회성이라 미수정 | — |
+| `open_agents.ps1` | 2026-03-11 | 멀티볼트 루트에서 IDE를 한 번만 열면 되므로 불필요 |
+| `create_domain.ps1` | 2026-03-17 | 일회성 스크립트, `_Standards/Domain/` 초기 생성 완료 |
+| `migrate_standards.ps1` | 2026-03-17 | 일회성, `_Standards/` 구조 재편 완료 |
+| `migrate_standards2.ps1` | 2026-03-17 | 일회성, `_Standards/` 하위 폴더 이동 완료 |
+| `create_MakeCloneVault.bat` | 2026-03-17 | 일회성, clone_vault.ps1로 대체 |
+| `GitMirrorSync_DecisionPoints.md` | 2026-03-17 | Git 미러 동기화 결정 문서, 참조 완료 |
+| `RUN_OBSIDIAN_VAMSURLIKE.bat` | 2026-03-17 | 하드코딩 절대경로, Hub 배포 부적합 |
 
 ---
 

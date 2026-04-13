@@ -15,6 +15,8 @@ updated: 2026-04-13
 
 | 버전           | 변경 내용 |
 | ------------ | ----- |
+| 202604130013 | PS1 전체 제거 + 규칙 Node.js CLI 전환. standards 커맨드 추가. Script_Registry Node.js 기준 전면 개편 |
+| 202604130012 | Shell Commands: pre_sync.ps1 → node cli.js pre-sync 전환. 크로스플랫폼 CLI 완전 전환 |
 | 202604130011 | cli-node Phase 6: 보조 도구 4개 포팅 (trash-clean, open-vault, obsidian-bridge, task-router). 전체 마이그레이션 완료 |
 | 202604130010 | cli-node Phase 5: clone-vault, hub-broadcast 포팅. aimv clone/broadcast 커맨드 등록 |
 | 202604130009 | cli-node Phase 4: sync 엔진 포팅 (sync-workspace, pre-sync). fs-mirror에 noPrune 옵션 추가. aimv sync/pre-sync 커맨드 등록 |

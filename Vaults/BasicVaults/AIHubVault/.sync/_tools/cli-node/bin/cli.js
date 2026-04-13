@@ -184,4 +184,14 @@ program
     taskRouter({ task: opts.task });
   });
 
+program
+  .command('standards')
+  .description('Display _Standards/ directory structure')
+  .option('-r, --vault-root <path>', 'Vault root path (auto-detect if omitted)')
+  .option('-d, --deep', 'Show subdirectories (NoteTemplates, VaultTypes, Domain)')
+  .action(async (opts) => {
+    const { checkStandards } = await import('../src/commands/check-standards.js');
+    checkStandards({ vaultRoot: opts.vaultRoot, deep: opts.deep });
+  });
+
 program.parse();

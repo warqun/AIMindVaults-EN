@@ -79,7 +79,7 @@
 - **C**: 생성 후 레지스트리 등록, CLAUDE.md 개별화, Obsidian 등록 안내 중 하나라도 누락
 
 ### 안내
-- **생성 방법**: `/create-vault` 스킬 또는 `BasicContentsVault/.sync/clone_vault.ps1` 사용. 수동 복사 금지.
+- **생성 방법**: `/create-vault` 스킬 또는 `node cli.js clone` 사용. 수동 복사 금지.
 - **위치 선택**: 용도에 맞는 카테고리 안내 (Domains_Game, Domains_Infra, Projects_Game 등)
 - **생성 후 필수**: CLAUDE.md 개별화, _STATUS.md 초기화, 루트 레지스트리 등록, Obsidian 등록 (볼트 매니저에서 직접)
 
@@ -123,7 +123,7 @@
 ### 안내
 - Workspace 편집은 AIHubVault에서만. 다른 볼트는 동기화로 자동 전파.
 - `_WORKSPACE_VERSION.md` 버전을 비교하여 차이가 있으면 동기화 수행.
-- 동기화 실행: 볼트를 Obsidian에서 열면 자동 실행. 수동: `pre_sync.ps1`.
+- 동기화 실행: 볼트를 Obsidian에서 열면 자동 실행. 수동: `node cli.js pre-sync`.
 
 ---
 
@@ -160,10 +160,10 @@
 - **A**: "리뷰 어떻게 해?", "BAD가 0이 아닌데?"
 
 ### 안내
-- 노트 편집 후 `post_note_edit_review.ps1` 실행 필수.
+- 노트 편집 후 `node cli.js review` 실행 필수.
 - BAD가 0이 아니면 해당 파일의 문제(frontmatter 누락, 인코딩 등)를 수정.
 - 인덱싱(`POST_EDIT_INDEX_UPDATED=1`)까지 확인해야 작업 완료.
-- 인덱싱 실패 시 수동: `vault_index_build.ps1 -VaultRoot {볼트경로} -Incremental`
+- 인덱싱 실패 시 수동: `node cli.js index build -r {볼트경로} -i`
 
 ---
 
@@ -174,7 +174,7 @@
 - **A**: "노트 어디 있어?", "찾고 싶은데"
 
 ### 안내
-- **인덱서를 먼저 사용**: `vault_index_search.ps1 -Query "검색어"`
+- **인덱서를 먼저 사용**: `node cli.js index search -q "검색어"`
 - 인덱서 결과가 없을 때만 Grep/Glob 사용.
 - 인덱스가 오래된 것 같으면 `/reindex` 실행.
 

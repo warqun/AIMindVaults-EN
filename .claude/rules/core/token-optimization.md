@@ -10,7 +10,7 @@
 ### 검색 순서 (강제)
 
 ```
-1단계: vault_index_search.ps1 — 인덱스 기반 키워드/태그/타입 검색
+1단계: node cli.js index search — 인덱스 기반 키워드/태그/타입 검색
 2단계: 인덱서 결과가 불충분할 때만 → Grep, Glob, Read 등 직접 파일 탐색
 ```
 
@@ -18,29 +18,29 @@
 
 ### 사용법
 
-```powershell
+```bash
 # 키워드 검색
-powershell -ExecutionPolicy Bypass -File "{볼트경로}/.sync/_tools/cli/vault_index_search.ps1" -VaultRoot "{볼트경로}" -Query "검색어"
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index search -r "{볼트경로}" -q "검색어"
 
 # 태그 필터
-powershell -ExecutionPolicy Bypass -File "{볼트경로}/.sync/_tools/cli/vault_index_search.ps1" -VaultRoot "{볼트경로}" -Tag "태그명"
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index search -r "{볼트경로}" -t "태그명"
 
 # 타입 필터
-powershell -ExecutionPolicy Bypass -File "{볼트경로}/.sync/_tools/cli/vault_index_search.ps1" -VaultRoot "{볼트경로}" -Type "knowledge"
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index search -r "{볼트경로}" --type "knowledge"
 
 # AI 컨텍스트용 압축 출력
-... -Format compact -Top 5
+... -f compact -n 5
 ```
 
 ### 파라미터
 
 | 파라미터 | 용도 | 기본값 |
 |---------|------|--------|
-| `-Query` | 키워드 검색 (title, tags, headings에 가중 랭킹) | |
-| `-Tag` | 태그 필터 | |
-| `-Type` | frontmatter type 필터 | |
-| `-Format` | 출력 형식 (`table` / `compact`) | `table` |
-| `-Top` | 상위 N건 | 10 |
+| `-q, --query` | 키워드 검색 (title, tags, headings에 가중 랭킹) | |
+| `-t, --tag` | 태그 필터 | |
+| `--type` | frontmatter type 필터 | |
+| `-f, --format` | 출력 형식 (`table` / `compact`) | `table` |
+| `-n, --top` | 상위 N건 | 10 |
 
 ### 인덱서 fallback 조건
 

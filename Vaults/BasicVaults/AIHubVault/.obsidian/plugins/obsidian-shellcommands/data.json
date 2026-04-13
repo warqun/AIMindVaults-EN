@@ -26,7 +26,7 @@
     {
       "id": "syncworkspace",
       "platform_specific_commands": {
-        "default": "powershell -NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File \"{{vault_path}}\\.sync\\pre_sync.ps1\""
+        "default": "node \"{{vault_path}}/.sync/_tools/cli-node/bin/cli.js\" pre-sync --vault-root \"{{vault_path}}\""
       },
       "shells": {},
       "alias": "Pre-Sync + Workspace Sync",
