@@ -1,6 +1,7 @@
 ---
 aliases:
   - "Claude Token Lite Prompt"
+  - "클로드 토큰 절약 프롬프트"
 tags:
   - TileMapToolKit
   - Standards
@@ -19,38 +20,38 @@ agent: codex
 local: TEMPLATE_ClaudeTokenLitePrompt
 ```
 
-## Purpose
-- Keep Claude input short and precise to reduce token consumption.
+## 목적
+- Claude 입력을 짧고 정확하게 유지해 토큰 소모를 줄인다.
 
-## Template
+## 템플릿
 ```md
-Goal:
-- (One single goal for this request)
+목표:
+- (이번 요청의 단일 목표 1개)
 
-Context (minimal):
-- Project/path:
-- Current state in 2-3 lines:
+맥락(최소):
+- 프로젝트/경로:
+- 현재 상태 2~3줄:
 
-Input Data:
-- Only necessary files/logs (max 3)
+입력 데이터:
+- 필요한 파일/로그만 (최대 3개)
 
-Output Format:
-- Choose: checklist / action items / 10-line summary
+출력 형식:
+- 체크리스트 / 조치 / 10줄 요약 중 선택
 
-Constraints:
-- Length: max N lines
-- Scope: this task only
+제약:
+- 길이: 최대 N줄
+- 범위: 이번 작업만
 
-Completion Criteria:
-- 1-2 items that define when this is done
+완료 기준:
+- 무엇이 바뀌면 완료인지 1~2개
 ```
 
-## Short Example
+## 짧은 예시
 ```md
-Goal: Identify root cause of 1 SkillSystem issue
-Context: Reviewing docs/issues/systems/Logic_ISSUE_INDEX_SkillSystem.md
-Input Data: ISSUE note + last 10 log lines
-Output Format: 2 potential causes + 1 immediate action
-Constraints: 8 lines max
-Completion Criteria: Next experiment step is clear
+목표: SkillSystem 이슈 1개 원인 추정
+맥락: docs/issues/systems/Logic_ISSUE_INDEX_SkillSystem.md 검토 중
+입력 데이터: ISSUE 노트 + 최근 로그 10줄
+출력 형식: 원인 2개 + 즉시 액션 1개
+제약: 총 8줄 이내
+완료 기준: 다음 실험 1개가 명확할 것
 ```

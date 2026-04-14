@@ -1,16 +1,16 @@
 <#
 .SYNOPSIS
-AgentForge full module installation script (for new vaults)
+AgentForge 모듈 전체 설치 스크립트 (신규 볼트용)
 
 .USAGE
   .\install.ps1 -AgentForge "C:\AgentForge" -Target "C:\NewVault"
 
 .DESCRIPTION
-Reads manifest.toml and installs all modules to the target vault.
-- Auto-creates target folders
-- Prompts [Y/N/All] before overwriting existing files
-- Creates .agentforge-version.toml after installation
-- UTF-8 without BOM + full glob pattern support
+manifest.toml을 읽어 모든 모듈을 대상 볼트에 설치합니다.
+• 대상 폴더 자동 생성
+• 기존 파일 덮어쓰기 전 [Y/N/All] 확인
+• 설치 완료 후 .agentforge-version.toml 생성
+• UTF-8 BOM 없음 + glob 패턴 완벽 지원
 #>
 
 param(
@@ -24,7 +24,7 @@ param(
 # ====================== UTF-8 Helpers ======================
 function Read-Utf8 {
     param([string]$Path)
-    if (-not (Test-Path $Path)) { throw "File not found: $Path" }
+    if (-not (Test-Path $Path)) { throw "파일 없음: $Path" }
     [System.IO.File]::ReadAllText($Path, [Text.Encoding]::UTF8)
 }
 
@@ -35,7 +35,7 @@ function Write-Utf8NoBom {
     [System.IO.File]::WriteAllText($Path, $Content, [Text.UTF8Encoding]::new($false))
 }
 
-# ====================== TOML Parser ======================
+# ====================== TOML 파서 ======================
 function Parse-Manifest {
     param([string]$Path)
     $content = Read-Utf8 $Path
@@ -85,7 +85,7 @@ function Write-InstalledVersions {
     Write-Utf8NoBom $Path $sb.ToString()
 }
 
-# ====================== Copy Helper ======================
+# ====================== 복사 헬퍼 ======================
 function Copy-ModuleFiles {
     param(
         [string]$AgentForge,
@@ -97,11 +97,11 @@ function Copy-ModuleFiles {
         $srcFull = Join-Path $AgentForge $entry.Src
         $items = Get-ChildItem -Path $srcFull -File -ErrorAction SilentlyContinue
         if (-not $items) {
-            Write-Warning "File not found: $($entry.Src)"
+            Write-Warning "파일 없음: $($entry.Src)"
             continue
         }
         foreach ($item in $items) {
-            # Treat dest as directory if it ends with / or src contains glob
+            # dest가 /로 끝나거나 glob이면 디렉토리로 취급
             if ($entry.Dest -match '/$|\\$' -or $entry.Src -match '\*') {
                 $destDir = Join-Path $Target ($entry.Dest.TrimEnd('/\'))
                 $destFile = Join-Path $destDir $item.Name
@@ -112,49 +112,49 @@ function Copy-ModuleFiles {
             if (-not (Test-Path $destParent)) { New-Item -ItemType Directory -Path $destParent -Force | Out-Null }
 
             if (Test-Path $destFile -and $ConfirmOverwrite) {
-                $ans = Read-Host "  $($destFile) already exists. Overwrite? (Y/N/All)"
+                $ans = Read-Host "  $($destFile) 이미 존재합니다. 덮어쓰시겠습니까? (Y/N/All)"
                 if ($ans -match '^A') { $ConfirmOverwrite = $false }
                 elseif ($ans -notmatch '^[Yy]') { continue }
             }
             Copy-Item -Path $item.FullName -Destination $destFile -Force
-            Write-Host "  -> $($item.Name)" -ForegroundColor Green
+            Write-Host "  → $($item.Name)" -ForegroundColor Green
         }
     }
 }
 
-# ====================== Main ======================
+# ====================== 메인 ======================
 $manifestPath = Join-Path $AgentForge "manifest.toml"
-if (-not (Test-Path $manifestPath)) { Write-Error "manifest.toml not found: $manifestPath"; exit 1 }
+if (-not (Test-Path $manifestPath)) { Write-Error "manifest.toml 없음: $manifestPath"; exit 1 }
 
 $modules = Parse-Manifest $manifestPath
 if (-not (Test-Path $Target)) {
     New-Item -ItemType Directory -Path $Target -Force | Out-Null
-    Write-Host "Target vault created: $Target" -ForegroundColor Cyan
+    Write-Host "대상 볼트 생성: $Target" -ForegroundColor Cyan
 }
 
-Write-Host "=== AgentForge Full Module Installation Start ===" -ForegroundColor Cyan
+Write-Host "=== AgentForge 전체 모듈 설치 시작 ===" -ForegroundColor Cyan
 
 $versionPath = Join-Path $Target ".agentforge-version.toml"
 $installed = @{}
 
 foreach ($modName in $modules.Keys) {
     $mod = $modules[$modName]
-    Write-Host "`n[$modName] Installing v$($mod.Version)..." -ForegroundColor Magenta
+    Write-Host "`n[$modName] v$($mod.Version) 설치 중..." -ForegroundColor Magenta
     Copy-ModuleFiles -AgentForge $AgentForge -Target $Target -FileEntries $mod.Files -ConfirmOverwrite $true
     $installed[$modName] = $mod.Version
 }
 
 Write-InstalledVersions $versionPath $installed
-Write-Host "`nInstallation complete! (.agentforge-version.toml created)" -ForegroundColor Green
+Write-Host "`n설치 완료! (.agentforge-version.toml 생성됨)" -ForegroundColor Green
 <#
 .SYNOPSIS
-AgentForge specific module update script
+AgentForge 특정 모듈 업데이트 스크립트
 
 .USAGE
   .\update.ps1 -AgentForge "C:\AgentForge" -Module claudian -Target "C:\MyVault"
 
 .DESCRIPTION
-Installs only the specified module, comparing versions with .agentforge-version.toml and copying only when changed.
+지정 모듈만 설치하고 .agentforge-version.toml과 버전 비교 후 변경된 경우에만 복사합니다.
 #>
 
 param(
@@ -168,14 +168,14 @@ param(
     [string]$Target
 )
 
-# (Same Read-Utf8, Write-Utf8NoBom, Parse-Manifest, Read-InstalledVersions, Write-InstalledVersions, Copy-ModuleFiles functions as install.ps1 — included in full without omission)
+# (install.ps1과 동일한 Read-Utf8, Write-Utf8NoBom, Parse-Manifest, Read-InstalledVersions, Write-InstalledVersions, Copy-ModuleFiles 함수 전체 복사 — 생략 없이 동일하게 포함됨)
 
-# ====================== UTF-8 Helpers (copy) ======================
-function Read-Utf8 { param([string]$Path) if (-not (Test-Path $Path)) { throw "File not found: $Path" }; [System.IO.File]::ReadAllText($Path, [Text.Encoding]::UTF8) }
+# ====================== UTF-8 Helpers (복사) ======================
+function Read-Utf8 { param([string]$Path) if (-not (Test-Path $Path)) { throw "파일 없음: $Path" }; [System.IO.File]::ReadAllText($Path, [Text.Encoding]::UTF8) }
 function Write-Utf8NoBom { param([string]$Path, [string]$Content) $parent = Split-Path $Path -Parent; if ($parent -and -not (Test-Path $parent)) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }; [System.IO.File]::WriteAllText($Path, $Content, [Text.UTF8Encoding]::new($false)) }
 
-# ====================== TOML Parser (copy) ======================
-function Parse-Manifest { /* Same full function as install.ps1 */ 
+# ====================== TOML 파서 (복사) ======================
+function Parse-Manifest { /* install.ps1과 동일한 함수 전체 복사 */ 
     param([string]$Path)
     $content = Read-Utf8 $Path
     $lines = $content -split "`r?`n"
@@ -190,8 +190,8 @@ function Parse-Manifest { /* Same full function as install.ps1 */
     return $modules
 }
 
-# ====================== Version Read/Write (copy) ======================
-function Read-InstalledVersions { /* Same as install.ps1 */ 
+# ====================== 버전 읽기/쓰기 (복사) ======================
+function Read-InstalledVersions { /* install.ps1과 동일 */ 
     param([string]$Path)
     if (-not (Test-Path $Path)) { return @{} }
     $content = Read-Utf8 $Path
@@ -204,7 +204,7 @@ function Read-InstalledVersions { /* Same as install.ps1 */
     }
     return $ver
 }
-function Write-InstalledVersions { /* Same as install.ps1 */ 
+function Write-InstalledVersions { /* install.ps1과 동일 */ 
     param([string]$Path, [hashtable]$Versions)
     $sb = [System.Text.StringBuilder]::new()
     [void]$sb.AppendLine("[installed]")
@@ -212,13 +212,13 @@ function Write-InstalledVersions { /* Same as install.ps1 */
     Write-Utf8NoBom $Path $sb.ToString()
 }
 
-# ====================== Copy Helper (copy) ======================
-function Copy-ModuleFiles { /* Same full copy as install.ps1 */ 
+# ====================== 복사 헬퍼 (복사) ======================
+function Copy-ModuleFiles { /* install.ps1과 동일 전체 복사 */ 
     param([string]$AgentForge, [string]$Target, [array]$FileEntries, [bool]$ConfirmOverwrite = $true)
     foreach ($entry in $FileEntries) {
         $srcFull = Join-Path $AgentForge $entry.Src
         $items = Get-ChildItem -Path $srcFull -File -ErrorAction SilentlyContinue
-        if (-not $items) { Write-Warning "File not found: $($entry.Src)"; continue }
+        if (-not $items) { Write-Warning "파일 없음: $($entry.Src)"; continue }
         foreach ($item in $items) {
             if ($entry.Dest -match '/$|\\$' -or $entry.Src -match '\*') {
                 $destDir = Join-Path $Target ($entry.Dest.TrimEnd('/\'))
@@ -227,20 +227,20 @@ function Copy-ModuleFiles { /* Same full copy as install.ps1 */
             $destParent = Split-Path $destFile -Parent
             if (-not (Test-Path $destParent)) { New-Item -ItemType Directory -Path $destParent -Force | Out-Null }
             if (Test-Path $destFile -and $ConfirmOverwrite) {
-                $ans = Read-Host "  $($destFile) already exists. Overwrite? (Y/N/All)"
+                $ans = Read-Host "  $($destFile) 이미 존재합니다. 덮어쓰시겠습니까? (Y/N/All)"
                 if ($ans -match '^A') { $ConfirmOverwrite = $false }
                 elseif ($ans -notmatch '^[Yy]') { continue }
             }
             Copy-Item -Path $item.FullName -Destination $destFile -Force
-            Write-Host "  -> $($item.Name)" -ForegroundColor Green
+            Write-Host "  → $($item.Name)" -ForegroundColor Green
         }
     }
 }
 
-# ====================== Main ======================
+# ====================== 메인 ======================
 $manifestPath = Join-Path $AgentForge "manifest.toml"
 $modules = Parse-Manifest $manifestPath
-if (-not $modules.ContainsKey($Module)) { Write-Error "Module '$Module' not found"; exit 1 }
+if (-not $modules.ContainsKey($Module)) { Write-Error "모듈 '$Module' 없음"; exit 1 }
 
 $mod = $modules[$Module]
 $versionPath = Join-Path $Target ".agentforge-version.toml"
@@ -248,26 +248,26 @@ $installed = Read-InstalledVersions $versionPath
 $currentVer = if ($installed.ContainsKey($Module)) { $installed[$Module] } else { "0.0.0" }
 
 if ($currentVer -eq $mod.Version) {
-    Write-Host "Already at latest version ($Module v$currentVer)" -ForegroundColor Green
+    Write-Host "이미 최신 버전 ($Module v$currentVer)" -ForegroundColor Green
     exit 0
 }
 
-Write-Host "Updating: $Module v$currentVer -> v$($mod.Version)" -ForegroundColor Magenta
+Write-Host "업데이트: $Module v$currentVer → v$($mod.Version)" -ForegroundColor Magenta
 Copy-ModuleFiles -AgentForge $AgentForge -Target $Target -FileEntries $mod.Files -ConfirmOverwrite $true
 
 $installed[$Module] = $mod.Version
 Write-InstalledVersions $versionPath $installed
-Write-Host "Module update complete" -ForegroundColor Green
+Write-Host "모듈 업데이트 완료" -ForegroundColor Green
 <#
 .SYNOPSIS
-AgentForge working vault -> source vault reverse sync (export)
+AgentForge 작업 볼트 → 원형 볼트 역동기화 (export)
 
 .USAGE
   .\export.ps1 -Source "C:\WorkVault" -AgentForge "C:\AgentForge"
 
 .DESCRIPTION
-Copies files from the Source vault back to AgentForge modules/ based on manifest.toml.
-Reverse-syncs changes only (simple copy, no prompts)
+manifest.toml 기준으로 Source 볼트의 파일들을 AgentForge modules/ 하위로 복사합니다.
+변경사항만 역동기화 (단순 복사, 프롬프트 없음)
 #>
 
 param(
@@ -281,7 +281,7 @@ param(
 # ====================== UTF-8 Helpers ======================
 function Read-Utf8 {
     param([string]$Path)
-    if (-not (Test-Path $Path)) { throw "File not found: $Path" }
+    if (-not (Test-Path $Path)) { throw "파일 없음: $Path" }
     [System.IO.File]::ReadAllText($Path, [Text.Encoding]::UTF8)
 }
 
@@ -292,7 +292,7 @@ function Write-Utf8NoBom {
     [System.IO.File]::WriteAllText($Path, $Content, [Text.UTF8Encoding]::new($false))
 }
 
-# ====================== TOML Parser ======================
+# ====================== TOML 파서 ======================
 function Parse-Manifest {
     param([string]$Path)
     $content = Read-Utf8 $Path
@@ -316,14 +316,14 @@ function Parse-Manifest {
     return $modules
 }
 
-# ====================== Reverse Sync Helper ======================
+# ====================== 역동기화 헬퍼 ======================
 function Export-ModuleFiles {
     param([string]$Source, [string]$AgentForge, [array]$FileEntries)
     foreach ($entry in $FileEntries) {
         $sourcePath = Join-Path $Source $entry.Dest
         $targetPath = Join-Path $AgentForge $entry.Src
         $items = Get-ChildItem -Path $sourcePath -File -ErrorAction SilentlyContinue
-        if (-not $items) { Write-Warning "File not found in Source: $($entry.Dest)"; continue }
+        if (-not $items) { Write-Warning "Source에 파일 없음: $($entry.Dest)"; continue }
         foreach ($item in $items) {
             if ($entry.Dest -match '/$|\\$' -or $entry.Src -match '\*') {
                 $destDir = Split-Path $targetPath -Parent
@@ -334,23 +334,23 @@ function Export-ModuleFiles {
             $destParent = Split-Path $destFile -Parent
             if (-not (Test-Path $destParent)) { New-Item -ItemType Directory -Path $destParent -Force | Out-Null }
             Copy-Item -Path $item.FullName -Destination $destFile -Force
-            Write-Host "  <- $($item.Name)" -ForegroundColor Cyan
+            Write-Host "  ← $($item.Name)" -ForegroundColor Cyan
         }
     }
 }
 
-# ====================== Main ======================
+# ====================== 메인 ======================
 $manifestPath = Join-Path $AgentForge "manifest.toml"
-if (-not (Test-Path $manifestPath)) { Write-Error "manifest.toml not found: $manifestPath"; exit 1 }
+if (-not (Test-Path $manifestPath)) { Write-Error "manifest.toml 없음: $manifestPath"; exit 1 }
 
 $modules = Parse-Manifest $manifestPath
 
-Write-Host "=== AgentForge Reverse Sync Start ===" -ForegroundColor Cyan
+Write-Host "=== AgentForge 역동기화 시작 ===" -ForegroundColor Cyan
 
 foreach ($modName in $modules.Keys) {
     $mod = $modules[$modName]
-    Write-Host "`n[$modName] Reverse syncing..." -ForegroundColor Magenta
+    Write-Host "`n[$modName] 역동기화 중..." -ForegroundColor Magenta
     Export-ModuleFiles -Source $Source -AgentForge $AgentForge -FileEntries $mod.Files
 }
 
-Write-Host "`nReverse sync complete!" -ForegroundColor Green
+Write-Host "`n역동기화 완료!" -ForegroundColor Green

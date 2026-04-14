@@ -1,27 +1,27 @@
 ---
 type: standard
 tags:
-updated: (date)
+updated: (날짜)
 ---
 
-# CONTENTS_SPEC — (Vault Name)
+# CONTENTS_SPEC — (볼트명)
 
-> AI agents read this file during work to understand the vault's content scope.
-> After vault creation, fill in the sections below to match the actual purpose.
+> AI 에이전트는 작업 시 이 파일을 읽어 볼트 콘텐츠를 파악합니다.
+> 볼트 생성 후 아래 항목을 실제 용도에 맞게 작성하세요.
 
-## Vault Purpose
+## 볼트 목적
 
-(Describe what this vault manages in 1-2 lines)
+(이 볼트가 무엇을 관리하는지 1~2줄로 작성)
 
-## Target Users
+## 대상 사용자
 
-(Who uses this vault — people/agents)
+(이 볼트를 사용하는 사람/에이전트)
 
-## Key Deliverables
+## 주요 산출물
 
-(List of primary documents/resources produced in this vault)
+(이 볼트에서 생산되는 주요 문서/자료 목록)
 
-## Scope
+## 범위
 
-- **Included**: (Topics covered by this vault)
-- **Excluded**: (Topics NOT covered by this vault)
+- **포함**: (이 볼트에서 다루는 주제)
+- **미포함**: (이 볼트에서 다루지 않는 주제)

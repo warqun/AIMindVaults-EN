@@ -1,17 +1,17 @@
 ---
 type: meta
 tags:
-updated: (date)
+updated: (날짜)
 ---
 
-# .forge — External Agent Results Staging
+# .forge — 외부 에이전트 결과물 스테이징
 
-A space for receiving, reviewing, and deploying external agent results.
+외부 에이전트 결과물을 수신·검토·배포하기 위한 공간.
 
-## Structure
+## 구조
 
-| Folder | Purpose |
-|--------|---------|
-| `inbox/` | Incoming external agent results |
-| `staging/` | Reviewed and ready files |
-| `tasks/` | Task instruction drafts |
+| 폴더 | 용도 |
+|------|------|
+| `inbox/` | 외부 에이전트 결과물 수신 대기 |
+| `staging/` | 검토·준비 완료된 파일 |
+| `tasks/` | 작업 지시 초안 |

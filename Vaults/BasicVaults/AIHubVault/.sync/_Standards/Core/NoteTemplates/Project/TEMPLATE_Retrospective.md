@@ -13,35 +13,35 @@ period:
 local: <% tp.file.title %>
 ```
 
-## Period
+## 기간
 
 -
 
-## What Went Well (Keep)
+## 잘한 것 (Keep)
 
 -
 
-## What to Improve (Improve)
+## 개선할 것 (Improve)
 
 -
 
-## What to Start (Start)
+## 시작할 것 (Start)
 
 -
 
-## What to Stop (Stop)
+## 멈출 것 (Stop)
 
 -
 
-## Action Items
+## 다음 행동 (Action Items)
 
 - [ ]
 - [ ]
 
-## Related Milestones
+## 연결 마일스톤
 
 - [[]]
 
 ---
 
-*Retrospective written: <% tp.date.now("YYYY-MM-DD") %>*
+*회고 작성일: <% tp.date.now("YYYY-MM-DD") %>*

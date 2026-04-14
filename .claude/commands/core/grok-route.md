@@ -1,69 +1,69 @@
-# /grok-route — Pre-Task Grok Branch Router
+# /grok-route — 작업 전 Grok 분기 라우터
 
-Arguments: $ARGUMENTS
-Usage: `/grok-route [task description]`
-
----
-
-## Purpose
-
-Upon receiving a task instruction, analyze the entire task to:
-1. Identify items that would yield better results when sent to Grok 3
-2. Generate a ready-to-paste Grok prompt for the user
-3. Handle the remainder directly with Claude
+인자: $ARGUMENTS
+사용법: `/grok-route [작업 설명]`
 
 ---
 
-## Execution Order
+## 목적
 
-### 1. Task Decomposition
+작업 지시를 받으면 전체 태스크를 분석하여:
+1. Grok 3에 보내면 더 나은 항목을 식별
+2. 사용자가 바로 복붙할 수 있는 Grok 프롬프트를 생성
+3. 나머지는 Claude가 직접 처리
 
-Read `$ARGUMENTS` and extract a list of subtasks.
+---
 
-### 2. Determine Grok Suitability
+## 실행 순서
 
-| Criteria | Grok Mode |
-|----------|-----------|
-| Keywords: "latest", "bug", "error", "trend", "community", "forum" | DeepSearch |
-| Formulas, balancing, algorithms, numerical verification requests | Think / Big Brain |
-| Subtitle/long document single conversion/summarization (external file-based) | Standard (large context) |
-| X/Twitter real-time information, short-form content planning | DeepSearch |
-| Vault file editing, design discussions, spec writing | -> Claude handles |
-| Issue finalization, multi-file coordination, continuous context required | -> Claude handles |
+### 1. 태스크 분해
 
-### 3. Output Format (fixed)
+`$ARGUMENTS`를 읽고 하위 작업 목록을 추출한다.
+
+### 2. Grok 적합 여부 판별
+
+| 판별 기준 | Grok 모드 |
+|-----------|-----------|
+| "최신", "버그", "에러", "트렌드", "커뮤니티", "포럼" 키워드 | DeepSearch |
+| 수식·밸런싱·알고리즘·수치 검증 요청 | Think / Big Brain |
+| 자막·긴 문서 단일 변환·요약 (외부 파일 기반) | 일반 (대용량) |
+| X/트위터 실시간 정보·숏폼 기획 | DeepSearch |
+| Vault 파일 수정·설계 논의·Spec 작성 | → Claude 담당 |
+| 이슈 확정·멀티파일 조율·연속 맥락 필요 | → Claude 담당 |
+
+### 3. 출력 형식 (고정)
 
 ```
-===================================
-[Grok] Items to send to Grok (copy and paste)
-===================================
+═══════════════════════════════════════
+🟡 Grok으로 보낼 것 (복붙해서 사용)
+═══════════════════════════════════════
 
-[Mode: DeepSearch / Think / Standard]
-------------------------------------
-[Full prompt to paste into Grok]
-------------------------------------
+[모드: DeepSearch / Think / 일반]
+────────────────────────────────
+[Grok에 붙여넣을 프롬프트 전문]
+────────────────────────────────
 
-(Omit this section if there are no Grok items)
+(Grok 항목이 없으면 이 섹션 생략)
 
-===================================
-[Claude] Items Claude will handle
-===================================
+═══════════════════════════════════════
+✅ Claude가 처리할 것
+═══════════════════════════════════════
 
-1. [Item]
-2. [Item]
+1. [항목]
+2. [항목]
 
-Let me know when you get the Grok results -> I'll incorporate them into the documents.
-===================================
+Grok 결과 받으면 알려줘 → 문서에 반영할게.
+═══════════════════════════════════════
 ```
 
-### 4. Grok Prompt Writing Rules
+### 4. Grok 프롬프트 작성 규칙
 
-- **For DeepSearch**: "Research the latest status of [topic] using DeepSearch and summarize the key points."
-- **For Think mode**: "Verify [formula/algorithm]. Use Think mode."
-- **For large context conversion**: "Convert the following content into Obsidian note format."
-- Write prompts in the user's preferred language; keep technical terms in English
+- **DeepSearch용**: "최신 [주제] 현황을 DeepSearch로 조사하고 요점을 한국어로 정리해줘."
+- **Think 모드용**: "[수식/알고리즘]을 검증해줘. Think 모드 사용."
+- **대용량 변환용**: "아래 내용을 Obsidian 노트 형식으로 변환해줘."
+- 프롬프트는 한국어로 작성, 기술 용어는 영어 유지
 
-### 5. Follow-Up
+### 5. 후속 처리
 
-- If there are Grok items: wait for user response
-- If there are no Grok items: proceed directly with Claude's tasks
+- Grok 항목이 있으면: 사용자 응답 대기
+- Grok 항목이 없으면: 바로 Claude 작업 시작

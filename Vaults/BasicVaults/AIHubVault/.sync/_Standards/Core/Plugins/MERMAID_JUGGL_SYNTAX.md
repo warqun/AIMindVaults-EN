@@ -5,13 +5,13 @@ type: standard
 updated: 2026-03-05
 ---
 
-# MERMAID_JUGGL_SYNTAX — Mermaid/Juggl Usage and Syntax
+# MERMAID_JUGGL_SYNTAX — Mermaid/Juggl 용법과 문법
 
-## 1) Mermaid Basic Syntax
+## 1) Mermaid 기본 문법
 
-### Code Block Rules
+### 코드블록 규칙
 
-- Always use fenced code blocks:
+- 반드시 fenced code block 사용:
 
 
 ```mermaid
@@ -20,15 +20,15 @@ flowchart TD
 ```
 
 
-### Commonly Used Diagram Types
+### 자주 쓰는 다이어그램 타입
 
 #### Flowchart
 
 ```mermaid
 flowchart TD
-  A[Request Received] --> B{Validation Passed?}
-  B -->|Yes| C[Process]
-  B -->|No| D[Return Error]
+  A[요청 수신] --> B{검증 통과?}
+  B -->|Yes| C[처리]
+  B -->|No| D[오류 반환]
 ```
 
 #### Sequence
@@ -38,10 +38,10 @@ sequenceDiagram
   participant U as User
   participant O as Obsidian
   participant A as Agent
-  U->>O: Note creation request
-  O->>A: Delegate task
-  A-->>O: Save result
-  O-->>U: Complete
+  U->>O: 노트 생성 요청
+  O->>A: 작업 전달
+  A-->>O: 결과 저장
+  O-->>U: 완료
 ```
 
 #### State
@@ -54,20 +54,20 @@ stateDiagram-v2
   Review --> Draft
 ```
 
-### Mermaid Writing Rules
+### Mermaid 작성 규칙
 
-1. Keep node names short and clear
-2. Standardize branch labels as `Yes/No` or domain terms
-3. One flow per diagram; split into separate files if complex
-4. Add a one-sentence purpose statement for the diagram in the document body
+1. 노드 이름은 짧고 명확하게 유지
+2. 분기 라벨은 `Yes/No` 또는 도메인 용어로 통일
+3. 한 다이어그램에 흐름 1개만 담고, 복잡하면 파일 분리
+4. 문서 본문에 다이어그램 목적 1문장 추가
 
-## 2) Juggl Operational Syntax (Link-Based)
+## 2) Juggl 운용 문법 (링크 기반)
 
-Juggl's core is not a separate DSL, but the design of inter-note links, tags, and metadata structure.
+Juggl은 별도 DSL보다, 노트 간 링크/태그/메타데이터 구조 설계가 핵심이다.
 
-### Key Connection Syntax
+### 핵심 연결 문법
 
-#### Wiki Links
+#### 위키링크
 
 ```markdown
 [[SkillSystem]]
@@ -75,20 +75,20 @@ Juggl's core is not a separate DSL, but the design of inter-note links, tags, an
 [[docs/issues/ISSUE_INDEX]]
 ```
 
-#### Block Links
+#### 블록 링크
 
 ```markdown
-[[SkillSystem#key-flow]]
+[[SkillSystem#핵심-흐름]]
 [[SkillSystem^decision-20260305]]
 ```
 
-#### Tags
+#### 태그
 
 ```markdown
 #project/topic-a #epic/logic #system/skill #status/in-progress
 ```
 
-#### Frontmatter Metadata
+#### frontmatter 메타데이터
 
 ```yaml
 ---
@@ -100,28 +100,28 @@ priority: high
 ---
 ```
 
-### Juggl Usage Rules
+### Juggl 활용 규칙
 
-1. Create hub notes: `ISSUE_INDEX`, `SYSTEM_INDEX`, `DECISIONS`
-2. Each note should have at least 2 internal links
-3. Periodically clean up isolated notes (no links)
-4. Fix tag/metadata schemas to improve filtering accuracy
+1. 허브 노트를 만든다: `ISSUE_INDEX`, `SYSTEM_INDEX`, `DECISIONS`
+2. 각 노트는 최소 2개 이상의 내부 링크를 가진다
+3. 고립 노트(링크 없음)는 주기적으로 정리한다
+4. 태그/메타데이터 스키마를 고정해 필터링 정확도를 높인다
 
-## 3) Mermaid + Juggl Combined Patterns
+## 3) Mermaid + Juggl 결합 패턴
 
-1. Detect relationship gaps with Juggl
-2. Formalize key flows with Mermaid
-3. Link Mermaid-containing notes from hub notes
+1. Juggl로 관계 공백 탐지
+2. 핵심 흐름을 Mermaid로 명시화
+3. Mermaid가 포함된 노트를 허브 노트에서 링크
 
-### Combined Example
+### 결합 예시
 
 ~~~markdown
-## Combat Processing Flow
+## 전투 처리 흐름
 
 ```mermaid
 flowchart LR
   Input --> Skill --> Damage --> Result
 ```
 
-Related notes: [[SkillSystem]], [[Stat2EndDamage]], [[CombatCore]]
+관련 노트: [[SkillSystem]], [[Stat2EndDamage]], [[CombatCore]]
 ~~~

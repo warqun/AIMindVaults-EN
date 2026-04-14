@@ -12,7 +12,7 @@ agent: claude
 
 # Hub-Sync Targets
 
-> Definitive list of files and folders synchronized across vaults by `aimv sync`.
+> Definitive list of files and folders synchronized across vaults by `sync_workspace.ps1`.
 > **Only the targets listed below are synced.** Everything else remains vault-specific and untouched.
 > Keep this document updated when the script changes.
 
@@ -60,7 +60,7 @@ Runs only if all previous batches succeed.
 
 ## Authoritative Source
 
-The batch definitions live in `.sync/_tools/cli-node/src/commands/sync.js`.
+The batch definitions live in `.sync/sync_workspace.ps1`.
 If this document and the script disagree, **the script is authoritative**.
 
 ---
@@ -68,5 +68,5 @@ If this document and the script disagree, **the script is authoritative**.
 ## Related
 
 - Script details: [[Script_Registry]]
-- Sync protocol design: [[20260311_Hub_Sync_Plan]]
-- Script internals: [[20260312_sync_workspace_Implementation_Details]]
+- Sync protocol design: [[20260311_허브_동기화_계획]]
+- Script internals: [[20260312_sync_workspace_작동방식_상세]]

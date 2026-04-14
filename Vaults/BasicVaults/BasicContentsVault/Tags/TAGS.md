@@ -1,26 +1,26 @@
 ---
 type: tag-taxonomy
 tags:
-updated: (date)
+updated: (날짜)
 ---
 
-# TAGS — Tag Rules/List (Normalization Reference)
+# TAGS — 태그 규칙/목록(정규화 기준)
 
-> Purpose: Keep tags as a "normalized minimum" to simplify search/filter/agent context.
-> After vault creation, define this vault's tag taxonomy here.
+> 목적: 검색/필터/에이전트 컨텍스트를 단순화하기 위해 태그를 “정규화된 소수”로 유지한다.
+> 볼트 생성 후 이 볼트의 태그 체계를 작성하세요.
 
-## Rules
+## 규칙
 
-- Tags are managed only in frontmatter `tags: [ ... ]` (body `#tag` is optional)
-- Tags use **lowercase + slash hierarchy**
-- Keep **3-8 tags** per note (no excessive tagging)
-- Before creating a new tag, add/review it in this document (prevent uncontrolled proliferation)
+- 태그는 frontmatter의 `tags: [ ... ]`에서만 관리(본문 `#tag`는 선택)
+- 태그는 **소문자 + 슬래시 계층**으로 통일
+- 한 노트에 태그는 **3~8개** 내로 유지(과도한 태그 금지)
+- 새로운 태그를 만들기 전에 이 문서에 추가/검토(무분별한 증식 방지)
 
 ---
 
-## Core Tags (Recommended)
+## 핵심 태그(권장)
 
-### Document Type
+### 문서 유형
 
 - `doc/design`
 - `doc/spec`
@@ -29,7 +29,7 @@ updated: (date)
 - `doc/reference`
 - `doc/temp`
 
-### Status/Priority
+### 상태/우선순위
 
 - `status/wip`
 - `status/blocked`
@@ -38,7 +38,7 @@ updated: (date)
 - `priority/medium`
 - `priority/low`
 
-### Agent (Operations)
+### 에이전트(운용)
 
 - `agent/claude`
 - `agent/codex`

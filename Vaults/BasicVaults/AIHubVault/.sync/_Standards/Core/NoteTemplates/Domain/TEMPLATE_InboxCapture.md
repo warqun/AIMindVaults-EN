@@ -13,21 +13,21 @@ status: unprocessed
 local: <% tp.file.title %>
 ```
 
-## Captured Content
+## 캡처 내용
 
-<!-- Capture quickly. Sort later. -->
+<!-- 빠르게 수집. 나중에 분류. -->
 
-## Source
+## 출처
 
-- Link/book/person:
+- 링크/책/사람:
 
-## Processing Direction
+## 처리 방향
 
-- [ ] Move to topics/
-- [ ] Link to people/ note
-- [ ] Move to references/
-- [ ] Delete
+- [ ] topics/ 로 이동
+- [ ] people/ 노트와 연결
+- [ ] references/ 로 이동
+- [ ] 삭제
 
 ---
 
-*Captured: <% tp.date.now("YYYY-MM-DD") %>*
+*수집일: <% tp.date.now("YYYY-MM-DD") %>*

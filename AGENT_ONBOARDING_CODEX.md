@@ -1,115 +1,115 @@
-# AIMindVaults — Codex Onboarding
+# AIMindVaults — Codex 온보딩
 
-> Codex desktop app / Codex CLI specific onboarding document.
-> Read `AGENT_ONBOARDING.md` for common rules first.
-
----
-
-## 1. Entry Points
-
-- **Root entry point**: `AGENTS.md` — Vault registry (22 vaults), routing rules, skills list
-- **Legacy**: `CODEX.md` → redirects to `AGENTS.md`
-- **Internal routing**: `.codex/CODEX.md` — Codex rules reference hub
-
-## 2. Session Start Sequence
-
-1. `AGENTS.md` (root) — Codex main entry point
-2. `.claude/rules/` all files — Common mandatory rules (canonical, applies to all agents)
-3. `_STATUS.md` (root) — Overall vault status
-4. `.codex/rules/` — Codex-specific rules
-5. `.codex/AGENT_STATUS.md` — Codex status
-6. Target vault's `AGENTS.md` or `CLAUDE.md`
-7. Target vault's `_STATUS.md`
-
-Complete this sequence before editing.
+> Codex 데스크탑 앱 / Codex CLI 전용 온보딩 문서.
+> 공통 규칙은 `AGENT_ONBOARDING.md`를 먼저 읽는다.
 
 ---
 
-## 3. Agent Identification
+## 1. 진입점
 
-- **Identifier**: `codex`
-- frontmatter `agent: codex` (for multi-agent work: `agent: [claude, codex]`)
-- Record as `codex / YYYY-MM-DD` in `_STATUS.md` at session exit
-- Handoff file: `_SESSION_HANDOFF_CODEX.md`
-- Status file: `.codex/AGENT_STATUS.md`
+- **루트 진입점**: `AGENTS.md` — 볼트 레지스트리 (22볼트), 라우팅 규칙, 스킬 목록
+- **레거시**: `CODEX.md` → `AGENTS.md`로 리다이렉트
+- **내부 라우팅**: `.codex/CODEX.md` — Codex 규칙 참조 허브
+
+## 2. 세션 시작 순서
+
+1. `AGENTS.md` (루트) — Codex 메인 진입점
+2. `.claude/rules/` 전체 — 공통 강제 규칙 (정본, 모든 에이전트 적용)
+3. `_STATUS.md` (루트) — 전체 볼트 현황
+4. `.codex/rules/` — Codex 고유 규칙
+5. `.codex/AGENT_STATUS.md` — Codex 상태
+6. 대상 볼트의 `AGENTS.md` 또는 `CLAUDE.md`
+7. 대상 볼트의 `_STATUS.md`
+
+편집 전에 위 순서를 완료한다.
 
 ---
 
-## 4. Read-Only Default Policy (Codex-Specific)
+## 3. 에이전트 식별
 
-- Unless the user explicitly specifies an **action (create/modify/delete/execute)** in their prompt, Codex operates in **read-only** mode.
-- Read-only scope: file browsing, content viewing, status checks, comparisons, summaries, reports.
-- Prohibited before explicit instruction: file changes, automation registration/execution, write-mode script execution, external state changes.
-- If instructions are ambiguous, do not start modification work — briefly confirm first.
+- **식별자**: `codex`
+- frontmatter `agent: codex` (복수 에이전트 작업 시 `agent: [claude, codex]`)
+- 세션 종료 시 `_STATUS.md`에 `codex / YYYY-MM-DD`로 기록
+- 핸드오프 파일: `_SESSION_HANDOFF_CODEX.md`
+- 상태 파일: `.codex/AGENT_STATUS.md`
 
 ---
 
-## 5. Codex Role Scope
+## 4. 읽기 전용 기본 정책 (Codex 고유)
 
-| Area | Codex | Claude Code |
+- 사용자가 프롬프트에서 **작업(생성/수정/삭제/실행)** 을 명시하지 않으면, Codex는 **읽기 전용**으로만 동작한다.
+- 읽기 전용 범위: 파일 탐색, 내용 조회, 상태 점검, 비교, 요약, 보고.
+- 명시 지시 전 금지: 파일 변경, 자동화 등록/실행, 쓰기성 스크립트 실행, 외부 상태 변경.
+- 지시가 모호하면 변경 작업을 시작하지 않고 짧게 확인한다.
+
+---
+
+## 5. Codex 역할 범위
+
+| 영역 | Codex | Claude Code |
 |------|-------|-------------|
-| Note editing within a single vault (`Contents/`) | O | O |
-| Source note pipeline (video/article/PDF → note) | O | O |
-| Repetitive tasks (bulk frontmatter updates, Juggl insertion, etc.) | O | O |
-| Background cleanup (link/tag cleanup) | O | X (primarily) |
-| Multi-vault structural changes | X | O |
-| Script development/modification | X | O |
-| `.obsidian/` configuration changes | X | O |
+| 단일 볼트 내 노트 편집 (`Contents/`) | O | O |
+| 소스 노트 파이프라인 (영상/글/PDF → 노트) | O | O |
+| 반복 작업 (frontmatter 일괄 갱신, Juggl 삽입 등) | O | O |
+| 백그라운드 정리 (링크/태그 정리) | O | X (주로) |
+| 멀티볼트 구조 변경 | X | O |
+| 스크립트 개발/수정 | X | O |
+| `.obsidian/` 설정 변경 | X | O |
 
-### Concurrent Modification Prohibited Areas
+### 동시 수정 금지 영역
 
-The following files can only be modified by one agent at a time:
+아래 파일은 한 에이전트만 수정할 수 있다:
 
-| File | Reason |
-|------|--------|
-| `_STATUS.md` (vault/root) | Single source of truth for status tracking |
-| `_WORKSPACE_VERSION.md` | Version number conflicts |
-| `.obsidian/**` | JSON merge not possible |
-| `_VAULT-INDEX.md` | Structure breaks on concurrent edits |
-
----
-
-## 6. Codex Skills (`.codex/skills/` — 7 skills)
-
-| Skill | Purpose | How to Run |
-|-------|---------|-----------|
-| `create-video-note` | Video URL → structured note | See `.codex/skills/create-video-note/SKILL.md` |
-| `create-article-note` | Web article/text → structured note | See `.codex/skills/create-article-note/SKILL.md` |
-| `create-pdf-note` | PDF → structured note | See `.codex/skills/create-pdf-note/SKILL.md` |
-| `cross-vault-migration` | Cross-vault note migration | See `.codex/skills/cross-vault-migration/SKILL.md` |
-| `sync-distribution` | Distribution sync | See `.codex/skills/sync-distribution/SKILL.md` |
-| `open-note` | Open an Obsidian note | See `.codex/skills/open-note.md` |
-| `open-vault` | Open an Obsidian vault | See `.codex/skills/open-vault.md` |
-
-Each skill has step-by-step procedures documented. Read the corresponding SKILL.md and execute in order.
+| 파일 | 사유 |
+|------|------|
+| `_STATUS.md` (볼트/루트) | 상태 추적의 단일 소스 |
+| `_WORKSPACE_VERSION.md` | 버전 번호 충돌 |
+| `.obsidian/**` | JSON 병합 불가 |
+| `_VAULT-INDEX.md` | 동시 편집 시 구조 깨짐 |
 
 ---
 
-## 7. Codex-Specific Rules (`.codex/rules/` — 4 rules)
+## 6. Codex 스킬 (`.codex/skills/` — 7개)
 
-| Rule | Key Point |
-|------|-----------|
-| `vault-routing.md` | AIHubVault → workspace, others → keyword inference or user confirmation |
-| `edit-scope.md` | Root scope definition, workspace is AIHubVault only, session exit procedure |
-| `status-sync.md` | Root status vs vault status separation principle |
-| `encoding-safety.md` | UTF-8 safety, Get-Content pipeline prohibited, stop immediately on mojibake |
+| 스킬 | 용도 | 실행 방법 |
+|------|------|----------|
+| `create-video-note` | 영상 URL → 구조화된 노트 | `.codex/skills/create-video-note/SKILL.md` 참조 |
+| `create-article-note` | 웹 글/텍스트 → 구조화된 노트 | `.codex/skills/create-article-note/SKILL.md` 참조 |
+| `create-pdf-note` | PDF → 구조화된 노트 | `.codex/skills/create-pdf-note/SKILL.md` 참조 |
+| `cross-vault-migration` | 볼트 간 노트 이관 | `.codex/skills/cross-vault-migration/SKILL.md` 참조 |
+| `sync-distribution` | 배포 동기화 | `.codex/skills/sync-distribution/SKILL.md` 참조 |
+| `open-note` | Obsidian 노트 열기 | `.codex/skills/open-note.md` 참조 |
+| `open-vault` | Obsidian 볼트 열기 | `.codex/skills/open-vault.md` 참조 |
 
-These rules **supplement** the common rules in `.claude/rules/core/`. Common rules take precedence.
+각 스킬은 단계별 절차가 문서화되어 있다. 해당 SKILL.md를 읽고 순서대로 실행하면 된다.
 
 ---
 
-## 8. Configuration Structure
+## 7. Codex 전용 규칙 (`.codex/rules/` — 4개)
+
+| 규칙 | 핵심 |
+|------|------|
+| `vault-routing.md` | AIHubVault → workspace, 기타 → 키워드 추론 또는 사용자 확인 |
+| `edit-scope.md` | 루트 스코프 정의, workspace는 AIHubVault 전용, 세션 종료 절차 |
+| `status-sync.md` | 루트 상태 vs 볼트 상태 분리 원칙 |
+| `encoding-safety.md` | UTF-8 안전, Get-Content 파이프라인 금지, mojibake 발생 시 즉시 중단 |
+
+이 규칙들은 `.claude/rules/core/`의 공통 규칙을 **보완**한다. 공통 규칙이 우선.
+
+---
+
+## 8. 설정 구조
 
 ```
 .codex/
-├── CODEX.md            ← Internal routing hub (session sequence, vault registry)
-├── AGENT_STATUS.md     ← Codex status (updated during complex tasks)
-├── rules/              ← 4 Codex-specific rules
+├── CODEX.md            ← 내부 라우팅 허브 (세션 순서, 볼트 레지스트리)
+├── AGENT_STATUS.md     ← Codex 상태 (복잡한 작업 시 갱신)
+├── rules/              ← Codex 전용 규칙 4개
 │   ├── vault-routing.md
 │   ├── edit-scope.md
 │   ├── status-sync.md
 │   └── encoding-safety.md
-└── skills/             ← 7 Codex-specific skills
+└── skills/             ← Codex 전용 스킬 7개
     ├── create-video-note/SKILL.md
     ├── create-article-note/SKILL.md
     ├── create-pdf-note/SKILL.md
@@ -121,36 +121,36 @@ These rules **supplement** the common rules in `.claude/rules/core/`. Common rul
 
 ---
 
-## 9. Common Rules Application
+## 9. 공통 규칙 적용
 
-Codex follows all 14 mandatory rules in `.claude/rules/core/`.
-As stated in `AGENTS.md` section on shared rules: "At session start, read and follow all rule files in the `.claude/rules/` directory."
+Codex도 `.claude/rules/core/`의 강제 규칙 14개를 모두 따른다.
+`AGENTS.md` §공통 규칙에 명시: "세션 시작 시 `.claude/rules/` 디렉토리의 모든 규칙 파일을 읽고 따른다."
 
-Key rules summary:
+주요 규칙 요약:
 
-| Rule | Key Point for Codex |
-|------|---------------------|
-| Post-Edit Review | Run `aimv review` after note edits + complete indexing |
-| Edit mode separation | Contents mode for note editing, workspace edits are AIHubVault only |
-| Session exit | Update both vault + root `_STATUS.md` + write handoff file |
-| Token conservation | Pinpoint access, no repeated reads, high-cost operations require pre-approval |
-| Script creation | Creation prohibited without user approval |
+| 규칙 | Codex 적용 시 핵심 |
+|------|-------------------|
+| Post-Edit Review | 노트 편집 후 `aimv review` 실행 + 인덱싱 완료 |
+| 편집 모드 분리 | Contents 모드로 노트 편집, workspace 편집은 AIHubVault 전용 |
+| 세션 종료 | 볼트 + 루트 `_STATUS.md` 양쪽 갱신 + 핸드오프 파일 작성 |
+| 토큰 절약 | 핀포인트 접근, 반복 읽기 금지, 고비용 작업 사전 승인 |
+| 스크립트 생성 | 사용자 승인 없이 생성 금지 |
 
-Full list: See the Rule Detail Reference table in `AGENT_ONBOARDING.md`.
+전체 목록: `AGENT_ONBOARDING.md` §규칙 상세 참조 테이블.
 
 ---
 
-## 10. Serena MCP — Semantic Code Analysis (Depending on User Environment)
+## 10. Serena MCP — 시맨틱 코드 분석 (사용자 환경에 따라)
 
-If the Serena MCP server is connected, you can explore and modify C# code at the symbol level.
+Serena MCP 서버가 연결되어 있는 경우, C# 코드를 심볼 단위로 탐색·수정할 수 있다.
 
-| Tool | Purpose |
-|------|---------|
-| `get_symbols_overview` | List classes/methods in a file |
-| `find_symbol` | Search by symbol name |
-| `find_referencing_symbols` | Find where a specific symbol is referenced |
-| `search_for_pattern` | Search for code patterns |
-| `replace_symbol_body` | Replace symbol body |
+| 도구 | 용도 |
+|------|------|
+| `get_symbols_overview` | 파일 내 클래스/메서드 목록 조회 |
+| `find_symbol` | 심볼 이름으로 검색 |
+| `find_referencing_symbols` | 특정 심볼을 참조하는 곳 찾기 |
+| `search_for_pattern` | 코드 패턴 검색 |
+| `replace_symbol_body` | 심볼 본문 교체 |
 
-Use `get_symbols_overview` to understand the structure before reading entire files.
-Details: `AGENTS.md` section on Serena MCP or `.claude/rules/custom/serena-mcp.md`
+파일 전체 읽기 전에 `get_symbols_overview`로 구조를 먼저 파악한다.
+상세: `AGENTS.md` §Serena MCP 또는 `.claude/rules/custom/serena-mcp.md`

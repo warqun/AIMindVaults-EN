@@ -8,17 +8,17 @@ updated: 2026-03-05
 
 # Dataview
 
-## Features
+## 기능
 
-- Dynamic list/table generation based on frontmatter
-- Automatic status dashboard aggregation
+- frontmatter 기반 동적 목록/테이블 생성
+- 상태 대시보드 자동 집계
 
-## Primary Use Cases
+## 주 사용 작업
 
-- Issue status boards
-- Priority/assignee/epic queries
+- 이슈 상태판
+- 우선순위/담당자/에픽 단위 조회
 
-## Basic Syntax
+## 기본 문법
 
 ```dataview
 TABLE status, priority, updated
@@ -27,6 +27,7 @@ WHERE status != "done"
 SORT updated desc
 ```
 
-## Notes
+## 주의
 
-- Keep frontmatter key names standardized for accurate results.
+- 정확한 결과를 위해 frontmatter 키 이름을 표준으로 고정한다.
+

@@ -6,83 +6,83 @@ tags:
 updated: 2026-04-08
 ---
 
-# AIMindVaults Setup Guide
+# AIMindVaults 환경 설정 가이드
 
-> Reference document for setting up AIMindVaults on a new PC or sharing with others.
-> AI agents can reference this document during onboarding to guide users through missing installations.
-
----
-
-## Quick Start
-
-1. Copy the AIMindVaults folder to your desired location or `git clone`
-2. Install and launch Obsidian
-3. Vault manager → **"Open folder as vault"** → select `Vaults/BasicVaults/AIHubVault`
-4. Repeat for `Vaults/BasicVaults/BasicContentsVault`
-5. On first open, approve "Trust author and enable plugins" → automatic sync runs
+> 새 PC에 AIMindVaults를 처음 설치하거나 다른 사람에게 전달할 때 참조하는 문서.
+> AI 에이전트가 온보딩 시 이 문서를 참조하여 미설치 항목을 안내할 수 있다.
 
 ---
 
-## External Software Installation
+## 빠른 시작
 
-### 1. Obsidian (Required)
-
-The vault viewer. Notes cannot be viewed without it.
-
-- **Download**: https://obsidian.md/download
-- **Install**: Run the downloaded installer
-- **Verify**: Search for "Obsidian" in the Start menu
-
-### 2. Obsidian CLI (Required)
-
-Enables terminal control of Obsidian. Required for agent automation and script integration.
-
-- **How to enable**:
-  1. Launch Obsidian
-  2. Settings (gear icon, bottom-left) → General
-  3. Toggle **"Enable CLI"** on
-- **Verify**: Run `obsidian --help` in terminal — help text should appear
-
-> If the installer is outdated, you may see "Please download the latest installer". In that case, reinstall the latest version from https://obsidian.md/download.
-
-### 3. Node.js (Conditional)
-
-Required by some community plugins such as local-rest-api. Not needed if using Obsidian purely as a viewer without AI agents.
-
-- **Download**: https://nodejs.org/ (LTS version recommended)
-- **Install**: Run the downloaded installer. Proceed with default options.
-- **Verify**: Run `node --version` in terminal — version number should appear
-
-### 4. AI Agent (Optional)
-
-Install the agent if you plan to use AI agents.
-
-| Agent | Installation | Notes |
-|-------|-------------|-------|
-| Claude Code | `npm install -g @anthropic-ai/claude-code` | Requires Node.js |
-| Codex | Codex desktop app or CLI | Separate installation |
+1. AIMindVaults 폴더를 원하는 위치에 복사 또는 `git clone`
+2. Obsidian 설치 후 실행
+3. 볼트 매니저 → **"보관함 폴더 열기"** → `Vaults/BasicVaults/AIHubVault` 선택
+4. 같은 방식으로 `Vaults/BasicVaults/BasicContentsVault` 등록
+5. 각 볼트를 처음 열면 "Trust author and enable plugins" 승인 → 자동 동기화 실행
 
 ---
 
-## Registering Vaults in Obsidian
+## 외부 소프트웨어 설치
 
-1. Launch Obsidian
-2. Click the vault switcher (vault icon, bottom-left)
-3. Select "Open folder as vault"
-4. Choose the `AIMindVaults/Vaults/BasicVaults/AIHubVault` folder
-5. Click "Trust author and enable plugins"
-6. Repeat for remaining vaults
+### 1. Obsidian (필수)
 
-### Initial Sync Trigger
+볼트 뷰어. 이것 없이는 노트를 볼 수 없다.
 
-When a vault is opened in Obsidian, the Shell Commands plugin automatically runs `syncworkspace` via the `on-layout-ready` event. This creates the `.sync/` folder and synchronizes the workspace from the Hub.
+- **다운로드**: https://obsidian.md/download
+- **설치**: 다운로드한 설치 파일 실행
+- **확인**: 시작 메뉴에서 "Obsidian" 검색
+
+### 2. Obsidian CLI (필수)
+
+터미널에서 Obsidian을 제어하는 기능. 에이전트 자동화와 스크립트 연동에 필요.
+
+- **활성화 방법**:
+  1. Obsidian 실행
+  2. 설정 (좌하단 톱니바퀴) → General
+  3. **"Enable CLI"** 토글 활성화
+- **확인**: 터미널에서 `obsidian --help` 실행 시 도움말 출력
+
+> 인스톨러가 오래된 경우 "Please download the latest installer" 메시지가 나올 수 있다. 이 경우 https://obsidian.md/download 에서 최신 인스톨러를 재설치하면 해결.
+
+### 3. Node.js (조건부)
+
+local-rest-api 플러그인 등 일부 커뮤니티 플러그인이 필요로 한다. AI 에이전트 없이 순수 뷰어로만 쓸 경우 불필요.
+
+- **다운로드**: https://nodejs.org/ (LTS 버전 권장)
+- **설치**: 다운로드한 설치 파일 실행. 기본 옵션으로 진행.
+- **확인**: 터미널에서 `node --version` 실행 시 버전 출력
+
+### 4. AI 에이전트 (선택)
+
+AI 에이전트를 사용하려면 해당 에이전트를 설치한다.
+
+| 에이전트 | 설치 | 비고 |
+|---------|------|------|
+| Claude Code | `npm install -g @anthropic-ai/claude-code` | Node.js 필요 |
+| Codex | Codex 데스크탑 앱 또는 CLI | 별도 설치 |
 
 ---
 
-## Agent Reference
+## 볼트를 Obsidian에 등록
 
-When an agent starts a session in a new environment:
+1. Obsidian 실행
+2. 좌하단 볼트 스위처 (금고 아이콘) 클릭
+3. "Open folder as vault" 선택
+4. `AIMindVaults/Vaults/BasicVaults/AIHubVault` 폴더 선택
+5. "Trust author and enable plugins" 클릭
+6. 나머지 볼트도 동일하게 반복
 
-1. Run the §6 environment check from `AGENT_ONBOARDING.md` to assess the current state
-2. If anything is missing, cite the relevant section of this document to guide installation
-3. If vaults are not registered, guide through the "Registering Vaults in Obsidian" procedure above
+### 초기 동기화 트리거
+
+각 볼트를 Obsidian에서 열면 Shell Commands 플러그인이 `on-layout-ready` 이벤트로 `syncworkspace`를 자동 실행한다. 이때 `.sync/` 폴더가 생성되고 Hub의 workspace가 동기화된다.
+
+---
+
+## 에이전트용 참조
+
+에이전트가 새 환경에서 세션을 시작할 때:
+
+1. `AGENT_ONBOARDING.md` §6 환경 점검을 수행하여 현재 상태를 파악한다
+2. 미설치 항목이 있으면 이 문서의 해당 섹션을 인용하여 설치 방법을 안내한다
+3. 볼트 등록이 안 되어 있으면 위 "볼트를 Obsidian에 등록" 절차를 안내한다

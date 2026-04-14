@@ -1,23 +1,23 @@
 ---
 name: juggl-insert
-description: Procedure for inserting a Juggl block below H1 when an existing note has none
+description: 기존 노트에 Juggl 블록이 없을 때 H1 아래에 삽입하는 절차
 ---
 
-# Juggl Block Insertion
+# Juggl 블록 삽입
 
-> When to use: Adding a Juggl block to an existing note that doesn't have one
-> Rules: `.codex/rules/never-do.md`, `.codex/rules/bulk-edit-safety.md`
+> 사용 시점: 기존 노트에 Juggl 블록이 없을 때 추가
+> 규칙: `.codex/rules/never-do.md`, `.codex/rules/bulk-edit-safety.md`
 
-## Single File Insertion
+## 단일 파일 삽입
 
 ```powershell
-# 1. Read file (fixed UTF-8)
+# 1. 파일 읽기 (UTF-8 고정)
 $text = [System.IO.File]::ReadAllText($path, [Text.Encoding]::UTF8)
 
-# 2. Skip if juggl block already exists
+# 2. 이미 juggl 블록 있으면 스킵
 if ($text -match '```juggl') { Write-Host "SKIP: juggl already exists"; return }
 
-# 3. Find H1 position
+# 3. H1 위치 찾기
 $lines = $text -split "`n"
 $h1Index = -1
 for ($i = 0; $i -lt $lines.Count; $i++) {
@@ -25,31 +25,31 @@ for ($i = 0; $i -lt $lines.Count; $i++) {
 }
 if ($h1Index -eq -1) { Write-Host "ERROR: H1 not found"; return }
 
-# 4. Remove extension from filename
+# 4. 파일명에서 확장자 제거
 $baseName = [System.IO.Path]::GetFileNameWithoutExtension($path)
 
-# 5. Insert juggl block (line after H1)
+# 5. juggl 블록 삽입 (H1 다음 줄)
 $jugglBlock = "``````juggl`nlocal: $baseName`n``````"
 $newLines = @($lines[0..$h1Index]) + @("", $jugglBlock, "") + @($lines[($h1Index+1)..($lines.Count-1)])
 $newText = $newLines -join "`n"
 
-# 6. Write (UTF-8 without BOM)
+# 6. 쓰기 (BOM 없는 UTF-8)
 [System.IO.File]::WriteAllText($path, $newText, [Text.UTF8Encoding]::new($false))
 ```
 
-## Bulk Insertion (Multiple Files)
+## 대량 삽입 (다수 파일)
 
-Must follow the 5-step protocol (`.codex/rules/bulk-edit-safety.md`):
+반드시 5단계 프로토콜 준수 (`.codex/rules/bulk-edit-safety.md`):
 
 ```
-Step 1: Pre-encoding verification
-Step 2: Dry-run (output file list only)
-Step 3: Apply to 3 samples first
-Step 4: Visual verification then full run
-Step 5: Confirm post-review BAD_COUNT=0
+Step 1: 인코딩 사전 검증
+Step 2: Dry-run (파일 목록 출력만)
+Step 3: 3개 샘플 먼저 적용
+Step 4: 시각 확인 후 전체 실행
+Step 5: post-review BAD_COUNT=0 확인
 ```
 
-Excluded targets:
+제외 대상:
 ```
 Contents/*/temp/**
 _STATUS.md
@@ -58,10 +58,10 @@ _VAULT-INDEX.md
 .claude/**
 ```
 
-## Invariant Check (Before Full Run)
+## 불변 조건 확인 (전체 실행 전)
 
 ```powershell
-# Verify at most 1 juggl block per file
+# 파일당 juggl 블록 1개 이하인지 검사
 $files = Get-ChildItem Contents/**/*.md -Recurse
 foreach ($f in $files) {
     $content = [System.IO.File]::ReadAllText($f.FullName, [Text.Encoding]::UTF8)

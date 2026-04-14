@@ -8,41 +8,41 @@ updated: 2026-03-19
 agent: antigravity
 ---
 
-# Antigravity Session Rules (DEPRECATED)
+# Antigravity 세션 규칙 (DEPRECATED)
 
-> **DEPRECATED (2026-03-21)**: Transitioned from Antigravity to Codex desktop app. Use `AGENTS.md` at vault root.
+> **DEPRECATED (2026-03-21)**: Antigravity → Codex 데스크탑 앱으로 전환. 볼트 루트의 `AGENTS.md`를 사용.
 
-> Antigravity-specific session entry point.
+> Antigravity 전용 세션 진입점.
 
-## Common Rules (Authoritative Reference — Mandatory)
+## 공통 규칙 (정본 참조 — Mandatory)
 
-Read and follow **all rule files** in the root `.claude/rules/` directory.
-These are mandatory rules that apply equally to all AI agents.
+루트 `.claude/rules/` 디렉토리의 **모든 규칙 파일**을 읽고 따른다.
+이 규칙들은 모든 AI 에이전트에 동일 적용되는 강제 규칙이다.
 
-## Role of This Vault
+## 이 볼트의 역할
 
-**AI Workspace Design, Improvement & Distribution Hub** — Manages AI operational structures including `_Standards`, `_tools`, `.claude`, `_forge`.
+**AI 작업환경 설계·개선·배포 허브** — `_Standards`, `_tools`, `.claude`, `_forge` 등 AI 운영 구조 관리.
 
-## Session Start Routine (Mandatory)
+## 세션 시작 루틴 (강제)
 
-1. Read all of root `.claude/rules/` — Common mandatory rules
-2. Check root `_STATUS.md` — Overall vault status
-3. Check `_STATUS.md` — Current status of this vault
-4. Check `.antigravity/AGENT_STATUS.md` — My last work status
-5. Understand workspace structure via `_VAULT-INDEX.md`
+1. 루트 `.claude/rules/` 전체 읽기 — 공통 강제 규칙
+2. 루트 `_STATUS.md` 확인 — 전체 볼트 현황
+3. `_STATUS.md` 확인 — 이 볼트의 현재 상태
+4. `.antigravity/AGENT_STATUS.md` 확인 — 내 마지막 작업 상태
+5. `_VAULT-INDEX.md`로 작업환경 구조 파악
 
-## Antigravity-Specific Items
+## Antigravity 고유 사항
 
-- **Agent identifier**: `antigravity`
-- Background agent — token conservation is top priority
-- Workflow execution: See root `.antigravity/workflows/`
-- At session end, record working agent in vault `_STATUS.md` + root `_STATUS.md` as `antigravity / YYYY-MM-DD`
+- **에이전트 식별자**: `antigravity`
+- 백그라운드 에이전트 — 토큰 절약 최우선
+- 워크플로우 실행: 루트 `.antigravity/workflows/` 참조
+- 세션 종료 시 볼트 `_STATUS.md` + 루트 `_STATUS.md` 작업 에이전트를 `antigravity / YYYY-MM-DD`로 기록
 
-## Relationship with Other Agents
+## 다른 에이전트와의 관계
 
-| Agent | Entry Point | Common Rules |
-|-------|------------|--------------|
-| Antigravity (me) | `.antigravity/SESSION_RULES.md` | References `.claude/rules/` |
-| Claude Code | `CLAUDE.md` | `.claude/rules/` (authoritative) |
-| Codex | `.codex/CODEX.md` | References `.claude/rules/` |
-| Cursor | `.cursor/rules/` | References `.claude/rules/` |
+| 에이전트 | 진입점 | 공통 규칙 |
+|----------|--------|----------|
+| Antigravity (나) | `.antigravity/SESSION_RULES.md` | `.claude/rules/` 참조 |
+| Claude Code | `CLAUDE.md` | `.claude/rules/` (정본) |
+| Codex | `.codex/CODEX.md` | `.claude/rules/` 참조 |
+| Cursor | `.cursor/rules/` | `.claude/rules/` 참조 |

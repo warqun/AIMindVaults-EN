@@ -1,81 +1,81 @@
-# /note-from-article — Web Article/Text to Vault Note Conversion Pipeline
+# /note-from-article — 웹 글/텍스트 → 볼트 노트 변환 파이프라인
 
-> Converts a web article, blog post, document URL, or user-pasted text into a structured note.
+> 웹 글, 블로그, 문서 URL 또는 사용자가 붙여넣은 텍스트를 구조화된 노트로 변환.
 
-Input: $ARGUMENTS
+입력: $ARGUMENTS
 
-## Pipeline Stages
+## 파이프라인 단계
 
-### Stage 1: Acquire Content
+### 1단계: 콘텐츠 확보
 
-If a URL is provided, attempt in priority order:
+URL이 주어진 경우 우선순위대로 시도:
 
-1. **WebFetch**: Extract body text using URL + prompt
-2. **Chrome MCP**: If WebFetch fails -> navigate -> get_page_text
-3. **User paste**: If all above fail, request the user to paste the body text
+1. **WebFetch**: URL + 프롬프트로 본문 추출
+2. **Chrome MCP**: WebFetch 실패 시 → navigate → get_page_text
+3. **사용자 붙여넣기**: 위 모두 실패 시 사용자에게 본문 붙여넣기 요청
 
-If text is provided directly -> skip Stage 1.
+텍스트가 직접 주어진 경우 → 1단계 건너뜀.
 
-Metadata extraction:
-- Title, author/source, publication date, URL
+메타데이터 추출:
+- 제목, 저자/출처, 게시일, URL
 
-### Stage 2: Identify Key Content
+### 2단계: 핵심 내용 파악
 
-- Read the original text and **compress the core arguments/concepts into 3-5 points**
-- Separate supplementary content (ads, author bios, CTAs) from core content
-- Reference the original structure (sections, subheadings) if present, but do not copy it as-is
+- 원문을 읽고 **핵심 주장/개념을 3~5개로 압축**
+- 부수적 내용(광고, 자기소개, CTA)과 핵심 내용 분리
+- 원문의 구조(섹션, 소제목)가 있으면 참고하되 그대로 복사하지 않음
 
-### Stage 3: Vault Routing
+### 3단계: 볼트 라우팅
 
-- Determine the target vault based on the article's topic keywords
-- If the user specified a vault, use it as-is
-- If ambiguous, confirm with the user
-- Place under the target vault's Contents/Domain/
+- 글의 주제 키워드로 대상 볼트 판단
+- 사용자가 볼트를 지정했으면 그대로 사용
+- 모호하면 사용자에게 확인
+- 대상 볼트의 Contents/Domain/ 하위에 배치
 
-### Stage 4: Note Structuring
+### 4단계: 노트 구조화
 
-- **H1**: A refined title based on the core concept (not the original title verbatim)
-- **Key Summary**: Compress the entire article into 3-5 lines (top of the note)
-- **Body**: H2 sections organized by topic. Summarize and restructure the original while respecting copyright
-  - Direct quotation limited to one instance of 15 words or fewer
-  - All other content must be restated in your own words
-- **Comparisons/Tables**: Organize comparable content into tables
-- **Related Materials**: WikiLinks, original article link
+- **H1**: 핵심 개념으로 정제된 제목 (원문 제목 그대로가 아님)
+- **핵심 요약**: 글 전체를 3~5줄로 압축 (노트 상단)
+- **본문**: 주제별 H2 섹션. 원문을 요약·재구성하되, 저작권 준수
+  - 원문 직접 인용은 15단어 이내 1건만 허용
+  - 나머지는 자체 표현으로 재서술
+- **비교/표**: 대조 가능한 내용은 표로 정리
+- **관련 자료**: 위키링크, 원문 링크
 
 Frontmatter:
 ```yaml
 ---
 type: domain
 tags:
-  - [vault-tag]
-  - [topic-tags]
-source: [URL or source]
-source_title: [original title]
-source_author: [author/publisher]
+  - [볼트태그]
+  - [주제태그들]
+source: [URL 또는 출처]
+source_title: [원문 제목]
+source_author: [저자/매체]
 created: YYYY-MM-DD
 agent: claude
 ---
 ```
 
-Include Juggl embed.
+Juggl 임베드 포함.
 
-### Stage 5: Quality Verification
+### 5단계: 품질 검증
 
-- Run post-edit review
-- Self-check for key omissions compared to the original
+- post-edit review 실행
+- 원문 대비 핵심 누락 여부 자체 점검
 
-## Copyright Rules
+## 저작권 규칙
 
-- Do not copy the original text verbatim
-- The note is **a restructured expression of the original's core concepts in your own words**
-- Quotations must be 15 words or fewer, use quotation marks, limited to 1 instance
-- No continuous paraphrasing exceeding 30 words
+- 원문을 그대로 옮기지 않는다
+- 노트는 **원문의 핵심 개념을 자체 표현으로 재구성**한 것
+- 인용은 15단어 이내, 인용부호 사용, 1건 제한
+- 30단어 이상의 연속 패러프레이즈 금지
 
-## Failure Handling
+## 실패 시 대응
 
-| Situation | Response |
-|-----------|----------|
-| Page requires login | Request the user to paste the body text |
-| Page requires JS rendering | Switch to Chrome MCP |
-| Content is too short | Organize as-is; report to user if supplementation is needed |
-| Multilingual content | Translate to the user's language while keeping key terms in the original language |
+| 상황 | 대응 |
+|------|------|
+| 페이지 로그인 필요 | 사용자에게 본문 붙여넣기 요청 |
+| 페이지 JS 렌더링 필수 | Chrome MCP로 전환 |
+| 내용이 너무 짧음 | 그대로 정리, 보강 필요 시 사용자에게 보고 |
+| 다국어 콘텐츠 | 한국어로 번역하되 핵심 용어는 원문 병기 |

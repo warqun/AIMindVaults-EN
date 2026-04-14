@@ -7,22 +7,22 @@ agent: claudian
 updated: 2026-03-06
 ---
 
-# _forge/staging — Pre-Transfer Review Queue
+# _forge/staging — AgentForge 이전 전 검토 대기
 
-Files awaiting final review before being moved to the AgentForge vault are stored here.
+AgentForge 볼트로 이동하기 전 최종 검토 대기 파일들을 여기에 보관한다.
 
-## Workflow
+## 사용 흐름
 
 ```
-inbox/ receives results
-    |
-Claudian processes (script validation, file cleanup)
-    |
-staging/ holds (awaiting review)
-    |
-Move to AgentForge vault
+inbox/ 결과 수신
+    ↓
+Claudian 처리 (스크립트 검증, 파일 정리)
+    ↓
+staging/ 보관 (검토 대기)
+    ↓
+AgentForge 볼트로 이동
 ```
 
-## Currently Pending
+## 현재 대기 중
 
-(none)
+(없음)

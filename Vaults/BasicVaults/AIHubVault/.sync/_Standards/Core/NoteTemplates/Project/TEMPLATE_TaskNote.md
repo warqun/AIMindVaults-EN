@@ -14,30 +14,30 @@ priority: medium
 local: <% tp.file.title %>
 ```
 
-## Goal
+## 목표
 
-<!-- What changes when this task is complete. -->
+<!-- 이 작업이 완료되면 무엇이 달라지는가. -->
 
-## Done Criteria
+## 완료 조건 (Done Criteria)
 
 - [ ]
 - [ ]
 
-## Task Details
+## 작업 내용
 
 -
 
-## Blocking / Dependencies
+## 블로킹 / 의존
 
-- Blocking: [[]]
-- Prerequisite: [[]]
+- 블로킹: [[]]
+- 선행 필요: [[]]
 
-## Progress Log
+## 진행 로그
 
-| Date | Details |
-|------|---------|
-| <% tp.date.now("YYYY-MM-DD") %> | Task started |
+| 날짜 | 내용 |
+|------|------|
+| <% tp.date.now("YYYY-MM-DD") %> | 작업 시작 |
 
 ---
 
-*Created: <% tp.date.now("YYYY-MM-DD") %>*
+*생성일: <% tp.date.now("YYYY-MM-DD") %>*

@@ -1,21 +1,21 @@
-# Script Creation Approval (Mandatory)
+# 스크립트 생성 사전 승인 (Mandatory)
 
-> Applies uniformly to all vaults. Common to all agents.
+> 모든 볼트에 동일 적용. 모든 에이전트 공통.
 
-## Rules
+## 규칙
 
-- When creating a new script (`.ps1`, `.py`, `.bat`, `.sh`, etc.) to perform a task, **you must report to and obtain approval from the user before creating it.**
-- Do not create or execute scripts without approval.
+- 작업 수행을 위해 새로운 스크립트(`.ps1`, `.py`, `.bat`, `.sh` 등)를 생성하려는 경우, **생성 전에 반드시 사용자에게 보고하고 승인을 받는다.**
+- 승인 없이 스크립트를 생성하거나 실행하지 않는다.
 
-## Required Report Items
+## 보고 항목
 
-1. Purpose of the script (why it is needed)
-2. File path where the script will be created
-3. Scope of impact when executed (which files/folders are affected)
-4. Whether it is one-time use or for permanent retention
+1. 스크립트의 목적 (왜 필요한가)
+2. 생성 경로
+3. 실행 시 영향 범위 (어떤 파일/폴더에 영향을 주는가)
+4. 일회성인지 영구 보관인지
 
-## Prohibited Actions
+## 금지 사항
 
-- Creating and running scripts without the user's knowledge is prohibited.
-- Modifying existing scripts without authorization is prohibited.
-- Reporting after the fact with "I created and ran it" without prior approval is prohibited.
+- 사용자 모르게 스크립트를 생성하여 자동화 실행하는 행위 금지.
+- 기존 스크립트를 무단으로 수정하는 행위 금지.
+- 보고 없이 "만들어서 실행했습니다"라고 사후 통보하는 행위 금지.

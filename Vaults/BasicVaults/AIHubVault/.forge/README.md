@@ -5,29 +5,29 @@ agent: claude
 updated: 2026-03-08
 ---
 
-# .forge — External Agent Output Staging
+# .forge — 외부 에이전트 결과물 스테이징
 
-A space for deploying this vault's (AIMindVault) workspace configuration to other vaults.
+이 볼트(AIMindVault)의 작업환경 구성을 다른 볼트로 배포하기 위한 공간.
 
-## Structure
+## 구조
 
-| Folder | Purpose |
-|--------|---------|
-| `inbox/` | Receives outputs from external agents (Grok, Codex, etc.) |
-| `staging/` | Scripts/configs that have been reviewed and are ready for deployment |
-| `tasks/` | Draft task directives related to deployment |
+| 폴더 | 용도 |
+|------|------|
+| `inbox/` | 외부 에이전트(Grok·Codex 등) 결과물 수신 대기 |
+| `staging/` | 배포 전 검토·준비 완료된 스크립트·설정 |
+| `tasks/` | 배포 관련 작업 지시 초안 |
 
-## Workflow
+## 워크플로우
 
 ```
-External agent output
-    -> inbox/ (received)
-    -> Review
-    -> staging/ (deployment-ready)
-    -> Deploy to target vault
+외부 에이전트 결과물
+    → inbox/ (수신)
+    → 검토
+    → staging/ (배포 준비 완료)
+    → 대상 볼트에 배포
 ```
 
-## Related Documents
+## 관련 문서
 
-- [[_tools/GitMirrorSync_DecisionPoints]] — Vault cloning/sync decision points
-- [[_tools/clone_vault.ps1]] — Vault cloning script
+- [[_tools/GitMirrorSync_DecisionPoints]] — 볼트 복제/동기화 결정 사항
+- [[_tools/clone_vault.ps1]] — 볼트 복제 스크립트

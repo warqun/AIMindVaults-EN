@@ -9,71 +9,71 @@ tags:
 date: 2026-03-07
 ---
 
-# Obsidian Git + Time Machine Optimal Setup Guide (2026)
+# Obsidian Git + Time Machine 최적 설정 가이드 (2026년 기준)
 
-**Purpose**: Build an optimized backup and point-in-time timeline recovery system for your Obsidian vault. This guide maximizes the synergy between the Obsidian Git plugin and the Time Machine plugin.
+**목적**: 옵시디언 볼트의 완벽한 백업과 과거 시점 타임라인 복원 시스템을 구축하기 위한 최적화된 설정 조합입니다. Obsidian Git 플러그인과 Time Machine 플러그인의 시너지를 최대화합니다.
 
-This combination provides intuitive timeline-based partial recovery (Time Machine) when you accidentally delete content, while simultaneously maintaining long-term version-controlled backups on the cloud via GitHub (Obsidian Git) — the **ultimate backup + timeline system**.
+이 조합은 실수로 내용을 지웠을 때 직관적으로 타임라인을 넘겨가며 복구(Time Machine)할 수 있게 해주고, 동시에 클라우드(GitHub)에 안전하게 장기 형상 관리 백업(Obsidian Git)을 해주는 **최고의 백업+타임라인 시스템**입니다.
 
 ---
 
-## 1. Obsidian Git — Optimal Auto-Commit Settings (Most Important!)
+## 1. Obsidian Git – 자동 커밋 최적 설정 (가장 중요!)
 
-**Settings path**: `Settings` → `Community plugins` → `Obsidian Git` settings (gear icon)
+**설정 경로**: `Settings(설정)` → `Community plugins` → `Obsidian Git` 설정(⚙️) 열기
 
-| Setting | Recommended Value | Reason / Tips |
-|:--------|:------------------|:--------------|
-| **Auto commit-and-sync interval** | **10 minutes** (5-15 range) | 5 minutes creates too many commits and can get heavy. 10 minutes is the most stable. |
-| **Auto commit-and-sync after stopping file edits** | `On` | Commits right after edits stop, increasing real-time backup coverage |
-| **Auto pull interval** | **10 minutes** | Match with commit interval |
-| **Auto pull on startup** | `On` | Automatically pulls the latest version every time Obsidian starts |
-| **Push on commit-and-sync** | `On` | Auto-push to GitHub remote on commit (confirms backup) |
-| **Author name for commit** | Your name | (Required) |
-| **Author email for commit** | GitHub email | (Required) |
-| **Commit message template** | `{{date:YYYY-MM-DD HH:mm}} {{message}}` | Time is auto-recorded in commit messages, making later identification very easy |
-| **Merge strategy** | `Merge` (or `Rebase`) | `Merge` is the safest and most straightforward for personal vaults |
+| 설정 항목 | 추천 값 | 이유 / 팁 |
+| :--- | :--- | :--- |
+| **Auto commit-and-sync interval** | **10분** (5~15분 사이) | 5분은 너무 자주 커밋되어 무거워질 수 있음. 10분이 가장 안정적. |
+| **Auto commit-and-sync after stopping file edits** | `On` | 파일 수정이 끝나면 바로 커밋하여 실시간 백업성 증가 |
+| **Auto pull interval** | **10분** | 커밋 간격과 동일하게 맞춤 |
+| **Auto pull on startup** | `On` | 옵시디언을 켤 때마다 자동으로 최신 버전을 가져옴 |
+| **Push on commit-and-sync** | `On` | 커밋과 동시에 GitHub 원격 저장소로 자동 푸시 (백업 확정) |
+| **Author name for commit** | 본인 이름 | (필수 설정) |
+| **Author email for commit** | GitHub 이메일 | (필수 설정) |
+| **Commit message template** | `{{date:YYYY-MM-DD HH:mm}} {{message}}` | 커밋 메시지에 시간이 자동 기록되어 나중에 식별하기 매우 좋음 |
+| **Merge strategy** | `Merge` (또는 `Rebase`) | 혼자 사용하는 개인 볼트라면 `Merge`가 가장 무난하고 안전함 |
 
-**Additionally recommended options:**
+**추가로 켜두면 좋은 옵션:**
 - `Auto backup after latest commit` → `On`
 - `Pull changes before commit` → `On`
 
-> **Effect:** With this setup, around 100-200 auto-commits will naturally accumulate per day without putting strain on Obsidian performance.
+> 💡 **효과:** 이렇게 설정해두면 하루에 100~200개 정도의 자동 커밋이 자연스럽게 쌓이면서도 옵시디언 성능에 무리를 주지 않습니다.
 
 ---
 
-## 2. Time Machine — How to View the Timeline
+## 2. Time Machine – 타임라인 보는 법
 
-The Time Machine plugin **requires almost no complex configuration**.
-If Git is already connected to your vault, it **automatically merges Git commit history and Obsidian's built-in File Recovery snapshots into a single timeline** (duplicates are automatically removed).
+Time Machine 플러그인은 **별도의 복잡한 설정이 거의 필요 없습니다**. 
+Git이 이미 볼트에 연결되어 있다면, **자동으로 Git 커밋 내역과 옵시디언 기본 File Recovery 스냅샷을 하나의 타임라인으로 합쳐서 보여줍니다** (중복은 자동 제거됨).
 
-### How to Access the Timeline (3 methods)
+### 타임라인 진입 방법 (3가지)
 
-1. **Easiest method (recommended)**
-   - Open the note you want to view past history for.
-   - Click the **Time Machine icon (clock shape)** in the right sidebar menu.
-   - The timeline slider appears at the bottom of the screen immediately!
-2. **Via Command Palette**
-   - Press `Ctrl + P` and search for `Time Machine: Open timeline for current file`.
-3. **From File Explorer**
-   - Right-click the note title in the file explorer and select `Open Time Machine`.
+1. **가장 쉬운 방법 (추천)**
+   - 과거 기록을 보고 싶은 노트를 엽니다.
+   - 오른쪽 사이드바 메뉴에서 **Time Machine 아이콘(시계 모양 ⏱️)**을 클릭합니다.
+   - 화면 하단에 바로 타임라인 슬라이더가 등장합니다!
+2. **명령어 팔레트로 열기**
+   - `Ctrl + P`를 누르고 `Time Machine: Open timeline for current file`을 검색하여 실행합니다.
+3. **탐색기에서 열기**
+   - 파일 탐색기에서 노트 제목을 우클릭하고 `Open Time Machine`을 선택합니다.
 
-### Timeline Features
-- **Drag the bottom slider left and right** to preview past versions (edit history) in real time.
-- Besides rolling back the entire document to a specific point, you can **copy and restore just a specific paragraph (partial)**.
-- **Blue dots** on the timeline represent Git commits, while **gray dots** represent system File Recovery snapshots.
+### 타임라인 활용 기능
+- 하단의 **슬라이더를 좌우로 드래그**하면서 과거 버전(수정 내역)을 실시간 미리보기로 확인할 수 있습니다.
+- 특정 시점을 선택한 뒤, 문서 전체를 롤백하는 것뿐만 아니라 **특정 문단(부분)만 복사해서 되돌리기**가 가능합니다.
+- 타임라인 상의 **파란 점은 Git 커밋**을, **회색 점은 시스템 File Recovery** 스냅샷을 나타냅니다.
 
 ---
 
-## 3. Complete Optimal Setup Summary (Follow These Steps)
+## 3. 전체 최적 조합 요약 (이대로 따라 하세요)
 
-1. **File Recovery (Core Plugin)**
-   - Enable (recommended interval: `5 minutes`)
-2. **Obsidian Git (Community Plugin)**
-   - Configure 10-minute interval auto-sync as per the optimization table above
-3. **Time Machine (Community Plugin)**
-   - Install and activate (auto-integrates)
+1. **File Recovery (코어 플러그인)** 
+   - 켜기 (간격은 `5분` 추천)
+2. **Obsidian Git (커뮤니티 플러그인)** 
+   - 위의 최적화 표대로 10분 간격 자동 동기화 셋팅
+3. **Time Machine (커뮤니티 플러그인)** 
+   - 설치 및 활성화 (자동 연동됨)
 
-With this setup:
-- If you accidentally lose note content, you can **instantly perform partial recovery via the Time Machine timeline**.
-- Long-term document corruption/loss is prevented by **automatic backup to GitHub**.
-- On PC, the Git-based system works, and on mobile, the File Recovery timeline provides defense — **protection everywhere, anytime**.
+이 상태를 세팅해두면:
+- 실수로 노트를 날려버리면 **Time Machine 타임라인**으로 즉각 부분 복구할 수 있습니다.
+- 장기적인 문서 훼손/손실을 막기 위해 **GitHub**에 안전하게 자동 저장(백업)됩니다.
+- PC에서는 Git 기반, 모바일에서는 File Recovery 타임라인을 통해 언제 어디서든 방어 체계가 작동합니다.

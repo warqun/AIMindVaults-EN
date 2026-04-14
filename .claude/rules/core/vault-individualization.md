@@ -1,96 +1,96 @@
-# Vault Individualization (Mandatory)
+# 볼트 개별화 (Mandatory)
 
-> Applies when creating any vault. Rules for tailoring individual settings to the vault's purpose and topic.
+> 모든 볼트 생성 시 적용. 볼트의 용도와 주제에 맞게 개별 설정을 구체화하는 규칙.
 
-## Vault Creation Method (Mandatory)
+## 볼트 생성 방법 (강제)
 
-**All new vaults must be created by cloning BasicContentsVault using `node cli.js clone`.**
+**모든 새 볼트는 `node cli.js clone`으로 BasicContentsVault를 클론하여 생성한다.**
 
-- Source: `Vaults/BasicVaults/BasicContentsVault/` (general-purpose vault template)
-- Tool: `.sync/_tools/cli-node/bin/cli.js clone`
-- Do not manually copy folders (`Copy-Item`, `cp`, `xcopy`, etc.).
-- Do not use AIHubVault as a source (it is a workspace hub with a heavy structure).
+- 소스: `Vaults/BasicVaults/BasicContentsVault/` (범용 볼트 템플릿)
+- 도구: `.sync/_tools/cli-node/bin/cli.js clone`
+- 폴더를 수동 복사(`Copy-Item`, `cp`, `xcopy` 등)하지 않는다.
+- AIHubVault는 소스로 사용하지 않는다 (작업환경 허브라 구조가 무거움).
 
 ```bash
-node "{vault_path}/.sync/_tools/cli-node/bin/cli.js" clone -t "<target_path>" -n "<vault_name>"
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" clone -t "<대상경로>" -n "<볼트명>"
 ```
 
-This script handles:
-- Copying while excluding `.git`, caches, and sync folders (robocopy)
-- Automatic removal of device-specific plugin settings (obsidian-git, claudian)
-- Automatic update of make-md systemName
+이 스크립트가 처리하는 항목:
+- `.git`, 캐시, 동기화 폴더 제외 복사 (robocopy)
+- 디바이스별 플러그인 설정 자동 제거 (obsidian-git, claudian)
+- make-md systemName 자동 갱신
 
-After cloning, perform the **required decisions** and **required tasks** below.
+클론 완료 후 아래 **필수 결정 항목**과 **필수 작업**을 수행한다.
 
-## Required Decisions When Creating a Vault
+## 볼트 생성 시 필수 결정 항목
 
-### 1. Vault Name
+### 1. 볼트명
 
-- Use a name that immediately conveys the vault's role.
-- No URI reserved characters (`#`, `%`, `&`, `?`, `+`) or emojis.
-- Examples: `Unity`, `AppFlowy`, `Project_VamSurLike`
+- 역할이 즉시 파악되는 이름 사용.
+- URI 예약문자(`#`, `%`, `&`, `?`, `+`) 및 이모지 금지.
+- 예: `Unity`, `AppFlowy`, `Project_VamSurLike`
 
-### 2. Parent Folder Category
+### 2. 상위 폴더 분류
 
-Place the vault under the appropriate parent folder based on its nature:
+볼트의 성격에 따라 적절한 상위 폴더에 배치:
 
-| Category | Path | Criteria |
-|----------|------|----------|
-| Domains_Game | `Vaults/Domains_Game/` | Game-related domain knowledge |
-| Domains_Video | `Vaults/Domains_Video/` | Video/media domain knowledge |
-| Domains_Infra | `Vaults/Domains_Infra/` | Infrastructure/tools domain knowledge |
-| Projects_GameTool | `Vaults/Projects_GameTool/` | Game development tools/toolkit projects |
-| Projects_Game | `Vaults/Projects_Game/` | Game development projects |
-| Projects_Infra | `Vaults/Projects_Infra/` | Infrastructure project deliverables |
-| Lab_Infra | `Vaults/Lab_Infra/` | Domain + project hybrid (plugin development, etc.) |
-| Personal | `Vaults/Personal/` | Personal records |
-| BasicVaults | `Vaults/BasicVaults/` | System vaults (Hub, distribution copy) |
+| 분류 | 경로 | 기준 |
+|------|------|------|
+| Domains_Game | `Vaults/Domains_Game/` | 게임 관련 도메인 지식 |
+| Domains_Video | `Vaults/Domains_Video/` | 영상/미디어 도메인 지식 |
+| Domains_Infra | `Vaults/Domains_Infra/` | 인프라/도구 도메인 지식 |
+| Projects_GameTool | `Vaults/Projects_GameTool/` | 게임 개발 도구/툴킷 프로젝트 |
+| Projects_Game | `Vaults/Projects_Game/` | 게임 개발 프로젝트 |
+| Projects_Infra | `Vaults/Projects_Infra/` | 인프라 프로젝트 작업물 |
+| Lab_Infra | `Vaults/Lab_Infra/` | 도메인+프로젝트 복합 (플러그인 개발 등) |
+| Personal | `Vaults/Personal/` | 개인 기록 |
+| BasicVaults | `Vaults/BasicVaults/` | 시스템 볼트 (Hub, 배포본) |
 
-If a new category is needed, confirm with the user before creating it.
+새 분류가 필요하면 사용자에게 확인 후 생성.
 
-### 3. CLAUDE.md Authoring
+### 3. CLAUDE.md 작성
 
-Write CLAUDE.md tailored to the vault's role:
+볼트 역할에 맞게 CLAUDE.md를 개별 작성:
 
-- **This vault's role**: 1-2 clear lines
-- **Collection scope**: Types and criteria for content that should go in this vault
-- **What this vault does NOT collect**: Boundaries for similar content that should be routed to other vaults. Specify adjacent vaults that may cause confusion (e.g., "Shader styling goes here; color theory goes to LightAndColor")
-- **Directory structure**: Folder structure under Contents/
-- **Tag rules**: Designate the vault identification tag
-- **Session entry rules**: Include mandatory pre-read of _STATUS.md
+- **이 볼트의 역할**: 1~2줄로 명확히
+- **수집 범위**: 이 볼트에 들어와야 하는 콘텐츠의 종류와 기준
+- **수집하지 않는 것**: 유사하지만 다른 볼트로 라우팅해야 하는 경계. 혼동 가능한 인접 볼트를 명시 (예: "셰이더 스타일링은 여기, 색채 이론은 LightAndColor로")
+- **디렉토리 구조**: Contents/ 하위 폴더 구조
+- **태그 규칙**: 볼트 식별 태그 지정
+- **세션 진입 규칙**: _STATUS.md 선독 필수 포함
 
-### 4. Content Structure
+### 4. 콘텐츠 구조 결정
 
-Set up the Contents/ subdirectory structure based on vault type:
+볼트 타입에 따라 Contents/ 하위 구조를 설정:
 
-- **Domain vaults**: Topic-based folders under `Contents/Domain/`
-- **Project vaults**: `Contents/Project/plan/`, `Contents/Project/idea/`, etc.
-- Structure can be freely set to match the vault's purpose, but must be registered in `_VAULT-INDEX.md`
+- **Domain 볼트**: `Contents/Domain/` 하위에 주제별 폴더
+- **Project 볼트**: `Contents/Project/plan/`, `Contents/Project/idea/` 등
+- 구조는 볼트 용도에 맞게 자유롭게 설정하되, `_VAULT-INDEX.md`에 등록
 
-### 5. Tag Rules
+### 5. 태그 규칙
 
-- Designate one vault identification tag (e.g., `Unity`, `AppFlowy`, `Project_VamSurLike`)
-- This tag must be included in the frontmatter `tags` of every note
+- 볼트 식별 태그를 1개 지정 (예: `Unity`, `AppFlowy`, `Project_VamSurLike`)
+- 모든 노트의 frontmatter `tags`에 이 태그를 필수 포함
 
-## Required Tasks After Vault Creation
+## 볼트 생성 후 필수 작업
 
-1. Run workspace sync (propagate Core files from Hub)
-2. Register in the root `_STATUS.md` vault registry
-3. Add keywords to the vault entry protocol in the root `CLAUDE.md`
-4. **Initial content index build** (Mandatory):
+1. workspace 동기화 실행 (Hub에서 Core 파일 전파)
+2. 루트 `_STATUS.md` 볼트 레지스트리에 등록
+3. 루트 `CLAUDE.md` 볼트 진입 프로토콜에 키워드 추가
+4. **초기 콘텐츠 인덱스 빌드** (강제):
 ```bash
-node "{vault_path}/.sync/_tools/cli-node/bin/cli.js" index build -r "{vault_path}"
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index build -r "{볼트경로}"
 ```
-   - If the CLI script is missing, workspace sync was not completed — re-check from step 1
-   - After the build completes, verify that `vault_index.json` was created
+   - CLI 스크립트가 없으면 workspace 동기화가 안 된 것이므로 1번부터 재확인
+   - 빌드 완료 후 `vault_index.json` 생성을 확인
 
-## Items Excluded from Distribution Sync
+## 배포 동기화 대상 제외 항목
 
-Vault-individual files are not included in distribution sync:
+볼트 개별 파일은 배포 동기화에 포함하지 않는다:
 
-- `CLAUDE.md` (content differs per vault)
-- `CODEX.md` (varies by agent selection)
-- `AGENT_STATUS.md` (varies by agent selection)
-- `_STATUS.md` (status differs per vault)
-- `_VAULT-INDEX.md` (structure differs per vault)
-- `_Standards/CONTENTS_SPEC.md` (content scope differs per vault)
+- `CLAUDE.md` (볼트별 내용 다름)
+- `CODEX.md` (에이전트 선택에 따라 다름)
+- `AGENT_STATUS.md` (에이전트 선택에 따라 다름)
+- `_STATUS.md` (볼트별 상태 다름)
+- `_VAULT-INDEX.md` (볼트별 구조 다름)
+- `_Standards/CONTENTS_SPEC.md` (볼트별 콘텐츠 범위 다름)

@@ -1,86 +1,86 @@
-# AIMindVaults User Customization Guide
+# AIMindVaults 사용자 커스터마이징 가이드
 
-This document explains how to extend and adjust AIMindVaults to fit your environment.
-Starting from the default setup (AIHubVault + BasicContentsVault), you can add and modify as needed.
+이 문서는 AIMindVaults를 자신의 환경에 맞게 확장하고 조정하는 방법을 설명합니다.
+기본 제공 구성(AIHubVault + BasicContentsVault)을 출발점으로, 필요한 만큼 추가·변경할 수 있습니다.
 
 ---
 
-## 1. Adding Vaults
+## 1. 볼트 추가
 
-When a new topic or project comes up, add a vault to manage knowledge separately.
+새로운 주제나 프로젝트가 생기면 볼트를 추가해 지식을 분리 관리합니다.
 
-### Creating a Vault
+### 볼트 생성
 
-Clone `BasicContentsVault` as a template.
+`BasicContentsVault`를 템플릿으로 복제합니다.
 
 ```bash
-node cli.js clone -t "<target_path>" -n "<vault_name>"
+node cli.js clone -t "<대상경로>" -n "<볼트명>"
 ```
 
-Example:
+예시:
 
 ```bash
 node cli.js clone -t "Vaults/Domains_Dev/Python" -n "Python"
 ```
 
-Do not use manual folder copying (`Copy-Item`, `cp`, `xcopy`). Automated steps such as plugin settings, sync folder handling, and indexer initialization will be skipped.
+수동 폴더 복사(`Copy-Item`, `cp`, `xcopy`)는 사용하지 않습니다. 플러그인 설정, 동기화 폴더 처리, 인덱서 초기화 등 자동 처리 단계가 누락됩니다.
 
-### Choosing a Category
+### 카테고리 선택
 
-Select the parent folder that matches the vault's purpose.
+볼트의 성격에 맞는 상위 폴더를 선택합니다.
 
-| Category | Path | Criteria |
-|----------|------|----------|
-| Domains_* | `Vaults/Domains_<area>/` | Knowledge accumulation on a specific topic (tools, languages, techniques, etc.) |
-| Lab_* | `Vaults/Lab_<area>/` | Knowledge accumulation + hands-on development/experimentation hybrid |
-| Projects_* | `Vaults/Projects_<area>/` | Active project execution and work management |
-| Personal | `Vaults/Personal/` | Personal records, diary, retrospectives |
+| 분류 | 경로 | 기준 |
+|------|------|------|
+| Domains_* | `Vaults/Domains_<영역>/` | 특정 주제의 지식 축적 (도구, 언어, 기법 등) |
+| Lab_* | `Vaults/Lab_<영역>/` | 지식 축적 + 실제 개발/실험 복합 |
+| Projects_* | `Vaults/Projects_<영역>/` | 실전 프로젝트 실행 및 작업 관리 |
+| Personal | `Vaults/Personal/` | 개인 기록, 다이어리, 회고 |
 
-Examples: Python language knowledge → `Vaults/Domains_Dev/Python/`, game development project → `Vaults/Projects_Game/MyGame/`
+예: Python 언어 지식 → `Vaults/Domains_Dev/Python/`, 게임 개발 프로젝트 → `Vaults/Projects_Game/MyGame/`
 
-### Required Steps After Creation
+### 생성 후 필수 작업
 
-Complete the following 6 steps in order after creating a vault.
+볼트를 생성한 뒤 아래 6단계를 순서대로 완료합니다.
 
-**1. Individualize CLAUDE.md**
+**1. CLAUDE.md 개별화**
 
-Open `CLAUDE.md` at the vault root and define the role, collection scope, and tag rules for the vault.
-See [5. Vault CLAUDE.md Writing Guide](#5-vault-claudemd-writing-guide) below for details.
+볼트 루트의 `CLAUDE.md`를 열고 역할, 수집 범위, 태그 규칙을 해당 볼트에 맞게 작성합니다.
+작성 방법은 아래 [5. 볼트 CLAUDE.md 작성 가이드](#5-볼트-claudemd-작성-가이드)를 참고합니다.
 
-**2. Initialize _STATUS.md**
+**2. _STATUS.md 초기화**
 
-Open `_STATUS.md` at the vault root and fill in the initial state (Now, Next, Blocked).
+볼트 루트의 `_STATUS.md`를 열고 현재 상태(Now, Next, Blocked)를 초기 상태로 기입합니다.
 
-**3. Register in the Root CLAUDE.md Vault Registry**
+**3. 루트 CLAUDE.md 볼트 레지스트리에 등록**
 
-Add the new vault to the vault registry table in `C:\AIMindVaults\CLAUDE.md`.
-
-```markdown
-| MyVault | `Vaults/Domains_Dev/MyVault/` | Role description | active |
-```
-
-**4. Add Routing Keywords to Root CLAUDE.md**
-
-In the same file, add keywords to the "Vault Entry Protocol > Keyword Inference" section so the vault can be discovered.
+`C:\AIMindVaults\CLAUDE.md`의 볼트 레지스트리 테이블에 새 볼트를 추가합니다.
 
 ```markdown
-- "Python", "pandas", "pip" → Vaults/Domains_Dev/Python
+| MyVault | `Vaults/Domains_Dev/MyVault/` | 역할 설명 | active |
 ```
 
-**5. Register in Obsidian Vault Manager**
+**4. 루트 CLAUDE.md 라우팅 키워드 추가**
 
-Obsidian app > Vault manager > "Open folder as vault" > Select vault path.
-Do not use `obsidian://open?path=` URI for unregistered vaults — it causes very slow app startup.
+같은 파일의 "볼트 진입 프로토콜 > 키워드 추론" 섹션에 이 볼트를 찾아올 수 있는 키워드를 추가합니다.
 
-**6. Initial Index Build**
+```markdown
+- "Python", "파이썬", "pandas", "pip" → Vaults/Domains_Dev/Python
+```
 
-Build the index to enable note search within the vault.
+**5. Obsidian 볼트 매니저에서 등록**
+
+Obsidian 앱 > 볼트 매니저 > "보관함 폴더 열기" > 볼트 경로 선택.
+`obsidian://open?path=` URI로 미등록 볼트를 여는 것은 앱 속도가 매우 느리므로 사용하지 않습니다.
+
+**6. 초기 인덱스 빌드**
+
+볼트 내 노트 검색이 가능하도록 인덱스를 빌드합니다.
 
 ```bash
-node cli.js index build -r "<vault_path>"
+node cli.js index build -r "<볼트경로>"
 ```
 
-Example:
+예시:
 
 ```bash
 node cli.js index build -r "Vaults/Domains_Dev/Python"
@@ -88,262 +88,262 @@ node cli.js index build -r "Vaults/Domains_Dev/Python"
 
 ---
 
-## 2. Customizing Rules
+## 2. 규칙 커스터마이징
 
-You can add or adjust behavioral rules that agents (Claude Code, etc.) follow.
-
-### core vs custom
-
-| Location | Path | Nature |
-|----------|------|--------|
-| Core rules | `.claude/rules/core/` | Essential system rules. May be overwritten on update. Modification not recommended. |
-| Custom rules | `.claude/rules/custom/` | User-specific. Not subject to distribution sync. Freely add/modify. |
-
-If your settings must persist through updates, always write them in `custom/`.
-
-### Adding Custom Rules
-
-Create a markdown file inside `.claude/rules/custom/`.
-
-File format:
-
-```markdown
-# Rule Title (Mandatory or Optional)
-
-> Scope description.
-
-## Rules
-
-- Specific rule content
-- Specific rule content
-```
-
-`Mandatory` means the agent must follow the rule; `Optional` is a recommendation.
-
-Example — MCP server integration rule (`mcp-notion.md`):
-
-```markdown
-# Notion MCP Usage (Mandatory)
-
-> Applied when working with Notion.
-
-## Rules
-
-- Use the Notion MCP tools first for page read/write operations.
-- Direct API calls are only allowed when MCP tools cannot accomplish the task.
-```
-
-Example — Project-specific coding style (`python-style.md`):
-
-```markdown
-# Python Coding Style (Mandatory)
-
-> Applied when writing Python code.
-
-## Rules
-
-- Specify type hints for all function parameters and return values.
-- Write docstrings in Google style.
-- Include a module description docstring at the top of each file.
-```
-
----
-
-## 3. Customizing Skills
-
-Skills are slash commands invoked with `/skill-name` in Claude Code.
-Creating skills for frequently used workflows reduces repetitive instructions.
+에이전트(Claude Code 등)가 따르는 행동 규칙을 추가하거나 조정할 수 있습니다.
 
 ### core vs custom
 
-| Location | Path | Nature |
-|----------|------|--------|
-| Core skills | `.claude/commands/core/` | Essential system skills. Modification not recommended. |
-| Custom skills | `.claude/commands/custom/` | User-specific. Freely add. |
+| 위치 | 경로 | 성격 |
+|------|------|------|
+| core 규칙 | `.claude/rules/core/` | 시스템 핵심 규칙. 업데이트 시 덮어쓰기 가능. 수정 비권장. |
+| custom 규칙 | `.claude/rules/custom/` | 사용자 전용. 배포 동기화 대상이 아님. 자유롭게 추가/수정 가능. |
 
-### Adding Custom Skills
+업데이트를 받아도 자신의 설정이 유지되어야 한다면 반드시 `custom/`에 작성합니다.
 
-Create a markdown file inside `.claude/commands/custom/`.
-The filename becomes the skill name. `/my-skill` → `my-skill.md`
+### custom 규칙 추가 방법
 
-Example — Weekly review skill (`weekly-review.md`):
+`.claude/rules/custom/` 안에 마크다운 파일을 생성합니다.
+
+파일 형식:
 
 ```markdown
-# /weekly-review — Write Weekly Review
+# 규칙 제목 (Mandatory 또는 Optional)
 
-Create a weekly review note in Vaults/Personal/Diary/.
+> 적용 범위 설명.
 
-## Procedure
+## 규칙
 
-1. Determine the date range for the current week (Monday–Sunday)
-2. Filename: `YYYY-MM-DD_weekly-review.md` (based on Monday's date)
-3. Frontmatter: type=memo, tags=[diary, weekly-review]
-4. Sections: What I did this week / What went well / What to improve / Next week's plan
-5. Run post_note_edit_review
+- 구체적 규칙 내용
+- 구체적 규칙 내용
+```
+
+`Mandatory`는 에이전트가 반드시 따르는 규칙, `Optional`은 권장 사항입니다.
+
+예시 — MCP 서버 연동 규칙 (`mcp-notion.md`):
+
+```markdown
+# Notion MCP 활용 (Mandatory)
+
+> Notion 관련 작업 시 적용.
+
+## 규칙
+
+- 페이지 읽기/쓰기는 Notion MCP 도구를 우선 사용한다.
+- API 직접 호출은 MCP 도구로 불가능한 경우에만 허용한다.
+```
+
+예시 — 프로젝트별 코딩 스타일 (`python-style.md`):
+
+```markdown
+# Python 코딩 스타일 (Mandatory)
+
+> Python 코드 작성 시 적용.
+
+## 규칙
+
+- 타입 힌트를 모든 함수 파라미터와 반환값에 명시한다.
+- docstring은 Google 스타일로 작성한다.
+- 파일 상단에 모듈 설명 docstring을 포함한다.
 ```
 
 ---
 
-## 4. Overriding Tag Rules
+## 3. 스킬 커스터마이징
 
-The default tag format applies system-wide, but you can use a different format per vault.
+스킬은 Claude Code에서 `/스킬명`으로 호출하는 slash command입니다.
+자주 쓰는 작업 흐름을 스킬로 만들어두면 반복 지시를 줄일 수 있습니다.
 
-### Default Tag Format
+### core vs custom
 
-- General keywords: kebab-case (lowercase + hyphen) — `skill-system`, `game-design`
-- Proper nouns (product names, frameworks): Preserve original spelling — `Unity`, `Notion`, `AI`
-- No hierarchical tags (`/` separator)
-- Singular form — `systems` X → `system` O
+| 위치 | 경로 | 성격 |
+|------|------|------|
+| core 스킬 | `.claude/commands/core/` | 시스템 핵심 스킬. 수정 비권장. |
+| custom 스킬 | `.claude/commands/custom/` | 사용자 전용. 자유롭게 추가 가능. |
 
-### Per-Vault Override
+### custom 스킬 추가 방법
 
-Adding a `## Tag Rules` section to the vault's `CLAUDE.md` makes that format take precedence within the vault.
+`.claude/commands/custom/` 안에 마크다운 파일을 생성합니다.
+파일명이 스킬명이 됩니다. `/my-skill` → `my-skill.md`
+
+예시 — 주간 회고 스킬 (`weekly-review.md`):
 
 ```markdown
-## Tag Rules
+# /weekly-review — 주간 회고 작성
 
-- Use PascalCase (e.g., `GameDesign`, `SkillSystem`)
-- Allow hierarchical tags (e.g., `unity/dots`, `design/system`)
-- Vault identifier tag: `GameDesign` (required on all notes)
+Vaults/Personal/Diary/에 이번 주 회고 노트를 생성한다.
+
+## 절차
+
+1. 이번 주 날짜 범위 확인 (월요일~일요일)
+2. 파일명: `YYYY-MM-DD_주간회고.md` (월요일 날짜 기준)
+3. frontmatter: type=memo, tags=[diary, weekly-review]
+4. 섹션: 이번 주 한 일 / 잘된 점 / 개선할 점 / 다음 주 계획
+5. post_note_edit_review 실행
 ```
-
-If no such section is declared, the system default tag format applies.
 
 ---
 
-## 5. Vault CLAUDE.md Writing Guide
+## 4. 태그 규칙 오버라이드
 
-The vault's `CLAUDE.md` is the first file an agent reads when entering the vault.
-The more clearly you define the vault's role, the more accurately the agent places content.
+기본 태그 형식은 시스템 전역에 적용되지만, 볼트별로 다른 형식을 사용할 수 있습니다.
 
-### Required Sections
+### 기본 태그 형식
+
+- 일반 키워드: kebab-case (소문자 + 하이픈) — `skill-system`, `game-design`
+- 고유명사 (제품명, 프레임워크명): 원래 표기 유지 — `Unity`, `Notion`, `AI`
+- 계층 태그(`/` 구분자) 사용 금지
+- 단수형 원칙 — `systems` X → `system` O
+
+### 볼트별 오버라이드
+
+볼트 `CLAUDE.md`에 `## 태그 규칙` 섹션을 추가하면 해당 볼트에서는 그 규칙이 우선 적용됩니다.
 
 ```markdown
-# <VaultName>
+## 태그 규칙
 
-## Role
+- PascalCase 사용 (예: `GameDesign`, `SkillSystem`)
+- 계층 태그 허용 (예: `unity/dots`, `design/system`)
+- 볼트 식별 태그: `GameDesign` (모든 노트에 필수)
+```
 
-This vault accumulates knowledge about <topic>.
-<Describe the role clearly in 1-2 lines>
+선언한 섹션이 없으면 시스템 기본 태그 형식이 적용됩니다.
 
-## Collection Scope
+---
 
-Content that belongs in this vault:
+## 5. 볼트 CLAUDE.md 작성 가이드
 
-- <Target 1>
-- <Target 2>
-- <Target 3>
+볼트의 `CLAUDE.md`는 에이전트가 해당 볼트 진입 시 가장 먼저 읽는 파일입니다.
+볼트 역할을 명확히 정의할수록 에이전트가 올바른 위치에 콘텐츠를 배치합니다.
 
-## Out of Scope
+### 필수 섹션
 
-The following content should be routed to other vaults:
+```markdown
+# <볼트명>
 
-- <Excluded item> → <Target vault name>
-- <Excluded item> → <Target vault name>
+## 이 볼트의 역할
 
-## Directory Structure
+이 볼트는 <주제>에 관한 지식을 축적합니다.
+<1~2줄로 역할을 명확히 서술>
+
+## 수집 범위
+
+이 볼트에 들어와야 하는 콘텐츠:
+
+- <수집 대상 1>
+- <수집 대상 2>
+- <수집 대상 3>
+
+## 수집하지 않는 것
+
+아래 콘텐츠는 다른 볼트로 라우팅합니다:
+
+- <제외 대상> → <대상 볼트명>
+- <제외 대상> → <대상 볼트명>
+
+## 디렉토리 구조
 
 Contents/
-  Domain/         <- Domain knowledge notes
-    <TopicFolder>/
-  Project/        <- Project-related notes (optional)
+  Domain/         <- 도메인 지식 노트
+    <주제폴더>/
+  Project/        <- 프로젝트 관련 노트 (선택)
 
-## Tag Rules
+## 태그 규칙
 
-- Vault identifier tag: `<VaultTag>` (required on all notes)
-- Other tags follow the system default format
+- 볼트 식별 태그: `<볼트태그>` (모든 노트에 필수)
+- 그 외 태그는 시스템 기본 형식 적용
 
-## Session Entry Rules
+## 세션 진입 규칙
 
-1. Read `_STATUS.md` (understand current progress)
-2. Check the target folder
+1. `_STATUS.md` 읽기 (현재 진행 상황 파악)
+2. 작업 대상 폴더 확인
 ```
 
-### Declaring Vault-Specific Types
+### 전용 타입 선언
 
-If content doesn't fit the core types (study-note, knowledge, design, plan, etc.), declare vault-specific types.
+코어 타입(study-note, knowledge, design, plan 등)으로 분류가 어려운 콘텐츠가 있으면 전용 타입을 선언합니다.
 
 ```markdown
-## Vault-Specific Types
+## 전용 타입
 
-| Type | Purpose |
-|------|---------|
-| `recipe` | Recipe document |
-| `experiment` | Cooking experiment record |
+| 타입 | 용도 |
+|------|------|
+| `recipe` | 레시피 문서 |
+| `experiment` | 요리 실험 기록 |
 ```
 
-Vault-specific type names must not conflict with core types.
+코어 타입과 이름이 겹치지 않아야 합니다.
 
-### Example Template — Domain Vault
+### 예시 템플릿 — 도메인 볼트
 
 ```markdown
 # Python
 
-## Role
+## 이 볼트의 역할
 
-Accumulates knowledge about the Python language and its ecosystem.
-Covers syntax, patterns, standard library, and key package usage.
+Python 언어와 관련 생태계의 지식을 축적합니다.
+문법, 패턴, 표준 라이브러리, 주요 패키지 활용법을 다룹니다.
 
-## Collection Scope
+## 수집 범위
 
-- Python language syntax and behavior
-- Standard library usage (os, pathlib, dataclasses, etc.)
-- Key package usage (pandas, numpy, requests, etc.)
-- Python-based scripting patterns
+- Python 언어 문법 및 동작 원리
+- 표준 라이브러리 활용 (os, pathlib, dataclasses 등)
+- 주요 패키지 (pandas, numpy, requests 등) 사용법
+- Python 기반 스크립트 패턴
 
-## Out of Scope
+## 수집하지 않는 것
 
-- AI/ML model training, data science analysis → AI vault or separate project vault
-- Web frameworks (FastAPI, Django) → Consider splitting into a separate vault
-- Coding style, clean code principles → AI_Coding vault
+- AI/ML 모델 훈련, 데이터 과학 분석 → AI 볼트 또는 별도 프로젝트 볼트
+- 웹 프레임워크 (FastAPI, Django) → 별도 볼트로 분리 고려
+- 코딩 스타일, 클린 코드 원칙 → AI_Coding 볼트
 
-## Directory Structure
+## 디렉토리 구조
 
 Contents/
   Domain/
-    Syntax/         <- Language syntax
-    StdLib/         <- Standard library
-    Packages/       <- External packages
-    Patterns/       <- Code patterns
+    Syntax/         <- 언어 문법
+    StdLib/         <- 표준 라이브러리
+    Packages/       <- 외부 패키지
+    Patterns/       <- 코드 패턴
 
-## Tag Rules
+## 태그 규칙
 
-- Vault identifier tag: `Python` (required on all notes)
-- Other tags follow the system default format
+- 볼트 식별 태그: `Python` (모든 노트에 필수)
+- 그 외 태그는 시스템 기본 형식 적용
 
-## Session Entry Rules
+## 세션 진입 규칙
 
-1. Read `_STATUS.md`
-2. Check the relevant topic folder
+1. `_STATUS.md` 읽기
+2. 해당 주제 폴더 확인
 ```
 
 ---
 
-## 6. Agent Configuration
+## 6. 에이전트 구성
 
-Decide which AI agents to use, and place only the entry point files for those agents in each vault.
+사용할 AI 에이전트를 결정하고, 해당 에이전트의 진입점 파일만 볼트에 배치합니다.
 
-### Agent Entry Point Files
+### 에이전트별 진입점 파일
 
-| Agent | Entry Point File |
-|-------|-----------------|
+| 에이전트 | 진입점 파일 |
+|----------|------------|
 | Claude Code | `CLAUDE.md` |
 | Codex | `CODEX.md` |
 
-Do not create files for agents you don't use.
-For example, if you only use Claude Code, only `CLAUDE.md` is needed.
+사용하지 않는 에이전트의 파일은 생성하지 않습니다.
+예: Claude Code만 사용하면 `CLAUDE.md`만 있으면 됩니다.
 
-### When Using Multiple Agents
+### 멀티 에이전트 사용 시
 
-Using two agents together can cause conflicts if they modify the same file simultaneously.
-The following ownership separation is recommended.
+두 에이전트를 함께 사용하면 같은 파일을 동시에 수정하는 충돌이 발생할 수 있습니다.
+아래 소유권 분리를 권장합니다.
 
-| Agent | Responsible Area |
-|-------|-----------------|
-| Claude Code | Vault structure changes, script development, rule/skill authoring, multi-vault tasks |
-| Secondary agent | Note editing within a single vault, repetitive tasks, background cleanup |
+| 에이전트 | 담당 영역 |
+|----------|----------|
+| Claude Code | 볼트 구조 변경, 스크립트 개발, 규칙/스킬 작성, 복수 볼트 작업 |
+| 보조 에이전트 | 단일 볼트 내 노트 편집, 반복 작업, 백그라운드 정리 |
 
-The following files should only be modified by one agent at a time. Simultaneous edits risk data loss.
+아래 파일은 한 에이전트만 수정해야 합니다. 동시 수정 시 데이터 손실 위험이 있습니다.
 
 - `_STATUS.md`
 - `_WORKSPACE_VERSION.md`
@@ -352,82 +352,82 @@ The following files should only be modified by one agent at a time. Simultaneous
 
 ---
 
-## 7. Plugin Management
+## 7. 플러그인 관리
 
-Obsidian plugins are centrally managed in AIHubVault and propagated to all vaults through sync.
+Obsidian 플러그인은 AIHubVault에서 중앙 관리하고 동기화로 전체 볼트에 전파합니다.
 
-### Plugin Installation/Modification Principles
+### 플러그인 설치/변경 원칙
 
-- Plugin installation, removal, and configuration changes should be done **only in AIHubVault**.
-- Do not install directly into individual vaults' `.obsidian/plugins/`.
-- After making changes, run sync to automatically propagate to all other vaults.
+- 플러그인 설치·삭제·설정 변경은 **AIHubVault에서만** 수행합니다.
+- 개별 볼트의 `.obsidian/plugins/`에 직접 설치하지 않습니다.
+- 변경 후 동기화를 실행하면 나머지 볼트에 자동으로 전파됩니다.
 
-### Core Plugins (Cannot Be Removed)
+### Core 플러그인 (제거 불가)
 
-The following plugins are essential for system functionality.
+아래 플러그인은 시스템 기능에 필수입니다.
 
-| Plugin | Role |
-|--------|------|
-| local-rest-api | Communication between agents and Obsidian |
-| dataview | Data queries and views |
-| templater | Note templates |
-| linter | Automatic note formatting |
+| 플러그인 | 역할 |
+|----------|------|
+| local-rest-api | 에이전트와 Obsidian 간 통신 |
+| dataview | 데이터 쿼리 및 뷰 |
+| templater | 노트 템플릿 |
+| linter | 노트 형식 자동 정리 |
 
-### Adding Custom Plugins
+### Custom 플러그인 추가
 
-You can freely add any plugins beyond the core set.
+위 Core 플러그인 외에 필요한 플러그인을 자유롭게 추가할 수 있습니다.
 
-1. Open AIHubVault in Obsidian
-2. Settings > Community plugins > Install plugin
-3. Run sync to propagate to other vaults
+1. Obsidian에서 AIHubVault 열기
+2. 설정 > 커뮤니티 플러그인 > 플러그인 설치
+3. 동기화 실행하여 다른 볼트에 전파
 
-If you want to disable a specific plugin in a particular vault, specify it in that vault's `CLAUDE.md`.
+특정 볼트에서 특정 플러그인을 비활성화하고 싶으면, 해당 볼트 `CLAUDE.md`에 명시합니다.
 
 ```markdown
-## Plugin Exceptions
+## 플러그인 예외
 
-- Excalidraw: Not used in this vault (disabled)
+- Excalidraw: 이 볼트에서는 사용하지 않음 (비활성화)
 ```
 
 ---
 
-## 8. Understanding Distribution Sync
+## 8. 배포 동기화 이해
 
-You need to understand the distinction so your settings don't get overwritten when receiving system updates.
+시스템 업데이트를 받을 때 내 설정이 덮어쓰기 되지 않도록 구분을 알아두어야 합니다.
 
-### core vs custom Namespace
+### core vs custom 네임스페이스
 
 ```
-.claude/rules/core/      <- May be overwritten on update (system rules)
-.claude/rules/custom/    <- Not an update target (your settings preserved)
+.claude/rules/core/      <- 업데이트 시 덮어쓰기 가능 (시스템 규칙)
+.claude/rules/custom/    <- 업데이트 대상 아님 (내 설정 보존)
 
-.claude/commands/core/   <- May be overwritten on update (system skills)
-.claude/commands/custom/ <- Not an update target (your skills preserved)
+.claude/commands/core/   <- 업데이트 시 덮어쓰기 가능 (시스템 스킬)
+.claude/commands/custom/ <- 업데이트 대상 아님 (내 스킬 보존)
 ```
 
-**All files you add or modify should go in `custom/` to persist through updates.**
+**내가 추가하거나 수정한 모든 파일은 `custom/`에 넣어야 업데이트 후에도 유지됩니다.**
 
-### Vault-Specific Files (Not Subject to Distribution Sync)
+### 볼트 개별 파일 (배포 동기화 대상 아님)
 
-The following files have different content per vault, so updates will not overwrite them.
+아래 파일은 볼트마다 내용이 다르므로 업데이트가 덮어쓰지 않습니다.
 
-- `CLAUDE.md` (vault-specific role definition)
-- `_STATUS.md` (vault-specific progress status)
-- `_VAULT-INDEX.md` (vault-specific folder structure)
-- `_Standards/CONTENTS_SPEC.md` (vault-specific content scope)
+- `CLAUDE.md` (볼트별 역할 정의)
+- `_STATUS.md` (볼트별 진행 상태)
+- `_VAULT-INDEX.md` (볼트별 폴더 구조)
+- `_Standards/CONTENTS_SPEC.md` (볼트별 콘텐츠 범위)
 
-### Recommended Update Procedure
+### 업데이트 시 권장 순서
 
-1. Receive update (core/ files refreshed)
-2. Check `_ROOT_VERSION.md` to understand what changed
-3. Review for conflicts with your custom/ files
-4. Adjust custom/ files if needed
+1. 업데이트 받기 (core/ 파일 갱신)
+2. `_ROOT_VERSION.md` 확인하여 변경 사항 파악
+3. custom/ 파일과 충돌 여부 검토
+4. 필요하면 custom/ 파일 조정
 
 ---
 
-## Reference
+## 참고
 
-- Vault routing keywords: Root `CLAUDE.md` > Vault Entry Protocol
-- Note writing rules: `.claude/rules/core/note-writing.md`
-- Detailed vault creation rules: `.claude/rules/core/vault-individualization.md`
-- Session exit routine: `.claude/rules/core/session-exit.md`
+- 볼트 라우팅 키워드: 루트 `CLAUDE.md` > 볼트 진입 프로토콜
+- 노트 작성 규칙: `.claude/rules/core/note-writing.md`
+- 볼트 생성 상세 규칙: `.claude/rules/core/vault-individualization.md`
+- 세션 종료 루틴: `.claude/rules/core/session-exit.md`

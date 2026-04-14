@@ -1,6 +1,7 @@
 ---
 aliases:
   - "Juggl Note Template"
+  - "Juggl 노트 템플릿"
 tags:
   - TileMapToolKit
   - Standards
@@ -33,8 +34,8 @@ local: [NoteTitle]
 ```
 
 ## Context
-- Background:
-- Input:
+- 배경:
+- 입력:
 
 ## Key Points
 -
@@ -43,5 +44,5 @@ local: [NoteTitle]
 -
 
 ## Links
-- [[RelatedNote1]]
-- [[RelatedNote2]]
+- [[관련노트1]]
+- [[관련노트2]]

@@ -1,35 +1,35 @@
 # AIMindVault
 
-> An Obsidian vault for AI workspace design, improvement, and distribution.
-> Includes multi-agent orchestration (Claude, Codex, Copilot), knowledge graph visualization, automation scripts, and AI agent operation standard documents.
+> AI 작업환경 설계·개선·배포를 위한 Obsidian 볼트.
+> Multi-agent orchestration (Claude · Codex · Copilot), 지식 그래프 시각화, 자동화 스크립트, AI 에이전트 운영 표준 문서 포함.
 
-## What This Vault Contains
+## 이 볼트가 포함하는 것
 
-- **AI Agent Collaboration Settings** — Claude Code, Codex, Copilot Agent configuration files and rules
-- **`_Standards/`** — Frontmatter rules, plugin operation standards, encoding/editing safety guides
-- **`Contents/`** — Vault content (Domain: knowledge accumulation, Project: work management)
-- **`_forge/`** — Vault cloning scripts (clone_vault) and experimentation/staging hub
-- **Juggl Style Guide** — Knowledge graph visualization standards
+- **AI 에이전트 협업 설정** — Claude Code, Codex, Copilot Agent 설정 파일 및 규칙
+- **`_Standards/`** — Frontmatter 규칙, 플러그인 운영 표준, 인코딩/편집 안전 가이드
+- **`Contents/`** — 볼트 콘텐츠 (Domain: 지식 축적, Project: 작업 관리)
+- **`_forge/`** — 볼트 복제 스크립트 (clone_vault) 및 실험/스테이징 허브
+- **Juggl 스타일 가이드** — 지식 그래프 시각화 표준
 
 ---
 
 ## Prerequisites
 
-- **Obsidian** v1.5 or later
-- **(Optional)** Git — for automatic version control via obsidian-git
+- **Obsidian** v1.5 이상
+- **(선택)** Git — obsidian-git을 통한 자동 버전 관리 사용 시
 
 ---
 
 ## Quick Start
 
-### Step 1: Get the Vault
+### 1단계: 볼트 받기
 
-**ZIP Download (Simple)**
+**ZIP 다운로드 (간편)**
 
-1. Click **Code -> Download ZIP** on this page
-2. Extract and move the folder to your preferred location
+1. 이 페이지에서 **Code → Download ZIP** 클릭
+2. 압축 해제 후 원하는 위치에 폴더 이동
 
-**Git Clone (Recommended)**
+**Git Clone (권장)**
 
 ```bash
 git clone https://github.com/warqun/AIMindVault.git
@@ -37,99 +37,99 @@ git clone https://github.com/warqun/AIMindVault.git
 
 ---
 
-### Step 2: Open in Obsidian
+### 2단계: Obsidian에서 열기
 
-1. Launch Obsidian -> **Open folder as vault**
-2. Select the `AIMindVault` folder
+1. Obsidian 실행 → **Open folder as vault**
+2. `AIMindVault` 폴더 선택
 
-> **First launch**: When the "Community plugins" popup appears -> click **Turn on community plugins**
+> **첫 실행 시**: "커뮤니티 플러그인 사용" 팝업 → **Turn on community plugins** 클릭
 
 ---
 
-### Step 3: Install Plugins
+### 3단계: 플러그인 설치
 
-The vault does not include plugin binaries. Install them manually in the following order.
+볼트는 플러그인 바이너리를 포함하지 않습니다. 아래 순서로 직접 설치하세요.
 
-#### 1. Standard Community Plugins (24)
+#### ① 일반 커뮤니티 플러그인 (24개)
 
-Search, install, and enable in `Settings -> Community plugins -> Browse`:
+`Settings → Community plugins → Browse`에서 검색·설치·활성화:
 
-| Plugin Name                     | Purpose |
+| 플러그인명                     | 플러그인 용도 |
 | ------------------------- | ------- |
-| Advanced Canvas           | Enhanced canvas features (card colors, edge styles, groups, etc.) |
-| Advanced Tables           | Markdown table auto-alignment and keyboard editing support |
-| BRAT                      | Install and manage beta/unreleased plugins via GitHub URL |
-| Colored Tags              | Apply colors to tags for visual distinction |
-| Dataview                  | Query notes like a database — display as tables, lists |
-| Git                       | Git auto-commit, push, pull (version control) |
-| Global Search and Replace | Bulk search and replace across the entire vault |
-| Juggl                     | Interactive knowledge graph visualization |
-| Linter                    | Auto-correct note formatting (frontmatter, spacing, line breaks, etc.) |
-| Local REST API            | HTTP API access to Obsidian from external tools (Claude, etc.) |
-| make.md                   | File management, Spaces, smart folder UI |
-| MCP Tools                 | MCP server integration — connect AI agents with Obsidian |
-| Mermaid Themes            | Customize Mermaid diagram themes |
-| Mermaid Tools             | Mermaid diagram authoring helper |
-| Meta Bind                 | Interactive widgets in notes (buttons, sliders, inputs) |
-| Metadata Menu             | Frontmatter metadata management UI |
-| New 3D Graph              | 3D knowledge graph visualization |
-| QuickAdd                  | Quick note creation, templates, macro execution |
-| Share to NotionNext       | Export notes to Notion pages |
-| Shell Commands            | Run terminal commands directly within Obsidian |
-| Smart Connections         | AI-based semantic note similarity recommendations |
-| TagFolder                 | Tag-based virtual folder view |
-| Tasks                     | Todo lists, due dates, filters, recurring schedules |
-| Templater                 | Advanced template authoring and automation (JS scripting support) |
+| Advanced Canvas           | 캔버스 고급 기능 확장 (카드 색상, 엣지 스타일, 그룹 등) |
+| Advanced Tables           | 마크다운 표 자동 정렬 및 키보드 편집 지원 |
+| BRAT                      | 베타·미출시 플러그인 GitHub URL로 설치·관리 |
+| Colored Tags              | 태그에 색상 적용해 시각적 구분 |
+| Dataview                  | 노트를 데이터베이스처럼 쿼리·테이블·리스트로 표시 |
+| Git                       | Git 자동 커밋·푸시·풀 (버전 관리) |
+| Global Search and Replace | 볼트 전체 텍스트 일괄 검색·치환 |
+| Juggl                     | 인터랙티브 지식 그래프 시각화 |
+| Linter                    | 노트 형식 자동 교정 (frontmatter, 공백, 줄바꿈 등) |
+| Local REST API            | 외부 도구(Claude 등)에서 Obsidian에 HTTP API로 접근 |
+| make.md                   | 파일 관리·Spaces·스마트 폴더 UI 제공 |
+| MCP Tools                 | MCP 서버 연동 — AI 에이전트와 Obsidian 연결 |
+| Mermaid Themes            | Mermaid 다이어그램 테마 커스터마이징 |
+| Mermaid Tools             | Mermaid 다이어그램 작성 보조 도구 |
+| Meta Bind                 | 노트 내 인터랙티브 위젯 (버튼·슬라이더·입력창) |
+| Metadata Menu             | 프론트매터 메타데이터 관리 UI |
+| New 3D Graph              | 3D 지식 그래프 시각화 |
+| QuickAdd                  | 빠른 노트 생성·템플릿·매크로 실행 |
+| Share to NotionNext       | 노트를 Notion 페이지로 내보내기 |
+| Shell Commands            | 터미널 명령어를 Obsidian 내에서 직접 실행 |
+| Smart Connections         | AI 기반 노트 의미 유사도 연결 추천 |
+| TagFolder                 | 태그 기반 가상 폴더 뷰 제공 |
+| Tasks                     | 할 일 목록·마감일·필터·반복 일정 관리 |
+| Templater                 | 고급 템플릿 작성 및 자동화 (JS 스크립팅 지원) |
 
-#### 2. Beta Plugins (3)
+#### ② 베타 버전 플러그인 (3개)
 
-After installing and enabling BRAT, enter the following URLs in `Settings -> BRAT -> Add Beta plugin`:
+BRAT 설치 및 활성화 후, `Settings → BRAT → Add Beta plugin`에서 아래 URL 입력:
 
-| Plugin         | GitHub URL                                          | Purpose |
+| 플러그인         | GitHub URL                                          | 플러그인 용도 |
 | ------------ | --------------------------------------------------- | ------- |
-| Claudian     | https://github.com/YishenTu/claudian                | Run Claude AI agent directly within Obsidian |
-| Time Machine | https://github.com/dsebastien/obsidian-time-machine | Browse and restore note edit history/snapshots |
-| YTranscript  | https://github.com/lstrzepek/obsidian-yt-transcript | Extract YouTube video subtitles and insert into notes |
+| Claudian     | https://github.com/YishenTu/claudian                | Claude AI 에이전트를 Obsidian 내에서 직접 실행 |
+| Time Machine | https://github.com/dsebastien/obsidian-time-machine | 노트 편집 히스토리·스냅샷 조회 및 복원 |
+| YTranscript  | https://github.com/lstrzepek/obsidian-yt-transcript | YouTube 영상 자막 추출·노트 삽입 |
 
-> Detailed installation instructions -> [`_Standards/Plugins/Installed_Plugins_Index.md`](./_Standards/Plugins/Installed_Plugins_Index.md)
+> 상세 설치 방법 → [`_Standards/Plugins/Installed_Plugins_Index.md`](./_Standards/Plugins/Installed_Plugins_Index.md)
 
 ---
 
-## Vault Structure
+## 볼트 구조
 
 ```
 AIMindVault/
-├── Contents/              # Vault content
-│   ├── Domain/            # Knowledge accumulation (guides, research, prompts)
-│   └── Project/           # Work management (ideas, plans)
-├── _Standards/            # Vault consistency standards and plugin operation rules
-├── _tools/                # Automation scripts (PowerShell CLI)
-├── _forge/                # Vault cloning and initialization hub
-├── Juggl_StyleGuide/      # Juggl graph style guide
-├── Tags/                  # Tag definition notes
-├── _VaultReview/          # Agent review reports
-├── _STATUS.md             # Current work status (check at session start)
-├── _VAULT-INDEX.md        # Full document location index
-└── .claude/               # Claude Code settings (rules, commands)
+├── Contents/              # 볼트 콘텐츠
+│   ├── Domain/            # 지식 축적 (가이드, 리서치, 프롬프트)
+│   └── Project/           # 작업 관리 (아이디어, 계획)
+├── _Standards/            # Vault 일관성 기준 및 플러그인 운영 표준
+├── _tools/                # 자동화 스크립트 (PowerShell CLI)
+├── _forge/                # 볼트 복제·초기화 허브
+├── Juggl_StyleGuide/      # Juggl 그래프 스타일 가이드
+├── Tags/                  # 태그 정의 노트
+├── _VaultReview/          # 에이전트 검토 보고서
+├── _STATUS.md             # 현재 작업 상태 (세션 시작 시 확인)
+├── _VAULT-INDEX.md        # 전체 문서 위치 인덱스
+└── .claude/               # Claude Code 설정 (rules, commands)
 ```
 
 ---
 
-## AI Agent Integration
+## AI 에이전트 연동
 
-| Agent | Configuration Location |
+| 에이전트 | 설정 파일 위치 |
 |---------|-------------|
 | Claude Code | `.claude/CLAUDE.md`, `.claude/rules/`, `.claude/commands/` |
 | Codex | `.codex/` |
 | GitHub Copilot | `.github/copilot-instructions.md` |
 
-Set this vault path as the workspace for each AI tool, and the rules in `_Standards/` will be automatically referenced.
+각 AI 도구의 workspace로 이 볼트 경로를 지정하면 `_Standards/`의 규칙을 자동으로 참조합니다.
 
 ---
 
-## Plugin Details
+## 플러그인 상세 정보
 
--> [`_Standards/Plugins/README.md`](./_Standards/Plugins/README.md)
+→ [`_Standards/Plugins/README.md`](./_Standards/Plugins/README.md)
 
 ---
 

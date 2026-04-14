@@ -8,22 +8,23 @@ updated: 2026-03-05
 
 # Smart Connections
 
-## Features
+## 기능
 
-- Semantic-based similar note discovery
-- Related document recommendations to fill reference gaps
+- 의미 기반 유사 노트 탐색
+- 관련 문서 추천으로 누락 참조 보완
 
-## Primary Use Cases
+## 주 사용 작업
 
-- Collect prior materials before writing new documents
-- Detect duplicate documents
+- 새 문서 작성 전 선행 자료 수집
+- 중복 문서 탐지
 
-## Basic Procedure
+## 기본 절차
 
-1. Open a note containing key terms
-2. Review the recommended notes list
-3. Explicitly link referenced notes in the body
+1. 핵심 키워드가 있는 노트 열기
+2. 추천 노트 목록 확인
+3. 참조할 노트를 본문 링크로 명시
 
-## Caution
+## 주의
 
-- Recommendations are auxiliary signals; final judgment should be confirmed through manual review.
+- 추천 결과는 보조 신호이므로 최종 판단은 수동 검토로 확정한다.
+
