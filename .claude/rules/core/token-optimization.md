@@ -1,91 +1,91 @@
-# 토큰 절약 및 실행 위임 (Mandatory)
+# Token Saving & Execution Delegation (Mandatory)
 
-> 모든 볼트에 동일 적용. 모든 에이전트 공통.
-> 배경: Antigravity 등 백그라운드 에이전트의 과도한 토큰 소모 방지 목적.
+> Applies to all vaults. All agents.
+> Background: prevent runaway token consumption by background agents (Antigravity etc.).
 
-## 0. 콘텐츠 인덱서 우선 검색 (강제)
+## 0. Content-Indexer-First Search (Mandatory)
 
-볼트 내 노트를 찾거나, 내용을 점검하거나, 파일 목록을 파악할 때 **반드시 콘텐츠 인덱서를 먼저 사용**한다.
+When looking for notes, checking content, or listing files in a vault, **use the content indexer first**.
 
-### 검색 순서 (강제)
+### Search Order (Mandatory)
 
 ```
-1단계: node cli.js index search — 인덱스 기반 키워드/태그/타입 검색
-2단계: 인덱서 결과가 불충분할 때만 → Grep, Glob, Read 등 직접 파일 탐색
+Step 1: node cli.js index search — keyword/tag/type search via the index
+Step 2: Only if the indexer is insufficient → direct file tools (Grep, Glob, Read)
 ```
 
-**인덱서를 거치지 않고 바로 파일 탐색(Grep, Glob, find, ls)에 들어가지 않는다.**
+**Never jump straight to Grep / Glob / find / ls without going through the indexer.**
 
-### 사용법
+### Usage
 
 ```bash
-# 키워드 검색
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index search -r "{볼트경로}" -q "검색어"
+# Keyword search
+node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index search -r "{vault-path}" -q "query"
 
-# 태그 필터
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index search -r "{볼트경로}" -t "태그명"
+# Tag filter
+node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index search -r "{vault-path}" -t "tag"
 
-# 타입 필터
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index search -r "{볼트경로}" --type "knowledge"
+# Type filter
+node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index search -r "{vault-path}" --type "knowledge"
 
-# AI 컨텍스트용 압축 출력
+# Compact output for AI context
 ... -f compact -n 5
 ```
 
-### 파라미터
+### Parameters
 
-| 파라미터 | 용도 | 기본값 |
-|---------|------|--------|
-| `-q, --query` | 키워드 검색 (title, tags, headings에 가중 랭킹) | |
-| `-t, --tag` | 태그 필터 | |
-| `--type` | frontmatter type 필터 | |
-| `-f, --format` | 출력 형식 (`table` / `compact`) | `table` |
-| `-n, --top` | 상위 N건 | 10 |
+| Param | Purpose | Default |
+|-------|---------|---------|
+| `-q, --query` | Keyword search (weighted ranking on title/tags/headings) | |
+| `-t, --tag` | Tag filter | |
+| `--type` | Frontmatter `type` filter | |
+| `-f, --format` | Output format (`table` / `compact`) | `table` |
+| `-n, --top` | Top N | 10 |
 
-### 인덱서 fallback 조건
+### Fallback Conditions
 
-아래 경우에만 직접 파일 탐색으로 전환한다:
-- `vault_index.json`이 존재하지 않거나 빌드된 적 없는 볼트
-- 인덱서 검색 결과가 0건이고, 파일이 존재할 가능성이 높은 경우
-- 인덱서에 포함되지 않는 파일 (`.obsidian/`, `_tools/`, 스크립트 등 비콘텐츠)
+Switch to direct file tools only when:
+- `vault_index.json` doesn't exist or has never been built in this vault.
+- Indexer returns 0 hits but the file is likely to exist.
+- The file isn't covered by the index (`.obsidian/`, `_tools/`, scripts, etc.).
 
-### 인덱스 최신성 확인
+### Staleness Check
 
-- 인덱서 결과가 의심스러우면 `/reindex` 스킬로 증분 빌드 후 재검색
-- 대량 노트 추가/삭제 후에는 `/reindex` 실행을 권장
+- If indexer results look wrong, run `/reindex` for an incremental rebuild, then search again.
+- After bulk add/delete, running `/reindex` is recommended.
 
-## 1. 파일 탐색 최소화
+## 1. Minimize File Exploration
 
-- 파일을 읽거나 찾을 때 **핀포인트 접근**만 허용한다. 광범위 검색(`find`, `grep` 전체 스캔) 금지.
-- 정확한 경로를 모르면 **인덱서 검색을 먼저 시도**하고, 그래도 없으면 사용자에게 경로를 묻는다.
-- 대형 파일(100줄 이상)은 **필요한 부분만** 읽는다. 전체 로드 금지.
-- 같은 파일을 세션 내에서 **반복 읽기 금지**. 한 번 읽은 내용은 기억해서 재사용한다.
+- Reads and searches must be **pinpoint**. No broad scans (`find`, full-directory `grep`).
+- If you don't know the exact path, **try the indexer first**; if still nothing, ask the user.
+- For large files (100+ lines), read **only the range you need**. No full-file loads.
+- **Do not re-read** the same file in one session. Remember and reuse.
 
-## 2. 터미널 실행 위임 (핑퐁 방식)
+## 2. Delegate Terminal Execution (Ping-Pong)
 
-- 에이전트가 자체적으로 스크립트를 여러 번 실행하며 디버깅하지 않는다.
-- **확신이 서는 코드/명령어를 사용자에게 제시** → 사용자가 직접 실행 → 결과를 받아서 다음 단계 진행.
-- 자가 교정(self-correction) 반복 금지: 한 명령이 실패하면 **원인을 분석하여 수정안을 제시**하고, 직접 재실행하지 않는다.
-- 예외: 사용자가 명시적으로 "직접 실행해"라고 지시한 경우에만 에이전트가 직접 실행 가능.
+- Agents do not iterate scripts locally, debugging in a loop.
+- **Present a command you're confident in** → user runs it → agent uses the result to proceed.
+- No self-correction loops: if a command fails, **diagnose and propose a fix**; don't re-run it yourself.
+- Exception: only when the user explicitly says "run it yourself" does the agent run directly.
 
-## 3. 컨텍스트 비대화 방지
+## 3. Avoid Context Bloat
 
-- 긴 세션에서 누적된 파일 로그, 검색 결과를 매 턴마다 재전송하지 않는다.
-- 이전 턴에서 이미 확인한 정보는 요약 참조로 대체한다.
-- 불필요한 확인 단계(이미 알고 있는 사실의 재검증) 생략.
+- Don't re-send accumulated file logs and search results every turn.
+- Reference summaries of earlier turns instead of repeating data.
+- Skip redundant verification of facts already established.
 
-## 4. 작업 전 비용 판단
+## 4. Pre-Task Cost Assessment
 
-- 작업 시작 전 **예상 토큰 소모가 큰 작업**(대량 파일 스캔, 복수 스크립트 실행, 대형 문서 전체 읽기)을 식별한다.
-- 고비용 작업은 사용자에게 **사전 보고 후 승인**을 받는다.
-- 동일 목표 달성을 위한 **저비용 대안**이 있으면 그것을 우선 제안한다.
+- Before starting, identify **high-token actions** (bulk file scans, multiple script runs, full-document reads).
+- Report expensive actions to the user and get approval before running them.
+- If a **cheaper alternative** achieves the same goal, propose that first.
 
-## 금지 사항 요약
+## Forbidden Actions (Summary)
 
-| 금지 행위 | 대안 |
-|-----------|------|
-| 광범위 파일 검색 (전체 디렉토리 스캔) | 사용자에게 경로 확인 |
-| 대형 파일 전체 읽기 | 필요한 줄 범위만 읽기 |
-| 자가 디버깅 반복 (run → fail → retry) | 수정안 제시 후 사용자 실행 위임 |
-| 같은 파일 반복 읽기 | 첫 읽기 결과 기억·재사용 |
-| 불필요한 확인/검증 단계 | 이미 아는 정보는 생략 |
+| Forbidden | Alternative |
+|-----------|-------------|
+| Broad file search (full-directory scan) | Ask the user for the path |
+| Full-file read of large files | Read only the needed line range |
+| Self-debug loops (run → fail → retry) | Propose a fix, delegate execution |
+| Re-reading the same file | Remember and reuse the first read |
+| Redundant verification | Skip facts already known |

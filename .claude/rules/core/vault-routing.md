@@ -1,44 +1,44 @@
-# 볼트 라우팅 (Mandatory)
+# Vault Routing (Mandatory)
 
-> 모든 볼트에 동일 적용. 모든 에이전트 공통.
+> Applies to all vaults. All agents.
 
-## 콘텐츠 배치 전 필수 확인
+## Required Check Before Placing Content
 
-- 노트/콘텐츠를 생성하기 전에 **루트 `_STATUS.md` 볼트 레지스트리**를 확인하여 적절한 볼트를 선택한다.
-- 루트 `CLAUDE.md`의 볼트 진입 프로토콜도 참조한다.
+- Before creating a note/content, check the **root `_STATUS.md` vault registry** to pick the right vault.
+- Also consult the vault entry protocol in root `CLAUDE.md`.
 
-## 금지 볼트
+## Forbidden Vault
 
-- **BasicContentsVault**: AIHubVault의 배포용 복제 볼트. 직접 콘텐츠 작업 금지. `/create-vault` 스킬 전용.
+- **BasicContentsVault**: a distribution clone template. No direct content work. `/create-vault` skill only.
 
-## 미등록 볼트 발견 시
+## When You Find an Unregistered Vault
 
-- 루트 `_STATUS.md` 볼트 레지스트리에 없는 볼트에 처음 접근하면, 즉시 레지스트리에 등록한다.
-- 등록 항목: 볼트명, 타입 (카테고리에서 추론), 콘텐츠 설명, 작업 에이전트
-- 사용자가 직접 생성한 볼트도 동일하게 적용.
+- If you hit a vault that isn't in root `_STATUS.md`'s registry on first access, register it immediately.
+- Registration fields: vault name, type (inferred from category), content description, working agent.
+- Same applies to vaults the user created directly.
 
-## 볼트 첫 접근 시 인덱스 빌드 (강제)
+## Index Build on First Vault Access (Mandatory)
 
-에이전트가 볼트에 처음 접근할 때 (신규 생성이든, 사용자가 만든 볼트든) `vault_index.json`이 없으면 **콘텐츠 인덱스를 빌드**한다.
+When an agent accesses a vault for the first time (whether newly created or user-created), if `vault_index.json` doesn't exist, **build the content index**.
 
 ```bash
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index build -r "{볼트경로}"
+node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index build -r "{vault-path}"
 ```
 
-- CLI 스크립트(`.sync/_tools/cli-node/bin/cli.js`)가 없으면 스킵하고 로그 남김
-- 빌드 완료 후 `node cli.js index search`를 통한 검색이 가능해진다
-- 이후 노트 탐색/점검 시 인덱서 우선 검색 규칙(`token-optimization.md` § 0) 적용
+- If the CLI script (`.sync/_tools/cli-node/bin/cli.js`) is missing, skip and log.
+- After the build, `node cli.js index search` becomes usable.
+- From then on, apply the indexer-first rule (`token-optimization.md` § 0) for any note exploration.
 
-## 라우팅 규칙
+## Routing Rules
 
-- 도메인 지식 (Unity, CapCut, Notion, Git 등) → 해당 `Vaults/Domains_*/` 볼트
-- 게임 기획·디자인 → `Vaults/Domains_Game/GameDesign/`
-- AI 작업환경 설계·운영 → `Vaults/BasicVaults/AIHubVault/`
-- 프로젝트 작업물 → 해당 `Vaults/Projects_*/` 볼트
-- 적합한 볼트가 없으면 → 사용자에게 확인 후 배치. 임의 판단으로 부적합한 볼트에 넣지 않는다.
+- Domain knowledge (Unity, CapCut, Notion, Git, etc.) → matching `Vaults/Domains_*/` vault.
+- Game design → `Vaults/Domains_Game/GameDesign/`.
+- AI workspace design/operation → `Vaults/BasicVaults/AIHubVault/`.
+- Project work → matching `Vaults/Projects_*/` vault.
+- No suitable vault? → ask the user before placing. Do not default to an unrelated vault.
 
-## 라우팅 판단 시 볼트 CLAUDE.md 참조 (강제)
+## Reference Vault CLAUDE.md When Routing (Mandatory)
 
-- 카테고리만으로 대상 볼트가 명확하지 않을 때, **후보 볼트의 CLAUDE.md에서 수집 범위와 경계**를 읽고 판단한다.
-- 특히 인접 도메인 간 경계가 모호한 경우 (예: GameArt vs LightAndColor, AI vs AI_Coding) CLAUDE.md의 "수집하지 않는 것" 항목을 확인한다.
-- CLAUDE.md에 수집 범위가 명시되지 않은 볼트는 "이 볼트의 역할"로 판단하되, 작업 완료 후 수집 범위 보강을 권장한다.
+- When category alone doesn't make the target clear, read the **scope and boundaries in each candidate vault's CLAUDE.md** before deciding.
+- Especially for adjacent-domain ambiguity (e.g. GameArt vs LightAndColor, AI vs AI_Coding), check the "What this vault does NOT collect" section.
+- For vaults whose CLAUDE.md doesn't declare a scope, route by the "Role of this vault" line — and after the work, recommend adding an explicit scope declaration.

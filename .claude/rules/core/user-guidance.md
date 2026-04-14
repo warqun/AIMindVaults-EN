@@ -1,218 +1,218 @@
-# 유저 가이드 (Mandatory)
+# User Guidance (Mandatory)
 
-> 모든 볼트에 동일 적용. 모든 에이전트 공통.
-> 유저가 AIMindVaults 코어 기능 사용 중 막히거나 잘못된 방법을 시도하면, 에이전트가 이 가이드를 참조하여 안내한다.
-
----
-
-## 트리거 체계
-
-이 가이드는 아래 3가지 유형의 트리거로 발동한다.
-
-### 유형 A: 유저 질문 트리거
-
-유저가 절차/방법을 직접 물어볼 때 발동.
-
-**감지 키워드**: "어떻게", "뭘 해야", "모르겠", "까먹", "방법", "절차", "다음에 뭐", "how to", "what should I"
-
-### 유형 B: 잘못된 시도 감지 트리거
-
-에이전트가 유저의 요청이나 에이전트 자신의 행동이 규칙에 어긋남을 감지했을 때 **선제적으로** 발동.
-
-| 감지 조건 | 해당 섹션 |
-|-----------|----------|
-| 미등록 볼트에 `obsidian://open?path=` 사용 시도 | §1 |
-| `Copy-Item`, `cp`, `xcopy`로 볼트 폴더 복사 시도 | §2 |
-| BasicContentsVault에 콘텐츠 작성 시도 | §3 |
-| 한 작업에서 Contents 파일과 workspace 파일 동시 수정 시도 | §4 |
-| AIHubVault가 아닌 볼트에서 `.sync/` 또는 `.obsidian/` 수정 시도 | §5, §6 |
-| 노트 편집 완료 후 post_note_edit_review 미실행 | §8 |
-| 인덱서 없이 Grep/Glob으로 전체 볼트 스캔 시도 | §9 |
-| `Remove-Item -Recurse`로 깊은 재귀 폴더 삭제 시도 | §10 |
-| 사용자 승인 없이 스크립트 생성 시도 | §11 |
-
-### 유형 C: 절차 누락 감지 트리거
-
-필수 단계를 건너뛰었을 때 발동. 에이전트가 작업 흐름 중 자동 감지.
-
-| 감지 조건 | 해당 섹션 |
-|-----------|----------|
-| 볼트 생성 후 루트 레지스트리 미등록 | §2 |
-| 볼트 생성 후 CLAUDE.md 미개별화 | §2 |
-| 볼트 생성 후 Obsidian 등록 안내 누락 | §1, §2 |
-| 세션 종료 시 _STATUS.md 또는 핸드오프 미갱신 | §7 |
-| 노트 편집 후 인덱싱 미완료 (`POST_EDIT_INDEX_UPDATED` 미확인) | §8 |
-| workspace 편집 후 `_WORKSPACE_VERSION.md` 미기록 | §5, §6 |
-| 코어 규칙 변경 후 `_ROOT_VERSION.md` 미기록 | §12 |
+> Applies to all vaults. All agents.
+> When a user gets stuck on a core AIMindVaults feature or attempts the wrong approach, the agent consults this guide to steer them.
 
 ---
 
-## 안내 원칙
+## Trigger System
 
-- **간결하게**: 해당 상황에 필요한 최소 정보만 전달. 전체 규칙을 읊지 않는다.
-- **한 번만**: 같은 세션에서 동일 안내를 반복하지 않는다. 한 번 안내 후 유저가 동의하면 이후 같은 패턴은 자동 처리.
-- **차단이 아닌 안내**: 유저의 작업을 멈추지 않는다. 올바른 방법을 알려주고 유저가 선택하게 한다.
-- **자기 교정 포함**: 에이전트 자신이 잘못된 방법을 시도하려 할 때도 이 가이드로 자기 교정한다.
+This guide fires on three trigger types.
 
----
+### Type A: User-Question Trigger
 
-## 1. 새 볼트를 Obsidian에서 열기
+Fires when the user directly asks about procedure or method.
 
-### 트리거
-- **B**: 에이전트가 미등록 볼트에 `obsidian://open?path=` 사용하려 할 때
-- **A**: "새 볼트 어떻게 열어?", "Obsidian에 등록"
+**Detection keywords**: "how to", "what should I", "how do I", "I don't know", "I forgot", "procedure", "what's next", "steps".
 
-### 안내
-> Obsidian 볼트 매니저 → "보관함 폴더 열기" → 볼트 경로 선택
+### Type B: Wrong-Attempt Trigger
 
-- `obsidian://open?path=` URI로 미등록 볼트를 열면 앱 상태 전환 + 등록 + 플러그인 로드가 동시에 일어나 매우 느리다.
-- URI는 **이미 등록된 볼트 전환** (`obsidian://open?vault=볼트명`) 용도로만 사용한다.
-- 에이전트도 미등록 볼트에 `obsidian://open?path=`를 사용하지 않는다.
+Fires **preemptively** when the agent notices that the user's request — or the agent's own planned action — violates a rule.
 
----
+| Condition | Section |
+|-----------|---------|
+| Using `obsidian://open?path=` on an unregistered vault | §1 |
+| Copying a vault folder with `Copy-Item`, `cp`, `xcopy` | §2 |
+| Writing content into BasicContentsVault | §3 |
+| Editing Contents files and workspace files in one task | §4 |
+| Editing `.sync/` or `.obsidian/` from a non-Hub vault | §5, §6 |
+| Skipping `post_note_edit_review` after editing a note | §8 |
+| Scanning the whole vault with Grep/Glob without the indexer | §9 |
+| Deleting a deep recursive folder with `Remove-Item -Recurse` | §10 |
+| Creating a script without user approval | §11 |
 
-## 2. 볼트 생성
+### Type C: Missing-Step Trigger
 
-### 트리거
-- **B**: 수동 폴더 복사로 볼트를 만들려고 할 때
-- **A**: "볼트 어디에 만들어?", "볼트 만들고 나서 뭐 해?"
-- **C**: 생성 후 레지스트리 등록, CLAUDE.md 개별화, Obsidian 등록 안내 중 하나라도 누락
+Fires when a mandatory step was skipped. The agent detects this automatically during task flow.
 
-### 안내
-- **생성 방법**: `/create-vault` 스킬 또는 `node cli.js clone` 사용. 수동 복사 금지.
-- **위치 선택**: 용도에 맞는 카테고리 안내 (Domains_Game, Domains_Infra, Projects_Game 등)
-- **생성 후 필수**: CLAUDE.md 개별화, _STATUS.md 초기화, 루트 레지스트리 등록, Obsidian 등록 (볼트 매니저에서 직접)
-
----
-
-## 3. 노트는 어느 볼트에 넣어야 하는지
-
-### 트리거
-- **A**: "이거 어디에 넣어?", "어떤 볼트?"
-- **B**: BasicContentsVault에 콘텐츠 작성 시도
-
-### 안내
-- `_STATUS.md` 볼트 레지스트리에서 카테고리별 볼트 목록을 보여준다.
-- 키워드로 적합한 볼트를 추천한다 (CLAUDE.md 라우팅 규칙 참조).
-- 적합한 볼트가 없으면 새 볼트 생성을 제안한다.
-- BasicContentsVault에는 콘텐츠를 넣지 않는다 (클론 템플릿 전용).
+| Condition | Section |
+|-----------|---------|
+| Vault created but not added to the root registry | §2 |
+| Vault created but CLAUDE.md not individualized | §2 |
+| Vault created but Obsidian registration not mentioned | §1, §2 |
+| Session ending without updating `_STATUS.md` or handoff | §7 |
+| Note edited but indexing incomplete (`POST_EDIT_INDEX_UPDATED` not checked) | §8 |
+| Workspace edited but no entry in `_WORKSPACE_VERSION.md` | §5, §6 |
+| Core rule changed but no entry in `_ROOT_VERSION.md` | §12 |
 
 ---
 
-## 4. 편집 모드 혼동
+## Guidance Principles
 
-### 트리거
-- **B**: 한 작업에서 Contents 파일과 workspace 파일을 동시 수정하려 할 때
-- **A**: "이 파일 수정해도 돼?", "Contents랑 workspace 차이가 뭐야?"
-
-### 안내
-- `Contents/**` = Contents 모드. 노트 작성/수정.
-- `.sync/`, `.claude/`, 볼트 루트 파일 = Workspace 모드. AIHubVault에서만 수정.
-- 한 작업에서 두 모드를 혼합하지 않는다. 모드 전환 시 선언.
-- "이 파일은 workspace 편집이라 AIHubVault에서 수정해야 합니다" 식으로 안내.
+- **Concise**: deliver only the minimum information needed for the situation. Do not recite the full rule.
+- **Once only**: do not repeat the same guidance inside one session. Once the user agrees, handle subsequent occurrences silently.
+- **Guide, don't block**: never halt the user's work. Show the correct way and let them choose.
+- **Self-correction included**: when the agent itself is about to take the wrong action, use this guide to correct itself.
 
 ---
 
-## 5. Workspace 동기화
+## 1. Opening a New Vault in Obsidian
 
-### 트리거
-- **B**: AIHubVault가 아닌 볼트에서 `.sync/` 파일 직접 수정 시도
-- **A**: "동기화가 안 됐나?", "버전이 다른데?"
-- **C**: workspace 편집 후 `_WORKSPACE_VERSION.md` 미기록
+### Triggers
+- **B**: agent about to call `obsidian://open?path=` on an unregistered vault.
+- **A**: "how do I open a new vault?", "register in Obsidian".
 
-### 안내
-- Workspace 편집은 AIHubVault에서만. 다른 볼트는 동기화로 자동 전파.
-- `_WORKSPACE_VERSION.md` 버전을 비교하여 차이가 있으면 동기화 수행.
-- 동기화 실행: 볼트를 Obsidian에서 열면 자동 실행. 수동: `node cli.js pre-sync`.
+### Guidance
+> Obsidian Vault Manager → "Open folder as vault" → select the vault path.
 
----
-
-## 6. 플러그인 설치/설정
-
-### 트리거
-- **B**: AIHubVault가 아닌 볼트에서 `.obsidian/` 수정 시도
-- **A**: "플러그인 설치해줘", "설정 바꿨는데 다른 볼트에 안 먹혀"
-
-### 안내
-- 플러그인 설치/설정 변경은 AIHubVault에서 수행 → 동기화로 전파.
-- `/install-plugin` 스킬 사용 권장.
-- `.obsidian/` 편집은 Workspace 모드. `_WORKSPACE_VERSION.md` 버전 기록 필수.
+- `obsidian://open?path=` on an unregistered vault triggers app-state switch + registration + plugin load simultaneously — very slow.
+- The URI is only for **switching between already-registered vaults** (`obsidian://open?vault=name`).
+- Agents must not use `obsidian://open?path=` on unregistered vaults either.
 
 ---
 
-## 7. 세션 종료
+## 2. Creating a Vault
 
-### 트리거
-- **A**: "끝났어", "정리해", "마무리"
-- **C**: 세션 종료 시 _STATUS.md, 핸드오프, 루트 _STATUS.md 중 하나라도 누락
+### Triggers
+- **B**: trying to create a vault by manually copying folders.
+- **A**: "where do I create the vault?", "what do I do after creating a vault?"
+- **C**: after creation, any of registry/CLAUDE.md/Obsidian steps missing.
 
-### 안내
-- `/vault-update` 스킬로 세션 종료 루틴을 실행하면 자동 처리.
-- 수동 시: 볼트 `_STATUS.md` + 루트 `_STATUS.md` + `_SESSION_HANDOFF_{에이전트}.md` 3개 모두 갱신.
-- 하나라도 빠지면 세션 종료 불완전.
-
----
-
-## 8. 노트 작성 후 검증
-
-### 트리거
-- **C**: 노트 편집 완료 후 post_note_edit_review 미실행, 또는 인덱싱 미완료
-- **A**: "리뷰 어떻게 해?", "BAD가 0이 아닌데?"
-
-### 안내
-- 노트 편집 후 `node cli.js review` 실행 필수.
-- BAD가 0이 아니면 해당 파일의 문제(frontmatter 누락, 인코딩 등)를 수정.
-- 인덱싱(`POST_EDIT_INDEX_UPDATED=1`)까지 확인해야 작업 완료.
-- 인덱싱 실패 시 수동: `node cli.js index build -r {볼트경로} -i`
+### Guidance
+- **Method**: use the `/create-vault` skill or `node cli.js clone`. No manual copy.
+- **Location**: pick the right category (Domains_Game, Domains_Infra, Projects_Game, etc.) for the purpose.
+- **Mandatory after creation**: individualize CLAUDE.md, initialize _STATUS.md, add to root registry, register in Obsidian (via the Vault Manager directly).
 
 ---
 
-## 9. 콘텐츠 검색
+## 3. Which Vault Does This Note Belong To
 
-### 트리거
-- **B**: 인덱서 없이 Grep/Glob으로 전체 볼트 스캔 시도
-- **A**: "노트 어디 있어?", "찾고 싶은데"
+### Triggers
+- **A**: "where does this go?", "which vault?"
+- **B**: attempting to write content into BasicContentsVault.
 
-### 안내
-- **인덱서를 먼저 사용**: `node cli.js index search -q "검색어"`
-- 인덱서 결과가 없을 때만 Grep/Glob 사용.
-- 인덱스가 오래된 것 같으면 `/reindex` 실행.
-
----
-
-## 10. 무한 재귀 경로 삭제
-
-### 트리거
-- **B**: `Remove-Item -Recurse`, `rd /s /q`, `7z d` 등으로 깊은 재귀 폴더 삭제 시도
-- **A**: "삭제가 안 돼", "경로가 너무 길어"
-
-### 안내
-- 상세 해결법: `temp-file-management.md` § "무한 재귀 경로 삭제 (Incident Rule)"
-- 1순위: PowerShell flatten-and-delete
-- 2순위: robocopy mirror 반복
-- 7z, Remove-Item, rd, .NET Delete는 모두 실패한다.
+### Guidance
+- Show the categorized vault list from `_STATUS.md`'s vault registry.
+- Recommend a fit based on keywords (see root CLAUDE.md routing rules).
+- If nothing fits, propose creating a new vault.
+- Do not drop content into BasicContentsVault (clone template only).
 
 ---
 
-## 11. 스크립트 생성
+## 4. Edit-Mode Confusion
 
-### 트리거
-- **B**: 에이전트가 사용자 승인 없이 스크립트 생성 시도
-- **C**: Script_Registry.md 중복 확인 누락
+### Triggers
+- **B**: trying to edit Contents files and workspace files in the same task.
+- **A**: "can I edit this file?", "what's the difference between Contents and workspace?"
 
-### 안내
-- 스크립트 생성 전 반드시 사용자 승인. 목적, 경로, 영향 범위 보고.
-- `Script_Registry.md`에서 중복 확인. 기존 스크립트 확장으로 해결 가능하면 새로 만들지 않는다.
+### Guidance
+- `Contents/**` = Contents mode. Note authoring/editing.
+- `.sync/`, `.claude/`, vault root files = Workspace mode. Edit only in AIHubVault.
+- Do not mix modes in one task. Declare the mode when switching.
+- Phrase it as: "This file is a workspace edit, so it needs to happen in AIHubVault."
 
 ---
 
-## 12. 배포 동기화
+## 5. Workspace Sync
 
-### 트리거
-- **A**: "배포 어떻게 해?", "SellingVault가 뭐야?"
-- **C**: 코어 규칙 변경 후 `_ROOT_VERSION.md` 미기록
+### Triggers
+- **B**: editing `.sync/` files directly in a non-Hub vault.
+- **A**: "did the sync not run?", "the versions don't match".
+- **C**: workspace edited but `_WORKSPACE_VERSION.md` not updated.
 
-### 안내
-- 코어 규칙/스킬 변경은 배포 대상. `_ROOT_VERSION.md`에 기록.
-- 배포 경로: SellingVault (`C:\SellingVault\Korean\AIMindVaults`).
-- 배포 + git push는 사용자가 명시적으로 요청한 경우에만 수행.
+### Guidance
+- Workspace edits only in AIHubVault. Other vaults receive them automatically via sync.
+- Compare `_WORKSPACE_VERSION.md` versions; if they differ, run sync.
+- Sync execution: opening the vault in Obsidian runs it automatically. Manual: `node cli.js pre-sync`.
+
+---
+
+## 6. Plugin Install / Config
+
+### Triggers
+- **B**: editing `.obsidian/` in a non-Hub vault.
+- **A**: "install this plugin", "I changed the setting but it didn't apply to the other vault".
+
+### Guidance
+- Plugin install / config changes happen in AIHubVault → propagated by sync.
+- Prefer the `/install-plugin` skill.
+- `.obsidian/` edits are Workspace mode. `_WORKSPACE_VERSION.md` entry required.
+
+---
+
+## 7. Session Exit
+
+### Triggers
+- **A**: "done", "wrap up", "close out".
+- **C**: any of _STATUS.md / handoff / root _STATUS.md missing at session end.
+
+### Guidance
+- `/vault-update` skill runs the session-exit routine automatically.
+- Manual: update all three — vault `_STATUS.md`, root `_STATUS.md`, `_SESSION_HANDOFF_{agent}.md`.
+- Missing any one = session exit incomplete.
+
+---
+
+## 8. Post-Edit Validation
+
+### Triggers
+- **C**: after note edit, `post_note_edit_review` not run, or indexing incomplete.
+- **A**: "how do I review?", "BAD is not 0".
+
+### Guidance
+- Run `node cli.js review` after editing notes.
+- If BAD is not 0, fix the offending file (missing frontmatter, encoding, etc.).
+- Work is complete only after indexing (`POST_EDIT_INDEX_UPDATED=1`) is confirmed.
+- If indexing fails: `node cli.js index build -r {vault-path} -i` manually.
+
+---
+
+## 9. Content Search
+
+### Triggers
+- **B**: scanning the whole vault with Grep/Glob without the indexer.
+- **A**: "where is the note?", "I want to find it".
+
+### Guidance
+- **Indexer first**: `node cli.js index search -q "query"`.
+- Fall back to Grep/Glob only when the indexer returns nothing.
+- If the index looks stale, run `/reindex`.
+
+---
+
+## 10. Infinite-Recursion Path Deletion
+
+### Triggers
+- **B**: trying `Remove-Item -Recurse`, `rd /s /q`, `7z d` on a deep recursive folder.
+- **A**: "it won't delete", "the path is too long".
+
+### Guidance
+- Full procedure: `temp-file-management.md` § "Infinite-Recursion Path Deletion (Incident Rule)".
+- 1st choice: PowerShell flatten-and-delete.
+- 2nd choice: repeated robocopy mirror.
+- 7z, Remove-Item, rd, .NET Delete all fail.
+
+---
+
+## 11. Script Creation
+
+### Triggers
+- **B**: agent about to create a script without user approval.
+- **C**: `Script_Registry.md` duplicate check skipped.
+
+### Guidance
+- Always get user approval before creating a script. Report purpose, path, and impact scope.
+- Check `Script_Registry.md` for duplicates. If an existing script can be extended, don't create a new one.
+
+---
+
+## 12. Distribution Sync
+
+### Triggers
+- **A**: "how do I deploy?", "what is SellingVault?"
+- **C**: core rule changed but `_ROOT_VERSION.md` not updated.
+
+### Guidance
+- Core rule/skill changes are distribution targets. Log them in `_ROOT_VERSION.md`.
+- Distribution path: SellingVault (`C:\SellingVault\English\AIMindVaults` for EN, `C:\SellingVault\Korean\AIMindVaults` for KO).
+- Deploy + git push only when the user explicitly requests it.

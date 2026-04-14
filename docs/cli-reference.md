@@ -1,19 +1,19 @@
-# AIMindVaults CLI 레퍼런스
+# AIMindVaults CLI Reference
 
-Node.js 기반 크로스플랫폼 CLI 도구. 볼트 인덱싱, 동기화, 리뷰, 볼트 관리 등 AIMindVaults 핵심 기능을 제공한다.
+A Node.js cross-platform CLI that drives the core of AIMindVaults: vault indexing, sync, review, and vault management.
 
-- 위치: `.sync/_tools/cli-node/bin/cli.js`
-- 프로그램명: `aimv`
-- 런타임: Node.js ESM
-- 플랫폼: Windows / macOS / Linux
+- Location: `.sync/_tools/cli-node/bin/cli.js`
+- Program name: `aimv`
+- Runtime: Node.js ESM
+- Platforms: Windows / macOS / Linux
 
-## 실행 방법
+## How to run
 
 ```bash
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" <command> [options]
+node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" <command> [options]
 ```
 
-전역 설치 또는 alias 설정 후:
+Or, after a global install / alias:
 
 ```bash
 aimv <command> [options]
@@ -21,23 +21,23 @@ aimv <command> [options]
 
 ---
 
-## 인덱서
+## Indexer
 
 ### index build
 
-볼트 콘텐츠 인덱스를 빌드한다. `vault_index.json`을 생성하며, 이후 `index search`의 검색 소스가 된다.
+Build the vault's content index. Produces `vault_index.json`, which becomes the source for `index search`.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --vault-root <path>` | 볼트 경로 | 자동탐지 |
-| `-i, --incremental` | 변경된 파일만 증분 빌드 | false |
-| `-v, --verbose` | 상세 출력 | false |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --vault-root <path>` | Vault path | auto-detect |
+| `-i, --incremental` | Incremental build (changed files only) | false |
+| `-v, --verbose` | Verbose output | false |
 
 ```bash
-# 전체 빌드
+# full build
 node cli.js index build -r "/path/to/vault"
 
-# 증분 빌드 (변경된 파일만)
+# incremental build (changed files only)
 node cli.js index build -r "/path/to/vault" -i
 ```
 
@@ -45,25 +45,25 @@ node cli.js index build -r "/path/to/vault" -i
 
 ### index search
 
-인덱스에서 노트를 검색한다. 키워드, 태그, type 필터를 조합할 수 있다.
+Search notes in the index. Combines keyword, tag, and type filters.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --vault-root <path>` | 볼트 경로 | 자동탐지 |
-| `-q, --query <keyword>` | 키워드 검색 (title, tags, headings 가중 랭킹) | |
-| `-t, --tag <tag>` | 태그 필터 | |
-| `--type <type>` | frontmatter type 필터 | |
-| `-f, --format <fmt>` | 출력 형식 (`table` \| `compact`) | `table` |
-| `-n, --top <n>` | 최대 결과 수 | 10 |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --vault-root <path>` | Vault path | auto-detect |
+| `-q, --query <keyword>` | Keyword search (weighted by title / tags / headings) | |
+| `-t, --tag <tag>` | Tag filter | |
+| `--type <type>` | Frontmatter type filter | |
+| `-f, --format <fmt>` | Output format (`table` \| `compact`) | `table` |
+| `-n, --top <n>` | Max results | 10 |
 
 ```bash
-# 키워드 검색
-node cli.js index search -q "색채학"
+# keyword search
+node cli.js index search -q "color theory"
 
-# 태그 + compact 출력
-node cli.js index search -q "색채학" -t "knowledge" -f compact
+# tag + compact output
+node cli.js index search -q "color theory" -t "knowledge" -f compact
 
-# type 필터
+# type filter
 node cli.js index search --type "study-note" -n 5
 ```
 
@@ -71,18 +71,18 @@ node cli.js index search --type "study-note" -n 5
 
 ### index master-build
 
-AIMindVaults 전체 볼트에 걸친 크로스볼트 마스터 인덱스를 빌드한다. 볼트 경계를 넘어 노트를 검색할 때 사용한다.
+Build a cross-vault master index spanning every AIMindVaults vault. Use when searching across vault boundaries.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --root <path>` | AIMindVaults 루트 경로 | 자동탐지 |
-| `--vault-name <name>` | 특정 볼트만 부분 업데이트 | |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --root <path>` | AIMindVaults root | auto-detect |
+| `--vault-name <name>` | Update a single vault only | |
 
 ```bash
-# 전체 마스터 인덱스 빌드
+# build the full master index
 node cli.js index master-build
 
-# 특정 볼트만 갱신
+# refresh a single vault
 node cli.js index master-build --vault-name "Unity"
 ```
 
@@ -90,63 +90,63 @@ node cli.js index master-build --vault-name "Unity"
 
 ### index master-search
 
-마스터 인덱스에서 크로스볼트 검색을 수행한다.
+Cross-vault search against the master index.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --root <path>` | AIMindVaults 루트 경로 | 자동탐지 |
-| `-q, --query <keyword>` | 키워드 검색 | |
-| `-t, --tag <tag>` | 태그 필터 | |
-| `--vault <vault>` | 볼트명 필터 | |
-| `-f, --format <fmt>` | 출력 형식 (`table` \| `compact`) | `table` |
-| `-n, --top <n>` | 최대 결과 수 | 15 |
-| `-c, --concepts-only` | 크로스볼트 컨셉 맵만 표시 | false |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --root <path>` | AIMindVaults root | auto-detect |
+| `-q, --query <keyword>` | Keyword search | |
+| `-t, --tag <tag>` | Tag filter | |
+| `--vault <vault>` | Vault name filter | |
+| `-f, --format <fmt>` | Output format (`table` \| `compact`) | `table` |
+| `-n, --top <n>` | Max results | 15 |
+| `-c, --concepts-only` | Show the cross-vault concept map only | false |
 
 ```bash
-# 크로스볼트 키워드 검색
-node cli.js index master-search -q "스킬 시스템"
+# cross-vault keyword search
+node cli.js index master-search -q "skill system"
 
-# 특정 볼트 내 검색
+# search within one vault
 node cli.js index master-search -q "ECS" --vault "Unity"
 
-# 크로스볼트 컨셉 맵만 확인
+# show the cross-vault concept map only
 node cli.js index master-search -c
 ```
 
 ---
 
-## 리뷰
+## Review
 
 ### review
 
-노트 편집 후 UTF-8 인코딩 검증 및 자동 인덱싱을 수행한다. 편집 완료 직후 반드시 실행해야 한다.
+Run UTF-8 encoding validation and automatic re-indexing after a note edit. Must run immediately after any edit.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --vault-root <path>` | 볼트 경로 | 자동탐지 |
-| `-s, --scope <name>` | 검사 범위 폴더명 | |
-| `-v, --verbose` | 상세 출력 | false |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --vault-root <path>` | Vault path | auto-detect |
+| `-s, --scope <name>` | Restrict to a named folder | |
+| `-v, --verbose` | Verbose output | false |
 
-**출력 코드:**
+**Output codes:**
 
-| 출력 | 의미 |
-|------|------|
-| `POST_EDIT_REVIEW_BAD=0` | 인코딩 오류 없음 (정상) |
-| `POST_EDIT_REVIEW_BAD=N` | N건 오류 — 해당 파일 수정 필요 |
-| `POST_EDIT_INDEX_UPDATED=1` | 인덱싱 완료 |
-| `POST_EDIT_INDEX_SKIPPED=1` | 인덱싱 건너뜀 — 수동 빌드 필요 |
+| Output | Meaning |
+|--------|---------|
+| `POST_EDIT_REVIEW_BAD=0` | No encoding errors (good) |
+| `POST_EDIT_REVIEW_BAD=N` | N errors — fix the listed files |
+| `POST_EDIT_INDEX_UPDATED=1` | Indexing complete |
+| `POST_EDIT_INDEX_SKIPPED=1` | Indexing skipped — manual build needed |
 
-검토 통과 시 자동으로 `index build -i`를 호출한다.
+On pass, `review` auto-invokes `index build -i`.
 
 ```bash
-# 기본 리뷰
+# standard review
 node cli.js review -r "/path/to/vault"
 
-# Contents 폴더 한정 검사
+# scope to the Contents folder
 node cli.js review -r "/path/to/vault" -s "Contents"
 ```
 
-`POST_EDIT_INDEX_SKIPPED=1`이 출력되면 수동으로 인덱스를 갱신한다:
+If `POST_EDIT_INDEX_SKIPPED=1`, refresh manually:
 
 ```bash
 node cli.js index build -r "/path/to/vault" -i
@@ -154,28 +154,28 @@ node cli.js index build -r "/path/to/vault" -i
 
 ---
 
-## 동기화
+## Sync
 
 ### sync
 
-Hub(AIHubVault)와 위성볼트 간 workspace 파일을 동기화한다.
+Sync workspace files between the Hub (AIHubVault) and a satellite vault.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --vault-root <path>` | 볼트 경로 | 자동탐지 |
-| `--hub-path <path>` | Hub 경로 | 자동탐지 |
-| `-d, --dry-run` | 실제 변경 없이 미리보기 | false |
-| `--no-prune` | 타겟에만 있는 파일 삭제 안 함 | false |
-| `--verify-content` | 버전 일치해도 파일 해시 강제 검증 | false |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --vault-root <path>` | Vault path | auto-detect |
+| `--hub-path <path>` | Hub path | auto-detect |
+| `-d, --dry-run` | Preview without changes | false |
+| `--no-prune` | Don't delete files that exist only in the target | false |
+| `--verify-content` | Force file-hash verification even when versions match | false |
 
 ```bash
-# 동기화 미리보기
+# preview
 node cli.js sync -r "/path/to/vault" -d
 
-# 실제 동기화
+# actual sync
 node cli.js sync -r "/path/to/vault"
 
-# 파일 삭제 없이 동기화
+# sync without deletes
 node cli.js sync -r "/path/to/vault" --no-prune
 ```
 
@@ -183,13 +183,13 @@ node cli.js sync -r "/path/to/vault" --no-prune
 
 ### pre-sync
 
-트램펄린 커맨드. 현재 실행 중인 `cli.js`와 Hub의 `cli.js`를 해시 비교하여, 구버전이면 Hub 버전으로 자동 교체 후 `sync`를 실행한다.
+Trampoline command. Compares the running `cli.js` hash against the Hub's `cli.js`; if outdated, swaps itself for the Hub version and then runs `sync`.
 
-Obsidian의 Shell Commands 플러그인 on-layout-ready 이벤트에 연결되어 볼트 열기 시 자동 실행된다.
+Wired to the Obsidian Shell Commands plugin `on-layout-ready` event, so it runs automatically when a vault is opened.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --vault-root <path>` | 볼트 경로 | 자동탐지 |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --vault-root <path>` | Vault path | auto-detect |
 
 ```bash
 node cli.js pre-sync -r "/path/to/vault"
@@ -197,17 +197,17 @@ node cli.js pre-sync -r "/path/to/vault"
 
 ---
 
-## 볼트 관리
+## Vault management
 
 ### clone
 
-BasicContentsVault를 기반으로 새 볼트를 클론한다. 수동 폴더 복사 대신 이 커맨드를 사용한다.
+Clone a new vault from BasicContentsVault. Use this instead of manual folder copy.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-t, --target-path <path>` | 생성할 볼트 경로 (필수) | |
-| `-n, --project-name <name>` | 볼트 표시 이름 | |
-| `-s, --source-path <path>` | 소스 볼트 경로 | 자동탐지 |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-t, --target-path <path>` | Destination vault path (required) | |
+| `-n, --project-name <name>` | Display name | |
+| `-s, --source-path <path>` | Source vault path | auto-detect |
 
 ```bash
 node cli.js clone \
@@ -219,49 +219,49 @@ node cli.js clone \
 
 ### broadcast
 
-Hub의 `.sync/` 내 특정 파일을 전체 위성볼트에 전파한다. 특정 스크립트나 설정 파일을 단일 파일 단위로 배포할 때 사용한다.
+Push a specific file from the Hub's `.sync/` to every satellite vault. Use for per-file urgent rollouts.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-p, --relative-path <path>` | `.sync/` 기준 상대 경로 (필수) | |
-| `-d, --dry-run` | 미리보기 | false |
-| `-f, --force` | 타겟에 파일이 없어도 생성 | false |
-| `-e, --exclude <patterns...>` | 제외할 볼트명 패턴 | |
-| `--vaults-root <path>` | `Vaults/` 폴더 경로 | 자동탐지 |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-p, --relative-path <path>` | Path relative to `.sync/` (required) | |
+| `-d, --dry-run` | Preview | false |
+| `-f, --force` | Create file even where it doesn't exist | false |
+| `-e, --exclude <patterns...>` | Vault-name patterns to exclude | |
+| `--vaults-root <path>` | `Vaults/` folder path | auto-detect |
 
 ```bash
-# 미리보기
+# preview
 node cli.js broadcast -p "_tools/cli-node/bin/cli.js" -d
 
-# 전파 실행
+# broadcast
 node cli.js broadcast -p "_tools/cli-node/bin/cli.js"
 
-# 특정 볼트 제외
+# exclude a vault
 node cli.js broadcast -p "_tools/cli-node/bin/cli.js" -e "BasicContentsVault"
 ```
 
 ---
 
-## 유틸리티
+## Utilities
 
 ### trash-clean
 
-각 볼트의 `.trash/` 폴더를 일괄 정리한다.
+Bulk-empty each vault's `.trash/` folder.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-v, --vault <names...>` | 특정 볼트만 지정 | 전체 |
-| `-d, --dry-run` | 미리보기 | false |
-| `--vaults-root <path>` | `Vaults/` 폴더 경로 | 자동탐지 |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-v, --vault <names...>` | Target specific vaults | all |
+| `-d, --dry-run` | Preview | false |
+| `--vaults-root <path>` | `Vaults/` folder path | auto-detect |
 
 ```bash
-# 전체 볼트 미리보기
+# preview all vaults
 node cli.js trash-clean -d
 
-# 특정 볼트만 정리
+# clean specific vaults
 node cli.js trash-clean -v "Unity" "GameDesign"
 
-# 실제 삭제
+# actually delete
 node cli.js trash-clean
 ```
 
@@ -269,11 +269,11 @@ node cli.js trash-clean
 
 ### open
 
-`pre-sync`를 실행한 후 Obsidian에서 해당 볼트를 연다.
+Run `pre-sync`, then open the vault in Obsidian.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --vault-root <path>` | 볼트 경로 | 자동탐지 |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --vault-root <path>` | Vault path | auto-detect |
 
 ```bash
 node cli.js open -r "/path/to/vault"
@@ -283,118 +283,118 @@ node cli.js open -r "/path/to/vault"
 
 ### bridge
 
-Obsidian local-rest-api 플러그인과 연동하는 CLI 래퍼. 노트 읽기/쓰기, 검색, 히스토리 조회 등을 수행한다.
+CLI wrapper for the Obsidian local-rest-api plugin: note read/write, search, history lookup, and more.
 
-| 옵션 | 설명 |
-|------|------|
-| `-a, --action <action>` | 실행할 액션 (아래 목록 참조) |
-| `-r, --vault-root <path>` | 볼트 경로 |
-| `--vault-name <name>` | 볼트명 |
-| `-p, --path <path>` | 대상 노트 경로 |
-| `-q, --query <query>` | 검색어 |
-| `-c, --content <text>` | 추가/생성할 내용 |
-| `--version` | 버전 정보 |
-| `--from` | 히스토리 시작 날짜 |
-| `--to` | 히스토리 종료 날짜 |
-| `-l` | 목록 출력 |
-| `--plugin-id` | 플러그인 ID |
-| `-s` | 간략 출력 |
+| Option | Description |
+|--------|-------------|
+| `-a, --action <action>` | Action to run (see list below) |
+| `-r, --vault-root <path>` | Vault path |
+| `--vault-name <name>` | Vault name |
+| `-p, --path <path>` | Target note path |
+| `-q, --query <query>` | Search query |
+| `-c, --content <text>` | Content to append / create |
+| `--version` | Version info |
+| `--from` | History start date |
+| `--to` | History end date |
+| `-l` | List output |
+| `--plugin-id` | Plugin id |
+| `-s` | Compact output |
 
-**지원 액션:**
+**Supported actions:**
 
-| 액션 | 설명 |
-|------|------|
-| `vault-info` | 볼트 정보 조회 |
-| `search` | 노트 전문 검색 |
-| `read` | 노트 내용 읽기 |
-| `open` | Obsidian에서 노트 열기 |
-| `append` | 노트에 내용 추가 |
-| `create` | 노트 생성 |
-| `history` | 편집 히스토리 조회 |
-| `plugins-list` | 설치된 플러그인 목록 |
-| `post-review` | 편집 후 리뷰 트리거 |
+| Action | Description |
+|--------|-------------|
+| `vault-info` | Get vault info |
+| `search` | Full-text note search |
+| `read` | Read a note |
+| `open` | Open a note in Obsidian |
+| `append` | Append content to a note |
+| `create` | Create a note |
+| `history` | Query edit history |
+| `plugins-list` | List installed plugins |
+| `post-review` | Trigger post-edit review |
 
 ```bash
-# 볼트 정보 확인
+# vault info
 node cli.js bridge -a vault-info -r "/path/to/vault"
 
-# 노트 읽기
+# read a note
 node cli.js bridge -a read -p "Contents/Domain/note-title.md" -r "/path/to/vault"
 
-# 노트에 내용 추가
-node cli.js bridge -a append -p "Contents/Domain/note.md" -c "추가할 내용" -r "/path/to/vault"
+# append content
+node cli.js bridge -a append -p "Contents/Domain/note.md" -c "text to append" -r "/path/to/vault"
 ```
 
 ---
 
 ### route
 
-작업 설명을 입력하면 적합한 에이전트와 볼트를 추천한다.
+Given a task description, recommend an agent and a vault.
 
-| 옵션 | 설명 |
-|------|------|
-| `-t, --task <description>` | 작업 설명 (필수) |
+| Option | Description |
+|--------|-------------|
+| `-t, --task <description>` | Task description (required) |
 
 ```bash
-node cli.js route -t "Unity 타일맵 렌더링 최적화 작업"
+node cli.js route -t "Unity tilemap rendering optimization"
 ```
 
 ---
 
 ### standards
 
-볼트의 `_Standards/` 디렉토리 구조를 확인한다.
+Inspect a vault's `_Standards/` directory structure.
 
-| 옵션 | 설명 | 기본값 |
-|------|------|--------|
-| `-r, --vault-root <path>` | 볼트 경로 | 자동탐지 |
-| `-d, --deep` | 하위 폴더까지 표시 | false |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-r, --vault-root <path>` | Vault path | auto-detect |
+| `-d, --deep` | Recurse into subfolders | false |
 
 ```bash
-# 기본 구조 확인
+# basic structure
 node cli.js standards -r "/path/to/vault"
 
-# 하위 폴더 포함
+# include subfolders
 node cli.js standards -r "/path/to/vault" -d
 ```
 
 ---
 
-## 자주 쓰는 워크플로우
+## Common workflows
 
-### 노트 편집 후 리뷰
+### Review after editing notes
 
-노트 편집을 마치면 반드시 `review`를 실행한다. `POST_EDIT_REVIEW_BAD=0`과 `POST_EDIT_INDEX_UPDATED=1`을 확인한다.
+Always run `review` after a note edit. Confirm `POST_EDIT_REVIEW_BAD=0` and `POST_EDIT_INDEX_UPDATED=1`.
 
 ```bash
 node cli.js review -r "/path/to/vault"
 ```
 
-### 전체 볼트 인덱스 갱신
+### Refresh the whole-vault index
 
-인덱스가 오래됐거나 대량 노트를 추가한 후 실행한다.
+Run after the index gets stale or after bulk-adding notes.
 
 ```bash
-# 증분 빌드 (권장)
+# incremental (recommended)
 node cli.js index build -r "/path/to/vault" -i
 
-# 전체 재빌드
+# full rebuild
 node cli.js index build -r "/path/to/vault"
 ```
 
-### 수동 동기화
+### Manual sync
 
-볼트를 열 때 자동 실행되지 않은 경우 수동으로 실행한다.
+Run this when the auto-sync on vault open didn't fire.
 
 ```bash
-# 미리보기 후 실행
+# preview, then apply
 node cli.js sync -r "/path/to/vault" -d
 node cli.js sync -r "/path/to/vault"
 ```
 
-### 전체 위성볼트 일괄 sync (bash 루프)
+### Batch-sync every satellite (bash loop)
 
-AIHubVault를 제외한 모든 위성볼트에 순서대로 동기화를 실행한다.
+Sync every satellite in order, excluding AIHubVault.
 
 ```bash
 VAULTS_ROOT="/c/AIMindVaults/Vaults"
@@ -411,8 +411,8 @@ done
 
 ---
 
-## 참고
+## Notes
 
-- PS1 스크립트에서 전환됨 (2026-04-13)
-- 이전 스크립트: `.sync/_tools/cli/vault_index_build.ps1`, `vault_index_search.ps1`, `post_note_edit_review.ps1`, `sync_workspace.ps1`
-- 인덱서 우선 검색 규칙: 노트 탐색 시 Grep/Glob 전에 `index search`를 먼저 사용한다 (`token-optimization.md` § 0 참조)
+- Migrated from PowerShell (2026-04-13).
+- Legacy scripts: `.sync/_tools/cli/vault_index_build.ps1`, `vault_index_search.ps1`, `post_note_edit_review.ps1`, `sync_workspace.ps1`.
+- Indexer-first search rule: when searching notes, use `index search` before Grep/Glob (see `token-optimization.md` § 0).

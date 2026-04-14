@@ -1,93 +1,93 @@
-# /auto-organize — 노트/볼트 생성 시 폴더 자동 분류
+# /auto-organize — Auto-Classify on Note/Vault Creation
 
-노트나 볼트를 생성할 때, 적절한 폴더가 없으면 주제에 맞는 폴더를 제안하고 생성한다.
+When creating a note or vault, if no suitable folder exists, propose and create one that matches the topic.
 
-## 사용법
+## Usage
 
 ```
-/auto-organize note <주제 또는 제목>
-/auto-organize vault <주제 또는 제목>
+/auto-organize note <topic or title>
+/auto-organize vault <topic or title>
 ```
 
-예시:
-- `/auto-organize note Notion API 웹훅 활용 패턴`
+Examples:
+- `/auto-organize note Notion API webhook patterns`
 - `/auto-organize vault Docker`
 
-## 프로세스
+## Process
 
-### 1. 대상 분석
+### 1. Analyze the target
 
-- 입력된 주제/제목에서 핵심 키워드 추출
-- note인 경우: 현재 볼트의 `Contents/Domain/`, `Contents/Project/` 하위 폴더 스캔
-- vault인 경우: `C:/AIMindVaults/Vaults/` 하위 카테고리 폴더 스캔
+- Extract key keywords from the topic/title.
+- For note: scan `Contents/Domain/` and `Contents/Project/` subfolders of the current vault.
+- For vault: scan category folders under `C:/AIMindVaults/Vaults/`.
 
-### 2. 기존 폴더 매칭
+### 2. Match against existing folders
 
-기존 폴더 목록을 조회하여 주제와 매칭되는 폴더가 있는지 판단.
+Query the existing folder list and decide whether a matching folder exists.
 
-- **매칭 성공**: 해당 폴더에 바로 생성 → 사용자에게 위치 보고
-- **매칭 실패**: 3단계로 진행
+- **Match found**: create there directly → report the location to the user.
+- **No match**: proceed to step 3.
 
-### 3. 새 폴더 제안 (매칭 실패 시)
+### 3. Propose a new folder (no match)
 
-사용자에게 아래 정보를 제시하고 승인을 요청:
+Present the following to the user and ask for approval:
 
-1. **제안 폴더 경로**: 기존 구조와 네이밍 패턴에 맞춰 제안
-2. **제안 근거**: 왜 이 위치/이름인지 설명
-3. **대안**: 기존 폴더 중 가장 가까운 후보 1~2개 제시
+1. **Proposed folder path**: aligned with existing structure and naming patterns.
+2. **Rationale**: why this location/name.
+3. **Alternatives**: 1–2 closest existing folders.
 
 ```
-제안: Contents/Domain/webhook/ (신규 생성)
-근거: 기존 integration/ 폴더는 외부 도구 통합 전반을 다루고, 웹훅은 별도 주제로 분리 가능
-대안: integration/ 하위에 넣기 (기존 폴더 활용)
+Proposed: Contents/Domain/webhook/ (new)
+Rationale: the existing integration/ folder covers external-tool integration broadly; webhooks can stand as their own topic.
+Alternative: nest under integration/ (reuse existing folder)
 ```
 
-### 4. 승인 후 실행
+### 4. Execute after approval
 
-사용자 승인을 받은 후:
+After approval:
 
-**노트의 경우:**
-1. 폴더 생성
-2. `/juggl-note` 스킬과 동일한 형식으로 노트 생성
-3. `_VAULT-INDEX.md`에 새 폴더 등록
+**For notes:**
+1. Create the folder.
+2. Create the note in the same format as `/juggl-note`.
+3. Register the new folder in `_VAULT-INDEX.md`.
 
-**볼트의 경우:**
-1. 카테고리 폴더 생성 (없는 경우)
-2. `/create-vault` 스킬 호출하여 볼트 생성
-3. 루트 `CLAUDE.md` 레지스트리 등록
+**For vaults:**
+1. Create the category folder (if missing).
+2. Invoke `/create-vault` to create the vault.
+3. Register in the root `CLAUDE.md` registry.
 
-### 5. 완료 보고
+### 5. Completion report
 
-생성된 폴더 경로, 노트/볼트 경로, 수행한 후속 작업을 보고.
+Report the created folder path, note/vault path, and any follow-up actions taken.
 
-## 폴더 네이밍 규칙
+## Folder Naming Rules
 
-- 영문 소문자 + 언더스코어 (노트 폴더): `db_design`, `permissions`, `workflow`
-- 볼트 카테고리는 기존 패턴 유지: `Domains_<영역>`, `Projects_<영역>`
-- 볼트명은 PascalCase: `Notion`, `Docker`, `Unity`
+- Lowercase + underscore for note folders: `db_design`, `permissions`, `workflow`.
+- Keep existing category patterns for vaults: `Domains_<area>`, `Projects_<area>`.
+- Vault names in PascalCase: `Notion`, `Docker`, `Unity`.
 
-## 판단 기준
+## Judgment Criteria
 
-### 노트 폴더 매칭
+### Note folder matching
 
-1. 폴더명과 주제 키워드 직접 매칭
-2. 해당 폴더 내 기존 노트 제목과 주제 유사도
-3. 매칭률이 낮으면 새 폴더 제안
+1. Direct match between folder name and topic keyword.
+2. Similarity between topic and existing note titles in the folder.
+3. If match rate is low, propose a new folder.
 
-### 볼트 카테고리 매칭
+### Vault category matching
 
-| 주제 | 카테고리 |
-|------|---------|
-| 게임 엔진, 게임 도메인 지식 | `Domains_Game` |
-| 게임 개발 도구, 툴킷 | `Projects_GameTool` |
-| 영상 편집, 미디어 | `Domains_Video` |
-| 인프라, DevOps, 도구 | `Domains_Infra` |
-| 3D 모델링, 렌더링 | `Domains_3D` |
-| AI 에셋 제작 | `Domains_AI_Asset` |
-| 버전 관리 | `Domains_VCS` |
-| 해당 없음 | 사용자에게 새 카테고리 제안
+| Topic | Category |
+|-------|----------|
+| Game engine / game domain knowledge | `Domains_Game` |
+| Game dev tools / toolkits | `Projects_GameTool` |
+| Video editing / media | `Domains_Video` |
+| Infra / DevOps / tools | `Domains_Infra` |
+| 3D modeling / rendering | `Domains_3D` |
+| AI asset production | `Domains_AI_Asset` |
+| Version control | `Domains_VCS` |
+| None | Propose a new category to the user |
 
-## 금지
+## Forbidden
 
-- 사용자 승인 없이 폴더를 생성하지 않는다.
-- 기존 폴더 구조를 변경하지 않는다 (새 폴더 추가만 가능).
+- Do not create folders without user approval.
+- Do not restructure existing folders (new folders only).

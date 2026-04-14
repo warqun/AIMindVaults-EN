@@ -1,141 +1,144 @@
-# AIMindVaults — Claude Code 온보딩
+# AIMindVaults — Claude Code Onboarding
 
-> Claude Code 에이전트 전용 온보딩 문서.
-> 공통 규칙은 `AGENT_ONBOARDING.md`를 먼저 읽는다.
-
----
-
-## 1. 진입점
-
-- **루트 진입점**: `CLAUDE.md` — 볼트 레지스트리 (22볼트), 라우팅 키워드, 진입 프로토콜
-- **볼트 진입점**: `{볼트}/CLAUDE.md` — 볼트 전용 규칙, 편집 모드, 세션 규칙
-
-## 2. 세션 시작 순서
-
-1. `CLAUDE.md` (루트) — 라우팅 허브
-2. `_SESSION_HANDOFF_CLAUDE.md` (루트) — 이전 세션 맥락
-3. `_STATUS.md` (루트) — 전체 볼트 현황
-4. 대상 볼트의 `CLAUDE.md`
-5. 대상 볼트의 `_STATUS.md`
-
-편집 전에 위 순서를 완료한다.
+> Onboarding for the Claude Code agent.
+> Read `AGENT_ONBOARDING.md` first for the shared rules.
 
 ---
 
-## 3. 에이전트 식별
+## 1. Entry Points
 
-- **식별자**: `claude`
-- frontmatter `agent: claude` (복수 에이전트 작업 시 `agent: [claude, codex]`)
-- 세션 종료 시 `_STATUS.md`에 `claude / YYYY-MM-DD`로 기록
-- 핸드오프 파일: `_SESSION_HANDOFF_CLAUDE.md`
+- **Root entry point**: `CLAUDE.md` — vault registry, routing keywords, entry protocol.
+- **Vault entry point**: `{vault}/CLAUDE.md` — vault-specific rules, edit modes, session rules.
+
+## 2. Session Start Order
+
+1. `CLAUDE.md` (root) — routing hub.
+2. `_SESSION_HANDOFF_CLAUDE.md` (root) — previous session context.
+3. `_STATUS.md` (root) — overall vault state.
+4. Target vault's `CLAUDE.md`.
+5. Target vault's `_STATUS.md`.
+
+Complete this sequence before editing anything.
 
 ---
 
-## 4. Claude Code 역할 범위
+## 3. Agent Identity
 
-| 영역 | Claude Code | Codex |
+- **Identifier**: `claude`.
+- frontmatter `agent: claude` (multi-agent work: `agent: [claude, codex]`).
+- At session end, log `claude / YYYY-MM-DD` in `_STATUS.md`.
+- Handoff file: `_SESSION_HANDOFF_CLAUDE.md`.
+
+---
+
+## 4. Claude Code Role Scope
+
+| Area | Claude Code | Codex |
 |------|-------------|-------|
-| 멀티볼트 구조 변경 (볼트 생성, 폴더 재구조화) | O | X |
-| 스크립트 개발/수정 (`_tools/cli-node/`) | O | X |
-| 규칙/스킬 작성 (`.claude/rules/`, `.claude/commands/`) | O | X |
-| `.obsidian/` 설정 변경 | O | X |
-| 복수 볼트에 걸치는 작업 | O | X |
-| 단일 볼트 내 노트 편집 | O | O |
-| 소스 노트 파이프라인 (영상/글/PDF → 노트) | O | O |
+| Multi-vault structural change (create vault, reshape folders) | Y | N |
+| Script development / modification (`_tools/cli-node/`) | Y | N |
+| Rules / skills authoring (`.claude/rules/`, `.claude/commands/`) | Y | N |
+| `.obsidian/` config changes | Y | N |
+| Cross-vault work | Y | N |
+| Note editing within a single vault | Y | Y |
+| Source-note pipeline (video/article/PDF → note) | Y | Y |
 
 ---
 
-## 5. 스킬 목록 (`.claude/commands/core/` — 17개)
+## 5. Skill List (`.claude/commands/core/` — 17)
 
-| 스킬 | 용도 |
-|------|------|
-| `/auto-organize` | 노트/볼트 생성 시 폴더 자동 분류 |
-| `/create-vault` | 새 볼트 생성 (BasicContentsVault 클론) |
-| `/grok-route` | Grok 분기 라우터 |
-| `/juggl-note` | Juggl 포함 표준 노트 생성 |
-| `/note-link` | 노트 간 의미적 연결 |
-| `/status-update` | 상태 갱신 |
-| `/vault-health` | Vault 건강 진단 |
-| `/vault-route` | 볼트 라우팅 및 진입 |
-| `/vault-update` | 세션 종료 루틴 |
-| `/install-plugin` | Obsidian 플러그인 설치 |
-| `/open-vault` | Obsidian 볼트 열기 |
-| `/open-note` | Obsidian 노트 열기 |
-| `/open-notes` | 복수 노트 새 탭 열기 (local-rest-api) |
-| `/reindex` | 볼트 콘텐츠 인덱스 재빌드 |
-| `/note-from-video` | 영상 → 볼트 노트 변환 파이프라인 |
-| `/note-from-article` | 웹 글/텍스트 → 볼트 노트 변환 파이프라인 |
-| `/note-from-pdf` | PDF → 볼트 노트 변환 파이프라인 |
+| Skill | Purpose |
+|-------|---------|
+| `/auto-organize` | Auto-classify on note/vault creation |
+| `/create-vault` | Create a new vault (clone from BasicContentsVault) |
+| `/grok-route` | Pre-work routing via Grok |
+| `/juggl-note` | Standard note with Juggl embed |
+| `/note-link` | Semantic linking between notes |
+| `/status-update` | Status refresh |
+| `/vault-health` | Vault health check |
+| `/vault-route` | Vault routing and entry |
+| `/vault-update` | Session-exit routine |
+| `/install-plugin` | Obsidian plugin install |
+| `/open-vault` | Open Obsidian vault |
+| `/open-note` | Open Obsidian note |
+| `/open-notes` | Open multiple notes in new tabs (local-rest-api) |
+| `/reindex` | Rebuild vault content index |
+| `/note-from-video` | Video → vault note pipeline |
+| `/note-from-article` | Web article/text → vault note pipeline |
+| `/note-from-pdf` | PDF → vault note pipeline |
 
-스킬 상세: `.claude/commands/MANIFEST.md` 참조.
+Skill details: see `.claude/commands/MANIFEST.md`.
 
 ---
 
-## 6. 설정 구조
+## 6. Config Structure
 
 ```
 .claude/
 ├── rules/
-│   ├── core/           ← 강제 규칙 14개 (모든 에이전트 공통, 배포 동기화 대상)
-│   ├── custom/         ← 개인 규칙 (배포 미대상)
-│   └── MANIFEST.md     ← core/ 목록
+│   ├── core/           ← 15 mandatory rules (shared across agents, sync target)
+│   ├── custom/         ← personal rules (not synced)
+│   └── MANIFEST.md     ← list for core/
 ├── commands/
-│   ├── core/           ← 스킬 17개 (배포 동기화 대상)
-│   ├── custom/         ← 개인 스킬 (배포 미대상)
-│   └── MANIFEST.md     ← core/ 목록
-└── settings.local.json ← Claude Code 로컬 설정
+│   ├── core/           ← 17 skills (sync target)
+│   ├── custom/         ← personal skills (not synced)
+│   └── MANIFEST.md     ← list for core/
+└── settings.local.json ← Claude Code local settings
 ```
 
-### core vs custom 규칙
+### core vs custom rules
 
-- **core/**: 모든 사용자에게 적용되는 제품 규칙. `aimv sync`로 자동 전파.
-- **custom/**: 사용자 개인 규칙. 배포 동기화 대상 아님. 자유롭게 추가/수정.
-- 신규 규칙은 custom/에 우선 생성 → 검증 후 core/로 격상.
-
----
-
-## 7. 강제 규칙 요약 (`.claude/rules/core/`)
-
-| 규칙 | 핵심 |
-|------|------|
-| `vault-routing.md` | 콘텐츠 배치 전 볼트 레지스트리 확인 |
-| `edit-mode-separation.md` | Contents/workspace 모드 분리, workspace는 AIHubVault 전용 |
-| `note-writing.md` | frontmatter 필수, WikiLink 필수, URI 예약문자 금지 |
-| `session-exit.md` | _STATUS.md + 핸드오프 양쪽 갱신 필수 |
-| `post-edit-review.md` | 편집 후 검증 + 인덱싱 완료까지가 작업 종료 |
-| `encoding-safety.md` | UTF-8 고정 I/O, Get-Content 파이프라인 금지 |
-| `token-optimization.md` | 핀포인트 접근, 반복 읽기 금지, 고비용 작업 사전 승인 |
-| `script-creation-approval.md` | 스크립트 생성 전 사용자 승인 필수 |
-| `script-management.md` | Script_Registry 중복 확인, 경로 하드코딩 금지 |
-| `temp-file-management.md` | $env:TEMP 사용, 볼트 내 임시 파일 방치 금지 |
-| `distribution-sync.md` | 배포 반영 대상 변경 시 변경 로그 기록 |
-| `juggl-style-sync.md` | Juggl 스타일 변경 시 graph.css 갱신 |
-| `obsidian-config-safety.md` | .obsidian/ 편집은 AIHubVault에서만, Read→Edit 방식 |
-| `vault-individualization.md` | 볼트 생성 시 `aimv clone` 사용, 이름/분류/태그 구체화 |
+- **core/**: product rules that apply to every user. Propagated automatically via `aimv sync`.
+- **custom/**: personal rules. Not a sync target. Add and modify freely.
+- New rules start in custom/ — promote to core/ after validation.
 
 ---
 
-## 8. MCP 서버 연동
+## 7. Mandatory Rules — Summary (`.claude/rules/core/`)
 
-Claude Code는 MCP(Model Context Protocol) 서버를 통해 외부 도구와 연동한다.
-설정: `~/.claude/settings.json` 또는 프로젝트별 `.claude/settings.local.json`.
+| Rule | Core idea |
+|------|-----------|
+| `vault-routing.md` | Check the vault registry before placing content |
+| `edit-mode-separation.md` | Separate Contents/workspace modes; workspace edits in AIHubVault only |
+| `note-writing.md` | Frontmatter required, WikiLink required, no URI-reserved characters |
+| `session-exit.md` | Update both _STATUS.md and the handoff file |
+| `post-edit-review.md` | Validation + indexing complete = task done |
+| `encoding-safety.md` | UTF-8 fixed I/O; no Get-Content pipeline |
+| `token-optimization.md` | Pinpoint access, no re-reads, pre-approve expensive work |
+| `script-creation-approval.md` | User approval required before creating a script |
+| `script-management.md` | Check Script_Registry for duplicates, no hardcoded paths |
+| `temp-file-management.md` | Use $env:TEMP; no temp files left inside a vault |
+| `distribution-sync.md` | Log distribution-relevant changes in the changelog |
+| `juggl-style-sync.md` | Update graph.css when Juggl style changes |
+| `obsidian-config-safety.md` | `.obsidian/` edits in AIHubVault only, Read→Edit approach |
+| `vault-individualization.md` | Use `aimv clone` to create vaults; concretize name/category/tag |
+| `user-guidance.md` | Agent playbook for guiding users on core features |
 
-### 이 환경에 연결된 MCP 서버
+---
 
-| 서버 | 용도 | 상세 |
-|------|------|------|
-| Serena | 시맨틱 코드 분석 (C# 심볼 기반) | `.claude/rules/custom/serena-mcp.md` |
-| mcp-unity | Unity 에디터 조작 | 사용하지 않음 (unity-cli 우선) |
-| Notion | Notion 페이지 읽기/쓰기 | `.claude/rules/custom/notion-sync.md` |
-| Blender | Blender 3D 조작 | `.claude/rules/custom/blender-mcp.md` |
-| Google Calendar | 일정 관리 | — |
-| Gmail | 이메일 | — |
-| Claude in Chrome | 브라우저 자동화 | — |
+## 8. MCP Server Integration
 
-### Unity 도구 우선순위 (강제)
+Claude Code connects to external tools via MCP (Model Context Protocol) servers.
+Configure in `~/.claude/settings.json` or the per-project `.claude/settings.local.json`.
 
-1. **unity-cli** — 최우선 (`unity-cli console`, `unity-cli editor refresh --compile`)
-2. **Serena MCP** — C# 코드 심볼 탐색/수정
-3. **mcp-unity** — unity-cli 없는 프로젝트에서만 대체
+### MCP servers commonly used in this environment
 
-상세: `.claude/rules/custom/unity-tools.md`, `.claude/rules/custom/serena-mcp.md`
+| Server | Purpose | Details |
+|--------|---------|---------|
+| Serena | Semantic code analysis (C# symbol-based) | `.claude/rules/custom/serena-mcp.md` |
+| mcp-unity | Unity editor control | Not used (unity-cli preferred) |
+| Notion | Notion page read/write | `.claude/rules/custom/notion-sync.md` |
+| Blender | Blender 3D control | `.claude/rules/custom/blender-mcp.md` |
+| Google Calendar | Scheduling | — |
+| Gmail | Email | — |
+| Claude in Chrome | Browser automation | — |
+
+These are examples from a maintainer's environment. Users configure their own servers under `custom/`.
+
+### Unity Tool Priority (Mandatory)
+
+1. **unity-cli** — highest priority (`unity-cli console`, `unity-cli editor refresh --compile`).
+2. **Serena MCP** — C# symbol navigation/editing.
+3. **mcp-unity** — fallback only when unity-cli is unavailable.
+
+Details: `.claude/rules/custom/unity-tools.md`, `.claude/rules/custom/serena-mcp.md`.

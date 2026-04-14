@@ -1,77 +1,77 @@
 ---
-description: "Obsidian 플러그인 설치 (AIHubVault 기준)"
+description: "Install an Obsidian plugin (into AIHubVault)"
 ---
 
-# /install-plugin — Obsidian 플러그인 설치
+# /install-plugin — Install an Obsidian Plugin
 
-## 사용법
+## Usage
 
 ```
-/install-plugin <플러그인명 또는 GitHub URL>
+/install-plugin <plugin-name or GitHub URL>
 ```
 
-## 절차
+## Procedure
 
-### 1. 대상 확인
+### 1. Target check
 
-- 설치 대상 볼트: **AIHubVault만** (workspace 편집 규칙)
-- 플러그인 경로: `AIHubVault/.obsidian/plugins/<플러그인ID>/`
+- Install target: **AIHubVault only** (workspace edit rule).
+- Plugin path: `AIHubVault/.obsidian/plugins/<plugin-id>/`.
 
-### 2. 플러그인 다운로드
+### 2. Download the plugin
 
 ```powershell
-$pluginDir = 'C:/AIMindVaults/Vaults/BasicVaults/AIHubVault/.obsidian/plugins/<플러그인ID>'
+$pluginDir = 'C:/AIMindVaults/Vaults/BasicVaults/AIHubVault/.obsidian/plugins/<plugin-id>'
 New-Item -ItemType Directory -Path $pluginDir -Force
 ```
 
-- GitHub Releases API에서 최신 릴리스의 `main.js`, `manifest.json`, `styles.css` 다운로드
-- `styles.css`가 없는 플러그인도 있음 (정상)
+- Fetch `main.js`, `manifest.json`, `styles.css` from the GitHub Releases API latest release.
+- Some plugins have no `styles.css` (normal).
 
-### 3. community-plugins.json 등록
+### 3. Register in community-plugins.json
 
-**금지**: PowerShell `ConvertFrom-Json` → `ConvertTo-Json` 파이프라인 사용 금지 (배열 손상 위험)
+**Forbidden**: the PowerShell `ConvertFrom-Json` → `ConvertTo-Json` pipeline (risks corrupting arrays).
 
-**올바른 방법**: `Read` 도구로 파일을 읽고, `Edit` 도구로 플러그인ID를 배열에 직접 추가
+**Correct**: Read the file with the `Read` tool, then use the `Edit` tool to append the plugin id directly to the array.
 
 ```
-기존:
+before:
   "templater-obsidian",
   "ytranscript"
 ]
 
-변경:
+after:
   "templater-obsidian",
   "ytranscript",
-  "<새 플러그인ID>"
+  "<new-plugin-id>"
 ]
 ```
 
-### 4. 다른 볼트 전파
+### 4. Propagate to other vaults
 
-- `aimv sync` 실행으로 대상 볼트에 플러그인 전파 (Batch 0 병합 방식)
-- 사용자에게 전파 실행 여부 확인 후 진행
+- Run `aimv sync` to propagate the plugin to target vaults (Batch 0 merge).
+- Confirm with the user before running.
 
-### 5. 활성화 확인
+### 5. Activation check
 
-- 대상 볼트를 Obsidian에서 열기/재시작 안내
-- **사용자가 플러그인 활성화를 확인할 때까지 후속 작업(노트 열기 등)을 진행하지 않는다**
-- 활성화 확인 방법: Obsidian 설정 → Community plugins → 해당 플러그인 토글 ON
+- Tell the user to open/restart the target vault in Obsidian.
+- **Do not proceed with follow-up work (opening notes, etc.) until the user confirms activation.**
+- How to confirm: Obsidian Settings → Community plugins → toggle the plugin ON.
 
-### 6. 버전 기록
+### 6. Version logging
 
-- AIHubVault `_WORKSPACE_VERSION.md`에 버전 기록 (workspace 편집 규칙)
+- Record the version in AIHubVault `_WORKSPACE_VERSION.md` (workspace edit rule).
 
-## 노트 열기 시 사전 조건
+## Prerequisite for Opening Notes
 
-AI가 `obsidian://advanced-uri`로 노트를 열기 전에 반드시 확인:
+Before the AI opens a note via `obsidian://advanced-uri`, verify:
 
-1. **대상 볼트에 Advanced URI 플러그인이 설치되어 있는가** — `.obsidian/plugins/obsidian-advanced-uri/` 존재 확인
-2. **`community-plugins.json`에 등록되어 있는가** — `obsidian-advanced-uri` 포함 확인
-3. 위 조건 미충족 시 → 이 스킬(`/install-plugin`)로 설치 먼저 수행
-4. 설치 후 → 5단계(활성화 확인)까지 완료된 후에만 노트 열기 시도
+1. **Advanced URI plugin is installed in the target vault** — check `.obsidian/plugins/obsidian-advanced-uri/` exists.
+2. **It's registered in `community-plugins.json`** — `obsidian-advanced-uri` is listed.
+3. If either fails → install it first with this skill (`/install-plugin`).
+4. After install → only attempt to open notes once step 5 (activation check) is complete.
 
-## 주의사항
+## Cautions
 
-- `.obsidian/` JSON 파일은 PowerShell JSON 파이프라인 대신 텍스트 직접 편집만 사용
-- 플러그인 삭제 시에도 동일: `community-plugins.json`에서 해당 줄 제거 + 폴더 삭제
-- 베타 플러그인(BRAT 경유)은 이 스킬 대상이 아님
+- For `.obsidian/` JSON files, edit the text directly — no PowerShell JSON pipeline.
+- Plugin removal follows the same rule: remove the line from `community-plugins.json` and delete the folder.
+- Beta plugins (via BRAT) are out of scope for this skill.

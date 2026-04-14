@@ -1,44 +1,44 @@
-# /vault-route — 볼트 라우팅 및 진입
+# /vault-route — Vault Routing and Entry
 
-인자: $ARGUMENTS
-사용법: `/vault-route [볼트명 또는 작업 설명]`
+Argument: $ARGUMENTS
+Usage: `/vault-route [vault-name or task description]`
 
 ---
 
-## 실행 순서
+## Execution Order
 
-### 1. 대상 볼트 식별
+### 1. Identify the target vault
 
-`$ARGUMENTS`에서 볼트를 결정:
+Resolve the vault from `$ARGUMENTS`:
 
-| 입력 패턴 | 대상 볼트 |
-|-----------|-----------|
-| "AIHubVault", "AI 작업환경", "에이전트", "_Standards" | AIHubVault |
-| "BasicContentsVault", "콘텐츠", "노트 작성" | BasicContentsVault |
-| 파일 경로 포함 | 경로에서 볼트 추출 |
-| 모호함 | 사용자에게 확인 |
+| Input pattern | Target vault |
+|---------------|--------------|
+| "AIHubVault", "AI workspace", "agent", "_Standards" | AIHubVault |
+| "BasicContentsVault", "content", "note authoring" | BasicContentsVault |
+| Contains a file path | Extract the vault from the path |
+| Ambiguous | Confirm with the user |
 
-볼트 경로 참조: `CLAUDE.md`의 볼트 레지스트리 테이블.
+Vault path reference: the vault registry table in `CLAUDE.md`.
 
-### 2. 볼트 진입
+### 2. Enter the vault
 
-아래를 순서대로 읽기:
-1. 루트 `_STATUS.md` — 전체 볼트 현황 + 다른 볼트 작업 확인
-2. `{볼트경로}/CLAUDE.md` — 볼트 전용 규칙 확인
-3. `{볼트경로}/_STATUS.md` — 현재 진행 상황 확인
+Read in order:
+1. Root `_STATUS.md` — overall vault state + cross-vault conflict check.
+2. `{vault-path}/CLAUDE.md` — vault-specific rules.
+3. `{vault-path}/_STATUS.md` — current progress.
 
-### 3. 진입 완료 보고
+### 3. Entry completion report
 
 ```
 ═══════════════════════════════════════
-✅ 볼트 진입 완료
+✅ Vault entry complete
 ═══════════════════════════════════════
-볼트: [볼트명]
-경로: [경로]
-현재 상태: [_STATUS.md 요약 1줄]
+Vault: [name]
+Path: [path]
+Current state: [one-line _STATUS.md summary]
 ═══════════════════════════════════════
 ```
 
-### 4. 작업 대기
+### 4. Wait for work
 
-사용자의 작업 지시를 대기. 이후 작업은 해당 볼트 컨텍스트 내에서 수행.
+Wait for the user's task instruction. Subsequent work happens inside the entered vault's context.

@@ -1,18 +1,18 @@
 ---
 type: reference
 tags:
-  - AIMindVault
+  - AIHubVault
   - Meta
-updated: 2026-03-15
+updated: 2026-04-15
 ---
 
-# AIMindVaults 핵심 개념
+# AIMindVaults Core Concepts
 
-> 멀티볼트 시스템을 처음 접하는 사용자를 위한 핵심 개념 안내.
+> Orientation guide for new users of the multi-vault system.
 
 ---
 
-## 1. Hub & Spoke — 단일 원본 구조
+## 1. Hub & Spoke — single-source structure
 
 ```
         ┌─────────────────┐
@@ -20,161 +20,155 @@ updated: 2026-03-15
         │  (Single Source   │
         │   of Truth)      │
         └────────┬────────┘
-                 │ workspace 파일 배포
+                 │ workspace files propagated
         ┌────────┴────────┐
-        │                  │
+        │                 │
    ┌────▼─────┐     ┌─────▼────┐
-   │ Contents  │     │  Other   │
-   │  Vault    │     │  Vault   │
-   │ (받기만)   │     │ (받기만)  │
+   │ Contents │     │  Other   │
+   │  Vault   │     │  Vault   │
+   │ (receive)│     │ (receive)│
    └──────────┘     └──────────┘
 ```
 
-- **AIHubVault**가 유일한 원본(Hub). `_Standards/Core/`, `_tools/`, `_WORKFLOW.md` 등 workspace 파일은 여기서만 편집.
-- 다른 볼트(Spoke)는 이 파일들을 받기만 한다. 직접 수정하면 다음 동기화 시 덮어씌워짐.
-- Hub 식별 마커: `_forge/` 디렉토리 (AIHubVault에만 존재).
+- **AIHubVault** is the sole source (Hub). `_Standards/Core/`, `.sync/_tools/`, `_WORKFLOW.md`, and similar workspace files are edited only here.
+- Other vaults (Spokes) only receive these files. Direct edits get overwritten on the next sync.
+- Hub marker: `.sync/.hub_marker` (exists only in AIHubVault).
 
 ---
 
-## 2. Hub-Sync — 자동 동기화
+## 2. Hub-Sync — automatic sync
 
 ```
-  Obsidian에서 볼트 열기
+  Open vault in Obsidian
          │
          ▼
-  Shell Commands 플러그인
-  (on-layout-ready 이벤트)
+  Shell Commands plugin
+  (on-layout-ready event)
          │
          ▼
-  sync_workspace.ps1 실행
+  `aimv pre-sync` runs
          │
          ▼
-  _WORKSPACE_VERSION.md 비교
+  Compare _WORKSPACE_VERSION.md
          │
     ┌────┴────┐
-    │ 같음     │ 다름
-    │          │
-    ▼          ▼
-  SKIP      Batch 동기화
-            (Hub → 이 볼트)
+    │  same   │ different
+    │         │
+    ▼         ▼
+  SKIP     Mirror workspace files
+           (Hub → this vault)
 ```
 
-- 볼트를 열 때마다 자동으로 Hub와 버전을 비교.
-- 차이가 있으면 4단계 Batch로 동기화:
-  1. Guides (`Juggl_StyleGuide/`)
-  2. Rules & Standards (`_Standards/Core/`, `_WORKFLOW.md`, `_VAULT-INDEX.md`) — 실패 시 3단계 중단
-  3. Scripts (`_tools/`)
-  4. Version Record (`_WORKSPACE_VERSION.md`)
-- 동기화 대상 목록: `_Standards/Core/Hub_Sync_Targets.md`
-- **명시된 것만 동기화. 나머지는 볼트 고유.**
+- Each vault open auto-compares its version against the Hub.
+- If different, workspace files mirror from Hub.
+- Sync targets: `_Standards/Core/Hub_Sync_Targets.md`.
+- **Only listed targets sync. Everything else is vault-specific.**
 
 ---
 
-## 3. 편집 모드 분리
+## 3. Edit-mode separation
 
 ```
   ┌─────────────────────────────────────────┐
-  │              볼트 내부                    │
+  │              inside a vault              │
   │                                          │
   │  ┌──────────────┐  ┌──────────────────┐ │
   │  │ [Contents]   │  │ [workspace]      │ │
   │  │              │  │                  │ │
   │  │ Contents/    │  │ _Standards/      │ │
-  │  │  ├ Domain/   │  │ _tools/          │ │
+  │  │  ├ Domain/   │  │ .sync/_tools/    │ │
   │  │  └ Project/  │  │ _WORKFLOW.md     │ │
   │  │              │  │ .claude/         │ │
-  │  │ 지식·작업     │  │ 규칙·도구·설정    │ │
+  │  │ notes & work │  │ rules / tools    │ │
   │  └──────────────┘  └──────────────────┘ │
   │                                          │
-  │     ❌ 한 작업에서 두 모드 혼합 금지       │
+  │    Never mix both modes in one task      │
   └─────────────────────────────────────────┘
 ```
 
-- **Contents 모드**: `Contents/**`만 수정. 지식 축적, 작업 관리.
-- **Workspace 모드**: `_Standards/`, `_tools/`, `.claude/` 등만 수정. 규칙·도구 관리.
-- 한 작업 안에서 두 모드를 섞지 않는다. 전환 시 명시적으로 선언.
+- **Contents mode**: edits `Contents/**` only. Knowledge + project notes.
+- **Workspace mode**: edits `_Standards/`, `.sync/_tools/`, `.claude/`, etc. only. Rules / tools.
+- Declare the mode explicitly when switching.
 
 ---
 
-## 4. 볼트 라우팅
+## 4. Vault routing
 
 ```
-  에이전트 세션 시작
+  Agent session starts
          │
          ▼
-  루트 진입점 읽기
-  (CLAUDE.md / CODEX.md)
+  Read the root entry point
+  (CLAUDE.md / AGENTS.md)
          │
          ▼
-  대상 볼트 식별
-  (명시 지정 / 키워드 추론 / 사용자 확인)
+  Identify the target vault
+  (explicit / keyword inference / ask user)
          │
          ▼
-  볼트 진입 프로토콜
+  Vault entry protocol
   ┌──────────────────┐
-  │ 1. 볼트 CLAUDE.md │
-  │ 2. 볼트 _STATUS.md│
-  │ 3. 작업 시작       │
+  │ 1. vault CLAUDE.md│
+  │ 2. vault _STATUS  │
+  │ 3. start work     │
   └──────────────────┘
 ```
 
-- AI 에이전트는 **멀티볼트 루트(`AIMindVaults/`)에서 시작**.
-- 루트의 라우팅 허브(`CLAUDE.md`, `CODEX.md`)가 볼트 레지스트리를 제공.
-- 사용자의 요청에서 대상 볼트를 판별하고, 해당 볼트의 규칙 파일을 읽은 후 작업 시작.
+- The AI agent always starts at the multi-vault root (`AIMindVaults/`).
+- The root routing hub (`CLAUDE.md`, `AGENTS.md`) provides the vault registry.
+- The agent picks a target vault from the user's request, reads that vault's rules, then starts work.
 
 ---
 
-## 5. Sync Targets — 명시 대상만 동기화
+## 5. Sync Targets — only listed items sync
 
 ```
   AIHubVault (Hub)
   ┌────────────────────────────────────┐
   │                                    │
-  │  동기화됨 (Spoke로 전파)            │
+  │  synced (propagated to Spokes)     │
   │  ├── Juggl_StyleGuide/             │
   │  ├── _Standards/Core/              │
   │  ├── _WORKFLOW.md                  │
   │  ├── _VAULT-INDEX.md               │
-  │  ├── _tools/                       │
+  │  ├── .sync/_tools/                 │
   │  └── _WORKSPACE_VERSION.md         │
   │                                    │
-  │  동기화 안 됨 (Hub 전용)            │
-  │  ├── Contents/          ← 볼트 고유 │
-  │  ├── _Standards/Contents/← 볼트 고유│
-  │  ├── _forge/            ← Hub 전용  │
-  │  ├── .claude/           ← 볼트 고유 │
-  │  ├── .antigravity/      ← 볼트 고유 │
+  │  NOT synced (Hub-only or per-vault)│
+  │  ├── Contents/          ← per-vault│
+  │  ├── _Standards/Contents/          │
+  │  ├── .sync/.hub_marker  ← Hub-only │
+  │  ├── .claude/           ← per-vault│
   │  └── ...                           │
   └────────────────────────────────────┘
 ```
 
-- `Hub_Sync_Targets.md`에 명시된 파일/폴더**만** 동기화.
-- 목록에 없는 것은 전부 볼트 고유 — 동기화되지 않음.
+- Only items listed in `Hub_Sync_Targets.md` sync.
+- Everything else is vault-specific and is not touched by sync.
 
 ---
 
-## 6. 멀티 에이전트 — 상태 공유로 충돌 방지
+## 6. Multi-agent — shared state prevents collisions
 
 ```
   ┌──────────┐  ┌──────────┐  ┌──────────────┐
-  │ Claude   │  │  Codex   │  │ Antigravity  │
+  │ Claude   │  │  Codex   │  │    Cursor    │
   │  Code    │  │          │  │              │
   └────┬─────┘  └────┬─────┘  └──────┬───────┘
        │              │               │
-       │   각자 상태 파일 갱신          │
-       │              │               │
+       │     each updates its own     │
+       │        state files           │
        ▼              ▼               ▼
   ┌─────────────────────────────────────────┐
-  │           볼트 내부 상태 파일              │
+  │          state files inside the vault    │
   │                                          │
-  │  _STATUS.md          ← 통합 현황          │
-  │  .claude/AGENT_STATUS.md  ← Claude 전용   │
-  │  .codex/AGENT_STATUS.md   ← Codex 전용    │
-  │  .antigravity/SESSION_RULES.md ← AG 전용  │
+  │  _STATUS.md          ← unified status    │
+  │  .claude/AGENT_STATUS.md  ← Claude only  │
+  │  .codex/AGENT_STATUS.md   ← Codex only   │
+  │  .cursor/...                              │
   └─────────────────────────────────────────┘
 ```
 
-- 여러 AI 에이전트가 같은 볼트에서 작업할 수 있음.
-- 각 에이전트는 세션 종료 시 자기 상태 파일(`AGENT_STATUS.md`)을 갱신.
-- `_STATUS.md`는 통합 현황. 다른 에이전트의 마지막 작업을 확인하고 충돌 방지.
-- 세션 시작 시 `_STATUS.md`를 먼저 읽어 현재 상황을 파악한 후 작업 시작.
+- Multiple AI agents can share a vault.
+- Each agent updates its own `AGENT_STATUS.md` at session end.
+- `_STATUS.md` is the unified view. Each agent reads it at session start to see the other agents' last work and avoid collisions.

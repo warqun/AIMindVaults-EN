@@ -1,187 +1,187 @@
-# 노트 작성 패턴 (Mandatory)
+# Note Writing Pattern (Mandatory)
 
-> 모든 볼트에 동일 적용.
+> Applies to all vaults.
 
-## 언어
+## Language
 
-- 기본은 한국어.
-- 코드/식별자/경로는 원문 유지.
+- Default: the user's primary language (English in this distribution).
+- Keep code, identifiers, and paths in their original form.
 
-## 날짜 형식
+## Date Format
 
-- YYYY-MM-DD 형식만 사용.
+- `YYYY-MM-DD` only.
 
-## 문서 구조
+## Document Structure
 
-- H1 제목 1개.
-- 필요 시 H2/H3로 구조화.
-- 내부 링크는 [[WikiLink]] 사용.
-- **위키링크 필수** (강제): 새 노트 생성 시 같은 볼트 내 관련 노트에 `[[위키링크]]`를 1개 이상 포함한다. AI가 link_graph를 통해 다각도 탐색할 수 있도록 노트 간 연결을 확보하는 것이 목적이다.
-- 위키링크는 파일명 기반 해석이므로, 파일명 규칙(URI 예약문자·이모지 금지) 준수가 전제다.
+- One H1 title.
+- Use H2/H3 to organize when needed.
+- Internal links use `[[WikiLinks]]`.
+- **Wikilinks required** (mandatory): every new note must contain at least one `[[wikilink]]` to a related note in the same vault. The goal is connecting notes so the AI can explore via link_graph from multiple angles.
+- Wikilinks resolve by filename, so filename rules (no URI-reserved characters, no emoji) are a prerequisite.
 
-## Frontmatter 필수
+## Frontmatter (Required)
 
-- 모든 노트는 YAML Frontmatter(`---`)로 시작.
-- `type`, `tags`(볼트 태그 포함), `updated` 또는 `created` 필수.
-- `agent`: 해당 노트에 작업한 에이전트를 **모두** 기록한다. 최신 작업자만이 아니라 누적 기록이다.
-  - 단일: `agent: claude`
-  - 복수: `agent: [claude, codex]` 또는 YAML 리스트 형식
-- 새 폴더 생성 시 `_VAULT-INDEX.md` 루트 구조에 등록.
+- Every note starts with YAML frontmatter (`---`).
+- `type`, `tags` (must include the vault tag), and `updated` or `created` are required.
+- `agent`: record **every** agent that has worked on the note — not just the latest, but a cumulative list.
+  - Single: `agent: claude`
+  - Multiple: `agent: [claude, codex]` or YAML list form.
+- When creating a new folder, register it in `_VAULT-INDEX.md`'s root structure.
 
-## Frontmatter `type` 규칙 (강제)
+## Frontmatter `type` Rules (Mandatory)
 
-### 형식
+### Format
 
-- **kebab-case**: 소문자 + 하이픈. `study-note` O, `StudyNote` X, `study_note` X
-- **단수형**: `standard` O, `standards` X
-- **`-note` 접미사 금지**: `knowledge` O, `knowledge-note` X (타입 자체가 노트임을 전제)
+- **kebab-case**: lowercase with hyphens. `study-note` ✓, `StudyNote` ✗, `study_note` ✗.
+- **Singular**: `standard` ✓, `standards` ✗.
+- **No `-note` suffix**: `knowledge` ✓, `knowledge-note` ✗ (the type itself already implies a note).
 
-### 코어 타입 목록
+### Core Type List
 
-노트 작성 시 아래 목록에서 선택한다. 목록에 없는 타입이 필요하면 사용자에게 제안하여 승인 후 등록한다.
+Pick from the list below when writing a note. If none fit, propose a new type to the user and register it after approval.
 
-#### 콘텐츠 타입
+#### Content Types
 
-| 타입 | 용도 |
-|------|------|
-| `study-note` | 외부 자료 (영상, 문서, 강의) 학습 정리 |
-| `knowledge` | 도메인 지식 — 원본 사고 정리, 경험 기반 지식 |
-| `design` | 설계 문서 — 시스템, 구조, 아키텍처 설계 |
-| `plan` | 계획서 — 작업 계획, 로드맵, 일정 |
-| `research` | 리서치 — 조사, 분석, 비교 |
-| `reference` | 참고 자료 — 외부 레퍼런스 정리, 이관 기록 |
-| `report` | 보고서 — 작업 결과, 검토 결과 보고 |
-| `spec` | 스펙 문서 — 기능/시스템 상세 명세 |
-| `guide` | 가이드 — 설치/운영/사용법 안내 |
-| `concept` | 컨셉 문서 — 초기 아이디어, 방향 탐색 |
-| `memo` | 짧은 메모 — 일시적 기록, 빠른 메모 |
+| Type | Purpose |
+|------|---------|
+| `study-note` | Notes from external material (video, doc, lecture) |
+| `knowledge` | Domain knowledge — original thinking, experience-based insight |
+| `design` | Design docs — system / structure / architecture |
+| `plan` | Plans — task plans, roadmaps, schedules |
+| `research` | Research — investigation, analysis, comparison |
+| `reference` | Reference — organized external references, migration logs |
+| `report` | Reports — work results, review outcomes |
+| `spec` | Specs — detailed feature/system specifications |
+| `guide` | Guides — installation / operation / usage |
+| `concept` | Concept docs — early ideas, direction exploration |
+| `memo` | Short memos — fleeting notes, quick captures |
 
-#### 이슈 관리 타입
+#### Issue Management Types
 
-| 타입 | 용도 |
-|------|------|
-| `issue` | 이슈 기록 — 문제 발견, 버그, 개선 요청 |
-| `issue-index` | 이슈 인덱스 — 이슈 목록 관리 |
-| `issue-spec` | 이슈 상세 스펙 — 이슈별 구현 명세 |
-| `issue-design` | 이슈 설계 — 이슈 해결을 위한 설계 |
-| `issue-report` | 이슈 해결 보고 — 해결 결과, 사후 분석 |
-| `debug-design` | 디버그 설계 — 디버깅 과정 및 해결 설계 |
+| Type | Purpose |
+|------|---------|
+| `issue` | Issue record — bug, request, problem |
+| `issue-index` | Issue index — list of issues |
+| `issue-spec` | Issue spec — per-issue implementation detail |
+| `issue-design` | Issue design — resolution design |
+| `issue-report` | Issue resolution report — outcome, postmortem |
+| `debug-design` | Debug design — debugging process and fix design |
 
-#### 임시 타입
+#### Temporary Types
 
-| 타입 | 용도 |
-|------|------|
-| `temp-draft` | 임시 초안 — 미완성 문서, 작업 중 스냅샷 |
-| `temp-review` | 임시 검토 — 일회성 검토/체크리스트 |
+| Type | Purpose |
+|------|---------|
+| `temp-draft` | Temporary draft — WIP documents, work-in-progress snapshots |
+| `temp-review` | Temporary review — one-off review / checklist |
 
-#### 볼트 구조 타입
+#### Vault Structure Types
 
-| 타입 | 용도 |
-|------|------|
-| `standard` | 볼트 표준 문서 — `_Standards/` 하위 규칙/용어/스타일 |
-| `folder-index` | 폴더 인덱스 — `Domain.md`, `Project.md` 등 폴더 네비게이션용 목차 |
+| Type | Purpose |
+|------|---------|
+| `standard` | Vault standard doc — rules / terms / styles under `_Standards/` |
+| `folder-index` | Folder index — `Domain.md`, `Project.md`, etc. (folder navigation TOC) |
 
-### 볼트 전용 타입
+### Vault-Specific Types
 
-볼트별로 고유한 타입이 필요하면 해당 볼트의 `CLAUDE.md`에 전용 타입을 선언한다.
-
-```markdown
-## 전용 타입
-| 타입 | 용도 |
-|------|------|
-| `plugin-analysis` | 플러그인 상세 분석 |
-| `system-flow` | 시스템 플로우 다이어그램 |
-```
-
-- 전용 타입은 코어 타입과 이름이 겹치지 않아야 한다.
-- 다른 볼트에서도 사용되기 시작하면 코어 타입으로 격상을 검토한다.
-
-### 에이전트 타입 선택 흐름 (강제)
-
-1. 코어 타입 목록에서 적합한 타입을 선택한다.
-2. 볼트 `CLAUDE.md`에 전용 타입이 있으면 후보에 포함한다.
-3. 적합한 타입이 없으면 → 사용자에게 신규 타입을 제안한다.
-4. 승인 시 → 볼트 전용이면 볼트 `CLAUDE.md`에, 범용이면 이 목록에 등록한다.
-5. **미등록 타입을 임의로 사용하지 않는다.**
-
-## Frontmatter `tags` 규칙
-
-### 태그의 역할
-
-태그는 **내용 기반 상세 분류와 검색 키워드** 전용이다. 노트 유형은 `type`, 대주제 영역은 볼트명과 폴더 구조가 담당한다.
-
-### 기본 형식 (Default)
-
-아래는 시스템 기본 태그 형식이다. 사용자는 볼트 `CLAUDE.md`의 `## 태그 규칙` 섹션에서 자신만의 형식을 정의하여 오버라이드할 수 있다.
-
-- **고유명사**: 원래 표기 유지 — `Unity`, `AI`, `Obsidian`, `Claude`, `Notion`, `Blender`, `CapCut`, `DOTS`, `MCP`
-- **그 외 전부**: kebab-case (소문자 + 하이픈) — `skill-system`, `plugin-dev`, `game-design`
-- **Flat 전용**: 계층 태그(`/` 구분자) 사용 금지 — `doc/design` X → `design` 또는 적절한 kebab-case
-- **단수형 원칙**: `systems` X → `system`
-
-### 고유명사 판단 기준
-
-제품명, 서비스명, 프레임워크명, 약어로 한정:
-- O: `Unity`, `AI`, `Obsidian`, `Claude`, `Notion`, `Blender`, `CapCut`, `DOTS`, `MCP`, `Juggl`
-- X: `GameSystem` → `game-system`, `SkillSystem` → `skill-system`, `StyleGuide` → `style-guide`
-
-### 볼트 식별 태그 (비권장)
-
-볼트명을 태그로 사용하는 것은 권장하지 않는다. 인덱서 `vault` 필드와 파일 경로로 충분히 식별된다.
-- 비권장: `CombatToolKit`, `AIMindVault`, `TileMapToolKit` 등을 태그로 사용
-- 사용자가 의도적으로 볼트 태그를 유지하려면 볼트 `CLAUDE.md`에 명시한다.
-
-### 사용자 오버라이드
-
-사용자가 다른 태그 형식을 선호하면 볼트 `CLAUDE.md`에 아래처럼 선언한다:
+If a vault needs its own types, declare them in that vault's `CLAUDE.md`:
 
 ```markdown
-## 태그 규칙
-- PascalCase 사용 (예: `GameDesign`, `SkillSystem`)
-- 계층 태그 허용 (예: `unity/dots`, `design/system`)
+## Dedicated Types
+| Type | Purpose |
+|------|---------|
+| `plugin-analysis` | Detailed plugin analysis |
+| `system-flow` | System flow diagram |
 ```
 
-볼트 `CLAUDE.md`에 태그 규칙이 선언되면 해당 볼트에서는 그 규칙이 기본 형식보다 우선한다.
+- Vault-specific types must not collide with core type names.
+- If another vault starts using the same type, consider promoting it to core.
 
-### 에이전트 태그 선택 흐름
+### Agent Type-Selection Flow (Mandatory)
 
-1. 볼트 `CLAUDE.md`에 태그 규칙이 있으면 그것을 따른다.
-2. 없으면 위 기본 형식을 적용한다.
-3. 노트 내용을 분류할 수 있는 구체적 키워드를 선택한다.
-4. 기존에 같은 의미로 쓰이는 태그가 있으면 그것을 재사용한다.
-5. 볼트명, 폴더명과 중복되는 태그는 추가하지 않는다.
-6. 검색 시 유의미한 태그만 부여한다 — 모든 노트에 붙는 태그는 검색 가치가 없다.
+1. Pick a type from the core list.
+2. If the vault's `CLAUDE.md` declares dedicated types, include them as candidates.
+3. If nothing fits → propose a new type to the user.
+4. On approval → register in the vault `CLAUDE.md` (vault-specific) or this list (universal).
+5. **Never use an unregistered type on your own.**
 
-## 마크다운 볼드 규칙
+## Frontmatter `tags` Rules
 
-- `**텍스트(괄호)**` 형태 금지 — Obsidian에서 볼드가 렌더링되지 않고 `**`가 그대로 보인다.
-- 괄호 보충이 필요하면 볼드 밖으로 빼기: `**텍스트** (괄호)` 또는 `**텍스트**: 괄호 설명`
-- 볼드 안에 인라인 코드가 들어가는 경우도 동일: `**텍스트 (\`코드\`)**` → `**텍스트**: \`코드\``
+### Role of Tags
 
-## 표현 규칙
+Tags are for **content-based fine-grained classification and search keywords** only. Note type is handled by `type`; broad subject area is handled by the vault name and folder structure.
 
-- 비유적·은유적 표현 금지. 작업명, 제목, 설명은 내용을 직접 서술한다.
-  - 잘못된 예: "집안 정리", "씨앗 뿌리기", "뼈대 세우기"
-  - 올바른 예: "판매 전 품질 검수", "초기 데이터 입력", "기본 구조 생성"
-- 작업 관리 항목(Notion DB, 체크리스트 등)은 특히 엄격 적용 — 제3자가 읽어도 즉시 의미 파악 가능해야 한다.
+### Default Format
 
-## H1 제목 규칙 (강제)
+The system default is below. Users can override per vault via a `## Tag Rules` section in the vault's `CLAUDE.md`.
 
-- **URI 예약문자 금지**: `#`, `%`, `&`, `?`, `+` — 인덱서 title 필드, Obsidian 내부 링크, Notion 공유 시 파싱 오류·링크 깨짐 원인.
-- **이모지 금지** — 인덱서 파싱, 검색 랭킹, 외부 시스템 연동 시 불안정. 시각적 강조가 필요하면 Obsidian 아이콘(`icon` 속성) 또는 frontmatter `aliases`로 대체.
-- **대체 표기**: `C#` → `CSharp`, `C++` → `CPP`, `Q&A` → `QnA`
-- H1 제목은 파일명, 인덱서 title, WikiLink 표시명의 원천이므로 위 규칙을 반드시 준수한다.
+- **Proper nouns**: preserve original casing — `Unity`, `AI`, `Obsidian`, `Claude`, `Notion`, `Blender`, `CapCut`, `DOTS`, `MCP`.
+- **Everything else**: kebab-case (lowercase + hyphens) — `skill-system`, `plugin-dev`, `game-design`.
+- **Flat only**: no hierarchical tags (`/` separator) — `doc/design` ✗ → `design` or an appropriate kebab-case tag.
+- **Singular**: `systems` ✗ → `system`.
 
-## 파일명 규칙
+### What Counts as a Proper Noun
 
-- 파일명에 URI 예약문자를 사용하지 않는다: `#`, `%`, `&`, `?`, `+`
-  - Obsidian URI/내부 링크에서 `#`가 헤딩 구분자로 해석되어 링크가 깨짐
-  - 상세: ObsidianDev 볼트 `20260319_Obsidian_URI_Hash_문제_리서치.md`
-- 파일명에 이모지를 사용하지 않는다 — OS 간 호환성, 터미널 출력, 스크립트 파싱 불안정.
-- 대체 표기: `C#` → `CSharp`, `C++` → `CPP`, `Q&A` → `QnA`
-- 가독성은 frontmatter `aliases`로 유지
+Limited to product names, service names, framework names, and acronyms:
+- ✓: `Unity`, `AI`, `Obsidian`, `Claude`, `Notion`, `Blender`, `CapCut`, `DOTS`, `MCP`, `Juggl`.
+- ✗: `GameSystem` → `game-system`, `SkillSystem` → `skill-system`, `StyleGuide` → `style-guide`.
 
-## 금지
+### Vault-Identifier Tags (Discouraged)
 
-- 동일 문서 내 중복 결론 기록 금지.
-- 미확정 내용을 확정으로 표현 금지.
+Using the vault name as a tag is discouraged — the indexer's `vault` field plus the file path already identify it.
+- Discouraged: `CombatToolKit`, `AIMindVault`, `TileMapToolKit`, etc. as tags.
+- If you intentionally want the vault tag, declare it in the vault's `CLAUDE.md`.
+
+### User Override
+
+Users who prefer a different tag format declare it in the vault's `CLAUDE.md`:
+
+```markdown
+## Tag Rules
+- Use PascalCase (e.g. `GameDesign`, `SkillSystem`)
+- Allow hierarchical tags (e.g. `unity/dots`, `design/system`)
+```
+
+When a vault `CLAUDE.md` declares tag rules, those rules take precedence over the default for that vault.
+
+### Agent Tag-Selection Flow
+
+1. If the vault's `CLAUDE.md` has tag rules, follow them.
+2. Otherwise, use the default format above.
+3. Pick specific keywords that actually classify the note's content.
+4. Reuse existing tags with the same meaning rather than creating near-duplicates.
+5. Do not add tags that duplicate the vault name or folder name.
+6. Only add tags that add search value — tags attached to every note are useless for search.
+
+## Markdown Bold Rules
+
+- No `**text(paren)**` form — Obsidian doesn't render the bold and the `**` shows literally.
+- If you need a parenthetical next to bold, move the parens outside: `**text** (paren)` or `**text**: paren explanation`.
+- Same for bold with inline code: `**text (\`code\`)**` → `**text**: \`code\``.
+
+## Expression Rules
+
+- No metaphors or figurative expressions. Task names, titles, and descriptions must describe their content directly.
+  - Bad: "house cleaning", "planting seeds", "building the skeleton".
+  - Good: "pre-sale QA", "initial data entry", "basic structure creation".
+- This is strictest for task-management entries (Notion DB, checklists) — a third party must grasp the meaning immediately.
+
+## H1 Title Rules (Mandatory)
+
+- **No URI-reserved characters**: `#`, `%`, `&`, `?`, `+` — breaks indexer `title` field, Obsidian internal links, and Notion sharing.
+- **No emoji** — unstable in indexer parsing, search ranking, and external integrations. If you need visual emphasis, use Obsidian's icon (`icon` property) or frontmatter `aliases`.
+- **Alternates**: `C#` → `CSharp`, `C++` → `CPP`, `Q&A` → `QnA`.
+- H1 is the source of the filename, indexer `title`, and wikilink display name — this rule is non-negotiable.
+
+## Filename Rules
+
+- No URI-reserved characters in filenames: `#`, `%`, `&`, `?`, `+`.
+  - In Obsidian URIs and internal links, `#` is interpreted as a heading separator and breaks the link.
+  - Details: ObsidianDev vault `20260319_Obsidian_URI_Hash_issue_research.md`.
+- No emoji in filenames — cross-OS compatibility, terminal output, and script parsing all become unstable.
+- Alternates: `C#` → `CSharp`, `C++` → `CPP`, `Q&A` → `QnA`.
+- Use frontmatter `aliases` for readability.
+
+## Forbidden
+
+- No duplicate conclusions in the same document.
+- Do not present unsettled content as settled.
