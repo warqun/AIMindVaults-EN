@@ -1,0 +1,98 @@
+{
+  "built": "2026-04-13T14:58:08",
+  "vault_count": 2,
+  "note_count": 7,
+  "vaults": {
+    "AIHubVault": {
+      "path": "Vaults/BasicVaults/AIHubVault",
+      "note_count": 3,
+      "domain_tags": [
+        "AIMindVault",
+        "domain",
+        "Meta"
+      ],
+      "built": "2026-04-13T14:57:59"
+    },
+    "BasicContentsVault": {
+      "path": "Vaults/BasicVaults/BasicContentsVault",
+      "note_count": 4,
+      "domain_tags": [],
+      "built": "2026-04-13T14:58:08"
+    }
+  },
+  "notes": [
+    {
+      "vault_id": "AIHubVault",
+      "title": "CONTENTS_AI_RULES — AIMindVault-Specific AI Work Rules",
+      "path": "Contents/CONTENTS_AI_RULES.md",
+      "type": "standard",
+      "tags": [
+        "AIMindVault",
+        "domain"
+      ]
+    },
+    {
+      "vault_id": "AIHubVault",
+      "title": "CONTENTS_GLOSSARY — AIMindVault Terminology",
+      "path": "Contents/CONTENTS_GLOSSARY.md",
+      "type": "standard",
+      "tags": [
+        "AIMindVault",
+        "domain"
+      ]
+    },
+    {
+      "vault_id": "AIHubVault",
+      "title": "CONTENTS_INDEX — AIHubVault Contents Map",
+      "path": "Contents/CONTENTS_INDEX.md",
+      "type": "contents-index",
+      "tags": [
+        "AIMindVault",
+        "Meta"
+      ]
+    },
+    {
+      "vault_id": "BasicContentsVault",
+      "title": "CONTENTS_AI_RULES — (Vault Name) AI Work Rules",
+      "path": "Contents/CONTENTS_AI_RULES.md",
+      "type": "standard",
+      "tags": []
+    },
+    {
+      "vault_id": "BasicContentsVault",
+      "title": "CONTENTS_GLOSSARY — (Vault Name) Glossary",
+      "path": "Contents/CONTENTS_GLOSSARY.md",
+      "type": "standard",
+      "tags": []
+    },
+    {
+      "vault_id": "BasicContentsVault",
+      "title": "",
+      "path": "Contents/Domain/Domain.md",
+      "type": "folder-index",
+      "tags": []
+    },
+    {
+      "vault_id": "BasicContentsVault",
+      "title": "",
+      "path": "Contents/Project/Project.md",
+      "type": "folder-index",
+      "tags": []
+    }
+  ],
+  "tag_index": {
+    "AIMindVault": [
+      "AIHubVault:Contents/CONTENTS_AI_RULES.md",
+      "AIHubVault:Contents/CONTENTS_GLOSSARY.md",
+      "AIHubVault:Contents/CONTENTS_INDEX.md"
+    ],
+    "domain": [
+      "AIHubVault:Contents/CONTENTS_AI_RULES.md",
+      "AIHubVault:Contents/CONTENTS_GLOSSARY.md"
+    ],
+    "Meta": [
+      "AIHubVault:Contents/CONTENTS_INDEX.md"
+    ]
+  },
+  "concept_map": {}
+}

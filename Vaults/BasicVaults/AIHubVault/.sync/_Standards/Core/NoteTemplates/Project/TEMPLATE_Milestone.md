@@ -14,32 +14,32 @@ target_date:
 local: <% tp.file.title %>
 ```
 
-## 목표치
+## Target Metrics
 
-<!-- 숫자·지표로 표현 가능한 달성 기준. -->
+<!-- Measurable achievement criteria expressed in numbers/indicators. -->
 
-## 달성 기준 (Success Criteria)
+## Success Criteria
 
 - [ ]
 - [ ]
 
-## 기간
+## Timeline
 
-- **시작**: <% tp.date.now("YYYY-MM-DD") %>
-- **목표 완료**:
+- **Start**: <% tp.date.now("YYYY-MM-DD") %>
+- **Target Completion**:
 
-## 포함 작업
+## Included Tasks
 
 - [[]]
 
-## 리스크
+## Risks
 
 -
 
-## 현황
+## Status
 
-<!-- 진행률·블로킹 사항 요약. -->
+<!-- Progress rate and blocking issues summary. -->
 
 ---
 
-*마일스톤 생성일: <% tp.date.now("YYYY-MM-DD") %>*
+*Milestone created: <% tp.date.now("YYYY-MM-DD") %>*

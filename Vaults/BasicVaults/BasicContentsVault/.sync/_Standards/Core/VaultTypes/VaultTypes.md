@@ -9,65 +9,65 @@ created: 2026-03-18
 updated: 2026-03-18
 ---
 
-# 볼트 유형 정의
+# Vault Type Definitions
 
-멀티볼트 시스템에서 사용하는 볼트 카테고리 및 각 유형의 역할/규칙 정의.
+Vault categories used in the multi-vault system and the role/rules for each type.
 
 ---
 
-## 유형 목록
+## Type List
 
-| 유형 | 카테고리 접두사 | 역할 | Contents 범위 |
+| Type | Category Prefix | Role | Contents Scope |
 |------|----------------|------|---------------|
-| **Basic** | `BasicVaults/` | 작업환경 허브, 범용 템플릿 | Domain + Project |
-| **Domain** | `Domains_<영역>/` | 특정 주제의 지식 축적 전용 | Domain 위주 |
-| **Lab** | `Lab_<영역>/` | 지식 축적 + 실제 개발/실험 복합 | Domain + Project 동등 |
-| **Project** | `Projects_<영역>/` | 실전 프로젝트 실행 전용 | Project 위주 |
-| **Reference** | `References/` | 외부 자료 조회 전용 | 읽기 전용 (수정 금지) |
+| **Basic** | `BasicVaults/` | Workspace hub, general-purpose template | Domain + Project |
+| **Domain** | `Domains_<area>/` | Knowledge accumulation for a specific topic | Primarily Domain |
+| **Lab** | `Lab_<area>/` | Combined knowledge accumulation + actual development/experimentation | Domain + Project equally |
+| **Project** | `Projects_<area>/` | Practical project execution | Primarily Project |
+| **Reference** | `References/` | External material lookup only | Read-only (no modifications) |
 
 ---
 
 ## Basic
 
-- **AIHubVault**: 규칙/도구/표준의 유일한 원본. workspace 모드 편집은 여기서만.
-- **BasicContentsVault**: 새 볼트 복제 시 소스로 사용되는 범용 템플릿.
+- **AIHubVault**: The sole authoritative source for rules/tools/standards. Workspace mode editing is done here only.
+- **BasicContentsVault**: General-purpose template used as source when cloning new vaults.
 
 ## Domain
 
-특정 주제의 지식을 축적하는 볼트. Contents/Domain에 지식 노트를 쌓는 것이 주 목적.
+Vaults for accumulating knowledge on a specific topic. The primary purpose is building knowledge notes in Contents/Domain.
 
-- 예시: Unity (게임 엔진), CapCut (영상편집), Notion (워크스페이스 운영)
-- 카테고리 분류: `Domains_Game`, `Domains_Video`, `Domains_Infra`, `Domains_3D`, `Domains_AI_Asset`, `Domains_VCS`
+- Examples: Unity (game engine), CapCut (video editing), Notion (workspace management)
+- Category classification: `Domains_Game`, `Domains_Video`, `Domains_Infra`, `Domains_3D`, `Domains_AI_Asset`, `Domains_VCS`
 
 ## Lab
 
-지식 축적(Domain)과 실제 개발/실험(Project)이 함께 이루어지는 복합 볼트. 배우면서 동시에 만드는 작업에 적합.
+Composite vaults where knowledge accumulation (Domain) and actual development/experimentation (Project) happen together. Ideal for learning and building simultaneously.
 
-- 예시: ObsidianDev (플러그인 API 학습 + 실제 플러그인 개발)
-- 카테고리 분류: `Lab_Infra`, `Lab_Game` 등
-- Contents/Domain과 Contents/Project를 동등하게 활용
+- Examples: ObsidianDev (plugin API learning + actual plugin development)
+- Category classification: `Lab_Infra`, `Lab_Game`, etc.
+- Uses Contents/Domain and Contents/Project equally
 
 ## Project
 
-특정 목표를 가진 실전 프로젝트. 완료 시점이 있으며, 종료 후 지식은 Domain 볼트로 승급(Knowledge Promotion) 가능.
+Practical projects with specific goals. Have completion deadlines, and after completion, knowledge can be promoted (Knowledge Promotion) to Domain vaults.
 
-- 예시: Project_VamSurLike (뱀서라이크 게임 개발)
-- 카테고리 분류: `Projects_Game` 등
+- Examples: Project_VamSurLike (vampire survivors-like game development)
+- Category classification: `Projects_Game`, etc.
 
 ## Reference
 
-외부 자료를 조회 전용으로 보관. AI 에이전트는 읽기만 허용.
+External materials stored for lookup only. AI agents are only allowed to read.
 
-- 예시: Unity_Documentation (Unity 6.3 공식 매뉴얼)
-- 수정 금지 (readonly)
+- Examples: Unity_Documentation (Unity 6.3 official manual)
+- No modifications allowed (readonly)
 
 ---
 
-## 볼트 생성 시 유형 선택 기준
+## Vault Type Selection Criteria
 
-| 질문 | 답변 → 유형 |
-|------|-------------|
-| 지식만 쌓을 건가? | **Domain** |
-| 배우면서 동시에 개발/실험할 건가? | **Lab** |
-| 명확한 목표/완료 시점이 있는 작업인가? | **Project** |
-| 외부 자료를 보관만 할 건가? | **Reference** |
+| Question | Answer → Type |
+|----------|---------------|
+| Will you only accumulate knowledge? | **Domain** |
+| Will you learn and develop/experiment simultaneously? | **Lab** |
+| Is there a clear goal/completion deadline? | **Project** |
+| Will you only store external materials for reference? | **Reference** |

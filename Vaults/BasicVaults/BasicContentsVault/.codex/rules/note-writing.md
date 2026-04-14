@@ -82,5 +82,5 @@ Do not report completion before `POST_EDIT_REVIEW_BAD=0`.
 - Before creating any new script, check `_Standards/Core/Script_Registry.md` for duplicates.
 - If existing script can be extended with parameters, prefer that over creating new scripts.
 - After creation, register in `Script_Registry.md` (name, location, purpose, creator, user).
-- After deletion, move entry to "삭제된 스크립트" section with reason.
+- After deletion, move entry to "Deleted Scripts" section with reason.
 - Full rules: `_Standards/Core/Script_Creation_Rule.md`

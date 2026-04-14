@@ -8,17 +8,17 @@ updated: 2026-03-05
 
 # Mermaid Tools
 
-## 기능
+## Features
 
-- Mermaid 코드 작성/수정 보조
-- 다이어그램 렌더 검토
+- Mermaid code writing/editing assistance
+- Diagram render review
 
-## 주 사용 작업
+## Primary Use Cases
 
-- 시스템 흐름도, 시퀀스, 상태 전이 문서화
-- 아키텍처 의사결정 시 시각 자료 생성
+- System flow, sequence, state transition documentation
+- Visual aids for architecture decision-making
 
-## 기본 문법 진입점
+## Basic Syntax Entry Point
 
 ```mermaid
 flowchart TD
@@ -26,5 +26,4 @@ flowchart TD
   B --> C[Output]
 ```
 
-상세 문법은 `MERMAID_JUGGL_SYNTAX.md`를 따른다.
-
+For detailed syntax, follow `MERMAID_JUGGL_SYNTAX.md`.

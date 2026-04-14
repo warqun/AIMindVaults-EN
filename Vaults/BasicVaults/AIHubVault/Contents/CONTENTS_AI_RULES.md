@@ -6,29 +6,29 @@ tags:
 updated: 2026-03-10
 ---
 
-# CONTENTS_AI_RULES — AIMindVault 전용 AI 작업 규칙
+# CONTENTS_AI_RULES — AIMindVault-Specific AI Work Rules
 
-> `_Standards/Core/` 규칙에 추가(override)된다.
+> These rules supplement (override) `_Standards/Core/` rules.
 
-## 작업 우선순위
+## Work Priority
 
-1. `_STATUS.md` 먼저 확인 — 현재 집중 작업 파악
-2. `_VAULT-INDEX.md`로 관련 파일 위치 확인
-3. 작업 범위가 넓으면 `_Standards/Core/` 관련 가이드 참조
+1. Check `_STATUS.md` first — understand the current focus task
+2. Use `_VAULT-INDEX.md` to locate relevant files
+3. If the scope is broad, refer to guides in `_Standards/Core/`
 
-## 파일 수정 규칙
+## File Modification Rules
 
-- `_Standards/Core/` 파일 수정은 모든 볼트에 영향. 신중하게 판단.
-- `_Standards/Contents/` 파일은 이 볼트 전용. 자유롭게 수정 가능.
-- `_forge/staging/` 파일은 검토 완료 후 배포 대기 상태. 삭제 전 확인.
+- Modifying `_Standards/Core/` files affects all vaults. Proceed with caution.
+- `_Standards/Contents/` files are vault-specific. Modify freely.
+- `_forge/staging/` files are in a reviewed, deployment-ready state. Confirm before deleting.
 
-## 노트 생성 시 주의
+## Notes on Note Creation
 
-- Frontmatter 규칙: `_Standards/Core/NoteProperties.md` 참조
+- Frontmatter rules: see `_Standards/Core/NoteProperties.md`
 - `type`: `standard` | `template` | `guide` | `idea` | `plan` | `report`
-- `tags`에 `AIMindVault` 필수 포함
+- `tags` must include `AIMindVault`
 
-## 금지 사항
+## Prohibited Actions
 
-- `_Standards/Core/` 전체 bulk 수정 금지
-- `_forge/inbox/` 파일 무단 삭제·수정 금지 (외부 에이전트 결과물)
+- Bulk modification of `_Standards/Core/` is prohibited
+- Unauthorized deletion or modification of `_forge/inbox/` files is prohibited (external agent outputs)

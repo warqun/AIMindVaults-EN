@@ -1,116 +1,116 @@
 ---
 name: create-video-note
-description: 영상 URL에서 메타데이터와 자막을 확보해 구조화된 Obsidian 노트를 만드는 Codex 전용 절차
+description: A Codex-exclusive procedure that retrieves metadata and subtitles from a video URL to create a structured Obsidian note
 ---
 
-# 영상 노트 생성
+# Create Video Note
 
-**목적**: YouTube 등 `yt-dlp` 지원 영상에서 핵심 내용을 추출해 구조화된 Obsidian 노트를 만든다.
-**범위**: Codex 전용 절차. `.claude/commands/`를 공유하지 않고 독립적으로 운용한다.
-**핵심 규칙**: 임시 파일은 `$env:TEMP`에서만 다룬다. 최종 산출물 외에는 볼트에 남기지 않는다.
+**Purpose**: Extract key content from YouTube or other `yt-dlp`-supported videos and create a structured Obsidian note.
+**Scope**: Codex-exclusive procedure. Operates independently without sharing `.claude/commands/`.
+**Core Rule**: Temporary files must only be handled in `$env:TEMP`. Nothing other than the final output should remain in the vault.
 
-## Step 1: 입력과 대상 볼트 확정
+## Step 1: Confirm Input and Target Vault
 
-- 입력값 확인:
-  - 영상 URL
-  - 대상 볼트가 명시됐는지
-  - 초심자용 설명, 번역, 요약 강도 같은 추가 요구가 있는지
-- 볼트가 명시되지 않았으면 주제 키워드로 라우팅한다.
-- 라우팅이 모호하면 추측해서 저장하지 말고 사용자에게 짧게 확인한다.
+- Verify inputs:
+  - Video URL
+  - Whether a target vault is specified
+  - Any additional requirements such as beginner-level explanations, translation, or summary depth
+- If no vault is specified, route based on topic keywords.
+- If routing is ambiguous, ask the user briefly rather than saving to a guessed location.
 
-## Step 2: 임시 작업 폴더 생성
+## Step 2: Create Temporary Working Folder
 
-`$env:TEMP\aimind_video_note_{yyyyMMdd_HHmmss}` 폴더를 만든다.
+Create a folder at `$env:TEMP\aimind_video_note_{yyyyMMdd_HHmmss}`.
 
-## Step 3: 메타데이터 확보
+## Step 3: Retrieve Metadata
 
-- `yt-dlp --dump-json "<URL>"`로 아래 정보를 확보한다.
-  - 제목
-  - 채널명
-  - 길이
-  - 업로드 일자
-  - 챕터
-  - 설명란
-- 챕터가 없으면 설명란의 타임스탬프를 보조 구조로 사용한다.
+- Use `yt-dlp --dump-json "<URL>"` to obtain the following:
+  - Title
+  - Channel name
+  - Duration
+  - Upload date
+  - Chapters
+  - Description
+- If no chapters exist, use timestamps from the description as supplementary structure.
 
-## Step 4: 자막 확보
+## Step 4: Retrieve Subtitles
 
-- 아래 우선순위로 시도한다.
-  1. 수동 한국어 자막
-  2. 자동 생성 한국어 자막
-  3. 영어 자막
-  4. 자막이 전혀 없으면 설명란과 챕터만으로 정리
-- 다운로드는 임시 폴더 안에서만 진행한다.
-- 자막 파일은 SRT 또는 VTT 중 실제 확보된 형식을 사용한다.
+- Try in the following priority order:
+  1. Manual Korean subtitles
+  2. Auto-generated Korean subtitles
+  3. English subtitles
+  4. If no subtitles at all, organize using only the description and chapters
+- Downloads must only occur within the temporary folder.
+- Use whichever subtitle format is actually obtained (SRT or VTT).
 
-## Step 5: 자막 정제
+## Step 5: Clean Subtitles
 
-- 타임코드, 메타 헤더, HTML/VTT 태그를 제거한다.
-- 자동 자막의 연속 중복 문장을 병합한다.
-- 맥락상 명백한 오인식만 교정한다.
-- 확신 없는 부분은 억지로 고치지 말고 `[?]` 또는 주석으로 남긴다.
+- Remove timecodes, meta headers, and HTML/VTT tags.
+- Merge consecutive duplicate sentences from auto-generated subtitles.
+- Only correct misrecognitions that are contextually obvious.
+- For uncertain parts, leave `[?]` or a comment rather than forcing corrections.
 
-## Step 6: 핵심 내용 구조화
+## Step 6: Structure Key Content
 
-- 영상 제목을 그대로 복제하지 말고 핵심 주제로 H1을 정제한다.
-- 노트 상단에 3~5줄 핵심 요약을 둔다.
-- 본문은 챕터 또는 주제 전환 기준으로 H2를 나눈다.
-- 각 섹션은 다음 순서를 우선한다.
-  - 핵심 개념
-  - 구체 설명
-  - 팁, 비교, 적용 포인트
-- 자막 품질이 낮으면 하단에 한계와 보정 사항을 짧게 적는다.
+- Refine H1 based on the core topic rather than copying the video title verbatim.
+- Place a 3-5 line key summary at the top of the note.
+- Divide the body into H2 sections based on chapters or topic transitions.
+- Each section should prioritize the following order:
+  - Core concepts
+  - Detailed explanations
+  - Tips, comparisons, application points
+- If subtitle quality is low, briefly note limitations and corrections at the bottom.
 
-## Step 7: 노트 작성
+## Step 7: Write the Note
 
-- 저장 위치는 기본적으로 대상 볼트의 `Contents/Domain/` 하위다.
-- 사용자가 프로젝트 맥락으로 요청했으면 `Contents/Project/`를 사용한다.
-- 노트에는 아래 요소를 포함한다.
+- The default save location is under `Contents/Domain/` in the target vault.
+- If the user requested it in a project context, use `Contents/Project/`.
+- The note should include:
   - YAML frontmatter
   - H1
-  - Juggl 블록
-  - 핵심 요약
-  - 구조화된 본문
-  - 관련 위키링크 1개 이상
+  - Juggl block
+  - Key summary
+  - Structured body
+  - At least one related wikilink
 
-권장 frontmatter:
+Recommended frontmatter:
 
 ```yaml
 ---
 type: domain
 tags:
-  - [볼트태그]
+  - [vault-tag]
   - video
-  - [주제태그]
-source: [영상 URL]
-source_title: [원제]
-source_channel: [채널명]
+  - [topic-tag]
+source: [video URL]
+source_title: [original title]
+source_channel: [channel name]
 created: YYYY-MM-DD
 agent: codex
 ---
 ```
 
-## Step 8: 검토
+## Step 8: Review
 
-- 자막 품질 때문에 의미가 흔들리는 구간이 본문 핵심 근거로 남아 있지 않은지 점검한다.
-- 노트 작성 규칙상 필요한 위키링크, frontmatter, Juggl 위치를 확인한다.
-- 완료 전에 반드시 아래 post-edit review를 실행하고 `POST_EDIT_INDEX_UPDATED=1`까지 확인한다.
+- Check that sections with unreliable subtitle quality are not used as core evidence in the body.
+- Verify wikilinks, frontmatter, and Juggl placement as required by note-writing rules.
+- Before completion, run the post-edit review below and confirm `POST_EDIT_INDEX_UPDATED=1`.
 ```bash
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" review -r "{볼트경로}" -s Contents
+node "{vault_path}/.sync/_tools/cli-node/bin/cli.js" review -r "{vault_path}" -s Contents
 ```
-- `POST_EDIT_INDEX_SKIPPED=1` 또는 `POST_EDIT_INDEX_UPDATED=0`이면 아래 명령으로 수동 인덱싱 후 다시 확인한다.
+- If `POST_EDIT_INDEX_SKIPPED=1` or `POST_EDIT_INDEX_UPDATED=0`, run manual indexing with the command below and verify again.
 ```bash
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index build -r "{볼트경로}" -i
+node "{vault_path}/.sync/_tools/cli-node/bin/cli.js" index build -r "{vault_path}" -i
 ```
 
-## Step 9: 정리
+## Step 9: Cleanup
 
-- 임시 폴더를 삭제한다.
-- 삭제 확인과 콘텐츠 인덱싱 완료 전에는 완료로 간주하지 않는다.
+- Delete the temporary folder.
+- Do not consider the task complete until deletion is confirmed and content indexing is done.
 
-## 실패 시 대응
+## Failure Handling
 
-- `yt-dlp` 미설치: 설치 필요 사실을 즉시 알린다.
-- 자막 없음: 설명란과 챕터 기반 요약으로 축소 진행하고 한계를 명시한다.
-- 영상 비공개/삭제: 즉시 중단 후 보고한다.
-- 자막 인코딩 문제: 다른 자막 형식으로 재시도하고, 그래도 실패하면 원인만 남긴다.
+- `yt-dlp` not installed: Immediately inform that installation is required.
+- No subtitles: Proceed with a reduced summary based on description and chapters, and note the limitation.
+- Video private/deleted: Stop immediately and report.
+- Subtitle encoding issues: Retry with a different subtitle format; if that also fails, document the cause only.

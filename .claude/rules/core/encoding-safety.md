@@ -1,12 +1,12 @@
-# 인코딩 안전 강제 규칙
+# Encoding Safety (Mandatory)
 
-> 모든 볼트에 동일 적용. 2026-03-04 Incident 기반.
+> Applies uniformly to all vaults. Based on 2026-03-04 Incident.
 
-## 필수 규칙
+## Required Rules
 
-- `Contents` 대량 수정 전 반드시 인코딩 검증을 먼저 실행한다.
-- 대량 수정 스크립트는 UTF-8 고정 I/O만 허용한다.
-- 수정 후 `BAD_COUNT=0` 확인 전에는 후속 자동화 작업을 실행하지 않는다.
+- Before bulk-modifying `Contents`, always run encoding verification first.
+- Bulk modification scripts must use UTF-8 fixed I/O only.
+- Do not run subsequent automation tasks until `BAD_COUNT=0` is confirmed after modification.
 
 ## Incident Rule: Mojibake Prevention (Mandatory)
 

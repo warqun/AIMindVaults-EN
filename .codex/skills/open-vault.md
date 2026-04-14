@@ -1,16 +1,16 @@
 ---
-description: "Obsidian 볼트 열기"
+description: "Open an Obsidian vault"
 ---
 
 # open-vault
 
-지정한 Obsidian 볼트를 연다.
+Opens the specified Obsidian vault.
 
-## 파라미터
+## Parameters
 
-- `vault`: Obsidian에 등록된 볼트명 (필수)
+- `vault`: Vault name registered in Obsidian (required)
 
-## 실행
+## Execution
 
 ```powershell
 param(
@@ -23,13 +23,13 @@ $uri = "obsidian://open?vault=$encodedVault"
 Start-Process $uri
 ```
 
-## 사용 예시
+## Usage Example
 
 ```powershell
 # open-vault "Project_AIMindVaults"
 ```
 
-## 주의사항
+## Notes
 
-- 볼트명은 Obsidian에 등록된 이름과 정확히 일치해야 한다.
-- 실패 시 볼트명 오탈자 또는 Obsidian 미실행/미설치 가능성을 점검한다.
+- The vault name must exactly match the name registered in Obsidian.
+- If it fails, check for typos in the vault name or whether Obsidian is running/installed.

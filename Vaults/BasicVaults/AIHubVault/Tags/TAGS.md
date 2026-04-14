@@ -3,23 +3,23 @@ type: tag-taxonomy
 updated: 2026-03-02
 ---
 
-# TAGS — 태그 규칙/목록(정규화 기준)
+# TAGS — Tag Rules/List (Normalization Reference)
 
-> 목적: 검색/필터/에이전트 컨텍스트를 단순화하기 위해 태그를 “정규화된 소수”로 유지한다.
-> 적용 대상: `Domain/` 중심(References에는 강제하지 않음).
+> Purpose: Keep tags as a "normalized small set" to simplify search/filter/agent context.
+> Scope: Primarily for `Domain/` (not enforced in References).
 
-## 규칙
+## Rules
 
-- 태그는 frontmatter의 `tags: [ ... ]`에서만 관리(본문 `#tag`는 선택)
-- 태그는 **소문자 + 슬래시 계층**으로 통일 (예: `system/effectpackagesystem`)
-- 한 노트에 태그는 **3~8개** 내로 유지(과도한 태그 금지)
-- 새로운 태그를 만들기 전에 이 문서에 추가/검토(무분별한 증식 방지)
+- Tags are managed only in frontmatter `tags: [ ... ]` (inline `#tag` in body is optional)
+- Tags use **lowercase + slash hierarchy** (e.g. `system/effectpackagesystem`)
+- Keep **3-8 tags** per note (no excessive tagging)
+- Before creating a new tag, add/review it in this document (prevent uncontrolled proliferation)
 
 ---
 
-## 핵심 태그(권장)
+## Core Tags (Recommended)
 
-### 프로젝트/범주
+### Project/Category
 
 - `project/vamsurlike`
 - `doc/design`
@@ -38,14 +38,14 @@ updated: 2026-03-02
 - `epic/server`
 - `epic/tools`
 
-### System (Logic 우선)
+### System (Logic Priority)
 
 - `system/stat2enddamage`
 - `system/skillsystem`
 - `system/effectpackagesystem`
 - `system/buffsystem`
 
-### 상태/우선순위
+### Status/Priority
 
 - `status/wip`
 - `status/blocked`
@@ -54,7 +54,7 @@ updated: 2026-03-02
 - `priority/medium`
 - `priority/low`
 
-### 에이전트(운용)
+### Agent (Operations)
 
 - `agent/claude`
 - `agent/codex`

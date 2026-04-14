@@ -1,96 +1,96 @@
-# AIMindVaults — 멀티볼트 라우팅 허브
+# AIMindVaults — Multi-Vault Routing Hub
 
-> 이 디렉토리는 여러 Obsidian 볼트를 관리하는 최상위 작업 디렉토리.
-> 개별 볼트 작업 시 반드시 볼트 진입 프로토콜을 따른다.
-> 공통 강제 규칙은 `.claude/rules/`에 정의되어 자동 적용.
+> This directory is the top-level working directory that manages multiple Obsidian vaults.
+> Always follow the vault entry protocol when working on individual vaults.
+> Shared mandatory rules are defined in `.claude/rules/` and auto-applied.
 
-## 볼트 레지스트리
+## Vault Registry
 
-### BasicVaults (작업환경 허브)
+### BasicVaults (Workspace Hub)
 
-| 볼트 ID | 경로 | 역할 | 상태 |
-|---------|------|------|------|
-| AIHubVault | `Vaults/BasicVaults/AIHubVault/` | **작업환경 원본(Hub)** — AI 작업환경 설계·개선·배포 허브 | active |
-| BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | 범용 콘텐츠 저장소 (배포용 — 직접 편집 금지) | active |
+| Vault ID | Path | Role | Status |
+|----------|------|------|--------|
+| AIHubVault | `Vaults/BasicVaults/AIHubVault/` | **Workspace source of truth (Hub)** — AI workspace design, improvement, and distribution hub | active |
+| BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | General-purpose content vault (distribution template — do not edit directly) | active |
 
-> 사용자가 볼트를 추가하면 이 레지스트리에 등록한다.
-> 볼트 생성은 `clone_vault.ps1`로 BasicContentsVault를 클론한다.
+> Register new vaults in this registry as they are added.
+> Create vaults by cloning BasicContentsVault with `node cli.js clone`.
 
-## 볼트 진입 프로토콜 (강제)
+## Vault Entry Protocol (Mandatory)
 
-1. **대상 볼트 식별**
-   - 명시적 지정: "AIHubVault에서 ~", "BasicContentsVault ~"
-   - 키워드 추론:
-     - "AI 워크플로우", "에이전트", "_Standards", ".forge", "workspace", "동기화 스크립트" → AIHubVault
-     - 그 외 주제 → 사용자에게 확인 (볼트가 없으면 생성 안내)
-   - 파일 경로 포함 시 → 경로에서 볼트 추출
-   - 모호하면 → 사용자에게 확인
+1. **Identify the target vault**
+   - Explicit specification: "In AIHubVault ~", "BasicContentsVault ~"
+   - Keyword inference:
+     - "AI workflow", "agent", "_Standards", ".forge", "workspace", "sync script" → AIHubVault
+     - Other topics → Ask the user (guide vault creation if none exists)
+   - If a file path is included → Extract vault from the path
+   - If ambiguous → Ask the user
 
-2. **볼트 진입 시 필수 읽기** (순서대로)
-   - `_SESSION_HANDOFF_CLAUDE.md` (루트) — Claude 이전 세션 맥락, 변경 파일, 미완료 항목 파악
-   - `_SESSION_HANDOFF_CODEX.md` (루트) — Codex 이전 세션 맥락 (충돌/연계 확인)
-   - `_STATUS.md` (루트) — 전체 볼트 현황 파악 + 다른 볼트 작업과 충돌/연계 확인
-   - `{볼트경로}/CLAUDE.md` — 볼트 전용 규칙
-   - `{볼트경로}/_STATUS.md` — 현재 진행 상황
+2. **Required reading on vault entry** (in order)
+   - `_SESSION_HANDOFF_CLAUDE.md` (root) — Previous Claude session context, changed files, incomplete items
+   - `_SESSION_HANDOFF_CODEX.md` (root) — Previous Codex session context (check for conflicts/dependencies)
+   - `_STATUS.md` (root) — Overall vault status + check for conflicts with other vault work
+   - `{vault-path}/CLAUDE.md` — Vault-specific rules
+   - `{vault-path}/_STATUS.md` — Current progress
 
-3. **작업환경 동기화 검토** (대상 볼트 ≠ AIHubVault인 경우)
-   - `{볼트경로}/_WORKSPACE_VERSION.md` 최상단 버전과 AIHubVault의 최상단 버전 비교
-   - 차이 있으면 → AIHubVault 기준으로 동기화 수행 후 작업 시작
-   - 상세: AIHubVault `.sync/` 내 동기화 스크립트 참조
+3. **Workspace sync review** (when target vault is not AIHubVault)
+   - Compare the top version in `{vault-path}/_WORKSPACE_VERSION.md` with AIHubVault's top version
+   - If there is a difference → Sync from AIHubVault before starting work
+   - Details: See sync scripts in AIHubVault `.sync/`
 
-4. **교차 작업 규칙**
-   - 2개 이상 볼트를 수정하는 경우, 볼트별로 분리하여 순차 실행
-   - 볼트 전환 시 현재 볼트의 편집을 완결한 후 전환
+4. **Cross-vault work rules**
+   - When modifying 2 or more vaults, separate by vault and execute sequentially
+   - Complete edits in the current vault before switching to another
 
-## 루트 작업 범위
+## Root Scope
 
-루트에서 직접 수정 가능한 대상:
-- `_STATUS.md` (멀티볼트 상태 허브)
-- `CLAUDE.md` (이 파일)
-- `CODEX.md` (Codex 루트 진입점)
-- `.claude/` (루트 Claude 설정)
-- `.codex/` (루트 Codex 설정)
-- `.cursor/` (루트 Cursor 설정)
-- `docs/` (루트 문서)
+Files that can be directly modified at root:
+- `_STATUS.md` (multi-vault status hub)
+- `CLAUDE.md` (this file)
+- `CODEX.md` (Codex root entry point)
+- `.claude/` (root Claude settings)
+- `.codex/` (root Codex settings)
+- `.cursor/` (root Cursor settings)
+- `docs/` (root documentation)
 
-볼트 내부 파일은 볼트 진입 프로토콜을 거친 후에만 수정한다.
+Vault internal files may only be modified after completing the vault entry protocol.
 
-## 공통 강제 규칙 참조
+## Shared Mandatory Rules Reference
 
-아래 규칙은 `.claude/rules/core/`에 정의되어 모든 볼트에 자동 적용:
-- 인코딩 안전 (`encoding-safety.md`)
-- 편집 모드 분리 (`edit-mode-separation.md`)
+The following rules are defined in `.claude/rules/core/` and auto-applied to all vaults:
+- Encoding safety (`encoding-safety.md`)
+- Edit mode separation (`edit-mode-separation.md`)
 - Post-Edit Review (`post-edit-review.md`)
-- 스크립트 관리 (`script-management.md`)
-- Juggl 스타일 동기화 (`juggl-style-sync.md`)
-- 노트 작성 패턴 (`note-writing.md`)
-- 볼트 라우팅 (`vault-routing.md`)
-- 세션 종료 (`session-exit.md`)
-- 토큰 최적화 (`token-optimization.md`)
-- 임시 파일 관리 (`temp-file-management.md`)
-- 스크립트 생성 승인 (`script-creation-approval.md`)
-- 배포 동기화 (`distribution-sync.md`)
-- Obsidian 설정 안전 편집 (`obsidian-config-safety.md`)
-- 볼트 개별화 (`vault-individualization.md`)
+- Script management (`script-management.md`)
+- Juggl style sync (`juggl-style-sync.md`)
+- Note writing patterns (`note-writing.md`)
+- Vault routing (`vault-routing.md`)
+- Session exit (`session-exit.md`)
+- Token optimization (`token-optimization.md`)
+- Temporary file management (`temp-file-management.md`)
+- Script creation approval (`script-creation-approval.md`)
+- Distribution sync (`distribution-sync.md`)
+- Obsidian config safe editing (`obsidian-config-safety.md`)
+- Vault individualization (`vault-individualization.md`)
 
-### 사용자 개인화 규칙
+### User Personalization Rules
 
-아래 규칙은 `.claude/rules/custom/`에 정의. 배포 동기화 대상 아님:
-- 멀티볼트 개인화 (`multivault-personalization.md`) — 에이전트/플러그인/스킬 커스텀 설정
+The following rules are defined in `.claude/rules/custom/`. Not subject to distribution sync:
+- Multi-vault personalization (`multivault-personalization.md`) — Custom agent/plugin/skill settings
 
-### 에이전트 필수 준수 사항
+### Agent Mandatory Requirements
 
-- **볼트 생성 시**: `vault-individualization.md` 규칙을 따라 이름/분류/CLAUDE.md/태그를 구체화한다.
-- **멀티볼트 커스텀 설정 시**: `multivault-personalization.md`를 참조하여 사용자의 에이전트/플러그인 선택을 반영한다.
-- **에이전트 진입점 파일** (`CLAUDE.md`, `CODEX.md`, `AGENT_STATUS.md`)은 볼트 개별 파일이므로 배포 동기화에 포함하지 않는다.
+- **When creating vaults**: Follow `vault-individualization.md` rules to specify name/category/CLAUDE.md/tags.
+- **When customizing multi-vault settings**: Reference `multivault-personalization.md` to reflect user's agent/plugin choices.
+- **Agent entry point files** (`CLAUDE.md`, `CODEX.md`, `AGENT_STATUS.md`) are vault-specific files and are not included in distribution sync.
 
-### 네임스페이스 구조
+### Namespace Structure
 
 ```
-.claude/rules/core/     ← 배포 규칙 (동기화 대상)
-.claude/rules/custom/   ← 사용자 규칙 (동기화 미대상)
-.claude/commands/core/   ← 배포 스킬 (동기화 대상)
-.claude/commands/custom/ ← 사용자 스킬 (동기화 미대상)
+.claude/rules/core/     ← Distribution rules (sync target)
+.claude/rules/custom/   ← User rules (not synced)
+.claude/commands/core/   ← Distribution skills (sync target)
+.claude/commands/custom/ ← User skills (not synced)
 ```
 
-각 폴더의 `MANIFEST.md`에 배포 파일 목록이 명시되어 있다.
+Each folder's `MANIFEST.md` lists the distribution files.

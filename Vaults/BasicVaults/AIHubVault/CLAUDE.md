@@ -7,138 +7,138 @@ updated: 2026-03-17
 agent: claude
 ---
 
-# AIHubVault — AI 작업환경 설계·개선·배포 허브
+# AIHubVault — AI Workspace Design, Improvement & Distribution Hub
 
-> 이 볼트의 모든 AI 에이전트(Claude Code, Claudian, Codex, Cursor)는 이 문서를 진입점으로 사용한다.
-> 에이전트별 추가 진입점: Codex → `CODEX.md` / Antigravity → `.antigravity/SESSION_RULES.md` / Cursor → `.cursor/rules/`
+> All AI agents in this vault (Claude Code, Claudian, Codex, Cursor) use this document as their entry point.
+> Additional entry points per agent: Codex -> `CODEX.md` / Antigravity -> `.antigravity/SESSION_RULES.md` / Cursor -> `.cursor/rules/`
 
-## 이 볼트의 역할
+## Role of This Vault
 
-**AI 작업환경 설계·개선·배포 허브** — `_Standards`, `_tools`, `.claude`, `.forge` 등 AI 운영 구조를 설계하고 다른 볼트에 배포하는 원본(Hub).
+**AI Workspace Design, Improvement & Distribution Hub** — Designs AI operational structures such as `_Standards`, `_tools`, `.claude`, `.forge`, and distributes them to other vaults as the single source of truth (Hub).
 
-> **콘텐츠 분리 완료 (2026-03-21)**: 기존 Contents/Domain/ → `Vaults/Domains_Infra/AI/`, Contents/Project/ → `Vaults/Projects_Infra/Project_AIMindVaults/`로 이관됨. 이 볼트는 workspace 전용 Hub로 운영.
+> **Content Separation Complete (2026-03-21)**: Former Contents/Domain/ moved to `Vaults/Domains_Infra/AI/`, Contents/Project/ moved to `Vaults/Projects_Infra/Project_AIMindVaults/`. This vault now operates as a workspace-only Hub.
 
-## 파생 인스턴스 규칙
+## Derived Instance Rules
 
-이 볼트는 `aimv clone`으로 복제되어 다른 용도의 볼트로 사용될 수 있다.
+This vault can be cloned via `aimv clone` and used as a vault for different purposes.
 
-1. **복제된 볼트도 이 CLAUDE.md의 공통 규칙(§ 아래)을 모두 따른다.**
-2. **workspace 모드 편집은 이 볼트(AIHubVault)에서만 수행한다.** 다른 볼트의 `_Standards/`, `_tools/`, `Juggl_StyleGuide/`는 Hub-Sync로 자동 배포되므로 읽기 전용.
-3. **다른 볼트에서는 `Contents/**`만 자유롭게 편집 가능.**
-
----
-
-## 세션 진입 규칙 (강제)
-
-어떤 작업이든, 시작 전에 반드시 아래 순서로 읽는다:
-
-1. `_STATUS.md` — 현재 집중/다음/블로킹 파악
-2. 이 문서 (`CLAUDE.md`) — 볼트 역할·규칙 확인
-3. `_VAULT-INDEX.md` — 문서 위치 파악
-
-**선독 절차를 건너뛰면 작업을 시작하지 않는다.**
+1. **Cloned vaults also follow all common rules (sections below) from this CLAUDE.md.**
+2. **Workspace mode editing is performed only in this vault (AIHubVault).** Other vaults' `_Standards/`, `_tools/`, `Juggl_StyleGuide/` are auto-distributed via Hub-Sync and are read-only.
+3. **In other vaults, only `Contents/**` can be freely edited.**
 
 ---
 
-## 편집 모드 분리 (강제)
+## Session Entry Rules (Mandatory)
 
-모든 편집은 아래 모드 중 하나를 **명시적으로 선언**한 후 수행한다. 모드 혼합 금지.
+Before any task, you must read the following in order:
 
-### Contents 모드
+1. `_STATUS.md` — Understand current focus/next/blockers
+2. This document (`CLAUDE.md`) — Confirm vault role and rules
+3. `_VAULT-INDEX.md` — Understand document locations
 
-> **이 볼트는 workspace 전용 Hub.** 콘텐츠 작업은 아래 볼트에서 수행:
-> - AI 도메인 지식 → `Vaults/Domains_Infra/AI/`
-> - AIMindVaults 프로젝트 → `Vaults/Projects_Infra/Project_AIMindVaults/`
-
-### workspace 모드 (AIHubVault 전용)
-
-- **대상**: `_Standards/`, `_tools/`, `.claude/`, `.codex/`, `.forge/`, `Tags/`, `Juggl_StyleGuide/`, 볼트 루트 파일
-- **금지**: `Contents/**` 본문 콘텐츠 수정
-- **예외**: `Contents/` 내 frontmatter 태그/메타데이터 일괄 갱신은 workspace 작업으로 허용
-- 수정 후 `_WORKSPACE_VERSION.md`에 버전 기록 필수 (형식: `YYYYMMDDNNNN`)
-- 버전 기록 없이 workspace 작업 완료 보고 금지
-
-### 모드 운용 규칙
-
-1. **작업 시작 시 모드 선언 필수**: `[Contents/Domain]`, `[Contents/Project]`, 또는 `[workspace]`를 명시
-2. **모드 전환 시 명시적 선언**: 이전 모드 편집이 완결된 후 전환
-3. **사용자 지시가 모드를 넘나드는 경우**: 모드별로 분리하여 순차 실행
+**Do not start any work without completing the pre-read procedure.**
 
 ---
 
-## 노트 작성 규칙
+## Edit Mode Separation (Mandatory)
 
-- **언어**: 한국어 기본. 코드/식별자/경로는 원문 유지.
-- **날짜**: YYYY-MM-DD 형식만 사용.
-- **구조**: H1 제목 1개. 내부 링크는 `[[WikiLink]]` 사용.
-- **Frontmatter 필수**: 모든 노트는 YAML Frontmatter(`---`)로 시작.
-  - `type`, `tags`(볼트 태그 포함), `updated` 또는 `created` 필수.
-  - 새 폴더 생성 시 `_VAULT-INDEX.md`에 등록.
-- **Juggl 임베드**: 제목 바로 아래에 삽입. 예외: `_STATUS.md`, `_VAULT-INDEX.md`, `.claude/` 내 파일.
+All edits must be performed after **explicitly declaring** one of the modes below. Mode mixing is prohibited.
+
+### Contents Mode
+
+> **This vault is a workspace-only Hub.** Content work should be done in the following vaults:
+> - AI domain knowledge -> `Vaults/Domains_Infra/AI/`
+> - AIMindVaults project -> `Vaults/Projects_Infra/Project_AIMindVaults/`
+
+### workspace Mode (AIHubVault Only)
+
+- **Scope**: `_Standards/`, `_tools/`, `.claude/`, `.codex/`, `.forge/`, `Tags/`, `Juggl_StyleGuide/`, vault root files
+- **Prohibited**: Modifying `Contents/**` body content
+- **Exception**: Batch frontmatter tag/metadata updates within `Contents/` are allowed as workspace work
+- After modification, version must be recorded in `_WORKSPACE_VERSION.md` (format: `YYYYMMDDNNNN`)
+- Do not report workspace work as complete without recording the version
+
+### Mode Operation Rules
+
+1. **Declare mode at work start**: Specify `[Contents/Domain]`, `[Contents/Project]`, or `[workspace]`
+2. **Explicit declaration when switching modes**: Switch only after previous mode edits are complete
+3. **When user instructions span multiple modes**: Separate by mode and execute sequentially
+
+---
+
+## Note Writing Rules
+
+- **Language**: English by default. Keep code/identifiers/paths in their original form.
+- **Dates**: Use YYYY-MM-DD format only.
+- **Structure**: One H1 heading. Use `[[WikiLink]]` for internal links.
+- **Frontmatter Required**: All notes must start with YAML Frontmatter (`---`).
+  - `type`, `tags` (including vault tag), `updated` or `created` are required.
+  - Register new folders in `_VAULT-INDEX.md`.
+- **Juggl Embed**: Insert directly below the title. Exceptions: `_STATUS.md`, `_VAULT-INDEX.md`, files within `.claude/`.
 
 ```juggl
-local: 노트_제목
+local: Note_Title
 ```
 
 ---
 
-## 안전 규칙
+## Safety Rules
 
-### 인코딩
+### Encoding
 
-- `Contents` 대량 수정 전 인코딩 검증 필수.
-- 대량 수정은 UTF-8 고정 I/O만 허용.
-- `Get-Content + Set-Content` 파이프라인으로 한국어 마크다운을 절대 재작성하지 않는다.
-- 대량 치환: dry-run → 3파일 샘플 → 전체 실행.
+- Encoding verification is required before bulk `Contents` modifications.
+- Bulk modifications must use UTF-8 fixed I/O only.
+- Never rewrite markdown with `Get-Content + Set-Content` pipeline.
+- Bulk replacement: dry-run -> 3-file sample -> full execution.
 
-### 임시 파일
+### Temporary Files
 
-- CLI 명령 실행 시 임시 파일은 `$env:TEMP` 하위에만 생성.
-- 볼트 루트에 `.vtt`, `.json`, `.srt`, `.tmp`, `.log` 등 임시 파일 방치 금지.
-- 작업 완료 후 즉시 삭제, 삭제 확인 전 완료 보고 금지.
+- Temporary files from CLI commands must be created only under `$env:TEMP`.
+- Do not leave `.vtt`, `.json`, `.srt`, `.tmp`, `.log` or other temporary files in the vault root.
+- Delete immediately after work completion; do not report completion before confirming deletion.
 
-### 토큰 절약
+### Token Conservation
 
-- **핀포인트 접근**: 필요한 파일만 정확히 지정하여 읽는다. 광범위 탐색 금지.
-- **같은 파일 반복 읽기 금지**: 한번 읽은 내용은 기억하고 재참조.
-- **고비용 작업 사전 보고**: 대량 파일 스캔, 복수 스크립트 실행 등은 사용자 승인 후 진행.
-
----
-
-## 스크립트 관리
-
-- 새 스크립트 생성 전 `_Standards/Core/Script_Registry.md`에서 중복 확인.
-- **스크립트 생성은 사용자 승인 필수.** 목적, 경로, 영향 범위, 일회성 여부를 보고.
-- 경로 하드코딩 금지 — 스크립트 위치 기반 자동탐지 사용.
-- 생성 후 Script_Registry.md에 등록. 삭제 시 "삭제된 스크립트" 섹션에 이동.
+- **Pinpoint access**: Read only the specific files needed. No broad exploration.
+- **No repeated reads**: Remember content from first read and reuse.
+- **Report high-cost operations in advance**: Get user approval before bulk file scans, multiple script executions, etc.
 
 ---
 
-## 편집 완료 게이트
+## Script Management
 
-노트 편집 완료 후 반드시 실행:
+- Check `_Standards/Core/Script_Registry.md` for duplicates before creating new scripts.
+- **User approval is required for script creation.** Report purpose, path, scope of impact, and whether it's one-time.
+- No hardcoded paths — use script-location-based auto-detection.
+- Register in Script_Registry.md after creation. Move to "Deleted Scripts" section on deletion.
+
+---
+
+## Edit Completion Gate
+
+After completing note edits, you must run:
 ```bash
 node .sync/_tools/cli-node/bin/cli.js review
 ```
-`POST_EDIT_REVIEW_BAD=0` 확인 전 완료 보고 금지.
+Do not report completion before confirming `POST_EDIT_REVIEW_BAD=0`.
 
 ---
 
-## 세션 종료 규칙
+## Session Exit Rules
 
-세션 종료 시 볼트의 `_STATUS.md`를 **직접 갱신**한다:
-- **Now**: 이번 세션에서 완료/진행 중인 작업
-- **Next**: 다음에 이어서 할 작업
-- **Blocked**: 막힌 사항 (없으면 "없음")
-- **Decisions**: 이번 세션에서 내린 결정 (`(YYYY-MM-DD)` 형식)
+At session end, **directly update** the vault's `_STATUS.md`:
+- **Now**: Tasks completed or in progress this session
+- **Next**: Tasks to continue next
+- **Blocked**: Blockers (or "None")
+- **Decisions**: Decisions made this session (`(YYYY-MM-DD)` format)
 
-**`_STATUS.md` 갱신 없이 세션을 종료하지 않는다.**
+**Do not end the session without updating `_STATUS.md`.**
 
 ---
 
-## 상세 규칙 참조
+## Detailed Rules Reference
 
-위 규칙의 상세 내용은 아래 경로에서 확인:
-- `_Standards/Core/AI_Rules_Index.md` — AI 에이전트 규칙 전체 인덱스
-- `_Standards/Core/` — 공통 운영 표준
-- `_WORKFLOW.md` — 전체 운용 규칙
+For detailed content of the above rules, refer to:
+- `_Standards/Core/AI_Rules_Index.md` — Complete AI agent rules index
+- `_Standards/Core/` — Common operational standards
+- `_WORKFLOW.md` — Full operational rules

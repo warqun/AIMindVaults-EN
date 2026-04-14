@@ -8,11 +8,11 @@ updated: 2026-03-15
 ## Status
 
 - **State**: Pending
-- **Now**: 멀티볼트 환경에서 Cursor 에이전트 설정 구조 초기화.
-- **Next**: AIHubVault 내 Cursor 전용 규칙 필요 시 `.cursor/rules/`에 정의.
-- **Blocked**: 없음
+- **Now**: Initializing Cursor agent configuration structure in the multi-vault environment.
+- **Next**: Define Cursor-specific rules in `.cursor/rules/` if needed within AIHubVault.
+- **Blocked**: None
 
 ## Notes
 
-- 이 볼트는 AI 작업환경 설계·개선·배포 허브 역할을 한다.
-- 다른 에이전트(Claude, Codex, Antigravity)의 `AGENT_STATUS.md`와 이 파일을 함께 참고하여 상태를 병합한다.
+- This vault serves as the AI workspace design, improvement, and deployment hub.
+- Refer to this file alongside `AGENT_STATUS.md` files from other agents (Claude, Codex, Antigravity) to merge statuses.

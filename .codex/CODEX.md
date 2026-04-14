@@ -16,7 +16,7 @@ tags:
 ## Session Start Order
 
 1. `CODEX.md`
-2. `_STATUS.md` (루트) — 전체 볼트 현황 + 다른 볼트 작업 확인
+2. `_STATUS.md` (root) — Check overall vault status + other vault activities
 3. `.codex/rules/vault-routing.md`
 4. `.codex/rules/edit-scope.md`
 5. `.codex/rules/status-sync.md`
@@ -31,8 +31,8 @@ Do not start editing before finishing that order.
 
 | Vault ID | Path | Role | Status |
 |------|------|------|------|
-| AIHubVault | `Vaults/BasicVaults/AIHubVault/` | AI 작업환경 설계·개선·배포 허브 | active |
-| BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | 범용 콘텐츠 저장소 | active |
+| AIHubVault | `Vaults/BasicVaults/AIHubVault/` | AI workspace design, improvement, and distribution hub | active |
+| BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | General-purpose content store | active |
 
 ## Routing Rules
 

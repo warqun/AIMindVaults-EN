@@ -9,46 +9,47 @@ tags:
 date: 2026-03-07
 ---
 
-# Obsidian to NotionNext (동기화 플러그인) 사용 가이드
+# Obsidian to NotionNext (Sync Plugin) Usage Guide
 
-**목적**: 옵시디언에서 작성한 마크다운 문서를 Notion 데이터베이스(일반 노션 페이지 또는 NotionNext 블로그 템플릿 등)로 원클릭 동기화 및 발행하는 플러그인입니다.
+**Purpose**: A plugin that synchronizes and publishes markdown documents written in Obsidian to Notion databases (regular Notion pages, NotionNext blog templates, etc.) with one click.
 
-원문 링크: [GitHub - obsidian-to-NotionNext](https://github.com/jxpeng98/obsidian-to-NotionNext)
-상세 매뉴얼: [공식 문서 사이트](https://obsidian-to-notionnext.pages.dev/)
-
----
-
-## 🛠 주요 기능 및 장점
-
-1. **다양한 데이터베이스 지원**
-   - 일반적인 Notion 데이터베이스뿐만 아니라 노션 기반 블로그인 **NotionNext** 템플릿, 그리고 사용자가 완전히 커스텀한 스키마까지 모두 지원합니다.
-2. **프론트매터(Frontmatter) 매핑**
-   - 옵시디언 노트 상단의 메타데이터(YAML/Properties) 속성을 노션 데이터베이스의 특정 열(Column) 속성으로 자유롭게 1:1 매핑할 수 있습니다.
-3. **첨부파일 자동 업로드**
-   - 로컬에 있는 이미지 파일(png, jpg 등)이나 PDF 파일을 노션으로 동기화할 때 자동으로 업로드 처리해 줍니다. 
-   - `[[위키링크]]` 형태나 `[마크다운링크]()` 형태의 이미지 첨부를 모두 인식합니다.
-4. **유연한 타겟 설정**
-   - 동기화 버튼을 누를 때마다 "어느 노션 데이터베이스로 보낼지" 실시간으로 선택할 수 있습니다.
+Original link: [GitHub - obsidian-to-NotionNext](https://github.com/jxpeng98/obsidian-to-NotionNext)
+Detailed manual: [Official documentation](https://obsidian-to-notionnext.pages.dev/)
 
 ---
 
-## 🚀 기본 세팅 및 사용법 흐름 (예상)
+## Key Features and Benefits
 
-이 플러그인은 옵시디언을 '작성용 로컬 창고'로, 노션을 '퍼블리싱용 웹 뷰어 또는 협업 공간'으로 사용할 때 가장 빛을 발합니다.
-
-**초기 세팅 필요 사항:**
-1. Notion API의 **Integration Token (내부 통합 API 키)** 발급
-2. 동기화할 Notion 데이터베이스 페이지 우측 상단 `...` 메뉴에서 해당 Integration에 **연결(Connect) 권한 부여**
-3. 플러그인 설정 창에 Token과 Database ID를 입력 및 프론트매터 매핑 룰 지정
-
-**동기화 워크플로우:**
-1. 옵시디언에서 평소처럼 글을 작성하고 이미지도 넣습니다.
-2. 명령어 팔레트(`Ctrl+P`)에서 **Sync to Notion** 관련 명령어를 실행합니다.
-3. 로컬 마크다운과 이미지가 자동으로 변환되어 지정된 노션 DB의 새 항목으로 업로드(또는 업데이트)됩니다.
-4. (선택) 동기화 직후 노션의 공유 링크(Share Link)가 클립보드에 생성되어 바로 타인에게 공유할 수 있습니다.
+1. **Diverse Database Support**
+   - Supports regular Notion databases, Notion-based blog **NotionNext** templates, and fully custom user schemas.
+2. **Frontmatter Mapping**
+   - Freely map metadata (YAML/Properties) attributes from the top of Obsidian notes 1:1 to specific column properties in Notion databases.
+3. **Automatic Attachment Upload**
+   - Automatically uploads local image files (png, jpg, etc.) and PDF files when syncing to Notion.
+   - Recognizes both `[[wiki link]]` and `[markdown link]()` format image attachments.
+4. **Flexible Target Settings**
+   - Each time you press the sync button, you can select in real-time "which Notion database to send to."
 
 ---
 
-## 💡 LatticeCore 활용 팁
-준형님의 멀티 볼트 아키텍처에서 작성한 기획서, 회의록, 외주 작업 지시서 등을 **Notion을 주로 사용하는 외부인(외주 편집자, 팀원 등)**에게 전달해야 할 때 매우 유용합니다.
-문서는 내 로컬 볼트(옵시디언)에 안전하게 보관하면서, 외부 배포용 페이지만 손쉽게 노션으로 밀어넣어 공유 링크를 던져주는 워크플로우를 구축해 보세요.
+## Basic Setup and Usage Flow
+
+This plugin shines most when using Obsidian as a 'local writing repository' and Notion as a 'web viewer for publishing or collaboration space.'
+
+**Initial Setup Requirements:**
+1. Issue a Notion API **Integration Token (internal integration API key)**
+2. Grant **Connect permissions** to the Integration from the `...` menu at the top right of the Notion database page to sync
+3. Enter the Token and Database ID in the plugin settings and specify frontmatter mapping rules
+
+**Sync Workflow:**
+1. Write content in Obsidian as usual and add images.
+2. Execute a **Sync to Notion** related command from the Command Palette (`Ctrl+P`).
+3. Local markdown and images are automatically converted and uploaded as new items (or updated) in the specified Notion DB.
+4. (Optional) After sync, a Notion share link is generated to the clipboard for immediate sharing.
+
+---
+
+## Tips
+
+When you need to deliver planning documents, meeting notes, or outsourcing work orders written in your multi-vault architecture to **external people who primarily use Notion (freelance editors, team members, etc.)**, this is very useful.
+Keep documents safely in your local vault (Obsidian), and easily push only the external distribution pages to Notion and share the link.

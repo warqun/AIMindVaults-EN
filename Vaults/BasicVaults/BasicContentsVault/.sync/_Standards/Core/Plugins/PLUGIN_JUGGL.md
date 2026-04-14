@@ -8,25 +8,24 @@ updated: 2026-03-05
 
 # Juggl
 
-## 기능
+## Features
 
-- 노트 간 링크 관계를 그래프로 시각화
-- 고립 노트/약한 연결 영역 식별
+- Visualize note link relationships as a graph
+- Identify isolated notes/weakly connected areas
 
-## 주 사용 작업
+## Primary Use Cases
 
-- 지식 구조 점검
-- 이슈/스펙/결정 노트 연결도 검토
+- Knowledge structure inspection
+- Issue/spec/decision note connectivity review
 
-## 운용 문법 핵심
+## Key Operational Syntax
 
-1. 위키링크를 명시적으로 작성: `[[노트명]]`
-2. 태그 스키마를 고정: `#project/<topic>`, `#system/<name>`
-3. frontmatter의 `type`, `status`, `epic`를 통일
+1. Write wiki links explicitly: `[[NoteName]]`
+2. Fix tag schema: `#project/<topic>`, `#system/<name>`
+3. Standardize frontmatter `type`, `status`, `epic`
 
-## 점검 체크리스트
+## Inspection Checklist
 
-- 허브 노트(인덱스)에서 모든 핵심 노트로 도달 가능한가
-- 신규 노트가 고립 상태로 남아있지 않은가
-- 동일 개념이 다른 이름으로 중복 생성되지 않았는가
-
+- Can all key notes be reached from the hub note (index)?
+- Are there new notes left in isolated state?
+- Has the same concept been duplicated under different names?

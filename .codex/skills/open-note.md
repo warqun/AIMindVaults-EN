@@ -1,17 +1,17 @@
 ---
-description: "Obsidian 노트 열기"
+description: "Open an Obsidian note"
 ---
 
 # open-note
 
-지정한 Obsidian 볼트의 노트를 연다.
+Opens a note in the specified Obsidian vault.
 
-## 파라미터
+## Parameters
 
-- `vault`: Obsidian에 등록된 볼트명 (필수)
-- `file`: 볼트 기준 상대 파일 경로 (필수)
+- `vault`: Vault name registered in Obsidian (required)
+- `file`: Relative file path from vault root (required)
 
-## 실행
+## Execution
 
 ```powershell
 param(
@@ -29,14 +29,14 @@ $uri = "obsidian://open?vault=$encodedVault&file=$encodedFile"
 Start-Process $uri
 ```
 
-## 사용 예시
+## Usage Example
 
 ```powershell
-# open-note "Project_AIMindVaults" "Contents/Project/plan/AIMindVaults_plan/20260321_인덱싱_트리거_설계.md"
+# open-note "Project_AIMindVaults" "Contents/Project/plan/AIMindVaults_plan/20260321_Indexing_Trigger_Design.md"
 ```
 
-## 주의사항
+## Notes
 
-- 한국어 파일명/공백/특수문자는 반드시 URI 인코딩한다.
-- 파일 경로는 볼트 루트 기준 상대경로를 사용한다.
-- 볼트명 또는 경로가 틀리면 해당 노트를 열지 못한다.
+- File names with non-ASCII characters, spaces, or special characters must be URI-encoded.
+- File paths use relative paths from the vault root.
+- If the vault name or path is incorrect, the note will not open.

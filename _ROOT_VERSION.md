@@ -8,60 +8,60 @@ updated: 2026-04-08
 
 # Root Version Log
 
-멀티볼트 루트 레벨 변경 이력. `.claude/`, `.antigravity/`, 루트 설정 파일 등의 변경을 추적한다.
+Change history for multi-vault root level. Tracks changes to `.claude/`, `.antigravity/`, root configuration files, etc.
 
-| 버전 | 날짜 | 변경 내용 |
-|------|------|----------|
-| R053 | 2026-04-13 | PS1 잔존 참조 전면 제거. Codex 스킬 3개, CODEX.md 28개, .codex/rules/ 84개, .codex/skills/session-end 27개, .github/copilot-instructions 28개, .antigravity/SESSION_RULES 28개, AGENT_ONBOARDING_CLAUDE/CODEX, .codex/rules/edit-scope, agent-ownership, Hub _WORKFLOW, Hub_Sync_Targets, TOOLS_INDEX 전면 개편 — 총 200+ 파일 Node.js CLI 참조로 전환 |
-| R052 | 2026-04-13 | `docs/` 신설 (architecture, cli-reference, customization). core commands 6개 PS1→Node.js CLI 전환. AGENT_ONBOARDING.md PS1 참조 전환 + docs 연동. README.md docs 참조 추가 |
-| R051 | 2026-04-13 | core/custom rules 8개 PS1→Node.js CLI 참조 전환. PS1 전체 제거. standards 커맨드 추가. Script_Registry 전면 개편 |
-| R050 | 2026-04-13 | TestVault 삭제. GameDesign, Blender, Git, AI_Gen4Game 4개 볼트 루트 `CLAUDE.md` 레지스트리 + 라우팅 키워드 등록. `Domains_3D`, `Domains_VCS`, `Domains_AI_Asset` 카테고리 신설 |
-| R049 | 2026-04-13 | frontmatter `tags` 표준화. 계층 태그 flatten, PascalCase→kebab-case 변환, 볼트 식별 태그 제거 (2차에 걸쳐 ~696파일). `note-writing.md` 태그 규칙 추가 — 기본 형식 + 사용자 오버라이드 구조. `AGENT_ONBOARDING.md` §8에 타입/태그 시스템 설명 섹션 추가 |
-| R048 | 2026-04-13 | 빈 타입 86건 처리. `folder-index` 코어 타입 신설 (note-writing.md). Domain.md/Project.md 51건 folder-index, CombatToolKit Legacy 27건 design, Grok 로그 5건 reference, 개별 3건 (plan/knowledge/study-note) 부여 |
-| R047 | 2026-04-13 | `master_index_build.ps1` Resolve-Path trailing backslash 버그 수정 (TrimEnd 추가). `/sync-all` 코어 스킬 신설 — 전체 위성 볼트 워크스페이스 일괄 동기화. MANIFEST 등록 |
-| R046 | 2026-04-13 | frontmatter `type` 표준화. `note-writing.md`에 코어 타입 목록(21개) + 볼트 전용 타입 확장 규칙 추가. 동의어 통합 72개(standards→standard, knowledge-note/domain→knowledge, planning-note→plan, research-note→research), 1회성 타입 12개 흡수, 위성 볼트 EXAMPLE_JUGGL 노트 156개 제거. ObsidianDev·Unity CLAUDE.md에 전용 타입 선언 |
-| R045 | 2026-04-13 | `Vaults/Domains_Dev/JavaScript/` 신규 볼트 생성. 루트 `CLAUDE.md`, `_STATUS.md`에 JavaScript 레지스트리와 라우팅 키워드 추가 |
-| R044 | 2026-04-13 | `vault-individualization.md` CLAUDE.md 필수 항목에 수집 범위·경계 추가. `vault-routing.md` 라우팅 판단 시 후보 볼트 CLAUDE.md 수집 범위 참조 규칙 추가 |
-| R043 | 2026-04-08 | `user-guidance.md` 코어 규칙 신설. 12개 코어 기능별 유저 혼란 상황 + 에이전트 안내 지침. MANIFEST 등록. `create-vault.md`, `open-vault.md`에 Obsidian 미등록 볼트 URI 금지 규칙 추가. `AGENT_ONBOARDING.md` §16에 볼트 등록 안내 추가 |
-| R042 | 2026-04-08 | `temp-file-management.md`에 "무한 재귀 경로 삭제 (Incident Rule)" 섹션 추가. PowerShell flatten-and-delete 1순위, robocopy mirror 2순위. 실패하는 방법(7z, Remove-Item, rd, .NET Delete) 명시 |
-| R041 | 2026-04-08 | `Vaults/Domain_Art/ArtInsight/` 신규 볼트 생성. 루트 `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`에 ArtInsight 레지스트리와 라우팅 키워드 추가, ArtInsight 개별 진입 문서/상태 문서/콘텐츠 규칙 개별화, 첫 노트 `20260408_미적_안목을_기르는_분별의_기준.md` 작성 |
-| R040 | 2026-04-08 | 콘텐츠 인덱서 우선 검색 강제 규칙 추가. `token-optimization.md` §0 신설 (인덱서 → fallback 순서), `vault-routing.md`에 첫 접근 시 인덱스 빌드 강제, `vault-individualization.md`에 생성 후 초기 빌드 단계 추가 |
-| R039 | 2026-04-08 | 볼트명 변경 CodeStyle → AI_Coding. 루트 CLAUDE.md 레지스트리/라우팅, 루트 _STATUS.md 레지스트리 갱신. 볼트 내부 태그 전체 AI_Coding으로 교체 |
-| R038 | 2026-04-08 | 콘텐츠 인덱싱 완료 강제 보강. AIHub `.sync/_tools/cli/post_note_edit_review.ps1`가 인덱서를 별도 PowerShell 프로세스로 실행해 성공 판정을 안정화하고, root `.codex/skills/create-video-note`, `create-article-note`, `create-pdf-note`에 `POST_EDIT_INDEX_UPDATED=1` 확인과 수동 fallback 절차를 명시 |
-| R037 | 2026-04-08 | 콘텐츠 인덱싱 규칙 강화. `post-edit-review.md`에 노트 추가/편집 후 인덱싱 필수 조건(`POST_EDIT_INDEX_UPDATED=1`) 추가, `/reindex` 스킬 경로를 `.sync/_tools/cli/` 구조에 맞게 갱신 |
-| R036 | 2026-04-08 | Codex 전용 소스 노트 파이프라인 추가. root `.codex/skills/create-article-note/`, `.codex/skills/create-pdf-note/` 신규 생성, `.codex/skills/create-video-note/`를 동일 기준으로 확장 |
-| R035 | 2026-04-06 | `/open-notes` 스킬 custom/ → core/ 격상. 활성 볼트 판별·경로 변환·파일 존재 확인 3단계 안전장치 추가. MANIFEST 등록 |
-| R034 | 2026-04-06 | `AGENT_ONBOARDING.md` 신규 — 에이전트 범용 온보딩 문서. 환경 개요, 핵심 규약 14개 압축, 규칙 파일 경로 참조 |
-| R033 | 2026-04-06 | `distribution-sync.md` Juggl_StyleGuide 배포 제거, `juggl-style-sync.md` 볼트별 개별 관리로 변경. 전체 볼트 `docs/` → `.docs/` 리네임, `recent_files.txt` 삭제, `Juggl_StyleGuide/` 볼트별 `Contents/`로 이동 |
-| R032 | 2026-04-05 | `/reindex` 스킬 신설 (`.claude/commands/core/reindex.md`) — 단일/전체 볼트 콘텐츠 인덱스 재빌드. MANIFEST 등록 |
-| R031 | 2026-04-05 | `/open-notes` 스킬 신설 (`.claude/commands/custom/open-notes.md`) — local-rest-api로 복수 노트 새 탭 열기. 글로벌 CLAUDE.md 스킬 목록에 등록 |
-| R030 | 2026-04-02 | `session-exit.md` — 볼트별 핸드오프 작성 시 루트 핸드오프에 참조 남기기 규칙 추가 |
-| R029 | 2026-04-01 | 세션 핸드오프 에이전트별 분리. `_SESSION_HANDOFF.md` → `_SESSION_HANDOFF_CLAUDE.md` + `_SESSION_HANDOFF_CODEX.md`. `session-exit.md` 규칙 갱신, `CLAUDE.md` 진입 프로토콜 갱신 |
-| R028 | 2026-04-01 | JissouGame 신규 볼트 생성. `Projects_Game` 카테고리 신설, 루트 `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`, `.claude/rules/core/vault-individualization.md` 갱신 |
-| R027 | 2026-04-01 | TileMapToolKit 신규 볼트 생성. 루트 `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`에 레지스트리/라우팅 추가 |
-| R026 | 2026-04-01 | `note-writing.md` — frontmatter `agent` 필드 규칙 명시: 최신 작업자만이 아니라 해당 노트에 작업한 에이전트를 누적 기록 |
-| R025 | 2026-03-23 | 볼트 개별화 규칙 신설 (`.claude/rules/core/vault-individualization.md`) — 볼트 생성 시 이름/분류/CLAUDE.md/태그 표준화 |
-| R024 | 2026-03-23 | 멀티볼트 개인화 규칙 신설 (`.claude/rules/custom/multivault-personalization.md`) — 에이전트/플러그인/스킬 커스텀 설정 |
-| R023 | 2026-03-21 | Personal 카테고리 신설 + `Vaults/Personal/Diary/` 다이어리 볼트 생성. 루트 CLAUDE.md, _STATUS.md에 등록. 라우팅 키워드 추가 |
-| R022 | 2026-03-21 | 세션 핸드오프 시스템 도입. 루트 `_SESSION_HANDOFF.md` 신규, `session-exit.md` 핸드오프 작성 규칙 추가, 루트 `CLAUDE.md` 진입 프로토콜에 핸드오프 읽기 추가 |
-| R021 | 2026-03-21 | 신규 볼트 2개 생성: `Vaults/Domains_Infra/AI` (AI 도메인), `Vaults/Projects_Infra/Project_AIMindVaults` (프로젝트) — AIHubVault 콘텐츠 분리 준비 |
-| R020 | 2026-03-21 | `note-writing.md` 위키링크 필수 규칙 추가 — 새 노트 생성 시 같은 볼트 내 관련 노트 위키링크 1개 이상 강제 |
-| R019 | 2026-03-21 | `note-writing.md` H1 제목 규칙 추가 — URI 예약문자·이모지 금지 (강제). 파일명에도 이모지 금지 추가 |
-| R018 | 2026-03-21 | `Vaults/Domains_Infra/Search/` 신규 볼트 생성. 검색 엔진·인덱싱·텍스트 매칭 도메인 지식 허브. 루트 CLAUDE.md, _STATUS.md에 등록 |
-| R017 | 2026-03-21 | `Vaults/Domains_Infra/CICD/` 신규 볼트 생성. CI/CD 및 배포 동기화 도메인 지식 허브. 루트 CLAUDE.md, _STATUS.md에 등록 |
-| R016 | 2026-03-21 | Codex 데스크탑 앱 전환. 루트+11볼트 `AGENTS.md` 신규 생성(2단계 라우팅+실행 구조). playbooks → `.codex/skills/` SKILL.md 형식 변환. `.antigravity/workflows/` → `.codex/skills/`로 이관. `agent-ownership.md` 충돌 방지 규칙 신규. 기존 CODEX.md, .antigravity에 deprecated 표시 |
-| R015 | 2026-03-19 | `.claude/rules/vault-routing.md` 신규: 볼트 라우팅 강제 규칙. BasicContentsVault 직접 작업 금지, 콘텐츠 배치 전 볼트 레지스트리 확인 필수 |
-| R014 | 2026-03-19 | 에이전트 규칙 정본 참조 방식 전환. Cursor/Codex/Antigravity 복제 규칙 8개 삭제 → `.claude/rules/` 정본 참조 + 에이전트 고유 `agent-rules` 파일로 대체. AIHubVault 내부 Codex/Antigravity 진입점에도 정본 참조 추가 |
-| R013 | 2026-03-19 | 루트 `_STATUS.md` 경량 레지스트리 구조로 재설계 (Now/Next/Blocked 제거 → 볼트 타입+콘텐츠+작업 에이전트 날짜). `session-exit.md` 루트 갱신 규칙 개정. 전체 11개 볼트 등록 |
-| R012 | 2026-03-18 | `Vaults/Lab_Infra/ObsidianDev/` 신규 볼트 생성. Lab 카테고리 신설 (Domain+Project 복합). 루트 CLAUDE.md Labs 섹션 추가 |
-| R011 | 2026-03-18 | `.claude/commands/auto-organize.md` 신규: 노트/볼트 생성 시 폴더 자동 분류 스킬. AI 제안 → 사용자 승인 방식 |
-| R010 | 2026-03-18 | `Vaults/Domains_Infra/Notion/` 신규 볼트 생성. 루트 CLAUDE.md 레지스트리 + _STATUS.md 섹션 추가 |
-| R009 | 2026-03-18 | `.claude/commands/create-vault.md` 신규: 볼트 생성 스킬. BasicContentsVault 기반 복제 + 후속 작업 프로세스 정의 |
-| R008 | 2026-03-18 | `note-writing.md` — 비유적/은유적 표현 금지 규칙 추가. 작업명·제목은 내용을 직접 서술 |
-| R007 | 2026-03-17 | `juggl-style-sync.md` — Juggl `local:` 값은 파일명 사용 규칙 명시 (H1 제목 아님) |
-| R006 | 2026-03-17 | `note-writing.md` — 마크다운 볼드+괄호 렌더링 규칙 추가. `**텍스트(괄호)**` 패턴 금지 |
-| R005 | 2026-03-17 | `README.md` 신규: 멀티볼트 시스템 소개, AI 규칙 체계, 빠른 시작 가이드 (git 배포 진입점) |
-| R004 | 2026-03-17 | `.claude/rules/token-optimization.md` 신규: 토큰 절약 및 실행 위임 강제 규칙 |
-| R003 | 2026-03-17 | `edit-mode-separation.md`에 루트 레벨 편집 시 `_ROOT_VERSION.md` 기록 강제 규칙 추가 |
-| R002 | 2026-03-17 | `.claude/rules/` 신규 3개: temp-file-management, distribution-sync, script-creation-approval |
-| R001 | 2026-03-17 | `.antigravity/workflows/` 신규 2개: create-video-note, sync-distribution |
+| Version | Date | Changes |
+|---------|------|---------|
+| R053 | 2026-04-13 | Full removal of remaining PS1 references. Converted 200+ files to Node.js CLI references across Codex skills (3), CODEX.md (28), .codex/rules/ (84), .codex/skills/session-end (27), .github/copilot-instructions (28), .antigravity/SESSION_RULES (28), AGENT_ONBOARDING_CLAUDE/CODEX, .codex/rules/edit-scope, agent-ownership, Hub _WORKFLOW, Hub_Sync_Targets, TOOLS_INDEX |
+| R052 | 2026-04-13 | Created `docs/` (architecture, cli-reference, customization). Converted 6 core commands from PS1 to Node.js CLI. Updated AGENT_ONBOARDING.md PS1 references + docs integration. Added docs references to README.md |
+| R051 | 2026-04-13 | Converted 8 core/custom rules from PS1 to Node.js CLI references. Removed all PS1 files. Added standards command. Overhauled Script_Registry |
+| R050 | 2026-04-13 | Deleted TestVault. Registered 4 vault root `CLAUDE.md` entries (GameDesign, Blender, Git, AI_Gen4Game) + routing keywords. Created `Domains_3D`, `Domains_VCS`, `Domains_AI_Asset` categories |
+| R049 | 2026-04-13 | Standardized frontmatter `tags`. Flattened hierarchical tags, converted PascalCase to kebab-case, removed vault identifier tags (~696 files in 2 passes). Added tag rules to `note-writing.md` — default format + user override structure. Added type/tag system explanation to `AGENT_ONBOARDING.md` section 8 |
+| R048 | 2026-04-13 | Processed 86 empty type entries. Created `folder-index` core type (note-writing.md). Assigned folder-index to 51 Domain.md/Project.md entries, design to 27 CombatToolKit Legacy entries, reference to 5 Grok logs, individual types (plan/knowledge/study-note) to 3 entries |
+| R047 | 2026-04-13 | Fixed `master_index_build.ps1` Resolve-Path trailing backslash bug (added TrimEnd). Created `/sync-all` core skill — batch workspace sync for all satellite vaults. Registered in MANIFEST |
+| R046 | 2026-04-13 | Standardized frontmatter `type`. Added core type list (21 types) + vault-specific type extension rules to `note-writing.md`. Merged 72 synonyms (standards->standard, knowledge-note/domain->knowledge, planning-note->plan, research-note->research), absorbed 12 one-off types, removed 156 EXAMPLE_JUGGL notes from satellite vaults. Declared vault-specific types in ObsidianDev and Unity CLAUDE.md |
+| R045 | 2026-04-13 | Created `Vaults/Domains_Dev/JavaScript/` new vault. Added JavaScript registry and routing keywords to root `CLAUDE.md` and `_STATUS.md` |
+| R044 | 2026-04-13 | Added collection scope and boundaries to `vault-individualization.md` CLAUDE.md required fields. Added rule to `vault-routing.md` for referencing candidate vault CLAUDE.md collection scope during routing decisions |
+| R043 | 2026-04-08 | Created `user-guidance.md` core rule. Agent guidance instructions for 12 core feature user confusion scenarios. Registered in MANIFEST. Added unregistered vault URI prohibition rules to `create-vault.md` and `open-vault.md`. Added vault registration guidance to `AGENT_ONBOARDING.md` section 16 |
+| R042 | 2026-04-08 | Added "Infinite Recursive Path Deletion (Incident Rule)" section to `temp-file-management.md`. PowerShell flatten-and-delete as priority 1, robocopy mirror as priority 2. Listed failing methods (7z, Remove-Item, rd, .NET Delete) |
+| R041 | 2026-04-08 | Created `Vaults/Domain_Art/ArtInsight/` new vault. Added ArtInsight registry and routing keywords to root `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`. Individualized ArtInsight entry docs/status docs/content rules. Wrote first note `20260408_Aesthetic_Sense_Standards_of_Discernment.md` |
+| R040 | 2026-04-08 | Added content indexer priority search mandatory rule. Created `token-optimization.md` section 0 (indexer -> fallback order). Added mandatory index build on first access to `vault-routing.md`. Added initial build step after creation to `vault-individualization.md` |
+| R039 | 2026-04-08 | Renamed vault CodeStyle to AI_Coding. Updated root CLAUDE.md registry/routing and root _STATUS.md registry. Replaced all vault internal tags with AI_Coding |
+| R038 | 2026-04-08 | Reinforced mandatory content indexing completion. AIHub `.sync/_tools/cli/post_note_edit_review.ps1` now runs indexer in separate PowerShell process for stable success detection. Added `POST_EDIT_INDEX_UPDATED=1` verification and manual fallback procedure to root `.codex/skills/create-video-note`, `create-article-note`, `create-pdf-note` |
+| R037 | 2026-04-08 | Strengthened content indexing rules. Added mandatory post-edit indexing condition (`POST_EDIT_INDEX_UPDATED=1`) to `post-edit-review.md`. Updated `/reindex` skill paths for `.sync/_tools/cli/` structure |
+| R036 | 2026-04-08 | Added Codex-specific source note pipelines. Created root `.codex/skills/create-article-note/` and `.codex/skills/create-pdf-note/`. Extended `.codex/skills/create-video-note/` to same standard |
+| R035 | 2026-04-06 | Promoted `/open-notes` skill from custom/ to core/. Added 3-stage safety checks: active vault detection, path conversion, file existence verification. Registered in MANIFEST |
+| R034 | 2026-04-06 | Created `AGENT_ONBOARDING.md` — universal agent onboarding document. Environment overview, 14 core conventions compressed, rule file path references |
+| R033 | 2026-04-06 | Removed Juggl_StyleGuide from `distribution-sync.md` deployment. Changed `juggl-style-sync.md` to per-vault individual management. Renamed `docs/` to `.docs/` across all vaults. Deleted `recent_files.txt`. Moved `Juggl_StyleGuide/` to per-vault `Contents/` |
+| R032 | 2026-04-05 | Created `/reindex` skill (`.claude/commands/core/reindex.md`) — single/all vault content index rebuild. Registered in MANIFEST |
+| R031 | 2026-04-05 | Created `/open-notes` skill (`.claude/commands/custom/open-notes.md`) — open multiple notes in new tabs via local-rest-api. Registered in global CLAUDE.md skill list |
+| R030 | 2026-04-02 | Added rule to `session-exit.md` — when writing per-vault handoff, must leave reference in root handoff |
+| R029 | 2026-04-01 | Split session handoff by agent. `_SESSION_HANDOFF.md` split into `_SESSION_HANDOFF_CLAUDE.md` + `_SESSION_HANDOFF_CODEX.md`. Updated `session-exit.md` rules and `CLAUDE.md` entry protocol |
+| R028 | 2026-04-01 | Created JissouGame new vault. Established `Projects_Game` category. Updated root `AGENTS.md`, `CLAUDE.md`, `_STATUS.md`, `.claude/rules/core/vault-individualization.md` |
+| R027 | 2026-04-01 | Created TileMapToolKit new vault. Added registry/routing to root `AGENTS.md`, `CLAUDE.md`, `_STATUS.md` |
+| R026 | 2026-04-01 | Added frontmatter `agent` field rule to `note-writing.md` — cumulative record of all agents that worked on a note, not just the latest |
+| R025 | 2026-03-23 | Created vault individualization rule (`.claude/rules/core/vault-individualization.md`) — standardized vault name/category/CLAUDE.md/tags on creation |
+| R024 | 2026-03-23 | Created multi-vault personalization rule (`.claude/rules/custom/multivault-personalization.md`) — agent/plugin/skill custom settings |
+| R023 | 2026-03-21 | Created Personal category + `Vaults/Personal/Diary/` diary vault. Registered in root CLAUDE.md and _STATUS.md. Added routing keywords |
+| R022 | 2026-03-21 | Introduced session handoff system. Created root `_SESSION_HANDOFF.md`. Added handoff writing rules to `session-exit.md`. Added handoff reading to root `CLAUDE.md` entry protocol |
+| R021 | 2026-03-21 | Created 2 new vaults: `Vaults/Domains_Infra/AI` (AI domain), `Vaults/Projects_Infra/Project_AIMindVaults` (project) — preparing for AIHubVault content separation |
+| R020 | 2026-03-21 | Added mandatory wiki link rule to `note-writing.md` — new notes must include at least 1 wiki link to related notes in the same vault |
+| R019 | 2026-03-21 | Added H1 title rules to `note-writing.md` — URI reserved characters and emoji prohibited (mandatory). Added emoji prohibition to file names |
+| R018 | 2026-03-21 | Created `Vaults/Domains_Infra/Search/` new vault. Search engine, indexing, and text matching domain knowledge hub. Registered in root CLAUDE.md and _STATUS.md |
+| R017 | 2026-03-21 | Created `Vaults/Domains_Infra/CICD/` new vault. CI/CD and deployment sync domain knowledge hub. Registered in root CLAUDE.md and _STATUS.md |
+| R016 | 2026-03-21 | Codex desktop app transition. Created `AGENTS.md` for root + 11 vaults (2-stage routing + execution structure). Converted playbooks to `.codex/skills/` SKILL.md format. Migrated `.antigravity/workflows/` to `.codex/skills/`. Created `agent-ownership.md` conflict prevention rules. Marked existing CODEX.md and .antigravity as deprecated |
+| R015 | 2026-03-19 | Created `.claude/rules/vault-routing.md`: mandatory vault routing rules. Prohibited direct work on BasicContentsVault. Required vault registry check before content placement |
+| R014 | 2026-03-19 | Switched agent rules to canonical reference pattern. Deleted 8 duplicated Cursor/Codex/Antigravity rules. Replaced with `.claude/rules/` canonical references + agent-specific `agent-rules` files. Added canonical references to Codex/Antigravity entry points within AIHubVault |
+| R013 | 2026-03-19 | Redesigned root `_STATUS.md` to lightweight registry structure (removed Now/Next/Blocked, replaced with vault type + content + agent work date). Revised root update rules in `session-exit.md`. Registered all 11 vaults |
+| R012 | 2026-03-18 | Created `Vaults/Lab_Infra/ObsidianDev/` new vault. Established Lab category (Domain+Project hybrid). Added Labs section to root CLAUDE.md |
+| R011 | 2026-03-18 | Created `.claude/commands/auto-organize.md`: auto-categorize notes/vaults into folders skill. AI suggestion + user approval pattern |
+| R010 | 2026-03-18 | Created `Vaults/Domains_Infra/Notion/` new vault. Added registry to root CLAUDE.md + _STATUS.md section |
+| R009 | 2026-03-18 | Created `.claude/commands/create-vault.md`: vault creation skill. BasicContentsVault-based cloning + post-creation process definition |
+| R008 | 2026-03-18 | Added metaphorical/figurative expression prohibition to `note-writing.md`. Task names and titles must directly describe content |
+| R007 | 2026-03-17 | Added Juggl `local:` value must use filename rule to `juggl-style-sync.md` (not H1 title) |
+| R006 | 2026-03-17 | Added markdown bold+parentheses rendering rule to `note-writing.md`. Prohibited `**text(parentheses)**` pattern |
+| R005 | 2026-03-17 | Created `README.md`: multi-vault system introduction, AI rules framework, quick start guide (git distribution entry point) |
+| R004 | 2026-03-17 | Created `.claude/rules/token-optimization.md`: mandatory token conservation and execution delegation rules |
+| R003 | 2026-03-17 | Added mandatory `_ROOT_VERSION.md` recording rule for root-level edits to `edit-mode-separation.md` |
+| R002 | 2026-03-17 | Created 3 new `.claude/rules/`: temp-file-management, distribution-sync, script-creation-approval |
+| R001 | 2026-03-17 | Created 2 new `.antigravity/workflows/`: create-video-note, sync-distribution |

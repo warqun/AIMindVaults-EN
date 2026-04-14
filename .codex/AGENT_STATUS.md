@@ -6,16 +6,16 @@ updated: 2026-03-15
 
 # Codex Agent Status (Root)
 
-> Codex 루트 레벨 상태 파일.
+> Codex root-level status file.
 
-## 이번 세션 요약
+## Current Session Summary
 
-(세션 시작 후 기록)
+(To be recorded after session starts)
 
-## 다음에 할 일 (Next)
+## Next
 
 -
 
-## 막힌 것 (Blocked)
+## Blocked
 
-- 없음
+- None

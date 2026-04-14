@@ -1,94 +1,94 @@
-# /note-from-pdf — PDF → 볼트 노트 변환 파이프라인
+# /note-from-pdf — PDF to Vault Note Conversion Pipeline
 
-> 로컬 PDF 파일 또는 URL의 PDF를 구조화된 노트로 변환.
+> Converts a local PDF file or PDF from a URL into a structured note.
 
-입력: $ARGUMENTS
+Input: $ARGUMENTS
 
-## 파이프라인 단계
+## Pipeline Stages
 
-### 1단계: PDF 확보 및 읽기
+### Stage 1: Acquire and Read PDF
 
-**로컬 파일인 경우:**
-- Read 도구로 직접 읽기 (PDF 지원)
-- 10페이지 초과 시 `pages` 파라미터로 범위 지정 필수 (최대 20페이지/요청)
-- 대형 PDF는 목차 먼저 확인 → 핵심 페이지만 선별 읽기
+**For local files:**
+- Read directly with the Read tool (PDF supported)
+- For PDFs exceeding 10 pages, the `pages` parameter must be specified (max 20 pages/request)
+- For large PDFs, check the table of contents first -> selectively read only key pages
 
-**URL인 경우:**
-- 사용자에게 다운로드 확인 요청 (파일명, 출처 명시)
-- 승인 후 `$TEMP/aimind_pdf/`에 다운로드
-- 다운로드 후 Read로 읽기
+**For URLs:**
+- Request download confirmation from the user (specify filename and source)
+- After approval, download to `$TEMP/aimind_pdf/`
+- Read with the Read tool after download
 
-**페이지 전략:**
-1. 먼저 1~3페이지 읽기 (목차/개요 파악)
-2. 목차 기반으로 핵심 섹션 페이지 선별
-3. 선별된 페이지만 읽기 (토큰 절약)
-4. 전체를 다 읽어야 하는 경우 사용자에게 보고 후 진행
+**Page strategy:**
+1. Read pages 1-3 first (identify table of contents/overview)
+2. Select key section pages based on table of contents
+3. Read only selected pages (token conservation)
+4. If the entire document must be read, report to the user before proceeding
 
-### 2단계: 핵심 내용 추출
+### Stage 2: Extract Key Content
 
-- 목차/구조가 있으면 활용
-- **핵심 주장/개념을 3~5개로 압축**
-- 그림/도표가 있으면 해당 내용을 텍스트로 서술
-- 부록, 참고문헌, 색인은 제외 (필요 시 별도 언급)
+- Leverage table of contents/structure if available
+- **Compress core arguments/concepts into 3-5 points**
+- If figures/charts are present, describe their content in text
+- Exclude appendices, references, and indexes (mention separately if needed)
 
-### 3단계: 볼트 라우팅
+### Stage 3: Vault Routing
 
-- PDF 주제 키워드로 대상 볼트 판단
-- 사용자가 볼트를 지정했으면 그대로 사용
-- 모호하면 사용자에게 확인
+- Determine the target vault based on PDF topic keywords
+- If the user specified a vault, use it as-is
+- If ambiguous, confirm with the user
 
-### 4단계: 노트 구조화
+### Stage 4: Note Structuring
 
-- **H1**: 핵심 개념으로 정제된 제목
-- **핵심 요약**: 문서 전체를 3~5줄로 압축
-- **본문**: 원문의 장/절 구조를 참고하되 필요 시 재구성
-  - 각 섹션은 개념 설명 → 구체 내용 → 표/비교 순서
-- **관련 자료**: 위키링크, 원문 정보
+- **H1**: A refined title based on the core concept
+- **Key Summary**: Compress the entire document into 3-5 lines
+- **Body**: Reference the original's chapter/section structure, restructuring as needed
+  - Each section follows: concept explanation -> specific details -> tables/comparisons
+- **Related Materials**: WikiLinks, original document information
 
 Frontmatter:
 ```yaml
 ---
 type: domain
 tags:
-  - [볼트태그]
-  - [주제태그들]
-source: [파일경로 또는 URL]
-source_title: [문서 제목]
-source_author: [저자]
+  - [vault-tag]
+  - [topic-tags]
+source: [file path or URL]
+source_title: [document title]
+source_author: [author]
 created: YYYY-MM-DD
 agent: claude
 ---
 ```
 
-Juggl 임베드 포함.
+Include Juggl embed.
 
-### 5단계: 품질 검증
+### Stage 5: Quality Verification
 
-- post-edit review 실행
-- 페이지 범위를 제한 읽기한 경우, 누락 가능성 명시
+- Run post-edit review
+- If page range was limited during reading, explicitly note potential omissions
 
-### 6단계: 정리
+### Stage 6: Cleanup
 
-- URL에서 다운로드한 경우 `$TEMP/aimind_pdf/` 삭제
-- 로컬 파일은 원본 유지 (삭제 안 함)
+- If downloaded from a URL, delete `$TEMP/aimind_pdf/`
+- Keep local files intact (do not delete)
 
-## 대형 PDF 전략
+## Large PDF Strategy
 
-| PDF 크기 | 전략 |
-|----------|------|
-| ~10페이지 | 전체 읽기 |
-| 10~50페이지 | 목차 → 핵심 섹션 선별 → 선별 읽기 |
-| 50페이지 이상 | 사용자에게 관심 범위 확인 → 해당 범위만 |
+| PDF Size | Strategy |
+|----------|----------|
+| ~10 pages | Read in full |
+| 10-50 pages | Table of contents -> select key sections -> selective reading |
+| 50+ pages | Confirm scope of interest with user -> read only that range |
 
-## 저작권 규칙
+## Copyright Rules
 
-- note-from-article과 동일: 자체 표현으로 재구성, 직접 인용 15단어 이내 1건
+- Same as note-from-article: restructure in your own words, direct quotation limited to 15 words, 1 instance
 
-## 실패 시 대응
+## Failure Handling
 
-| 상황 | 대응 |
-|------|------|
-| 암호화된 PDF | 사용자에게 보고, 비밀번호 요청 |
-| 스캔 이미지 PDF (OCR 필요) | Read로 시도, 실패 시 보고 |
-| 파일 경로 오류 | 사용자에게 정확한 경로 확인 |
-| 너무 큰 파일 (200+ 페이지) | 관심 범위 축소 요청 |
+| Situation | Response |
+|-----------|----------|
+| Encrypted PDF | Report to user, request password |
+| Scanned image PDF (OCR needed) | Attempt with Read; report on failure |
+| File path error | Confirm correct path with user |
+| Very large file (200+ pages) | Request scope reduction |

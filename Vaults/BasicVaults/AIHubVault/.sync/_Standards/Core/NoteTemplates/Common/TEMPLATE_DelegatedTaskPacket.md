@@ -1,6 +1,6 @@
 ---
 aliases:
-  - "위임 작업 지시 템플릿"
+  - "Delegated Task Packet Template"
 tags:
   - TileMapToolKit
   - Standards
@@ -15,20 +15,20 @@ agent: codex
 # TEMPLATE_DelegatedTaskPacket
 
 ```md
-작업명:
-주 담당 에이전트: Codex | Gemini
+Task Name:
+Primary Agent: Codex | Gemini
 
-목표(1개):
-입력 자료(최대 3개):
-출력 형식(1개):
-완료 기준(1~2개):
+Goal (1):
+Input Materials (max 3):
+Output Format (1):
+Completion Criteria (1-2):
 
-제약:
-- 최대 40줄 요약
-- 전체 로그 붙여넣기 금지
-- 변경 파일/핵심 근거만 보고
+Constraints:
+- Max 40-line summary
+- No pasting full logs
+- Report only changed files/key evidence
 
-결과 제출 경로(고정, 덮어쓰기):
+Result Submission Path (fixed, overwrite):
 - Contents/Project/temp/agent_packets/RESULT_CODEX.md
 - Contents/Project/temp/agent_packets/RESULT_GEMINI.md
 ```

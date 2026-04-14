@@ -1,75 +1,75 @@
-# /vault-update — 세션 종료 루틴
+# /vault-update — Session Exit Routine
 
-> 대화 종료 전 호출. 이 세션에서 변경된 내용을 문서에 반영하고 기억 파일을 갱신.
-> 멀티볼트: 작업한 볼트를 자동 감지하거나 인자로 지정.
+> Called before ending a conversation. Reflects changes made during this session into documents and updates memory files.
+> Multi-vault: Auto-detects the vault worked on, or specify via argument.
 
-인자: $ARGUMENTS (볼트명, 생략 시 이번 세션에서 작업한 볼트 자동 감지)
+Arguments: $ARGUMENTS (vault name; if omitted, auto-detects vaults worked on during this session)
 
 ---
 
-## 실행 순서
+## Execution Order
 
-### 1. 대상 볼트 결정
+### 1. Determine Target Vault
 
-- `$ARGUMENTS`에 볼트명이 있으면 해당 볼트 사용
-- 없으면 이번 세션에서 수정한 파일 경로로 볼트 자동 감지
-- 여러 볼트를 작업했으면 각 볼트별로 순차 실행
+- If a vault name is provided in `$ARGUMENTS`, use that vault
+- Otherwise, auto-detect from file paths modified during this session
+- If multiple vaults were worked on, execute sequentially for each vault
 
-### 2. 이 세션에서 확정된 사항 확인
+### 2. Review Finalized Items from This Session
 
-이 대화에서 결정·확정된 내용이 있는지 점검:
-- 새로 확정된 이슈 (🔴 → 🟢)
-- 새로 추가된 설계 결정
-- 변경된 파일 구조
+Check if any decisions or finalizations were made during this conversation:
+- Newly resolved issues (open -> resolved)
+- Newly added design decisions
+- Changed file structures
 
-### 3. 문서 동기화 (있는 경우)
+### 3. Document Sync (if applicable)
 
-확정 사항이 있으면 아래 순서로 반영:
-1. 해당 `Spec.md` 섹션 ✅ 표시
-2. 설계서(`02-design/`) 확정 표 갱신
-3. `ISSUE_INDEX.md` 상태 업데이트
+If there are finalized items, reflect them in this order:
+1. Mark the relevant `Spec.md` section as complete
+2. Update the design document (`02-design/`) finalization table
+3. Update `ISSUE_INDEX.md` status
 
-### 4. _VAULT-INDEX.md 업데이트 (구조 변경 시)
+### 4. Update _VAULT-INDEX.md (on structural changes)
 
-새 파일이 생성되거나 삭제된 경우:
-- `{볼트경로}/_VAULT-INDEX.md`의 해당 섹션 갱신
+If new files were created or deleted:
+- Update the relevant section in `{vault-path}/_VAULT-INDEX.md`
 
-### 5. MEMORY.md 갱신
+### 5. Update MEMORY.md
 
-`memory/MEMORY.md`에 현재 진행 상태 반영:
-- 현재 진행 중인 이슈 번호
-- 다음 대화에서 이어서 할 작업
-- 특이사항
+Reflect current progress in `memory/MEMORY.md`:
+- Currently active issue numbers
+- Tasks to continue in the next conversation
+- Notable items
 
-### 5.5 _STATUS.md 갱신 (필수)
+### 5.5 Update _STATUS.md (mandatory)
 
-**항상 수행**: `{볼트경로}/_STATUS.md` 직접 갱신
-- Now: 이번 세션 완료/진행 중 작업
-- Next: 다음에 이어서 할 작업
-- Blocked: 막힌 사항 (없으면 "없음")
-- Decisions: 이번 세션 결정 사항 (있을 경우)
+**Always performed**: Directly update `{vault-path}/_STATUS.md`
+- Now: Tasks completed or in progress during this session
+- Next: Tasks to continue next
+- Blocked: Blockers (if none, "None")
+- Decisions: Decisions made during this session (if any)
 
-**`_STATUS.md` 갱신 없이 세션을 종료하지 않는다.**
+**Do not end the session without updating `_STATUS.md`.**
 
-### 5.5.1 AGENT_STATUS 갱신 (권장)
+### 5.5.1 Update AGENT_STATUS (recommended)
 
-`{볼트경로}/.claude/AGENT_STATUS.md` — 복잡한 작업이나 다음 세션에 맥락 전달이 필요할 때 갱신. 단순 작업이면 생략 가능.
+`{vault-path}/.claude/AGENT_STATUS.md` — Update when context needs to be carried over to the next session for complex work. Can be skipped for simple tasks.
 
-### 5.6 루트 _STATUS.md 갱신
+### 5.6 Update Root _STATUS.md
 
-**항상 수행**: 루트 `_STATUS.md`에서 작업한 볼트 섹션 갱신:
-- **Now**: 현재 진행 중인 작업
-- **Last Agent**: claude / {오늘 날짜}
-- **Next**: 다음 예정 작업
-- **Blocked**: 블로킹 사항 (없으면 "없음")
+**Always performed**: Update the section for the worked vault in root `_STATUS.md`:
+- **Now**: Currently active work
+- **Last Agent**: claude / {today's date}
+- **Next**: Upcoming planned work
+- **Blocked**: Blockers (if none, "None")
 
-### 6. 세션 종료 체크리스트 출력
+### 6. Output Session Exit Checklist
 
 ```
-[ ] Spec.md 미결 항목 동기화 완료
-[ ] ISSUE_INDEX.md 최신 상태 반영
-[ ] MEMORY.md 다음 할 일 업데이트
-[ ] _VAULT-INDEX.md 구조 반영 (변경 있을 시)
-[ ] 설계서-명세 불일치 없음 확인
-[ ] 루트 _STATUS.md 볼트 섹션 갱신
+[ ] Spec.md open items synced
+[ ] ISSUE_INDEX.md reflects latest state
+[ ] MEMORY.md next tasks updated
+[ ] _VAULT-INDEX.md structure reflected (if changes exist)
+[ ] No design-spec mismatches confirmed
+[ ] Root _STATUS.md vault section updated
 ```

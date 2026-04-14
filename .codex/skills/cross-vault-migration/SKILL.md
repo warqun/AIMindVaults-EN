@@ -1,38 +1,38 @@
 ---
 name: cross-vault-migration
-description: 볼트 간 지식 노트 이관 절차 — 소스에서 타겟으로 복사, 링크 갱신, 정리
+description: Cross-vault knowledge note migration procedure — copy from source to target, update links, clean up
 ---
 
-# 크로스 볼트 노트 이관
+# Cross-Vault Note Migration
 
-**목적**: 한 볼트에서 다른 볼트로 지식 노트를 이관하거나 승격시키는 표준 절차.
+**Purpose**: A standard procedure for migrating or promoting knowledge notes from one vault to another.
 
-## 사전 조건
+## Prerequisites
 
-- 소스 볼트와 타겟 볼트 식별
-- 양쪽 볼트의 규칙(AGENTS.md, CLAUDE.md) 확인
+- Identify the source vault and target vault
+- Review rules for both vaults (AGENTS.md, CLAUDE.md)
 
-## Step 1: 소스 자료 위치 확인
+## Step 1: Locate Source Materials
 
-소스 볼트에서 이관 대상 노트를 검색.
+Search for migration target notes in the source vault.
 
-## Step 2: 타겟 위치 결정
+## Step 2: Determine Target Location
 
-타겟 볼트의 적절한 경로 결정:
-- 도메인 지식 → `Contents/Domain/`
-- 표준 승격 → `AIHubVault/_Standards/`
+Determine the appropriate path in the target vault:
+- Domain knowledge -> `Contents/Domain/`
+- Standard promotion -> `AIHubVault/_Standards/`
 
-## Step 3: 이관 및 링크 갱신
+## Step 3: Migrate and Update Links
 
-1. 소스 → 타겟으로 내용 복사 (소스 삭제하지 않음)
-2. 타겟 볼트로 전환 → 내부 링크를 타겟 볼트 기준으로 갱신
-3. 타겟 볼트의 frontmatter/태그/Juggl 규칙 적용
+1. Copy content from source to target (do not delete source)
+2. Switch to target vault -> update internal links to target vault references
+3. Apply target vault frontmatter/tag/Juggl rules
 
-## Step 4: 소스 정리
+## Step 4: Clean Up Source
 
-소스 볼트로 전환:
-- 원본 삭제 또는 타겟 위치로의 포인터/링크로 대체 (사용자 선호에 따라)
+Switch to source vault:
+- Delete the original or replace with a pointer/link to the target location (per user preference)
 
-## Step 5: 검증
+## Step 5: Verification
 
-타겟 볼트에서 post-edit review 실행.
+Run post-edit review in the target vault.

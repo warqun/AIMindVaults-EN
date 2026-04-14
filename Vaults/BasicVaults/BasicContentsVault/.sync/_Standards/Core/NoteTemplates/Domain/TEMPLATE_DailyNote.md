@@ -13,19 +13,19 @@ created: <% tp.date.now("YYYY-MM-DD") %>
 local: <% tp.file.title %>
 ```
 
-## 오늘 한 일
+## Done Today
 
 -
 
-## 오늘 배운 것
+## Learned Today
 
 -
 
-## 생각·메모
+## Thoughts / Notes
 
 -
 
-## 내일 할 일
+## Tomorrow's Tasks
 
 -
 

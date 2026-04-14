@@ -1,38 +1,38 @@
-# GitHub Copilot — AIMindVault 지시사항
+# GitHub Copilot — AIMindVault Instructions
 
-> 이 파일은 **GitHub Copilot** (VSCode 확장) 전용 자동 로드 파일이다.
-> OpenAI Codex VSCode 확장을 사용하는 경우, 실제 자동 로드 파일은 프로젝트 루트의 `AGENTS.md` 이다.
-
----
-
-## 역할
-
-이 워크스페이스에서 Codex(GitHub Copilot)의 역할:
-- **구조화·계약 문서·Vault 정리** 전담
-- Claude(Claudian)가 설계한 내용을 문서화·정규화
-- 대량 수정 작업 (태그 정규화, Juggl 삽입 등)
+> This file is the auto-load file exclusively for **GitHub Copilot** (VSCode extension).
+> If using the OpenAI Codex VSCode extension, the actual auto-load file is `AGENTS.md` at the project root.
 
 ---
 
-## 절대 금지 (위반 시 파일 손상)
+## Role
 
-### 인코딩
+The role of Codex (GitHub Copilot) in this workspace:
+- Dedicated to **structuring, contract documents, and Vault organization**
+- Documenting and formalizing content designed by Claude (Claudian)
+- Bulk modification tasks (tag normalization, Juggl insertion, etc.)
+
+---
+
+## Absolute Prohibitions (Violation = File Corruption)
+
+### Encoding
 ```powershell
-# 금지
+# Prohibited
 Get-Content file.md | Set-Content file.md
 Get-Content file.md -Raw | Set-Content file.md
-# 허용
+# Allowed
 $t = [System.IO.File]::ReadAllText($p, [Text.Encoding]::UTF8)
 [System.IO.File]::WriteAllText($p, $t, [Text.UTF8Encoding]::new($false))
 ```
 
-### 대량 수정
-- 모든 파일에 한꺼번에 전역 치환 금지
-- 반드시 Dry-run → 3개 샘플 → 전체 순서 준수
+### Bulk Modifications
+- Global replacement on all files at once is prohibited
+- Must follow: Dry-run -> 3 samples -> full execution order
 
 ---
 
-## 세션 시작 시 반드시 읽는 파일
+## Files to Read at Session Start
 
 1. `.codex/rules/never-do.md`
 2. `_WORKFLOW.md`
@@ -41,34 +41,34 @@ $t = [System.IO.File]::ReadAllText($p, [Text.Encoding]::UTF8)
 
 ---
 
-## 세부 규칙 위치
+## Detailed Rule Locations
 
-- `.codex/rules/never-do.md` — 절대 금지 목록
-- `.codex/rules/note-writing.md` — frontmatter / Juggl 규칙
-- `.codex/rules/bulk-edit-safety.md` — 대량 수정 안전 프로토콜
+- `.codex/rules/never-do.md` — Absolute prohibitions list
+- `.codex/rules/note-writing.md` — Frontmatter / Juggl rules
+- `.codex/rules/bulk-edit-safety.md` — Bulk edit safety protocol
 
-## 플레이북 위치
+## Playbook Locations
 
-- `.codex/playbooks/juggl-insert.md` — Juggl 블록 삽입
-- `.codex/playbooks/session-end.md` — 세션 종료 체크리스트
-
----
-
-## 편집 모드 분리 (강제)
-
-모든 편집은 두 모드 중 하나에 속한다. 혼합 금지.
-
-- **`[Domain]` 모드**: `Domain/**` 콘텐츠만 수정. workspace 파일 수정 금지.
-- **`[workspace]` 모드**: 볼트 인프라(`_Standards/`, `_tools/`, `.claude/`, `.codex/`, `_forge/`, `Tags/`, vault 루트 파일) 수정. `Domain/**` 본문 수정 금지.
-- 작업 시작 시 모드 선언 필수. 전환 시 명시적 선언.
-- 상세 규칙: `_WORKFLOW.md` § 6)
+- `.codex/playbooks/juggl-insert.md` — Juggl block insertion
+- `.codex/playbooks/session-end.md` — Session end checklist
 
 ---
 
-## 편집 완료 게이트 (강제)
+## Edit Mode Separation (Mandatory)
 
-노트 편집 후 반드시:
+All edits belong to one of two modes. Mixing is prohibited.
+
+- **`[Domain]` mode**: Modify only `Domain/**` content. Modifying workspace files is prohibited.
+- **`[workspace]` mode**: Modify vault infrastructure (`_Standards/`, `_tools/`, `.claude/`, `.codex/`, `_forge/`, `Tags/`, vault root files). Modifying `Domain/**` body content is prohibited.
+- Mode declaration is required at work start. Explicit declaration required when switching.
+- Detailed rules: `_WORKFLOW.md` § 6)
+
+---
+
+## Edit Completion Gate (Mandatory)
+
+After editing notes, you must run:
 ```bash
 node ".sync/_tools/cli-node/bin/cli.js" review -r . -s Contents
 ```
-`POST_EDIT_REVIEW_BAD=0` 확인 전 완료 보고 금지.
+Do not report completion before confirming `POST_EDIT_REVIEW_BAD=0`.

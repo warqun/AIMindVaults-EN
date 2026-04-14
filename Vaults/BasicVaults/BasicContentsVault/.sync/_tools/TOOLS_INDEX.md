@@ -1,61 +1,62 @@
 # Tools Index
 
-> `_tools/` 하위 도구 목록. Hub-Sync로 모든 볼트에 배포된다.
+> Tool list under `_tools/`. Distributed to all vaults via Hub-Sync.
 
 ---
 
-## 사용자용 도구
+## Node.js CLI (`cli-node/`)
 
-> 사용자가 직접 실행하는 도구. 더블클릭 또는 PowerShell에서 수동 호출.
+> Unified entry point for all automation tools. Cross-platform CLI based on Node.js.
 
-| 파일                                          | 용도                           | 실행 방법                                |
-| ------------------------------------------- | ---------------------------- | ------------------------------------ |
-| `MakeCloneVault.bat`                        | 볼트 복제 런처 (부모경로 + 볼트명 입력)     | 더블클릭                                 |
-| `clone_vault.ps1`                           | Obsidian 볼트 미러 복제 (robocopy) | `.\clone_vault.ps1 -TargetPath <경로>` |
-| `cli_launchers/RUN_CLAUDE.bat`              | Claude CLI 실행                | 더블클릭                                 |
-| `cli_launchers/RUN_CODEX.bat`               | Codex CLI 실행                 | 더블클릭                                 |
-| `cli_launchers/RUN_GEMINI.bat`              | Gemini CLI 실행                | 더블클릭                                 |
+**Usage**: `node ".sync/_tools/cli-node/bin/cli.js" <command> [options]`
 
----
+| Command | Purpose | Example |
+|---------|---------|---------|
+| `review` | Post-edit quality verification (frontmatter, encoding) | `aimv review -r . -s Contents` |
+| `bridge` | Obsidian local-rest-api wrapper (search, read, open) | `aimv bridge -a search -q "keyword"` |
+| `sync` | AIHubVault -> satellite vault workspace sync | `aimv sync -r .` |
+| `pre-sync` | Auto-sync on Obsidian startup (trampoline) | `aimv pre-sync -r .` |
+| `broadcast` | Instantly propagate a specific Hub file to all satellite vaults | `aimv broadcast -p "file.md"` |
+| `index build` | Build vault content index | `aimv index build -r .` |
+| `index search` | Index-based keyword/tag/type search | `aimv index search -q "search term"` |
+| `route` | Task text-based vault/agent routing | `aimv route -t "task"` |
+| `clone` | Vault mirror clone (robocopy-based) | `aimv clone -t <path> -n <name>` |
+| `standards` | `_Standards/` structure verification | `aimv standards -r .` |
+| `trash-clean` | Obsidian trash cleanup | `aimv trash-clean -r .` |
 
-## AI 에이전트 전용 도구
+### bridge Action List
 
-> AI 에이전트(Claude Code, Claudian, Codex 등)가 작업 중 자동으로 호출하는 도구. 사용자가 직접 실행할 필요 없음.
-
-| 파일 | 용도 | 호출 예시 |
-|------|------|----------|
-| `cli/obsidian_ai_bridge.ps1` | Obsidian CLI 래퍼 — 검색, 읽기, 열기, 생성, 플러그인 관리 | `-Action open -Path "Contents/note.md"` |
-| `cli/post_note_edit_review.ps1` | 노트 편집 후 품질 검증 (frontmatter, 인코딩 등) | 편집 완료 후 자동 실행 |
-| `cli/sync_workspace.ps1` | AIHubVault → 다른 볼트 workspace 동기화 | `-NoPrune` (삭제 동기화 비활성화) |
-| `cli/task_router.ps1` | 작업 텍스트 기반 담당 에이전트 추천 | `-Task "볼트 구조 검증"` |
-| `cli/hub_broadcast.ps1` | Hub .sync/ 특정 파일을 전체 위성 볼트에 즉시 전파 | `-RelativePath "clone_vault.ps1" -Exclude TestVault` |
-
-### obsidian_ai_bridge.ps1 액션 목록
-
-| 액션 | 권한 | 설명 |
-|------|------|------|
-| `vault-info` | 읽기 | 볼트 정보 조회 |
-| `search` | 읽기 | 텍스트 검색 |
-| `search-context` | 읽기 | 컨텍스트 포함 검색 |
-| `read` | 읽기 | 파일 내용 읽기 |
-| `open` | 읽기 | Obsidian에서 노트 열기 |
-| `append` | 쓰기 | 파일 끝에 내용 추가 |
-| `create` | 쓰기 | 새 파일 생성 |
-| `history` | 읽기 | 파일 히스토리 목록 |
-| `history-read` | 읽기 | 히스토리 버전 읽기 |
-| `history-restore` | 쓰기 | 히스토리 버전 복원 |
-| `diff` | 읽기 | 버전 간 차이 비교 |
-| `plugins-list` | 읽기 | 설치된 플러그인 목록 |
-| `plugin-install` | 쓰기 | 플러그인 설치 |
-| `post-review` | 읽기 | 편집 후 품질 검증 실행 |
+| Action | Permission | Description |
+|--------|-----------|-------------|
+| `vault-info` | Read | Query vault information |
+| `search` | Read | Text search |
+| `search-context` | Read | Search with context |
+| `read` | Read | Read file contents |
+| `open` | Read | Open note in Obsidian |
+| `append` | Write | Append content to end of file |
+| `create` | Write | Create new file |
+| `history` | Read | File history list |
+| `history-read` | Read | Read history version |
+| `history-restore` | Write | Restore history version |
+| `diff` | Read | Compare differences between versions |
+| `plugins-list` | Read | List installed plugins |
+| `plugin-install` | Write | Install plugin |
+| `post-review` | Read | Run post-edit quality verification |
 
 ---
 
-## 참조 파일
+## User Tools
 
-| 파일 | 설명 |
-|------|------|
-| `antigravity.exe.txt` | Antigravity 실행 파일 경로 참조 |
-| `open_agents.ps1` | (폐지됨) 멀티볼트 루트 IDE 1회 실행으로 대체 |
-| `check_standards.ps1` | `_Standards/` 구조 확인 (디버그용) |
-| `verify_structure.ps1` | `_Standards/` 파일 목록 출력 (디버그용) |
+> Launchers for direct user execution.
+
+| File | Purpose | How to Run |
+|------|---------|-----------|
+| `cli_launchers/RUN_CLAUDE.bat` | Launch Claude CLI | Double-click |
+| `cli_launchers/RUN_CODEX.bat` | Launch Codex CLI | Double-click |
+| `cli_launchers/RUN_GEMINI.bat` | Launch Gemini CLI | Double-click |
+
+---
+
+## Detailed CLI Reference
+
+Full 14-command reference: `docs/cli-reference.md` (root)

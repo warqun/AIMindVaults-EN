@@ -1,69 +1,69 @@
-# 세션 종료 시 상태 갱신 (Mandatory)
+# Session Exit Status Update (Mandatory)
 
-> 모든 볼트에 동일 적용. 모든 에이전트 공통.
+> Applies uniformly to all vaults. Common to all agents.
 
-## _STATUS.md 갱신 (필수)
+## _STATUS.md Update (Required)
 
-세션 종료 시, 작업한 볼트의 `_STATUS.md`를 **직접 갱신**한다.
+At session exit, **directly update** the `_STATUS.md` of the vault(s) you worked on.
 
-갱신 항목:
-- **Now**: 이번 세션에서 완료하거나 진행 중인 작업
-- **Next**: 다음에 이어서 할 작업
-- **Blocked**: 막힌 사항 (없으면 "없음")
-- **Decisions**: 이번 세션에서 내린 결정 (있을 경우, `(YYYY-MM-DD)` 형식으로 추가)
+Fields to update:
+- **Now**: Tasks completed or in progress during this session
+- **Next**: Tasks to continue in the next session
+- **Blocked**: Blockers (if none, write "None")
+- **Decisions**: Decisions made during this session (if any, add in `(YYYY-MM-DD)` format)
 
-추가로, 루트 `_STATUS.md` 볼트 레지스트리에서 해당 볼트의 작업 에이전트 날짜를 갱신한다.
-- 형식: `에이전트명 / YYYY-MM-DD`
-- 해당 볼트가 레지스트리에 없으면 적절한 카테고리에 신규 행을 추가한다.
+Additionally, update the working agent date for the vault in the root `_STATUS.md` vault registry.
+- Format: `agent_name / YYYY-MM-DD`
+- If the vault is not in the registry, add a new row under the appropriate category.
 
-**볼트 `_STATUS.md` + 루트 `_STATUS.md` 양쪽 갱신 없이 세션을 종료하지 않는다.**
+**Do not end the session without updating both the vault `_STATUS.md` and the root `_STATUS.md`.**
 
-## 세션 핸드오프 노트 (필수)
+## Session Handoff Note (Required)
 
-세션 종료 시, **에이전트별 핸드오프 파일**을 덮어쓰기한다.
+At session exit, **overwrite** the **per-agent handoff file**.
 
 - Claude → `_SESSION_HANDOFF_CLAUDE.md`
 - Codex → `_SESSION_HANDOFF_CODEX.md`
-- 기타 에이전트 → `_SESSION_HANDOFF_{에이전트명}.md`
+- Other agents → `_SESSION_HANDOFF_{agent_name}.md`
 
-각 에이전트는 **자신의 핸드오프 파일만** 갱신한다. 다른 에이전트의 파일을 수정하지 않는다.
+Each agent updates **only its own handoff file**. Do not modify another agent's file.
 
-기록 항목:
-- **작업 요약**: 이번 세션에서 한 일 1~3줄
-- **볼트별 변경**: 변경/신규/삭제 파일 경로, 미완료 항목, 주의사항
-- **결정 사항**: `(YYYY-MM-DD)` 형식
-- **다음 세션 권장 작업**: 구체적으로 뭘 먼저 해야 하는지
-- **주의/경고**: 다음 세션에서 실수할 수 있는 것
+Fields to record:
+- **Work Summary**: 1-3 lines of what was done in this session
+- **Per-Vault Changes**: Changed/new/deleted file paths, incomplete items, caveats
+- **Decisions**: In `(YYYY-MM-DD)` format
+- **Recommended Next Session Tasks**: Specifically what to do first
+- **Warnings/Cautions**: Things that could go wrong in the next session
 
-핸드오프 노트는 이력 축적이 아닌 **최신 1회분만 유지**한다. 이력은 _STATUS.md + Notion에 남는다.
+The handoff note maintains **only the latest entry**, not a cumulative history. History is tracked in _STATUS.md + Notion.
 
-**핸드오프 노트 갱신 없이 세션을 종료하지 않는다.**
+**Do not end the session without updating the handoff note.**
 
-## 볼트별 핸드오프와 루트 핸드오프 연동 (필수)
+## Vault-Level Handoff and Root Handoff Linkage (Required)
 
-개별 볼트에 `_SESSION_HANDOFF_{에이전트명}.md`를 작성한 경우, **루트 핸드오프에도 참조를 남긴다.**
+If a `_SESSION_HANDOFF_{agent_name}.md` was written for an individual vault, **also leave a reference in the root handoff.**
 
-루트 핸드오프의 **볼트별 변경** 섹션에 아래 형식으로 기록:
+Record in the root handoff's **Per-Vault Changes** section using this format:
 
 ```markdown
-### {볼트명} (`{볼트경로}`)
-- 상세 핸드오프: `{볼트경로}/_SESSION_HANDOFF_{에이전트명}.md` 참조
-- 1줄 요약 (이번 세션에서 한 핵심 작업)
+### {vault_name} (`{vault_path}`)
+- Detailed handoff: See `{vault_path}/_SESSION_HANDOFF_{agent_name}.md`
+- 1-line summary (key work done in this session)
 ```
 
-**목적**: 다음 세션 시작 시 루트 핸드오프만 읽어도 어느 볼트에 상세 핸드오프가 있는지 즉시 파악할 수 있도록 한다.
+**Purpose**: Enables the next session to determine at a glance which vaults have detailed handoffs just by reading the root handoff.
 
-**루트 핸드오프에 볼트 참조 없이 볼트별 핸드오프만 작성하지 않는다.**
+**Do not write vault-level handoffs without a corresponding reference in the root handoff.**
 
-## AGENT_STATUS 갱신 (권장)
+## AGENT_STATUS Update (Recommended)
 
-각 에이전트의 개별 상태 파일(`AGENT_STATUS.md`)은 에이전트 자체 판단으로 갱신한다.
-- 복잡한 작업, 다음 세션에서 이어받을 맥락이 있을 때 권장
-- 단순 작업이면 생략 가능
+Each agent's individual status file (`AGENT_STATUS.md`) is updated at the agent's own discretion.
+- Recommended for complex tasks or when there is context to carry over to the next session
+- Can be skipped for simple tasks
 
-## 설계 근거
+## Design Rationale
 
-- 볼트 `_STATUS.md`: 상세 작업 내역 (Now/Next/Blocked/Decisions)
-- 루트 `_STATUS.md`: 볼트 레지스트리 + 최근 작업 에이전트 날짜만 기록 (경량)
-- 사용자가 최근 작업을 찾을 때 루트의 작업 날짜 순으로 볼트를 확인
-- 실제 운용은 1에이전트-1볼트 교대 방식
+- Vault `_STATUS.md`: Detailed work log (Now/Next/Blocked/Decisions)
+- Root `_STATUS.md`: Vault registry + most recent working agent date only (lightweight)
+- When the user looks for recent work, they check vaults in order of work date from the root
+- Actual operation follows a 1-agent-1-vault alternating pattern

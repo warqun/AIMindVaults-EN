@@ -1,31 +1,31 @@
 ---
-description: 영상 노트 스크립트 추출 및 마크다운 변환 프로세스
+description: Video note script extraction and markdown conversion process
 ---
-# 영상 노트 추출 워크플로우 (create-video-note)
+# Video Note Extraction Workflow (create-video-note)
 
-**목적**: 유튜브 영상 등에서 `yt-dlp`를 사용하여 메타데이터와 자동 자막 스크립트를 추출하고, 이를 기반으로 마크다운 노트를 지정된 볼트 위치(Contents 디렉토리)에 생성하는 표준 절차.
-**핵심 강제 규칙**: `yt-dlp` 실행 및 임시 파싱 스크립트 실행은 절대로 작업 중인 메인 볼트 경로(CWD)에 흔적을 남기면 안 되며, 시스템 임시 폴더(`$env:TEMP`)만을 사용 후 즉각 파기해야 한다.
+**Purpose**: A standard procedure for extracting metadata and auto-generated subtitle scripts from YouTube videos (etc.) using `yt-dlp`, then generating a markdown note based on that content at a designated vault location (Contents directory).
+**Key Mandatory Rule**: Running `yt-dlp` and any temporary parsing scripts must never leave traces in the main vault path (CWD) being worked on. Only the system temp folder (`$env:TEMP`) may be used, and it must be immediately cleaned up afterward.
 
-## 단계별 실행 지침
+## Step-by-Step Instructions
 
-### Step 1: 임시 작업 폴더 생성
-- 작업 중인 메인 시스템에 찌꺼기 파일이 남지 않도록 반드시 `%TEMP%` (Windows의 경우 `$env:TEMP`) 환경 변수 하위에 무작위 작업 폴더 하나를 생성한다.
-- `mkdir` 등을 이용해 유니크한 임시 폴더(`$env:TEMP\aimind_vid_extract_{시간}`)를 하나 판다.
+### Step 1: Create Temporary Working Folder
+- To prevent leftover files in the main system, always create a random working folder under `%TEMP%` (on Windows: `$env:TEMP`).
+- Use `mkdir` or similar to create a unique temp folder (`$env:TEMP\aimind_vid_extract_{timestamp}`).
 
-### Step 2: 임시 폴더 내에서 `yt-dlp` 실행
-- Step 1에서 생성한 임시 폴더로 이동(`cd` 또는 커맨드 `cwd` 인자 활용)한 상태에서 `yt-dlp` 명령을 실행한다.
-- `--dump-json --write-auto-sub --sub-lang ko --skip-download` 등의 옵션을 주어 메타데이터와 스트립트를 해당 **임시 폴더 내부**에만 떨어지게 한다.
-- 만약 영상 제목에 특수문자나 인코딩 문제가 있다면 출력 파일의 접두어나 형식을 단순화하여 예외 처리를 대비해야 한다.
+### Step 2: Run `yt-dlp` Inside the Temporary Folder
+- Move to (or specify the CWD as) the temporary folder created in Step 1, then run the `yt-dlp` command.
+- Use options like `--dump-json --write-auto-sub --sub-lang ko --skip-download` to ensure metadata and scripts are saved only **inside the temporary folder**.
+- If the video title contains special characters or encoding issues, simplify the output file prefix/format as a precaution.
 
-### Step 3: 스크립트 파싱 및 대상 노트 생성
-- 임시 폴더에 다운로드 받은 메타데이터(json)와 자막(vtt 등) 파일을 읽어들인다. (파이썬 등 파싱 스크립트를 사용할 때도 이 임시 폴더 안에서 실행해야 함)
-- 추출된 텍스트와 제목을 기반으로 영상의 핵심 내용과 프론트매터(Frontmatter) 등을 보강한 **마크다운 노트를 작성**한다.
-- 완성된 마크다운 노트 파일은 사용자가 지정한 타겟 볼트의 최종 위치(`Contents/Domain` 또는 `Contents/Project` 경로 하위 등)에 곧바로 저장한다.
+### Step 3: Parse Script and Create Target Note
+- Read the downloaded metadata (json) and subtitle (vtt, etc.) files from the temporary folder. (Any parsing scripts like Python must also run within this temp folder.)
+- Based on the extracted text and title, compose a **markdown note** enriched with the video's key content and frontmatter.
+- Save the completed markdown note file directly to the final location in the user-specified target vault (`Contents/Domain` or `Contents/Project` subdirectory, etc.).
 
-### Step 4: 임시 폴더 강제 삭제
-- 노트 작성을 완료하고 타겟 위치에 파일 저장이 끝났다면, Step 1에서 만든 `$env:TEMP\aimind_vid_extract_{시간}` 디렉토리 및 내부 파일 일체를 `Remove-Item -Force -Recurse` 옵션 등을 이용해 **완전히 강제 삭제**한다.
-- 찌꺼기 파일 누수를 막기 위해 프로세스 종료 전 반드시 확인할 것.
+### Step 4: Force Delete Temporary Folder
+- Once the note is written and saved to the target location, **completely force-delete** the `$env:TEMP\aimind_vid_extract_{timestamp}` directory and all its contents using `Remove-Item -Force -Recurse` or equivalent.
+- Always verify cleanup before process termination to prevent leftover file leaks.
 
-### Step 5: 최종 보고
-- 사용자에게 임시 폴더 정리(Cleanup)가 완벽하게 끝났음을 고지한다.
-- 대상 볼트에 생성된 영상 노트 파일의 최종 위치(`경로/파일명`)를 보고하여 사용자가 곧바로 확인할 수 있게 한다.
+### Step 5: Final Report
+- Notify the user that temporary folder cleanup is fully complete.
+- Report the final location (`path/filename`) of the generated video note in the target vault so the user can immediately verify it.

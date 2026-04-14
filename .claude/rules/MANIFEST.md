@@ -1,40 +1,40 @@
-# Rules 매니페스트
+# Rules Manifest
 
-> 배포 동기화 시 이 목록의 파일만 `core/`에서 관리한다.
-> `custom/`은 동기화 대상이 아니다.
+> Only the files in this list are managed under `core/` during distribution sync.
+> `custom/` is not a sync target.
 
-## 분류 기준
+## Classification Criteria
 
-- **core/**: 배포본에 포함되는 규칙. 모든 사용자에게 필요한 제품 기능.
-- **custom/**: 배포에 포함되지 않는 개인 규칙. 제작자·사용자 모두 해당.
-- **신규 규칙은 custom/에 우선 생성**한다. 검증 후 필요하면 core/로 격상.
-- core/로 격상 시 이 MANIFEST에 등록 + 배포 변경 로그에 기록.
+- **core/**: Rules included in the distribution. Product features needed by all users.
+- **custom/**: Personal rules not included in distribution. Applies to both creators and users.
+- **New rules should be created in custom/ first.** Promote to core/ after validation if needed.
+- When promoting to core/, register in this MANIFEST and log in the distribution changelog.
 
-## core/ — 배포 규칙 (동기화 대상)
+## core/ — Distribution Rules (Sync Target)
 
-| 파일명 | 용도 |
-|--------|------|
-| distribution-sync.md | 배포 동기화 규칙 |
-| edit-mode-separation.md | 편집 모드 분리 |
-| encoding-safety.md | 인코딩 안전 |
-| juggl-style-sync.md | Juggl 스타일 동기화 |
-| note-writing.md | 노트 작성 패턴 |
+| Filename | Purpose |
+|----------|---------|
+| distribution-sync.md | Distribution sync rules |
+| edit-mode-separation.md | Edit Mode Separation |
+| encoding-safety.md | Encoding safety |
+| juggl-style-sync.md | Juggl style sync |
+| note-writing.md | Note writing patterns |
 | post-edit-review.md | Post-Edit Review |
-| script-creation-approval.md | 스크립트 생성 사전 승인 |
-| script-management.md | 스크립트 관리 |
-| session-exit.md | 세션 종료 상태 갱신 |
-| temp-file-management.md | 임시 파일 관리 |
-| token-optimization.md | 토큰 절약 |
-| vault-routing.md | 볼트 라우팅 |
-| obsidian-config-safety.md | Obsidian 설정 파일 안전 편집 |
-| vault-individualization.md | 볼트 개별화 (생성 시 이름/분류/역할 구체화) |
-| user-guidance.md | 유저 가이드 (코어 기능 사용 시 에이전트 안내 룰북) |
+| script-creation-approval.md | Script creation approval |
+| script-management.md | Script management |
+| session-exit.md | Session exit status update |
+| temp-file-management.md | Temporary file management |
+| token-optimization.md | Token optimization |
+| vault-routing.md | Vault routing |
+| obsidian-config-safety.md | Obsidian config file safe editing |
+| vault-individualization.md | Vault individualization (name/category/role specification at creation) |
+| user-guidance.md | User guidance (agent guidance rulebook for core feature usage) |
 
-## custom/ — 사용자 규칙 (동기화 미대상)
+## custom/ — User Rules (Not a Sync Target)
 
-사용자가 자유롭게 추가하는 개인 규칙.
-배포 동기화가 이 폴더를 건드리지 않는다.
+Personal rules that users freely add.
+Distribution sync does not touch this folder.
 
-| 파일명 | 용도 |
-|--------|------|
-| multivault-personalization.md | 멀티볼트 개인화 (에이전트/플러그인/스킬 커스텀) |
+| Filename | Purpose |
+|----------|---------|
+| multivault-personalization.md | Multi-vault personalization (agent/plugin/skill customization) |

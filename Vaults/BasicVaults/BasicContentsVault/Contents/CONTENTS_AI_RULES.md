@@ -1,25 +1,25 @@
 ---
 type: standard
 tags:
-updated: (날짜)
+updated: (date)
 ---
 
-# CONTENTS_AI_RULES — (볼트명) AI 작업 규칙
+# CONTENTS_AI_RULES — (Vault Name) AI Work Rules
 
-> `_Standards/Core/` 규칙에 추가(override)된다.
-> 볼트 생성 후 이 볼트의 용도에 맞게 작성하세요.
+> Overrides/supplements `_Standards/Core/` rules.
+> After vault creation, customize for this vault's purpose.
 
-## 작업 우선순위
+## Work Priority
 
-1. `_STATUS.md` 먼저 확인 — 현재 집중 작업 파악
-2. `_VAULT-INDEX.md`로 관련 파일 위치 확인
-3. 작업 범위가 넓으면 `_Standards/Core/` 관련 가이드 참조
+1. Check `_STATUS.md` first — identify current focus tasks
+2. Use `_VAULT-INDEX.md` to locate related files
+3. For broad scope tasks, refer to `_Standards/Core/` guides
 
-## 노트 생성 시 주의
+## Note Creation Guidelines
 
-- Frontmatter 규칙: `_Standards/Core/NoteProperties.md` 참조
-- `tags`에 (볼트 태그) 필수 포함
+- Frontmatter rules: see `_Standards/Core/NoteProperties.md`
+- `tags` must include (vault tag)
 
-## 금지 사항
+## Prohibited Actions
 
-- `_Standards/Core/` 전체 bulk 수정 금지
+- Bulk modification of `_Standards/Core/` is prohibited

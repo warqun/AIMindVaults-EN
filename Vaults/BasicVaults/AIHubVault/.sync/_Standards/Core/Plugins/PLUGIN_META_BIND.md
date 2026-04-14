@@ -8,19 +8,18 @@ updated: 2026-03-05
 
 # Meta Bind
 
-## 기능
+## Features
 
-- 노트 내부 폼과 메타데이터 바인딩
-- 사람이 입력하면 frontmatter 자동 갱신
+- Bind in-note forms to metadata
+- Auto-update frontmatter when users input data
 
-## 주 사용 작업
+## Primary Use Cases
 
-- 점검표/결정폼/요청폼 구축
-- 협업 입력 인터페이스 통일
+- Build checklists/decision forms/request forms
+- Standardize collaborative input interfaces
 
-## 기본 절차
+## Basic Procedure
 
-1. 표준 필드 키 정의
-2. 입력 폼 블록 작성
-3. 저장 후 frontmatter 값 동기화 확인
-
+1. Define standard field keys
+2. Create input form blocks
+3. Save and verify frontmatter value synchronization

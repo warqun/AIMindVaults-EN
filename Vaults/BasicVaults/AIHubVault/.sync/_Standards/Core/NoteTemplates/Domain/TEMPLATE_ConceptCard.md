@@ -13,28 +13,28 @@ updated: <% tp.date.now("YYYY-MM-DD") %>
 local: <% tp.file.title %>
 ```
 
-## 정의
+## Definition
 
-<!-- 한 문장으로. -->
+<!-- One sentence. -->
 
-## 핵심 내용
-
--
-
-## 연결 개념
-
-- 상위: [[]]
-- 관련: [[]]
-- 대조: [[]]
-
-## 예시
+## Key Content
 
 -
 
-## 출처
+## Related Concepts
+
+- Parent: [[]]
+- Related: [[]]
+- Contrast: [[]]
+
+## Examples
+
+-
+
+## Sources
 
 -
 
 ---
 
-*최초 작성: <% tp.date.now("YYYY-MM-DD") %>*
+*Created: <% tp.date.now("YYYY-MM-DD") %>*

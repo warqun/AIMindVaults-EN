@@ -1,0 +1,65 @@
+{
+  "vault": "BasicContentsVault",
+  "built": "2026-04-13T14:58:08",
+  "notes": [
+    {
+      "path": "Contents/CONTENTS_AI_RULES.md",
+      "title": "CONTENTS_AI_RULES — (Vault Name) AI Work Rules",
+      "type": "standard",
+      "tags": [],
+      "headings": [
+        "Work Priority",
+        "Note Creation Guidelines",
+        "Prohibited Actions"
+      ],
+      "summary": "> Overrides/supplements `_Standards/Core/` rules.",
+      "links_to": [],
+      "links_from": [],
+      "mtime": "2026-04-13T14:01:59",
+      "hash": "0605adb3"
+    },
+    {
+      "path": "Contents/CONTENTS_GLOSSARY.md",
+      "title": "CONTENTS_GLOSSARY — (Vault Name) Glossary",
+      "type": "standard",
+      "tags": [],
+      "headings": [],
+      "summary": "> Key term definitions used in this vault. After vault creation, customize for your use case.",
+      "links_to": [],
+      "links_from": [],
+      "mtime": "2026-04-13T14:02:12",
+      "hash": "218731ed"
+    },
+    {
+      "path": "Contents/Domain/Domain.md",
+      "title": "",
+      "type": "folder-index",
+      "tags": [],
+      "headings": [],
+      "summary": "",
+      "links_to": [],
+      "links_from": [],
+      "mtime": "2026-04-12T21:45:13",
+      "hash": "e998765e"
+    },
+    {
+      "path": "Contents/Project/Project.md",
+      "title": "",
+      "type": "folder-index",
+      "tags": [],
+      "headings": [],
+      "summary": "",
+      "links_to": [],
+      "links_from": [],
+      "mtime": "2026-04-12T21:45:13",
+      "hash": "e998765e"
+    }
+  ],
+  "tag_index": {},
+  "link_graph": {
+    "CONTENTS_AI_RULES": [],
+    "CONTENTS_GLOSSARY": [],
+    "Domain": [],
+    "Project": []
+  }
+}

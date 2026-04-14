@@ -13,29 +13,29 @@ status: reading
 local: <% tp.file.title %>
 ```
 
-## 책 정보
+## Book Info
 
-- **저자**:
-- **출판**:
-- **읽기 시작**:
-- **읽기 완료**:
+- **Author**:
+- **Publisher**:
+- **Started Reading**:
+- **Finished Reading**:
 
-## 핵심 요약
+## Key Summary
 
-<!-- 3~5문장. 이 책의 핵심 주장. -->
+<!-- 3-5 sentences. The core argument of this book. -->
 
-## 인상적인 내용
+## Notable Content
 
 -
 
-## 행동 포인트
+## Action Points
 
 - [ ]
 
-## 연결 노트
+## Related Notes
 
 - [[]]
 
 ---
 
-*독서 노트 작성일: <% tp.date.now("YYYY-MM-DD") %>*
+*Book note created: <% tp.date.now("YYYY-MM-DD") %>*

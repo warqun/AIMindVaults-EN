@@ -8,19 +8,19 @@ updated: 2026-03-05
 
 # Claudian
 
-## 기능
+## Features
 
-- Obsidian 내부에서 Claude 대화 기반 편집 수행
-- 문서 초안, 리라이트, 요약 생성
+- Claude conversation-based editing inside Obsidian
+- Document draft, rewrite, and summary generation
 
-## 주 사용 작업
+## Primary Use Cases
 
-- 기획/정책 문서 초안
-- 기존 노트 구조 정리
+- Planning/policy document drafts
+- Restructuring existing notes
 
-## 기본 절차
+## Basic Procedure
 
-1. 대상 노트 열기
-2. 변경 목표 1문장으로 지정
-3. 수정 후 링크/frontmatter 확인
-4. 결과를 상태 문서에 기록
+1. Open the target note
+2. Specify the change goal in one sentence
+3. After editing, verify links/frontmatter
+4. Record results in the status document
