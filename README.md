@@ -1,6 +1,6 @@
 # AIMindVaults
 
-> Obsidian + AI 에이전트를 위한 멀티볼트 지식관리 시스템.
+> Persistent AI workspace built on Obsidian multi-vault architecture.
 
 ---
 
