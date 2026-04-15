@@ -1,75 +1,75 @@
-# Codex 대량 수정 안전 규칙
+# Codex bulk-edit safety rules
 
-> 2026-03-04 인코딩 사고 2건의 근본 원인을 방지하기 위한 강제 절차.
-> 기준: `_Standards/Encoding_BulkEdit_Safety.md`
+> Mandatory procedure to prevent the root causes of the two 2026-03-04 encoding incidents.
+> Reference: `_Standards/Encoding_BulkEdit_Safety.md`
 
 ---
 
-## 4단계 필수 프로토콜
+## 4-step mandatory protocol
 
-대량 수정(2개 이상의 파일을 스크립트로 수정)은 반드시 아래 순서를 따른다:
+Any bulk edit (script-driven edit of 2+ files) must follow this order:
 
 ```
 Step 1 — Dry-run
-  수정 없이 대상 파일 목록 + 변경 diff 요약 출력만
+  No edits; only print the target file list + summary diff
 
-Step 2 — Sample 3개
-  대상 3개 파일에만 먼저 적용
-  → Obsidian에서 열어 시각 확인 (Juggl 블록, frontmatter, 한글 정상 여부)
+Step 2 — Sample of 3
+  Apply to 3 target files first
+  → Visually verify in Obsidian (juggl block, frontmatter, Korean integrity)
 
-Step 3 — 전체 실행
-  샘플 통과 확인 후만 전체 파일에 적용
+Step 3 — Full run
+  Apply to all files only after the sample passes
 
-Step 4 — 사후 검증
+Step 4 — Post-verification
   node ".sync/_tools/cli-node/bin/cli.js" review -r . -s Contents
-  → POST_EDIT_REVIEW_BAD=0 확인
+  → Confirm POST_EDIT_REVIEW_BAD=0
 ```
 
 ---
 
-## 안전 I/O 코드 (PowerShell)
+## Safe I/O code (PowerShell)
 
 ```powershell
-# 읽기
+# Read
 $text = [System.IO.File]::ReadAllText($path, [Text.Encoding]::UTF8)
 
-# 쓰기 (BOM 없는 UTF-8)
+# Write (UTF-8 without BOM)
 [System.IO.File]::WriteAllText($path, $newText, [Text.UTF8Encoding]::new($false))
 ```
 
 ---
 
-## Juggl 블록 삽입 전용 규칙
+## Juggl block insertion rules
 
-- 삽입 전: 파일에 기존 juggl 블록 있는지 확인 → 있으면 스킵
-- 삽입 위치: 첫 번째 H1 바로 아래 (빈 줄 없이)
-- 제외 대상: `Domain/temp/agent_packets/**` 폴더 전체
-- 삽입 내용: `local:` 값은 파일명(확장자 제외)
-
----
-
-## 불변 조건 (Invariants) — 전체 실행 전 확인
-
-스크립트가 아래를 보장하는지 확인:
-- [ ] 파일당 juggl 블록 1개 이하 유지
-- [ ] frontmatter 블록 손상 없음 (`---` 위치 변경 없음)
-- [ ] `local:` 값이 파일명과 정확히 일치
-- [ ] 줄바꿈 문자(CRLF/LF) 변경 없음
+- Before insertion: check if the file already has a juggl block → if so, skip
+- Insertion point: directly below the first H1 (no blank line)
+- Excluded: the entire `Domain/temp/agent_packets/**` folder
+- Inserted content: `local:` value is the filename (without extension)
 
 ---
 
-## 긴급 중단 규칙
+## Invariants — verify before the full run
 
-`BAD_COUNT > 0` 또는 한글 깨짐 발견 시:
-1. 즉시 작업 중단
-2. 사용자에게 보고
-3. Obsidian 스냅샷에서 복구
-4. 복구 확인 후 안전 방식으로 재시도
+Confirm the script guarantees:
+- [ ] At most 1 juggl block per file
+- [ ] Frontmatter block intact (`---` positions unchanged)
+- [ ] `local:` value matches the filename exactly
+- [ ] Line endings (CRLF/LF) unchanged
 
 ---
 
-## 스크립트 생성 시 필수 참조
+## Emergency-stop rule
 
-- 새 스크립트 작성 전: `_Standards/Core/Script_Creation_Rule.md` 참조
-- 중복 확인: `_Standards/Core/Script_Registry.md` 확인
-- 경로 코딩: 하드코딩 금지, 자동탐지 패턴 사용
+If `BAD_COUNT > 0` or Korean mojibake appears:
+1. Stop work immediately
+2. Report to the user
+3. Restore from an Obsidian snapshot
+4. After restore is confirmed, retry using the safe method
+
+---
+
+## Required references when creating scripts
+
+- Before writing a new script: see `_Standards/Core/Script_Creation_Rule.md`
+- Duplicate check: see `_Standards/Core/Script_Registry.md`
+- Path coding: no hardcoding; use auto-detection patterns

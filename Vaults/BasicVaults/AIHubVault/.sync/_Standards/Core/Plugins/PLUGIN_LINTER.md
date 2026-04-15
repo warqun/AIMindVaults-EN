@@ -8,19 +8,18 @@ updated: 2026-03-05
 
 # Linter
 
-## 기능
+## Features
 
-- 문서 포맷 자동 정렬/정규화
-- frontmatter/헤더/목록 스타일 일관화
+- Auto-align / normalize document formatting
+- Unify frontmatter / heading / list styles
 
-## 주 사용 작업
+## Main uses
 
-- PR 전 문서 정리
-- 문서 자동 생성 후 포맷 보정
+- Tidy documents before a PR
+- Fix up formatting after document auto-generation
 
-## 기본 절차
+## Basic procedure
 
-1. 룰셋 확정
-2. 대상 문서에 Lint 실행
-3. 링크/코드블록 깨짐 여부 최종 확인
-
+1. Fix the ruleset
+2. Run lint against the target document
+3. Final check for broken links / code blocks

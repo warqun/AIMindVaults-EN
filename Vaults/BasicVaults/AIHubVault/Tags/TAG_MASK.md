@@ -1,44 +1,44 @@
 ---
 type: tag-mask
-updated: 2026-03-08
+updated: 2026-04-15
 ---
 
-# TAG_MASK — 태그 마스킹(기존 태그 → 정규 태그)
+# TAG_MASK — Tag masking (legacy tag → canonical tag)
 
-> 목적: 이미 흩어진 태그를 "정규 태그"로 점진적으로 통일한다.
-> 원칙: 자동 치환은 위험하니 **단계적/수동 검토**를 기본으로 한다.
+> Purpose: gradually unify scattered tags into a canonical tag set.
+> Principle: automatic replacement is risky — default to **staged/manual review**.
 
-## 마스킹 규칙
+## Masking rules
 
-1. 핵심 문서(`_Standards/`, `Domain/`)부터 시작
-2. 나머지 폴더로 점진 확장
-3. 에이전트 메모리 파일은 필요할 때만(옵션)
-
----
-
-## 매핑 테이블
-
-| 기존 태그 | 정규 태그 | 비고 |
-|----------|----------|------|
-| `Project_VamSurLike` | `AIMindVault` | 볼트 전환 완료 (2026-03-08) |
-| `high` | `priority/high` | 우선순위 |
-| `medium` | `priority/medium` | 우선순위 |
-| `low` | `priority/low` | 우선순위 |
+1. Start with core documents (`_Standards/`, `Domain/`).
+2. Expand gradually to the rest of the folders.
+3. Agent memory files only when needed (optional).
 
 ---
 
-## 체크리스트 (마스킹 시)
+## Mapping table
 
-- [x] 해당 노트가 어떤 폴더에 속하는지 확인
-- [x] 기존 `tags:` 유지하면서 정규 태그 추가(중간 단계)
-- [ ] 검색으로 "옛 태그만 달린 노트"가 줄어드는지 확인
-- [ ] 어느 시점에 옛 태그 제거할지 결정(대량 삭제는 마지막)
+| Legacy tag | Canonical tag | Notes |
+|------------|---------------|-------|
+| `Project_VamSurLike` | `AIMindVault` | Vault migration complete (2026-03-08) |
+| `high` | `priority/high` | Priority |
+| `medium` | `priority/medium` | Priority |
+| `low` | `priority/low` | Priority |
 
 ---
 
-## 전환 기록
+## Checklist (when masking)
 
-### 2026-03-08: Project_VamSurLike → AIMindVault 일괄 전환
+- [x] Verify which folder the note belongs to
+- [x] Keep the existing `tags:` while adding the canonical tag (intermediate step)
+- [ ] Check via search that notes carrying only the legacy tag are decreasing
+- [ ] Decide when to remove the legacy tag (bulk deletion is the final step)
 
-- 볼트 목적 전환(게임 기획 → AI 작업환경 허브)에 따라 전체 프론트매터 태그 교체
-- `_Standards/`, `_forge/`, `CLAUDE.md`, `CODEX.md` 등 핵심 파일 완료
+---
+
+## Migration log
+
+### 2026-03-08: Project_VamSurLike → AIMindVault bulk migration
+
+- Swapped frontmatter tags across the vault after its purpose shifted (game design → AI workspace hub).
+- Completed for core files: `_Standards/`, `_forge/`, `CLAUDE.md`, `CODEX.md`, etc.

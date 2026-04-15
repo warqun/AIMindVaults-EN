@@ -68,5 +68,5 @@ If this document and the script disagree, **the script is authoritative**.
 ## Related
 
 - Script details: [[Script_Registry]]
-- Sync protocol design: [[20260311_허브_동기화_계획]]
-- Script internals: [[20260312_sync_workspace_작동방식_상세]]
+- Sync protocol design: [[20260311_Hub_Sync_Plan]]
+- Script internals: [[20260312_sync_workspace_Internals]]

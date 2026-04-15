@@ -8,17 +8,17 @@ updated: 2026-03-05
 
 # Tasks
 
-## 기능
+## Features
 
-- 체크박스 기반 작업 관리/검색
-- 마감일/상태 기반 실행 목록 생성
+- Checkbox-based task management / search
+- Execution lists by due date / status
 
-## 주 사용 작업
+## Main uses
 
-- 금일/이번 주 우선 작업 추적
-- 미완료 작업 리포트
+- Track priority work for today / this week
+- Report open tasks
 
-## 기본 문법
+## Basic syntax
 
 ```tasks
 not done
@@ -26,7 +26,6 @@ path includes docs
 sort by due
 ```
 
-## 권장 규칙
+## Recommended rules
 
-- 태스크 생성 시 최소 `담당/마감/연결노트`를 같이 기록한다.
-
+- When creating a task, at minimum record `assignee / due / linked note`.

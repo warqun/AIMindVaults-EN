@@ -2,31 +2,31 @@
 type: standard
 tags:
   - domain
-updated: 2026-03-10
+updated: 2026-04-15
 ---
 
 # CONTENTS_SPEC — AIMindVault
 
-> AI 에이전트는 작업 시 이 파일을 읽어 볼트 컨텐츠을 파악합니다.
+> AI agents read this file at work start to understand the vault's contents.
 
-## 볼트 목적
+## Vault purpose
 
-**AI 작업환경 설계·개선·배포 허브.**
-AI 에이전트 협업 워크플로우, 도구 설정, 표준 문서, 볼트 생성 자동화를 관리한다.
+**Hub for designing, improving, and distributing the AI workspace.**
+Manages AI agent collaboration workflows, tool configuration, standard documents, and vault creation automation.
 
-## 대상 사용자
+## Target users
 
-- AI 도구(Claude, Codex, Copilot)를 적극 활용하는 지식 노동자
-- 여러 주제의 Obsidian 볼트를 운영하며 표준화를 원하는 사람
+- Knowledge workers who actively use AI tools (Claude, Codex, Copilot)
+- Users who run multiple Obsidian vaults on different topics and want standardization
 
-## 주요 산출물
+## Key artifacts
 
-1. `_Standards/Core/` — 모든 볼트에 배포되는 공통 운영 표준
-2. `_Standards/Contents/` — 이 볼트 전용 커스텀 규칙
-3. `_forge/` — 외부 에이전트 결과물 스테이징 허브
-4. `Contents/` — AI 활용 가이드, 프롬프트, 계획 문서
+1. `_Standards/Core/` — shared operational standards distributed to every vault
+2. `_Standards/Contents/` — custom rules specific to this vault
+3. `_forge/` — staging hub for external agent outputs
+4. `Contents/` — AI usage guides, prompts, and planning documents
 
-## 범위
+## Scope
 
-- **포함**: AI 도구 설정, 볼트 운영 표준, 자동화 스크립트, 에이전트 협업 패턴
-- **미포함**: 특정 프로젝트 실무 작업 (별도 프로젝트 볼트 사용)
+- **In scope**: AI tool configuration, vault operational standards, automation scripts, agent collaboration patterns
+- **Out of scope**: project-specific work (use dedicated project vaults)

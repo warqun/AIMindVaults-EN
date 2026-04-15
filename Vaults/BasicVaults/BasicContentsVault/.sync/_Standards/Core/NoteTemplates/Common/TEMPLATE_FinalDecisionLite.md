@@ -1,6 +1,6 @@
 ---
 aliases:
-  - "최종 결론 템플릿"
+  - "Final decision template"
 tags:
   - TileMapToolKit
   - Standards
@@ -15,21 +15,21 @@ agent: codex
 # TEMPLATE_FinalDecisionLite
 
 ```md
-목표:
+Goal:
 
-결론(핵심 3줄):
+Conclusion (3 lines):
 1.
 2.
 3.
 
-채택안:
-- (A/B 중 선택)
+Chosen option:
+- (pick A / B)
 
-근거(최대 5줄):
+Evidence (max 5 lines):
 - RESULT_CODEX:
 - RESULT_GEMINI:
 
-다음 행동(1~2개):
+Next actions (1–2):
 1.
 2.
 ```

@@ -1,20 +1,20 @@
-# Obsidian — 사용자별 자동 생성
+# Obsidian — auto-generated per user
 **/workspace.json
 **/workspace-mobile.json
 
-# Smart Connections 임베딩 캐시 (~46MB)
+# Smart Connections embedding cache (~46MB)
 **/.smart-env/
 
-# Obsidian 휴지통
+# Obsidian trash
 **/.trash/
 
-# make-md 메타데이터 (자동 재생성)
+# make-md metadata (auto-regenerated)
 **/.space/
 
-# share-to-notionnext 개인 데이터 (API 키 포함 가능)
+# share-to-notionnext personal data (may include API keys)
 **/share-to-notionnext/data.json
 
-# bkit 플러그인 상태 (세션별 자동 생성)
+# bkit plugin state (auto-generated per session)
 .bkit/
 **/docs/.bkit-memory.json
 **/docs/.pdca-status.json
@@ -25,5 +25,5 @@
 Thumbs.db
 desktop.ini
 
-# Windows 예약 장치명 (재귀 복사 사고 잔여물)
+# Windows reserved device names (residue from a recursive-copy incident)
 nul

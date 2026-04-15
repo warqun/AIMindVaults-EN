@@ -1,5 +1,5 @@
 # ═══════════════════════════════════════════
-# Obsidian — 플러그인·캐시·UI 상태
+# Obsidian — plugins / cache / UI state
 # ═══════════════════════════════════════════
 .obsidian/plugins/*/data.json
 !.obsidian/plugins/obsidian-shellcommands/data.json
@@ -7,7 +7,7 @@
 .obsidian/workspace.json
 
 # ═══════════════════════════════════════════
-# Obsidian 플러그인 캐시·임베딩
+# Obsidian plugin cache / embeddings
 # ═══════════════════════════════════════════
 .smart-env/
 .makemd/
@@ -15,12 +15,12 @@
 .playwright-mcp/
 
 # ═══════════════════════════════════════════
-# Obsidian 휴지통
+# Obsidian trash
 # ═══════════════════════════════════════════
 .trash/
 
 # ═══════════════════════════════════════════
-# Claude Code — 세션·로컬 설정
+# Claude Code — sessions / local settings
 # ═══════════════════════════════════════════
 .claude/sessions/
 .claude/settings.local.json
@@ -28,17 +28,17 @@
 .claude/skills/
 
 # ═══════════════════════════════════════════
-# bkit — 자동 생성 상태
+# bkit — auto-generated state
 # ═══════════════════════════════════════════
 .bkit/
 
 # ═══════════════════════════════════════════
-# 자동 생성 로그
+# Auto-generated logs
 # ═══════════════════════════════════════════
 recent_files.txt
 
 # ═══════════════════════════════════════════
-# OS 임시 파일
+# OS temp files
 # ═══════════════════════════════════════════
 .DS_Store
 Thumbs.db

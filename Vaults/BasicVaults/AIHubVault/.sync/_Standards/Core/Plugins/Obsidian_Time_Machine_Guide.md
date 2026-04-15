@@ -9,47 +9,48 @@ tags:
 date: 2026-03-07
 ---
 
-# Obsidian Time Machine 플러그인 사용 가이드
+# Obsidian Time Machine plugin guide
 
-**목적**: 옵시디언의 기본 기능인 'File Recovery(파일 복구)' 스냅샷과 Git 커밋 내역을 통합하여, 직관적인 시각적 타임라인으로 문서의 과거 버전을 탐색하고 복구할 수 있게 돕는 강력한 플러그인입니다.
+**Purpose**: A powerful plugin that unifies Obsidian's built-in File Recovery snapshots with Git commit history, letting you explore and restore past versions of documents via an intuitive visual timeline.
 
-원문 링크: [GitHub - dsebastien/obsidian-time-machine](https://github.com/dsebastien/obsidian-time-machine)
-상세 매뉴얼: [공식 문서 사이트](https://developassion.gitbook.io/obsidian-time-machine/)
-
----
-
-## 🛠 주요 기능 및 장점
-
-1. **통합 타임라인 슬라이더**
-   - 하단 슬라이더를 드래그하여 노트가 시간 흐름에 따라 어떻게 변해왔는지 실시간으로 확인할 수 있습니다.
-2. **Git 커밋 자동 연동 (데스크톱 전용)**
-   - 볼트가 Git 저장소로 연결되어 있다면, **Git 커밋 내역(파란 점)**과 **File Recovery 스냅샷(회색 점)**을 하나의 타임라인에 합쳐서 보여줍니다.
-   - 중복된 내용의 스냅샷은 아주 똑똑하게 자동 제거(Deduplication)되어 깔끔한 타임라인을 제공합니다.
-3. **직관적인 변경 사항 보기 (Colored Diff View)**
-   - 무엇이 추가(초록색)되었고, 무엇이 삭제(빨간색)되었는지 코드 비교 툴처럼 직관적으로 보여줍니다.
-4. **부분 복구 지원 (Selective Restore)**
-   - 문서 전체를 과거 시점으로 통째로 되돌릴 수도 있지만, 실수로 날려버린 **특정 문단 단 하나만** 선택해서 현재 문서에 복구해 넣을 수도 있습니다.
+Source: [GitHub - dsebastien/obsidian-time-machine](https://github.com/dsebastien/obsidian-time-machine)
+Detailed manual: [Official docs site](https://developassion.gitbook.io/obsidian-time-machine/)
 
 ---
 
-## 🚀 사용법 (Getting Started)
+## 🛠 Key features and strengths
 
-이 플러그인은 설치만 해두면 백그라운드에서 알아서 작동하며, 필요할 때 꺼내 쓰기만 하면 됩니다.
-
-**[선행 조건]**
-- 옵시디언 기본 설정(Settings) -> Core plugins에서 **"File Recovery"** 옵션이 켜져 있어야 합니다. (보통 기본으로 켜져 있습니다)
-
-**[타임라인 보는 법]**
-1. 변경 내역을 확인하고 싶은 노트를 엽니다.
-2. 명령어 팔레트(`Ctrl` + `P`)를 열고 아래 명령어를 실행합니다:
-   > **`Time Machine: Open view`** (또는 우측 사이드바의 시계 아이콘 클릭)
-3. 화면 하단에 나타난 슬라이더를 움직여 과거 시점으로 이동합니다.
-4. 잃어버린 내용을 찾았다면 문서 전체를 Rervert(되돌리기) 하거나, 필요한 부분만 우클릭 복사하여 가져옵니다.
+1. **Unified timeline slider**
+   - Drag the bottom slider to see in real time how the note evolved over time.
+2. **Auto Git commit integration (desktop only)**
+   - If the vault is wired to a Git repo, **Git commits (blue dots)** and **File Recovery snapshots (gray dots)** merge into a single timeline.
+   - Duplicate-content snapshots are smartly auto-deduplicated for a clean timeline.
+3. **Intuitive change view (Colored Diff View)**
+   - Shows added content (green) vs. deleted content (red) as intuitively as a code diff tool.
+4. **Selective restore**
+   - You can roll back an entire document to a past point, or pick **just a single paragraph** you accidentally wiped and restore only that into the current document.
 
 ---
 
-## 💡 LatticeCore 및 백업 활용 팁
-앞서 세팅한 **Obsidian Git (10분 자동 푸시)** 시스템과 이 **Time Machine** 플러그인은 환상의 짝꿍입니다. 
-- 눈앞의 치명적인 오타나 실수(블록 날림 등)는 **Time Machine**의 5분 단위 스냅샷을 쓱 넘겨서 1초 만에 부분 복구합니다.
-- PC를 분실하거나 볼트 전체가 날아가는 대형 사고가 났을 때는 **Obsidian Git**에 저장된 클라우드 백업본으로 전체 복구합니다.
-- 즉, **단기 미시적 복구(Time Machine) + 장기 거시적 백업(Git)**이라는 무적의 2중 방어망이 완성됩니다!
+## 🚀 Getting started
+
+Install once — it runs in the background and you pull it out when you need it.
+
+**[Prerequisite]**
+- In Obsidian's Settings → Core plugins, **"File Recovery"** must be enabled. (On by default.)
+
+**[How to view the timeline]**
+1. Open the note whose history you want to check.
+2. Open the Command Palette (`Ctrl` + `P`) and run:
+   > **`Time Machine: Open view`** (or click the clock icon in the right sidebar)
+3. Move the slider at the bottom of the screen to travel back.
+4. When you find the lost content, Revert the whole document, or right-click to copy just the part you need.
+
+---
+
+## 💡 LatticeCore and backup tips
+
+The **Obsidian Git (10-minute auto-push)** system you just set up and this **Time Machine** plugin are a perfect pair.
+- For minor but painful typos or mistakes in front of you (accidental block wipe, etc.), scrub through **Time Machine's** 5-minute snapshots and do a partial restore in one second.
+- For catastrophes — lost PC, the whole vault gone — restore everything from the cloud backup stored by **Obsidian Git**.
+- This gives you an unbeatable two-layer defense: **short-term micro-restore (Time Machine) + long-term macro-backup (Git)**.

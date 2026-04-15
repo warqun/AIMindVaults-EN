@@ -6,150 +6,150 @@ tags:
   - AIMindVault
 ---
 
-# Plugins README — 플러그인 운영 표준 인덱스
+# Plugins README — Plugin operations index
 
-## 이 볼트의 플러그인 구성
+## Plugin composition for this vault
 
-이 볼트는 AI 에이전트 협업, 지식 그래프 시각화, 자동화를 위한 Obsidian 플러그인 세트를 사용한다.
+This vault uses an Obsidian plugin set for AI-agent collaboration, knowledge-graph visualization, and automation.
 
-### 커뮤니티 플러그인 (28개)
+### Community plugins (28)
 
-| 플러그인 | ID | 용도 | 카테고리 |
-|---------|-----|------|---------|
-| Advanced Canvas | `advanced-canvas` | 캔버스 확장 기능 | 시각화 |
-| Advanced Tables | `table-editor-obsidian` | 마크다운 테이블 편집 | 편집 |
-| BRAT | `obsidian42-brat` | 베타 플러그인 설치/관리 | 관리 |
-| Claudian | `claudian` | Claude AI 연동 (BRAT) | AI |
-| Colored Tags | `colored-tags` | 태그 색상 구분 | 시각화 |
-| Dataview | `dataview` | 데이터 쿼리/뷰 | 데이터 |
-| Git | `obsidian-git` | Git 버전 관리 | 관리 |
-| Global Search and Replace | `global-search-and-replace` | 전체 검색/치환 | 편집 |
-| Juggl | `juggl` | 인터랙티브 지식 그래프 | 시각화 |
-| Linter | `obsidian-linter` | 마크다운 포맷 정리 | 편집 |
-| Local REST API | `obsidian-local-rest-api` | REST API로 볼트 접근 | AI |
-| make.md | `make-md` | 파일 브라우저 확장 | 편집 |
-| MCP Tools | `mcp-tools` | MCP 프로토콜 서버 | AI |
-| Mermaid Themes | `mermaid-themes` | Mermaid 다이어그램 테마 | 시각화 |
-| Mermaid Tools | `mermaid-tools` | Mermaid 다이어그램 도구 | 시각화 |
-| Meta Bind | `obsidian-meta-bind-plugin` | 메타데이터 바인딩 UI | 데이터 |
-| Metadata Menu | `metadata-menu` | Frontmatter 메타데이터 관리 | 데이터 |
-| New 3D Graph | `new-3d-graph` | 3D 그래프 뷰 | 시각화 |
-| QuickAdd | `quickadd` | 빠른 노트/템플릿 추가 | 자동화 |
-| Share to NotionNext | `share-to-notionnext` | NotionNext 블로그 배포 | 배포 |
-| Shell Commands | `obsidian-shellcommands` | 쉘 명령 실행 | 자동화 |
-| Smart Connections | `smart-connections` | AI 임베딩 기반 유사 노트 | AI |
-| TagFolder | `obsidian-tagfolder` | 태그 기반 가상 폴더 | 탐색 |
-| Tasks | `obsidian-tasks-plugin` | 작업/할일 관리 | 데이터 |
-| Templater | `templater-obsidian` | 고급 템플릿 엔진 | 자동화 |
-| Time Machine | `obsidian-time-machine` | 노트 히스토리 (BRAT) | 관리 |
-| YTranscript | `ytranscript` | YouTube 자막 추출 (BRAT) | AI |
-| Obsidian Sync | (코어) | 동기화 | 관리 |
+| Plugin | ID | Purpose | Category |
+|--------|-----|---------|----------|
+| Advanced Canvas | `advanced-canvas` | Canvas extensions | Visualization |
+| Advanced Tables | `table-editor-obsidian` | Markdown table editing | Editing |
+| BRAT | `obsidian42-brat` | Install / manage beta plugins | Management |
+| Claudian | `claudian` | Claude AI integration (BRAT) | AI |
+| Colored Tags | `colored-tags` | Tag coloring | Visualization |
+| Dataview | `dataview` | Data queries / views | Data |
+| Git | `obsidian-git` | Git version control | Management |
+| Global Search and Replace | `global-search-and-replace` | Vault-wide search / replace | Editing |
+| Juggl | `juggl` | Interactive knowledge graph | Visualization |
+| Linter | `obsidian-linter` | Markdown formatting | Editing |
+| Local REST API | `obsidian-local-rest-api` | Vault access via REST API | AI |
+| make.md | `make-md` | File browser extension | Editing |
+| MCP Tools | `mcp-tools` | MCP protocol server | AI |
+| Mermaid Themes | `mermaid-themes` | Mermaid diagram themes | Visualization |
+| Mermaid Tools | `mermaid-tools` | Mermaid diagram tools | Visualization |
+| Meta Bind | `obsidian-meta-bind-plugin` | Metadata binding UI | Data |
+| Metadata Menu | `metadata-menu` | Frontmatter metadata management | Data |
+| New 3D Graph | `new-3d-graph` | 3D graph view | Visualization |
+| QuickAdd | `quickadd` | Fast note / template add | Automation |
+| Share to NotionNext | `share-to-notionnext` | Publish to NotionNext blog | Publishing |
+| Shell Commands | `obsidian-shellcommands` | Run shell commands | Automation |
+| Smart Connections | `smart-connections` | Embedding-based similar notes | AI |
+| TagFolder | `obsidian-tagfolder` | Virtual folders by tag | Navigation |
+| Tasks | `obsidian-tasks-plugin` | Task / TODO management | Data |
+| Templater | `templater-obsidian` | Advanced template engine | Automation |
+| Time Machine | `obsidian-time-machine` | Note history (BRAT) | Management |
+| YTranscript | `ytranscript` | YouTube transcript extraction (BRAT) | AI |
+| Obsidian Sync | (core) | Sync | Management |
 
-### BRAT 재설치 필요 플러그인
+### Plugins that need BRAT re-install
 
-미러 복제 시 아래 플러그인은 BRAT을 통해 재설치해야 한다.
+When mirroring the vault, re-install the plugins below via BRAT.
 
-| 플러그인 | 리포지토리 | 설치 링크 |
-|---------|-----------|----------|
+| Plugin | Repository | Install link |
+|--------|------------|--------------|
 | Time Machine | `dsebastien/obsidian-time-machine` | https://github.com/dsebastien/obsidian-time-machine |
 | YTranscript | `lstrzepek/obsidian-yt-transcript` | https://github.com/lstrzepek/obsidian-yt-transcript |
 | Claudian | `YishenTu/claudian` | https://github.com/YishenTu/claudian |
 
-### 활성화된 코어 플러그인
+### Enabled core plugins
 
 File explorer, Global search, Quick switcher, Graph view, Backlink, Canvas, Outgoing links, Tag pane, Properties, Page preview, Daily notes, Templates, Note composer, Command palette, Editor status, Bookmarks, Outline, Word count, File recovery, Sync, Bases
 
-### 비활성화된 코어 플러그인
+### Disabled core plugins
 
 Footnotes, Slash commands, Markdown importer, Zettelkasten prefixer, Random note, Slides, Audio recorder, Workspaces, Publish, Web viewer
 
 ---
 
-## 볼트 설정
+## Vault settings
 
-### 앱 설정 (`app.json`)
+### App settings (`app.json`)
 
-- `alwaysUpdateLinks`: true — 파일명 변경 시 링크 자동 갱신
+- `alwaysUpdateLinks`: true — auto-update links on file rename
 
-### 테마·외관 (`appearance.json`)
+### Appearance (`appearance.json`)
 
-- 테마: `obsidian` (기본 다크)
-- 활성 CSS 스니펫 (8개):
-  - `vis-callouts` — 콜아웃 스타일
-  - `vis-codeblocks` — 코드블록 스타일
-  - `vis-emphasis` — 강조 스타일
-  - `vis-headings` — 제목 스타일
-  - `vis-mermaid-fix` — Mermaid 렌더링 보정
-  - `vis-tables` — 테이블 스타일
-  - `vis-tags-links` — 태그/링크 스타일
-  - `vis-typography` — 타이포그래피
+- Theme: `obsidian` (default dark)
+- Active CSS snippets (8):
+  - `vis-callouts` — callout styling
+  - `vis-codeblocks` — code-block styling
+  - `vis-emphasis` — emphasis styling
+  - `vis-headings` — heading styling
+  - `vis-mermaid-fix` — Mermaid rendering fixes
+  - `vis-tables` — table styling
+  - `vis-tags-links` — tag / link styling
+  - `vis-typography` — typography
 
-> 참고: `header-colors.css`는 설치되어 있으나 비활성 상태.
+> Note: `header-colors.css` is installed but inactive.
 
-### 단축키 (`hotkeys.json`)
+### Hotkeys (`hotkeys.json`)
 
-| 단축키 | 명령 |
+| Hotkey | Command |
+|--------|---------|
+| `F12` | Open 3D Graph |
+| `Ctrl+Shift+Y` | Run a Shell Command |
+
+### Property types (`types.json`)
+
+- 17 TQ_-prefixed properties for the Tasks plugin (checkbox / text)
+- Default: `aliases`, `cssclasses`, `tags`
+
+---
+
+## Plugin roles by category
+
+### AI-agent integration (4)
+
+| Plugin | Role |
 |--------|------|
-| `F12` | 3D Graph 열기 |
-| `Ctrl+Shift+Y` | Shell Command 실행 |
+| Claudian | Call Claude directly from Obsidian |
+| MCP Tools | MCP protocol server — external AI tools access the vault |
+| Local REST API | Vault read / write over REST (for automation) |
+| Smart Connections | Embedding-based similar-note suggestions |
 
-### 프로퍼티 타입 (`types.json`)
+### Visualization (5)
 
-- Tasks 플러그인 전용 TQ_ 접두사 프로퍼티 17개 정의 (checkbox/text)
-- 기본: `aliases`, `cssclasses`, `tags`
+| Plugin | Role |
+|--------|------|
+| Juggl | Interactive knowledge graph (note-relationship visualization) |
+| New 3D Graph | 3D graph view |
+| Mermaid Tools | Edit / preview Mermaid diagrams |
+| Mermaid Themes | Customize Mermaid themes |
+| Advanced Canvas | Canvas extensions |
 
----
+### Automation (3)
 
-## 카테고리별 플러그인 역할
+| Plugin | Role |
+|--------|------|
+| Templater | Advanced templates (JavaScript supported) |
+| QuickAdd | Macros / quick adds |
+| Shell Commands | Run CLI commands (post-edit review, etc.) |
 
-### AI 에이전트 연동 (4개)
+### Data management (4)
 
-| 플러그인 | 역할 |
-|---------|------|
-| Claudian | Obsidian 내에서 Claude AI 직접 호출 |
-| MCP Tools | MCP 프로토콜 서버 — 외부 AI 도구가 볼트에 접근 |
-| Local REST API | REST API로 볼트 읽기/쓰기 (자동화용) |
-| Smart Connections | 임베딩 기반 유사 노트 추천 |
-
-### 시각화 (5개)
-
-| 플러그인 | 역할 |
-|---------|------|
-| Juggl | 인터랙티브 지식 그래프 (노트 관계 시각화) |
-| New 3D Graph | 3D 그래프 뷰 |
-| Mermaid Tools | Mermaid 다이어그램 편집/미리보기 |
-| Mermaid Themes | Mermaid 테마 커스터마이징 |
-| Advanced Canvas | 캔버스 확장 |
-
-### 자동화 (3개)
-
-| 플러그인 | 역할 |
-|---------|------|
-| Templater | 고급 템플릿 (JavaScript 지원) |
-| QuickAdd | 매크로/빠른 추가 |
-| Shell Commands | CLI 명령 실행 (post-edit review 등) |
-
-### 데이터 관리 (4개)
-
-| 플러그인 | 역할 |
-|---------|------|
-| Dataview | 노트 쿼리/목록/테이블 생성 |
-| Metadata Menu | Frontmatter 필드 관리 |
-| Meta Bind | 메타데이터 인라인 바인딩 |
-| Tasks | 할일/작업 추적 |
+| Plugin | Role |
+|--------|------|
+| Dataview | Note queries / lists / tables |
+| Metadata Menu | Manage frontmatter fields |
+| Meta Bind | Inline metadata binding |
+| Tasks | Task / TODO tracking |
 
 ---
 
-## 플러그인별 상세 문서
+## Detailed plugin documents
 
-### 공통 문서
+### Common
 
-- `PLUGIN_CAPABILITIES_FOR_AI.md`: 플러그인 기능 맵
-- `PLUGIN_TASK_ROUTING.md`: 작업별 도구 선택 기준
-- `MERMAID_JUGGL_SYNTAX.md`: Mermaid/Juggl 문법 레퍼런스
-- `RENDERING_SKILL_DRILLS.md`: 렌더/문법 숙련 훈련 시트
+- `PLUGIN_CAPABILITIES_FOR_AI.md`: Plugin capability map
+- `PLUGIN_TASK_ROUTING.md`: Tool choice per task
+- `MERMAID_JUGGL_SYNTAX.md`: Mermaid / Juggl syntax reference
+- `RENDERING_SKILL_DRILLS.md`: Render / syntax practice drills
 
-### 개별 문서
+### Individual
 
 - `PLUGIN_CLAUDIAN.md`
 - `PLUGIN_CHATGPT_MD.md`
@@ -168,9 +168,9 @@ Footnotes, Slash commands, Markdown importer, Zettelkasten prefixer, Random note
 
 ---
 
-## 운용 순서
+## Operating procedure
 
-1. 작업 목표 정의
-2. `PLUGIN_TASK_ROUTING.md`에서 1순위 플러그인 선택
-3. 해당 플러그인 개별 문서 절차로 실행
-4. 결과를 `_STATUS.md`/`AGENT_STATUS.md`에 기록
+1. Define the task goal.
+2. Pick the 1st-choice plugin from `PLUGIN_TASK_ROUTING.md`.
+3. Execute per that plugin's individual document.
+4. Record results in `_STATUS.md` / `AGENT_STATUS.md`.

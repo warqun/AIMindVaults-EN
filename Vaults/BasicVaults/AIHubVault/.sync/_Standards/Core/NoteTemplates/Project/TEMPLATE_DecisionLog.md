@@ -13,36 +13,36 @@ status: decided
 local: <% tp.file.title %>
 ```
 
-## 결정 요약
+## Decision summary
 
-<!-- 한 문장. 무엇을 어떻게 결정했는가. -->
+<!-- One sentence. What was decided and how. -->
 
-## 배경 / 문제
+## Background / problem
 
 -
 
-## 검토한 선택지
+## Options considered
 
-| 선택지 | 장점 | 단점 |
+| Option | Pros | Cons |
 |--------|------|------|
 | A. | | |
 | B. | | |
 
-## 최종 결정
+## Final decision
 
-**선택**: A / B / 기타
+**Choice**: A / B / other
 
-**이유**:
+**Reason**:
 -
 
-## 예상 결과
+## Expected outcome
 
 -
 
-## 재검토 조건
+## Re-review triggers
 
-<!-- 이 결정을 다시 검토해야 하는 상황. -->
+<!-- Situations that would warrant revisiting this decision. -->
 
 ---
 
-*결정일: <% tp.date.now("YYYY-MM-DD") %>*
+*Decided: <% tp.date.now("YYYY-MM-DD") %>*

@@ -10,19 +10,19 @@ tags:
 
 # CODEX.md (DEPRECATED)
 
-> **DEPRECATED (2026-03-21)**: 이 파일은 볼트 루트의 `AGENTS.md`로 대체됨.
+> **DEPRECATED (2026-03-21)**: This file is superseded by `AGENTS.md` at the vault root.
 
 > This is a Codex-specific support note.
 > The primary auto-loaded project entry is `CODEX.md`.
 
 ## Session Start Order
 
-1. 루트 `.claude/rules/` 전체 읽기 — 공통 강제 규칙 (정본)
-2. `.codex/rules/never-do.md` — Codex 고유 금지 목록
+1. Read all of root `.claude/rules/` — common mandatory rules (source of truth)
+2. `.codex/rules/never-do.md` — Codex-specific bans
 3. `_WORKFLOW.md`
 4. `_STATUS.md`
 5. `.codex/AGENT_STATUS.md`
-6. Relevant `.codex/rules/*` — Codex 고유 상세 규칙
+6. Relevant `.codex/rules/*` — Codex-specific detailed rules
 7. Target documents
 
 Do not start editing before finishing that order.

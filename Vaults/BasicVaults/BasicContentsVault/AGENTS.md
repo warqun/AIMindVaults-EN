@@ -1,34 +1,34 @@
-# BasicContentsVault — 볼트 복제 소스 템플릿 (Codex)
+# BasicContentsVault — Vault Clone Source Template (Codex)
 
-> Codex 전용 진입점. Claude Code → `CLAUDE.md` 참조.
-> 공통 강제 규칙: 루트 `.claude/rules/`에서 자동 적용.
+> Codex-only entry point. For Claude Code see `CLAUDE.md`.
+> Shared mandatory rules: automatically applied from the root `.claude/rules/`.
 
-## 공통 규칙 (정본 참조 — Mandatory)
+## Shared rules (authoritative reference — Mandatory)
 
-루트 `.claude/rules/` 디렉토리의 **모든 규칙 파일**을 읽고 따른다.
-볼트 `CLAUDE.md`도 참조한다.
+Read and follow **every rule file** under the root `.claude/rules/` directory.
+Also reference this vault's `CLAUDE.md`.
 
-## 주의: 이 볼트는 직접 편집 금지
+## Note: do not edit this vault directly
 
-이 볼트는 `/create-vault` 스킬의 **복제 소스 템플릿**이다.
-- 직접 콘텐츠 작업 금지
-- workspace는 AIHubVault에서 `sync_workspace.ps1`로 동기화
+This vault is the clone source template used by the `/create-vault` skill.
+- No direct content work
+- The workspace is synced from AIHubVault via `sync_workspace.ps1`
 
-## 볼트명이 BasicContentsVault가 아닌 경우
+## When the vault is NOT named BasicContentsVault
 
-복제 후 초기 설정이 안 된 상태이다. 즉시:
-1. 이 AGENTS.md의 제목/역할을 실제 용도에 맞게 수정
-2. `CLAUDE.md`, `_STATUS.md`도 동일하게 수정
-3. 루트 `_STATUS.md` 볼트 레지스트리에 등록
+The vault has been cloned but not yet customized. Immediately:
+1. Update the title / role of this AGENTS.md to match the actual use case.
+2. Do the same for `CLAUDE.md` and `_STATUS.md`.
+3. Register this vault in the root `_STATUS.md` vault registry.
 
-## 에이전트 식별자
+## Agent identifier
 
-- **식별자**: `codex`
+- **Identifier**: `codex`
 
-## Codex 고유 규칙
+## Codex-specific rules
 
-| 파일 | 용도 |
-|------|------|
-| `.codex/rules/never-do.md` | 금지 목록 |
-| `.codex/rules/note-writing.md` | 노트 작성 규칙 |
-| `.codex/rules/bulk-edit-safety.md` | 대량 편집 안전 |
+| File | Purpose |
+|------|---------|
+| `.codex/rules/never-do.md` | List of prohibitions |
+| `.codex/rules/note-writing.md` | Note authoring rules |
+| `.codex/rules/bulk-edit-safety.md` | Bulk-edit safety |
