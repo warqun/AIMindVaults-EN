@@ -143,6 +143,7 @@ Full detail on the 15 shared rules lives inside the vault:
 | `docs/architecture.md` | System architecture — Hub-Sync, edit modes, rule system, state management |
 | `docs/cli-reference.md` | Node.js CLI reference — all 14 commands in detail |
 | `docs/customization.md` | User customization — adding vaults, customizing rules/skills/tags |
+| `docs/context-optimization.md` | Context window optimization — split MCP/plugins between global and per-project |
 | `AGENT_ONBOARDING.md` | AI agent onboarding document |
 | `Vaults/BasicVaults/AIHubVault/README.md` | Installation guide, plugin list, AI agent integration |
 

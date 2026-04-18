@@ -428,6 +428,7 @@ These are unique per vault and are never overwritten by updates.
 ## References
 
 - Vault routing keywords: root `CLAUDE.md` > Vault entry protocol
-- Note-writing rules: `.claude/rules/core/note-writing.md`
-- Vault creation details: `.claude/rules/core/vault-individualization.md`
-- Session exit routine: `.claude/rules/core/session-exit.md`
+- Rule injection structure & context window optimization: [context-optimization.md](context-optimization.md)
+- Consolidated core rules (note writing, session exit, edit mode, etc.): `.claude/rules/core/_essentials.md`
+- Vault creation details: `.claude/rules-archive/vault-individualization.md` (Read when `/create-vault` Skill invoked)
+- Skill Router: `.claude/rules/core/_skill-router.md`

@@ -26,6 +26,7 @@ AIMindVaults is an Obsidian-based multi-vault knowledge management system.
 - System architecture details: `docs/architecture.md`.
 - CLI tool reference: `docs/cli-reference.md`.
 - User customization: `docs/customization.md`.
+- Context window optimization (MCP/plugins): `docs/context-optimization.md`.
 
 ---
 

@@ -85,3 +85,13 @@ When an agent starts a session in a fresh environment:
 1. Run the environment check from `AGENT_ONBOARDING.md` §6 to see what's present.
 2. For anything missing, quote the matching section above and walk the user through it.
 3. If a vault isn't registered in Obsidian yet, point the user at "Registering vaults in Obsidian".
+
+---
+
+## Context window optimization (optional)
+
+To reduce your AI agent's baseline context, see `docs/context-optimization.md` and split MCP servers / plugins between global and per-project scope.
+
+- Default: Memory files ~23k (the AIMindVaults rule-injection structure is already tuned).
+- Further optimization: MCP tools 67k → 15k, Custom agents 6k → 0k (when split per project).
+- Total baseline 170k → 80k (roughly 53% reduction) is achievable.
