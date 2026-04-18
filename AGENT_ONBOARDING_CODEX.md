@@ -123,8 +123,17 @@ These **complement** the shared rules under `.claude/rules/core/`. The shared ru
 
 ## 9. Shared-Rule Compliance
 
-Codex also follows all 15 mandatory rules under `.claude/rules/core/`.
+Codex also follows every mandatory rule under `.claude/rules/core/`.
 `AGENTS.md` § Shared Rules states: "At session start, read and follow every rule file under `.claude/rules/`."
+
+### Skill Router dynamic loading (Codex behavior)
+
+How Codex executes the "Dynamic rule loading" described in the shared onboarding §15:
+
+- On every user message, scan the trigger keyword table in `.claude/rules/core/_skill-router.md`.
+- On a match, Read the mapped `.claude/rules-archive/` rule file.
+- Rows that invoke a Skill (Claude Code-only) — directly Read the archive rule files that the Skill integrates, as a substitute.
+- Do not re-read archive files already loaded in the current session.
 
 Key rules:
 

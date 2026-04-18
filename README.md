@@ -124,6 +124,27 @@ Full detail on the 15 shared rules lives inside the vault:
 
 ---
 
+## How we handle context bloat
+
+AI agents auto-inject rule files, MCP server schemas, and plugin metadata at session start. In multi-vault, multi-tool setups, this baseline easily grows past 150k and eats into the context you actually need for work.
+
+AIMindVaults keeps it in check on two axes:
+
+1. **Rules scoped to the session lifecycle**
+   - Only the core (`_essentials.md` + `_skill-router.md`) is always injected.
+   - Domain rules live in `rules-archive/` and are excluded from auto-injection.
+   - When the agent sees a trigger keyword in the user message, only the relevant rule is loaded on demand.
+2. **Scope guidance for MCP servers and plugins**
+   - Keep only always-needed servers globally.
+   - Move domain-specific entries (Unity MCP, Blender MCP, etc.) into each project's `.claude/settings.json`.
+
+The result, in reference numbers from the default setup: Memory files ~23k (vs. ~45k in a typical configuration), effective baseline ~46k (vs. ~170k). Recent Claude Code classifies MCP and system tools as Deferred — their schemas load only when invoked — so the Deferred category no longer pressures the baseline.
+
+- How to tune: `SETUP_GUIDE.md § Context window tuning`
+- Numbers and interpretation: `docs/context-optimization.md`
+
+---
+
 ## Adding a vault
 
 1. Run the `/create-vault <category>/<vault-name>` skill (clones from BasicContentsVault)

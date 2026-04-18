@@ -88,10 +88,58 @@ When an agent starts a session in a fresh environment:
 
 ---
 
-## Context window optimization (optional)
+## Context window tuning (optional)
 
-To reduce your AI agent's baseline context, see `docs/context-optimization.md` and split MCP servers / plugins between global and per-project scope.
+MCP servers and plugins you add on top of the default can grow the baseline. Use the knobs below to keep it in check. (For background and architecture, see the README; for detailed numbers and interpretation, see `docs/context-optimization.md`.)
 
-- Default: Memory files ~23k (the AIMindVaults rule-injection structure is already tuned).
-- Further optimization: MCP tools 67k → 15k, Custom agents 6k → 0k (when split per project).
-- Total baseline 170k → 80k (roughly 53% reduction) is achievable.
+### 1. Scope MCP servers
+
+**Global `~/.claude/settings.json`** — keep only servers you need in every session:
+
+```json
+{
+  "mcpServers": {
+    "notion": { "command": "npx", "args": ["-y", "@notionhq/notion-mcp-server"] }
+  }
+}
+```
+
+**Per-project `.claude/settings.json`** — move domain-specific servers into the project that uses them:
+
+```json
+{
+  "mcpServers": {
+    "blender": { "command": "uvx", "args": ["blender-mcp"] }
+  }
+}
+```
+
+These are loaded only when Claude Code runs with that project as CWD.
+
+### 2. Scope plugins
+
+Disable globally:
+
+```json
+{
+  "enabledPlugins": { "bkit@bkit-marketplace": false }
+}
+```
+
+Re-enable per project when needed:
+
+```json
+{
+  "enabledPlugins": { "bkit@bkit-marketplace": true }
+}
+```
+
+### 3. Desktop / Claude.ai connectors
+
+Not controlled by Claude Code settings. Disable unused Desktop MCP / Claude.ai Connectors in their respective app settings.
+
+### Back up before changing settings
+
+```bash
+cp ~/.claude/settings.json ~/.claude/settings.json.backup-$(date +%Y%m%d)
+```

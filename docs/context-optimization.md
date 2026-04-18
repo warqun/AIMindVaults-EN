@@ -171,25 +171,42 @@ These are not controlled by Claude Code settings. Manage them in the Claude Desk
 
 ## Measure
 
-After changes, restart Claude Code and run `/context`:
+After changes, restart Claude Code and run `/context` to check the baseline.
+
+### Reference numbers (default setup)
+
+Example measurement from a root session of the AIMindVaults distribution with no extra MCP servers or plugins registered:
 
 ```
-Tokens: X / 1m (Y%)
+Tokens: ~46k / 1m (~5%)
 
 Estimated usage by category:
-  Memory files ........ ?k
-  MCP tools (deferred) ?k
-  Custom agents ....... ?k
+  System prompt ............ ~8k
+  System tools ............. ~11k
+  Memory files ............. ~23k
+  MCP tools (deferred) ..... variable (not actually injected)
+  Skills ................... ~2k
+  Free space ............... ~920k
 ```
+
+> The baseline grows as you add MCP servers and plugins. These numbers are a starting point.
+
+### Interpretation
+
+- **Memory files ~23k**: result of the layered rule injection (always-loaded `core/` + on-demand `rules-archive/`).
+- **Deferred tools do not consume tokens**: recent Claude Code uses a Deferred architecture where MCP and system tool schemas are loaded only when `ToolSearch` is invoked. They appear in `/context` but do not consume context, so MCP tools classified as Deferred are no longer a baseline concern.
+- **Effective baseline ~46k**: actual tokens used when a conversation starts. Out of 1M context, ~920k is free space.
 
 ### Targets
 
 | Metric | Before | After |
 |--------|--------|-------|
 | Memory files | ~45k | ~23k (built-in) |
-| MCP tools (deferred) | ~67k | ≤15k |
-| Custom agents | ~6k | ~0k (outside AIMindVaults sessions) |
-| Total baseline | ~170k | ~80k |
+| MCP tools (active) | ~67k | No real consumption under Deferred architecture |
+| Skills | ~6k | ≤2k |
+| **Effective baseline** | ~170k | **≤50k** |
+
+> Register MCP servers per-project and disable unused plugins to maintain this level.
 
 ---
 

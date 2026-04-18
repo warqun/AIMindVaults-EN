@@ -284,6 +284,16 @@ Crawls each vault's `Contents/**/*.md` and emits a JSON index under `.vault_data
 
 ## 15. Token Optimization
 
+### Dynamic rule loading
+
+- Only `_essentials.md` (integrated core) and `_skill-router.md` (keyword → rule/Skill mapping) under `.claude/rules/core/` are always injected.
+- Domain rules and reference guides live in `.claude/rules-archive/` and are **not auto-injected**.
+- On every user message, review `_skill-router.md` — when a trigger keyword matches, invoke the mapped Skill or Read the archive rule file.
+- Skills and rules already loaded in the current session must not be reloaded (avoid duplicate token cost).
+- If nothing matches, proceed with `_essentials.md` alone.
+
+### General token optimization
+
 - **Pinpoint access**: read the exact file you need. No broad scans.
 - If you don't know the path, ask the user first.
 - For large files (100+ lines), read only the needed range. Don't re-read the same file.

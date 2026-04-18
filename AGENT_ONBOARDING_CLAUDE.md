@@ -76,12 +76,13 @@ Skill details: see `.claude/commands/MANIFEST.md`.
 ```
 .claude/
 ├── rules/
-│   ├── core/           ← 15 mandatory rules (shared across agents, sync target)
-│   ├── custom/         ← personal rules (not synced)
+│   ├── core/           ← Mandatory rules (shared across agents, always injected, sync target)
+│   ├── custom/         ← Personal rules (always injected, not synced)
 │   └── MANIFEST.md     ← list for core/
+├── rules-archive/      ← Not auto-injected; read on demand via Skill Router triggers
 ├── commands/
-│   ├── core/           ← 17 skills (sync target)
-│   ├── custom/         ← personal skills (not synced)
+│   ├── core/           ← Skills (sync target)
+│   ├── custom/         ← Personal skills (not synced)
 │   └── MANIFEST.md     ← list for core/
 └── settings.local.json ← Claude Code local settings
 ```
@@ -91,6 +92,15 @@ Skill details: see `.claude/commands/MANIFEST.md`.
 - **core/**: product rules that apply to every user. Propagated automatically via `aimv sync`.
 - **custom/**: personal rules. Not a sync target. Add and modify freely.
 - New rules start in custom/ — promote to core/ after validation.
+
+### Skill Router dynamic loading (Claude Code behavior)
+
+How Claude Code executes the "Dynamic rule loading" described in the shared onboarding §15:
+
+- On every turn, match the user message against the trigger keywords in `_skill-router.md`.
+- On a match, invoke the mapped Skill (e.g. `/distribute`, `/create-vault`) via the `Skill` tool. If the Skill's body instructs further archive reads, load them with the `Read` tool.
+- Rows that map directly to a file are loaded with `Read` — no `Skill` call needed.
+- Skills/rules already loaded in the current session must not be reloaded.
 
 ---
 
