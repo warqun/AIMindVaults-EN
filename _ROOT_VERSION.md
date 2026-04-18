@@ -24,6 +24,8 @@ Change history for multi-vault root-level files: `.claude/`, `.antigravity/`, ro
 
 | Version | Date | Change | KO | EN |
 |---------|------|--------|----|----|
+| R063 | 2026-04-18 | **`.forge/` directory removed across all vaults** — external-agent staging hub concept retired. Purged `_forge`/`.forge` references in root `CLAUDE.md`, `.cursorrules`, `.codex/`, AIHubVault entry points, workflow docs, and PS1 scripts. Hub identification marker changed from `_forge/` to `.sync/.hub_marker` (Node.js CLI already used this, PS1 aligned). Distribution-level cleanup (content-standard alignment, removal of creator-specific examples) applied to English distribution. | ✅ | ✅ |
+| R058-R062 | 2026-04-18 | **Rules injection restructure Phase 1~3** — Added `_essentials.md` + `_skill-router.md` as always-loaded core. Moved 7 legacy rules (token-optimization, session-exit, note-writing, vault-routing, post-edit-review, edit-mode-separation, vault-individualization) to `rules-archive/` for on-demand loading. Slimmed `user-guidance.md` (high-risk inline only; full detail in `rules-archive/user-guidance-detail.md`). Updated `MANIFEST.md` and `create-vault.md` skill with archive references. Distribution-specific `_skill-router.md` omits creator-only Skill rows (Unity/Blender/Meshy/Discord/Notion/Distribute). | ✅ | ✅ |
 | R054 | 2026-04-15 | Bilingual distribution structure (Korean/English split repos). `distribution-deploy.md` updated with dual-path table and GitHub Issues triage rules. `_ROOT_VERSION.md` schema migrated to per-distribution columns. README rewritten around the "AI volatility + Obsidian scaling + multi-vault seams" narrative for both distributions. | ✅ | ✅ |
 
 ## Legacy schema (before 2026-04-15)

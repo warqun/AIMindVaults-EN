@@ -30,7 +30,7 @@ node "{BasicContentsVault}/.sync/_tools/cli-node/bin/cli.js" clone -t "C:/AIMind
 - Source: **BasicContentsVault** (general-purpose template, auto-detected).
 - Must use this CLI. Manual copy (`Copy-Item`, `cp`, `xcopy`, etc.) is forbidden.
 - AIHubVault is not used as the source (too heavy as the workspace hub).
-- Details: `.claude/rules/core/vault-individualization.md` § Vault creation method.
+- Details: `.claude/rules-archive/vault-individualization.md` § Vault creation method — **Read this file before proceeding** (not auto-injected).
 
 ### 3. Required post-creation steps
 

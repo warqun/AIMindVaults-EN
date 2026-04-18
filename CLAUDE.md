@@ -54,27 +54,34 @@ Files that can be directly modified at root:
 
 Vault internal files may only be modified after completing the vault entry protocol.
 
-## Shared Mandatory Rules Reference
+## Injection Structure (from 2026-04-18)
 
-The following rules are defined in `.claude/rules/core/` and auto-applied to all vaults:
-- Encoding safety (`encoding-safety.md`)
-- Edit mode separation (`edit-mode-separation.md`)
-- Post-Edit Review (`post-edit-review.md`)
-- Script management (`script-management.md`)
-- Juggl style sync (`juggl-style-sync.md`)
-- Note writing patterns (`note-writing.md`)
-- Vault routing (`vault-routing.md`)
-- Session exit (`session-exit.md`)
-- Token optimization (`token-optimization.md`)
-- Temporary file management (`temp-file-management.md`)
-- Script creation approval (`script-creation-approval.md`)
-- Distribution sync (`distribution-sync.md`)
-- Obsidian config safe editing (`obsidian-config-safety.md`)
-- Vault individualization (`vault-individualization.md`)
+### Always Injected (every session)
+
+- `.claude/rules/core/_essentials.md` — **Unified core**: report language, token economy, vault routing, edit mode, Post-Edit Review, note writing, session exit
+- `.claude/rules/core/_skill-router.md` — Trigger keyword → Skill / rule file mapping
+- Rest of `.claude/rules/core/` — Distribution rules (distribution-sync, encoding-safety, juggl-style-sync, obsidian-config-safety, script-creation-approval, script-management, temp-file-management, user-guidance slim)
+- `.claude/rules/custom/` — User's personal rules
+
+### Conditional Load (Skill Router on trigger)
+
+- `.claude/rules-archive/` — Excluded from auto-injection. On detecting trigger keywords, Read per `_skill-router.md` instructions. Includes consolidated-source rules (token-optimization, session-exit, note-writing, vault-routing, post-edit-review, edit-mode-separation) and on-demand docs (vault-individualization, user-guidance-detail).
+
+### Namespace
+
+```
+.claude/rules/core/       ← distribution rules (sync targets, auto-injected)
+.claude/rules/custom/     ← user rules (not synced, auto-injected)
+.claude/rules-archive/    ← not auto-injected, Read via Skill Router
+.claude/commands/core/    ← distribution skills (sync targets)
+.claude/commands/custom/  ← user skills (not synced)
+```
+
+Each folder's `MANIFEST.md` lists files subject to distribution.
 
 ### User Personalization Rules
 
-The following rules are defined in `.claude/rules/custom/`. Not subject to distribution sync:
+The following rules live in `.claude/rules/custom/`. Not subject to distribution sync:
 - Multi-vault personalization (`multivault-personalization.md`) — Custom agent/plugin/skill settings
 
 ### Agent Mandatory Requirements
