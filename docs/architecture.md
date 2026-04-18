@@ -24,30 +24,18 @@ Three core principles:
 ```
 C:\AIMindVaults\
 ├── Vaults\
-│   ├── BasicVaults\          ← system vaults
-│   ├── Domains_Game\         ← game domain
-│   ├── Domains_Video\        ← video domain
-│   ├── Domains_Infra\        ← infra / tooling domain
-│   ├── Domains_3D\           ← 3D domain
-│   ├── Domains_VCS\          ← version control domain
-│   ├── Domains_AI_Asset\     ← AI asset production
-│   ├── Domains_Dev\          ← programming language / style
-│   ├── Domains_Business\     ← business
-│   ├── Domains_Life\         ← life
-│   ├── Domain_Art\           ← art
-│   ├── Lab_Infra\            ← domain + project hybrid
-│   ├── Lab_Game\             ← game dev toolkit Lab
-│   ├── Lab_Content\          ← content production Lab
-│   ├── Projects_Game\        ← game dev projects
-│   ├── Projects_Infra\       ← infra projects
-│   └── Personal\             ← personal records
-├── References\               ← readonly references
-├── Archives\                 ← non-vault archives
-├── Backup\                   ← backups
+│   ├── BasicVaults\          ← system vaults (ships: AIHubVault + BasicContentsVault)
+│   ├── Domains_<area>\       ← user-added: domain knowledge grouped by area
+│   ├── Projects_<area>\      ← user-added: project work grouped by area
+│   ├── Lab_<area>\           ← user-added: domain + project hybrid
+│   └── Personal\             ← user-added: personal records
+├── References\               ← user-added: readonly external references
 ├── docs\                     ← system docs (this file)
 ├── _STATUS.md                ← root vault registry
 └── CLAUDE.md                 ← root agent entry point
 ```
+
+Only `BasicVaults/` is pre-populated. All other categories are example shapes the user creates as needed.
 
 ### Category rules
 
@@ -57,7 +45,7 @@ C:\AIMindVaults\
 | `Domains_*/` | Domain knowledge on a specific topic | External-material study, experience-based knowledge |
 | `Lab_*/` | Domain knowledge + active development | Plugin dev, research experiments |
 | `Projects_*/` | Project deliverables with specific goals | Game dev, infra builds |
-| `Personal/` | Private records | Diary, retrospectives, growth log |
+| `Personal/` | Private records | Diary, retrospectives, personal log |
 | `References/` | Read-only official external docs | Lookup only, no edits |
 
 ### Default-provided vaults
@@ -327,7 +315,7 @@ Every note starts with YAML frontmatter containing:
 ```yaml
 ---
 type: knowledge          # from the core type list
-tags: [Unity, game-system]
+tags: [AI, workflow]
 agent: claude            # cumulative log of working agents
 created: 2026-04-13      # or updated
 ---

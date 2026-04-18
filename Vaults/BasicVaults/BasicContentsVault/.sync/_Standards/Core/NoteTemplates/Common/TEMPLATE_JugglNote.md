@@ -2,7 +2,6 @@
 aliases:
   - "Juggl Note Template"
 tags:
-  - TileMapToolKit
   - Standards
   - Template
   - AIMindVault

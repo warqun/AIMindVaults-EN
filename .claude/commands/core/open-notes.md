@@ -49,10 +49,10 @@ Convert a path relative to the AIMindVaults root into a path **relative to the a
 
 ```python
 # Example: relative to the AIMindVaults root
-full_path = 'Vaults/Projects_Game/JissouGame/Contents/Project/02-design/entity/file.md'
+full_path = 'Vaults/Projects_<area>/<YourProject>/Contents/Project/02-design/entity/file.md'
 
-# If the active vault is JissouGame → strip the vault-path prefix
-vault_prefix = 'Vaults/Projects_Game/JissouGame/'
+# If the active vault is <YourProject> → strip the vault-path prefix
+vault_prefix = 'Vaults/Projects_<area>/<YourProject>/'
 vault_relative = full_path.removeprefix(vault_prefix)
 # Result: 'Contents/Project/02-design/entity/file.md'
 ```
@@ -147,8 +147,8 @@ Wait 3 seconds, then call the REST API.
 ## Examples
 
 ```
-/open-notes JissouGame player_controls_design, alt_player_controls_design
 /open-notes AIHubVault _STATUS, _WORKSPACE_VERSION
+/open-notes <YourVault> note_a, note_b
 ```
 
 ## Limitations

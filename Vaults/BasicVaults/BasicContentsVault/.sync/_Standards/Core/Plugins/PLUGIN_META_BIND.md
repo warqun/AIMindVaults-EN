@@ -1,6 +1,5 @@
 ---
 tags:
-  - TileMapToolKit
 type: plugin-standard
 plugin: obsidian-meta-bind-plugin
 updated: 2026-03-05

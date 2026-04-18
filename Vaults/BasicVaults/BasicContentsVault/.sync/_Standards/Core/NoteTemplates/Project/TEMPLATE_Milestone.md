@@ -1,7 +1,6 @@
 ---
 type: milestone
 tags:
-  - TileMapToolKit
   - milestone
 created: <% tp.date.now("YYYY-MM-DD") %>
 status: planned

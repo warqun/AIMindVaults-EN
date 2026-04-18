@@ -9,8 +9,8 @@ agent: claude
 
 # AIHubVault — AI workspace design / improvement / distribution Hub
 
-> Every AI agent in this vault (Claude Code, Codex, Cursor, …) uses this file as its entry point.
-> Agent-specific entry points: Codex → `AGENTS.md` / Cursor → `.cursor/rules/`
+> Every AI agent in this vault uses this file as its entry point.
+> Agent-specific entry points: Codex → `AGENTS.md`
 
 ## Role of this vault
 

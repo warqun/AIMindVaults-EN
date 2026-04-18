@@ -1,7 +1,6 @@
 ---
 type: decision
 tags:
-  - TileMapToolKit
   - decision
 created: <% tp.date.now("YYYY-MM-DD") %>
 status: decided

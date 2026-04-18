@@ -80,7 +80,7 @@ Fires when a mandatory step was skipped. The agent detects this automatically du
 
 ### Guidance
 - **Method**: use the `/create-vault` skill or `node cli.js clone`. No manual copy.
-- **Location**: pick the right category (Domains_Game, Domains_Infra, Projects_Game, etc.) for the purpose.
+- **Location**: pick the right category (`Domains_<area>`, `Projects_<area>`, `Lab_<area>`, `Personal`) for the purpose.
 - **Mandatory after creation**: individualize CLAUDE.md, initialize _STATUS.md, add to root registry, register in Obsidian (via the Vault Manager directly).
 
 ---

@@ -1,7 +1,6 @@
 ---
 type: standards
 tags:
-  - TileMapToolKit
   - Standards
   - AIMindVault
   - hub-sync

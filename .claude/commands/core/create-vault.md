@@ -9,9 +9,9 @@ Create a new Obsidian vault by cloning BasicContentsVault as the source.
 ```
 
 Examples:
-- `/create-vault Domains_Infra/Notion`
-- `/create-vault Domains_Game/Unreal`
-- `/create-vault Projects_GameTool/Project_RPG`
+- `/create-vault Domains_<area>/<YourDomainVault>`
+- `/create-vault Projects_<area>/<YourProject>`
+- `/create-vault Personal/<YourPersonalVault>`
 
 ## Process
 

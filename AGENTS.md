@@ -41,37 +41,21 @@ Complete this sequence before editing anything.
 | AIHubVault | `Vaults/BasicVaults/AIHubVault/` | AI-workspace design / improvement / distribution hub | active |
 | BasicContentsVault | `Vaults/BasicVaults/BasicContentsVault/` | General-purpose content store (distribution — do not edit directly) | active |
 
-### Domains (domain-knowledge vaults) — examples
-
-| Vault ID | Path | Role | Status |
-|----------|------|------|--------|
-| Unity | `Vaults/Domains_Game/Unity/` | Unity engine domain knowledge | active |
-| GameDesign | `Vaults/Domains_Game/GameDesign/` | Game design / planning | active |
-| CapCut | `Vaults/Domains_Video/CapCut/` | CapCut video-editing domain knowledge | active |
-| Notion | `Vaults/Domains_Infra/Notion/` | Notion workspace operations | active |
-| Git | `Vaults/Domains_VCS/Git/` | Git version-control knowledge | active |
-| Blender | `Vaults/Domains_3D/Blender/` | Blender 3D domain knowledge | active |
-
-### Projects (project vaults) — examples
-
-| Vault ID | Path | Role | Status |
-|----------|------|------|--------|
-| Project_AIMindVaults | `Vaults/Projects_Infra/Project_AIMindVaults/` | AIMindVaults multi-vault system project | active |
-
-> The distribution ships with only AIHubVault + BasicContentsVault. The rows above are examples of how users typically organize their own vaults.
+> The distribution ships with only AIHubVault + BasicContentsVault.
+> Create additional vaults by cloning BasicContentsVault with `node cli.js clone`, then register each new vault in the table above.
+> Recommended category pattern (use only what applies):
+>
+> ```
+> Vaults/Domains_<area>/<YourDomainVault>/    ← domain knowledge vaults
+> Vaults/Projects_<area>/<YourProjectVault>/  ← project work vaults
+> Vaults/Personal/<YourPersonalVault>/        ← personal notes
+> ```
 
 ## Vault Routing Rules
 
 1. Explicit vault naming takes priority.
-2. Keyword inference:
-   - "AI workflow", "agent", "_Standards", ".forge" → AIHubVault
-   - "Unity", "unity engine" → Unity
-   - "CapCut", "video editing" → CapCut
-   - "Notion", "notion operations" → Notion
-   - "Obsidian plugin", "plugin dev" → ObsidianDev
-   - "Git", "version control" → Git
-   - "Blender", "3D" → Blender
-   - (Extend this list as the user adds their own vaults.)
+2. Keyword inference: apply only to vaults that exist in the registry above. Do not infer routes to vaults that have not been created.
+   - "AI workflow", "agent", "_Standards", "workspace", "sync script" → AIHubVault
 3. If the request includes a file path → extract the vault from the path.
 4. If only root files are in scope → work at the root.
 5. If ambiguous → confirm with the user.
@@ -119,18 +103,9 @@ Activate the target project before accessing it.
 
 ---
 
-## Unity CLI — Unity Editor Control (if used)
+## External Tool Integrations (optional)
 
-Available when the Unity editor is open on the target project.
-
-| Purpose | Command |
-|---------|---------|
-| Console logs | `unity-cli console` |
-| Recompile | `unity-cli editor refresh --compile` |
-| Run tests | `unity-cli test` |
-| Custom tool | `unity-cli <tool_name> --params '{...}'` |
-
-Do not use `mcp__mcp-unity__*` MCP tools when unity-cli is available.
+Users may wire project-specific CLIs or MCP servers (Unity, Blender, etc.) into their workflow. Document usage policies under `.claude/rules/custom/<tool-name>.md` so agents know when to prefer one tool over another.
 
 ---
 

@@ -27,7 +27,6 @@ agent: claude
 ├── _STATUS.md           ← master progress state
 ├── _WORKFLOW.md         ← Vault operational rules
 ├── _WORKSPACE_VERSION.md ← workspace version tracker
-├── _forge/              ← workspace distribution hub (inbox / staging / tasks)
 ├── _tools/              ← automation scripts and CLI tools
 ├── _Standards/          ← Vault consistency baselines
 ├── _VaultReview/        ← agent-generated review reports
@@ -71,17 +70,7 @@ agent: claude
 
 ---
 
-## 3. _forge/ distribution hub
-
-| Folder | Purpose |
-|--------|---------|
-| `inbox/` | Pending receipts of external agent outputs |
-| `staging/` | Scripts / settings reviewed and ready for distribution |
-| `tasks/` | Draft work orders related to distribution |
-
----
-
-## 4. _VaultReview/ review reports
+## 3. _VaultReview/ review reports
 
 > Vault analysis / review documents produced by agents. Reference when making decisions.
 

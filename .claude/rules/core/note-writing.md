@@ -128,7 +128,7 @@ Limited to product names, service names, framework names, and acronyms:
 ### Vault-Identifier Tags (Discouraged)
 
 Using the vault name as a tag is discouraged — the indexer's `vault` field plus the file path already identify it.
-- Discouraged: `CombatToolKit`, `AIMindVault`, `TileMapToolKit`, etc. as tags.
+- Discouraged: using vault names themselves as tags.
 - If you intentionally want the vault tag, declare it in the vault's `CLAUDE.md`.
 
 ### User Override
@@ -137,8 +137,8 @@ Users who prefer a different tag format declare it in the vault's `CLAUDE.md`:
 
 ```markdown
 ## Tag Rules
-- Use PascalCase (e.g. `GameDesign`, `SkillSystem`)
-- Allow hierarchical tags (e.g. `unity/dots`, `design/system`)
+- Use PascalCase (e.g. `MyDomain`, `SkillSystem`)
+- Allow hierarchical tags (e.g. `domain/subtopic`, `design/system`)
 ```
 
 When a vault `CLAUDE.md` declares tag rules, those rules take precedence over the default for that vault.
@@ -176,7 +176,7 @@ When a vault `CLAUDE.md` declares tag rules, those rules take precedence over th
 
 - No URI-reserved characters in filenames: `#`, `%`, `&`, `?`, `+`.
   - In Obsidian URIs and internal links, `#` is interpreted as a heading separator and breaks the link.
-  - Details: ObsidianDev vault `20260319_Obsidian_URI_Hash_issue_research.md`.
+  - See the Obsidian URI hash caveat for details.
 - No emoji in filenames — cross-OS compatibility, terminal output, and script parsing all become unstable.
 - Alternates: `C#` → `CSharp`, `C++` → `CPP`, `Q&A` → `QnA`.
 - Use frontmatter `aliases` for readability.

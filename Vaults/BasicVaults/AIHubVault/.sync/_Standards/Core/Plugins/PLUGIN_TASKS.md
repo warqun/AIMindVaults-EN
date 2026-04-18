@@ -1,6 +1,5 @@
 ---
 tags:
-  - TileMapToolKit
 type: plugin-standard
 plugin: obsidian-tasks-plugin
 updated: 2026-03-05

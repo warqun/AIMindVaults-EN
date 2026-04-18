@@ -1,6 +1,5 @@
 ---
 tags:
-  - TileMapToolKit
   - plugin
   - git
   - backup

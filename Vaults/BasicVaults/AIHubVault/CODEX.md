@@ -79,8 +79,8 @@ Do not report completion until `POST_EDIT_REVIEW_BAD=0`.
 
 Every edit belongs to exactly one of two modes. Mixing is forbidden.
 
-- **`[Domain]` mode**: modify only `Domain/**` content. Forbidden to touch `_Standards/`, `_tools/`, `.claude/`, `.codex/`, `_forge/`, or vault root files.
-- **`[workspace]` mode**: modify vault infrastructure (`_Standards/`, `_tools/`, `.claude/`, `.codex/`, `_forge/`, `Tags/`, vault root files). Forbidden to touch `Domain/**` content bodies.
+- **`[Domain]` mode**: modify only `Domain/**` content. Forbidden to touch `_Standards/`, `_tools/`, `.claude/`, `.codex/`, or vault root files.
+- **`[workspace]` mode**: modify vault infrastructure (`_Standards/`, `_tools/`, `.claude/`, `.codex/`, `Tags/`, vault root files). Forbidden to touch `Domain/**` content bodies.
 - Declare the mode at the start of work. Declare explicitly when switching.
 - Details: `_WORKFLOW.md` § 6).
 

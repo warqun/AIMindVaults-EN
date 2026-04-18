@@ -26,9 +26,9 @@ Open and activate a specified Obsidian vault.
 ## Examples
 
 ```
-/open-vault Unity
 /open-vault AIHubVault
-/open-vault ObsidianDev
+/open-vault BasicContentsVault
+/open-vault <YourVault>
 ```
 
 ## Notes

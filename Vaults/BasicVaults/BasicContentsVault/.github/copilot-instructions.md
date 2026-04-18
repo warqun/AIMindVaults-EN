@@ -59,7 +59,7 @@ $t = [System.IO.File]::ReadAllText($p, [Text.Encoding]::UTF8)
 Every edit belongs to exactly one of two modes. Mixing is forbidden.
 
 - **`[Domain]` mode**: modify only `Domain/**` content. Forbidden to touch workspace files.
-- **`[workspace]` mode**: modify vault infrastructure (`_Standards/`, `_tools/`, `.claude/`, `.codex/`, `_forge/`, `Tags/`, vault root files). Forbidden to edit `Domain/**` content bodies.
+- **`[workspace]` mode**: modify vault infrastructure (`_Standards/`, `_tools/`, `.claude/`, `.codex/`, `Tags/`, vault root files). Forbidden to edit `Domain/**` content bodies.
 - Declare the mode at the start of work. Declare explicitly when switching.
 - Details: `_WORKFLOW.md` § 6).
 

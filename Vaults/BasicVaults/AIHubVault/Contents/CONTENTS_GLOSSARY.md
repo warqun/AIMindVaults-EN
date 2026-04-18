@@ -18,7 +18,6 @@ updated: 2026-04-15
 | **Core Standards** | `_Standards/Core/` — operational standards shared across every vault |
 | **Contents Standards** | `_Standards/Contents/` — custom per-topic rules for each vault |
 | **Agent** | An AI tool that works inside the vault (Claude, Codex, Copilot, etc.) |
-| **Forge (_forge)** | Staging hub for reviewing and distributing outputs from external agents |
 | **clone** | `clone_vault.ps1` — script that clones an existing vault |
 | **BRAT** | Management tool for installing unofficial Obsidian plugins |
 | **Juggl** | Interactive graph plugin that visualizes relationships between notes |

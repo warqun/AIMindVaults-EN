@@ -16,7 +16,7 @@
 
 AIMindVaults is an Obsidian-based multi-vault knowledge management system.
 
-- 20+ vaults organized by purpose (domain knowledge, projects, personal notes, reference docs, etc.).
+- Vaults are organized by purpose (domain knowledge, projects, personal notes, reference docs, etc.). The distribution ships with two: AIHubVault (Hub) and BasicContentsVault (clone template). The user adds more.
 - AIHubVault is the single source of truth (Hub) — it syncs the workspace (rules, scripts, standards) to every other vault.
 - New vaults are created by cloning BasicContentsVault via `aimv clone`.
 
@@ -31,22 +31,16 @@ AIMindVaults is an Obsidian-based multi-vault knowledge management system.
 
 ## 2. Vault Layout
 
-The full registry lives in `CLAUDE.md` or `AGENTS.md`. Main categories:
+The full registry lives in `CLAUDE.md` or `AGENTS.md`. Only `BasicVaults` ships pre-populated; the remaining categories are optional shapes the user may adopt.
 
-| Category | Path pattern | Examples |
-|----------|--------------|----------|
-| BasicVaults | `Vaults/BasicVaults/` | AIHubVault (Hub), BasicContentsVault (template) |
-| Domains_Game | `Vaults/Domains_Game/` | Unity, GameDesign, GameArt |
-| Domains_Video | `Vaults/Domains_Video/` | CapCut |
-| Domains_Infra | `Vaults/Domains_Infra/` | Notion, CICD, Search, AI, AppFlowy |
-| Domain_Art | `Vaults/Domain_Art/` | LightAndColor |
-| Domains_Business | `Vaults/Domains_Business/` | Funding |
-| Lab_Infra | `Vaults/Lab_Infra/` | ObsidianDev |
-| Lab_Game | `Vaults/Lab_Game/` | CombatToolKit, TileMapToolKit |
-| Projects_Game | `Vaults/Projects_Game/` | JissouGame |
-| Projects_Infra | `Vaults/Projects_Infra/` | Project_AIMindVaults |
-| Personal | `Vaults/Personal/` | Diary |
-| References | `References/` | Unity_Documentation (readonly) |
+| Category | Path pattern | Purpose |
+|----------|--------------|---------|
+| BasicVaults | `Vaults/BasicVaults/` | AIHubVault (Hub), BasicContentsVault (clone template) — shipped |
+| Domains_<area> | `Vaults/Domains_<area>/` | Domain-knowledge vaults — user-added |
+| Projects_<area> | `Vaults/Projects_<area>/` | Project work vaults — user-added |
+| Lab_<area> | `Vaults/Lab_<area>/` | Mixed domain + project — user-added |
+| Personal | `Vaults/Personal/` | Personal notes — user-added |
+| References | `References/` | Readonly reference material — user-added |
 
 ---
 
@@ -90,7 +84,7 @@ AIMindVaults/                    ← multi-vault root
 Before creating content, check the `_STATUS.md` vault registry to pick the right vault.
 
 - Keyword-based auto-routing: see the routing rules in the entry point doc (`CLAUDE.md` or `AGENTS.md`).
-- Explicit naming: "in AIHubVault...", "in the Unity vault..."
+- Explicit naming: "in AIHubVault...", "in the <YourDomainVault>..."
 - If nothing fits, ask the user. Never drop a note into an ill-fitting vault on your own.
 - BasicContentsVault is for clone templates only. No direct content work.
 
@@ -145,10 +139,10 @@ All edits declare one of two modes. No mixing.
 - Target: files under `Contents/**`
 - Content (note) authoring/editing only.
 - Sub-declaration: `[Contents/Domain]` (knowledge accumulation) or `[Contents/Project]` (task management).
-- Forbidden: editing workspace files (`.sync/`, `.claude/`, `.forge/`, etc.).
+- Forbidden: editing workspace files (`.sync/`, `.claude/`, `.codex/`, etc.).
 
 ### Workspace mode
-- Target: `.sync/`, `.claude/`, `.codex/`, `.forge/`, vault root files.
+- Target: `.sync/`, `.claude/`, `.codex/`, vault root files.
 - **Only in AIHubVault** (mandatory). Other vaults receive these via sync automatically.
 - After editing, log the version in `_WORKSPACE_VERSION.md` (format: `YYYYMMDDNNNN`). Required.
 - Do not report the work done without the version entry.
@@ -178,9 +172,9 @@ Every note's frontmatter carries two classification axes: `type` and `tags`.
 ```yaml
 ---
 type: knowledge       # pick from the core type list
-tags: [Unity, skill-system]  # content-based search keywords
+tags: [AI, workflow]  # content-based search keywords
 agent: claude         # cumulative record of agents that worked on this note
-updated: 2026-04-08
+updated: 2026-04-15
 ---
 ```
 
@@ -313,7 +307,7 @@ The `.md` notes here live inside Obsidian vaults. Use an Obsidian URI to open th
 Start-Process 'obsidian://open?vault=VaultName&file=relative/path/from/vault/root'
 ```
 
-- `vault`: the vault folder name Obsidian has registered (e.g. `AIHubVault`, `Unity`, `JissouGame`).
+- `vault`: the vault folder name Obsidian has registered (e.g. `AIHubVault`, `BasicContentsVault`, or any vault the user has added).
 - `file`: path relative to the vault root, without `.md` (e.g. `Contents/Domain/Example_Note`).
 - Separator: `/`. Non-ASCII filenames are fine.
 - Do not use `Start-Process <file.md>`, `code`, `Invoke-Item`, etc. — they open VS Code.

@@ -13,7 +13,7 @@ agent: claude
 - If starting from the multi-vault root hub, first confirm the target vault via the root `CLAUDE.md`, then read this document.
 - No matter what task is requested, read the following documents before starting actual work:
   1) `_STATUS.md` (required)
-  2) Agent entry point (CLAUDE.md / CODEX.md / SESSION_RULES.md / .cursor/rules/)
+  2) Agent entry point (CLAUDE.md / CODEX.md / AGENTS.md)
   3) AGENT_STATUS (optional — when you need history of a complex task)
 - Do not start work if this pre-read sequence is skipped.
 
@@ -28,7 +28,6 @@ agent: claude
 | Claude Code | Vault design, documentation, orchestration | `CLAUDE.md` | `.claude/AGENT_STATUS.md` (recommended) |
 | Claudian | Content work inside Obsidian (Contents only) | `CLAUDE.md` + systemPrompt | — |
 | Codex | Structuring, bulk automation, Vault organization | `CODEX.md` | `.codex/AGENT_STATUS.md` (recommended) |
-| Cursor | Code editing, refactoring | `.cursor/rules/` (auto-loaded) | `.cursor/AGENT_STATUS.md` (recommended) |
 
 ### Rules
 
@@ -62,7 +61,7 @@ Every edit belongs to exactly one of the modes below. Do not mix modes.
 
 - **Target**: files under `Contents/**`
 - **Nature**: authoring / editing content related to the vault's topic
-- **Forbidden**: modifying `_Standards/`, `_tools/`, `.claude/`, `.codex/`, `.forge/`, or vault root files
+- **Forbidden**: modifying `_Standards/`, `_tools/`, `.claude/`, `.codex/`, or vault root files
 - **Exceptions**: registering a new document in `_VAULT-INDEX.md` and updating state in `_STATUS.md` are allowed
 
 #### Contents mode reference order
@@ -85,7 +84,7 @@ Every edit belongs to exactly one of the modes below. Do not mix modes.
 
 ### workspace mode (environment work)
 
-- **Target**: `_Standards/`, `_tools/`, `.claude/`, `.codex/`, `.forge/`, vault root files, `Tags/`, `Juggl_StyleGuide/`
+- **Target**: `_Standards/`, `_tools/`, `.claude/`, `.codex/`, vault root files, `Tags/`, `Juggl_StyleGuide/`
 - **Nature**: changes to vault structure, settings, rules, scripts, or agent configuration
 - **Forbidden**: editing `Contents/**` content bodies
 - **Exception**: batch frontmatter tag / metadata updates inside `Contents/` are treated as workspace work

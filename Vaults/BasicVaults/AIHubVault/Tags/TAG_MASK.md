@@ -20,17 +20,18 @@ updated: 2026-04-15
 
 | Legacy tag | Canonical tag | Notes |
 |------------|---------------|-------|
-| `Project_VamSurLike` | `AIMindVault` | Vault migration complete (2026-03-08) |
 | `high` | `priority/high` | Priority |
 | `medium` | `priority/medium` | Priority |
 | `low` | `priority/low` | Priority |
+
+Add your own legacy→canonical mappings as your tag vocabulary evolves.
 
 ---
 
 ## Checklist (when masking)
 
-- [x] Verify which folder the note belongs to
-- [x] Keep the existing `tags:` while adding the canonical tag (intermediate step)
+- [ ] Verify which folder the note belongs to
+- [ ] Keep the existing `tags:` while adding the canonical tag (intermediate step)
 - [ ] Check via search that notes carrying only the legacy tag are decreasing
 - [ ] Decide when to remove the legacy tag (bulk deletion is the final step)
 
@@ -38,7 +39,4 @@ updated: 2026-04-15
 
 ## Migration log
 
-### 2026-03-08: Project_VamSurLike → AIMindVault bulk migration
-
-- Swapped frontmatter tags across the vault after its purpose shifted (game design → AI workspace hub).
-- Completed for core files: `_Standards/`, `_forge/`, `CLAUDE.md`, `CODEX.md`, etc.
+Record bulk tag migrations here with date, scope, and rationale.

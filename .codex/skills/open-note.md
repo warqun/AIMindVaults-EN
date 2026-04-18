@@ -32,7 +32,7 @@ Start-Process $uri
 ## Usage Example
 
 ```powershell
-# open-note "Project_AIMindVaults" "Contents/Project/plan/AIMindVaults_plan/20260321_Indexing_Trigger_Design.md"
+# open-note "<YourVault>" "Contents/Project/plan/some_note.md"
 ```
 
 ## Notes

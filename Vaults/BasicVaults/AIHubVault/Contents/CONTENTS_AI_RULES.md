@@ -19,7 +19,6 @@ updated: 2026-04-15
 
 - Modifying files under `_Standards/Core/` affects every vault. Decide carefully.
 - Files under `_Standards/Contents/` are specific to this vault and may be modified freely.
-- Files under `_forge/staging/` are review-complete and waiting for distribution. Verify before deleting.
 
 ## Note creation notes
 
@@ -31,4 +30,3 @@ updated: 2026-04-15
 ## Prohibited
 
 - No full bulk edits across `_Standards/Core/`.
-- No arbitrary deletion or modification of `_forge/inbox/` files (they are outputs from external agents).

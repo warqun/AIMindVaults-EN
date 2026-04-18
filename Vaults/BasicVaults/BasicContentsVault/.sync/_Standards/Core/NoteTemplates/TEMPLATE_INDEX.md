@@ -3,7 +3,6 @@ aliases:
   - "Template list"
   - "Note template index"
 tags:
-  - TileMapToolKit
   - Standards
   - Meta
   - AIMindVault

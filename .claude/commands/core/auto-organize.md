@@ -64,7 +64,7 @@ Report the created folder path, note/vault path, and any follow-up actions taken
 
 - Lowercase + underscore for note folders: `db_design`, `permissions`, `workflow`.
 - Keep existing category patterns for vaults: `Domains_<area>`, `Projects_<area>`.
-- Vault names in PascalCase: `Notion`, `Docker`, `Unity`.
+- Vault names in PascalCase (proper nouns preserved, compound words → PascalCase).
 
 ## Judgment Criteria
 
@@ -76,16 +76,16 @@ Report the created folder path, note/vault path, and any follow-up actions taken
 
 ### Vault category matching
 
-| Topic | Category |
-|-------|----------|
-| Game engine / game domain knowledge | `Domains_Game` |
-| Game dev tools / toolkits | `Projects_GameTool` |
-| Video editing / media | `Domains_Video` |
-| Infra / DevOps / tools | `Domains_Infra` |
-| 3D modeling / rendering | `Domains_3D` |
-| AI asset production | `Domains_AI_Asset` |
-| Version control | `Domains_VCS` |
+| Topic | Category pattern |
+|-------|-----------------|
+| Any domain-knowledge topic (tool, language, discipline) | `Domains_<area>` |
+| Any concrete project deliverable | `Projects_<area>` |
+| Mixed domain + project work | `Lab_<area>` |
+| Personal records | `Personal` |
+| Readonly external references | `References` |
 | None | Propose a new category to the user |
+
+Group related vaults under a shared `<area>` suffix the user picks (e.g. `Domains_Game`, `Domains_Infra`, `Projects_Product`). The suffix is free-form.
 
 ## Forbidden
 

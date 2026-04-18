@@ -23,8 +23,7 @@ Manages AI agent collaboration workflows, tool configuration, standard documents
 
 1. `_Standards/Core/` — shared operational standards distributed to every vault
 2. `_Standards/Contents/` — custom rules specific to this vault
-3. `_forge/` — staging hub for external agent outputs
-4. `Contents/` — AI usage guides, prompts, and planning documents
+3. `Contents/` — AI usage guides, prompts, and planning documents
 
 ## Scope
 

@@ -26,7 +26,7 @@ Start-Process $uri
 ## Usage Example
 
 ```powershell
-# open-vault "Project_AIMindVaults"
+# open-vault "<YourVault>"
 ```
 
 ## Notes

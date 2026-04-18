@@ -2,7 +2,6 @@
 aliases:
   - "Final decision template"
 tags:
-  - TileMapToolKit
   - Standards
   - Meta
   - AIMindVault

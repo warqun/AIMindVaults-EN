@@ -64,7 +64,7 @@ Get-ChildItem Domain/**/*.md | ForEach { ... Set-Content ... }
 ## 🚫 Unsanctioned script creation
 
 - Do not create new scripts without checking `_Standards/Core/Script_Registry.md`
-- Do not place duplicate-function scripts in `_tools/` or `_forge/`
+- Do not place duplicate-function scripts in `_tools/`
 - Do not skip registering a new script in `Script_Registry.md`
 - Do not hardcode paths — always use script-location-based auto-detection
 - Details: `_Standards/Core/Script_Creation_Rule.md`

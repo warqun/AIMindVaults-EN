@@ -165,7 +165,6 @@ updated: 2026-04-15
   │  _STATUS.md          ← unified status    │
   │  .claude/AGENT_STATUS.md  ← Claude only  │
   │  .codex/AGENT_STATUS.md   ← Codex only   │
-  │  .cursor/...                              │
   └─────────────────────────────────────────┘
 ```
 

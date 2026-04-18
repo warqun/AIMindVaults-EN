@@ -1,7 +1,6 @@
 ---
 type: standard
 tags:
-  - TileMapToolKit
   - AIMindVault
   - architecture
   - vault-types
@@ -36,14 +35,14 @@ Vault categories used in the multi-vault system and the role / rules for each ty
 
 Vaults that accumulate knowledge on a specific topic. Main purpose is to grow Contents/Domain with knowledge notes.
 
-- Examples: Unity (game engine), CapCut (video editing), Notion (workspace ops)
+- Examples: a language, a tool, or a discipline you want to master
 - Categories: `Domains_Game`, `Domains_Video`, `Domains_Infra`, `Domains_3D`, `Domains_AI_Asset`, `Domains_VCS`
 
 ## Lab
 
 Hybrid vaults where knowledge accumulation (Domain) and real development / experiments (Project) happen together. Suited to learning while building.
 
-- Example: ObsidianDev (learning the plugin API + actually developing plugins)
+- Example: learning a framework while building a real plugin for it
 - Categories: `Lab_Infra`, `Lab_Game`, etc.
 - Uses Contents/Domain and Contents/Project equally
 
@@ -51,14 +50,14 @@ Hybrid vaults where knowledge accumulation (Domain) and real development / exper
 
 A real project with a clear goal and an end date. After completion, knowledge may be promoted up to a Domain vault (Knowledge Promotion).
 
-- Example: Project_VamSurLike (Vampire-Survivors-like game development)
+- Example: a shippable product with a defined scope and deadline
 - Categories: `Projects_Game`, etc.
 
 ## Reference
 
 Holds external material for read-only reference. AI agents may only read.
 
-- Example: Unity_Documentation (official Unity 6.3 manual)
+- Example: an official product manual or API reference imported verbatim
 - No modifications (read-only)
 
 ---

@@ -21,7 +21,7 @@
 1. **Identify the target vault**
    - Explicit specification: "In AIHubVault ~", "BasicContentsVault ~"
    - Keyword inference:
-     - "AI workflow", "agent", "_Standards", ".forge", "workspace", "sync script" → AIHubVault
+     - "AI workflow", "agent", "_Standards", "workspace", "sync script" → AIHubVault
      - Other topics → Ask the user (guide vault creation if none exists)
    - If a file path is included → Extract vault from the path
    - If ambiguous → Ask the user
@@ -50,7 +50,6 @@ Files that can be directly modified at root:
 - `CODEX.md` (Codex root entry point)
 - `.claude/` (root Claude settings)
 - `.codex/` (root Codex settings)
-- `.cursor/` (root Cursor settings)
 - `docs/` (root documentation)
 
 Vault internal files may only be modified after completing the vault entry protocol.

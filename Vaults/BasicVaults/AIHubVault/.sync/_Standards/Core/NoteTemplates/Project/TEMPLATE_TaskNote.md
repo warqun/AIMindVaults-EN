@@ -1,7 +1,6 @@
 ---
 type: task
 tags:
-  - TileMapToolKit
   - task
 created: <% tp.date.now("YYYY-MM-DD") %>
 status: todo

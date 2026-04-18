@@ -55,14 +55,13 @@ Start-Process 'obsidian://advanced-uri?vault=VaultName&filepath=relative_path_in
 ## Examples
 
 ```
-/open-note Unity CSharp Job System
-/open-note C:\AIMindVaults\Vaults\Domains_Game\Unity\Contents\Domain\DOTS\04_Jobs_Burst\Unity_CSharp_Job_System.md
+/open-note AIHubVault weekly review
+/open-note C:\AIMindVaults\Vaults\BasicVaults\AIHubVault\Contents\Domain\Example\Example_Note.md
 ```
 
 ## Limitations
 
 - **Files with `#`, `%`, `&`, `?`, `+` in the name cannot be opened** — structural limit of Obsidian URIs.
-- Details: ObsidianDev vault `20260320_Obsidian_URI_Hash_final_report.md`.
 - Rename in Obsidian, then retry.
 
 ## References

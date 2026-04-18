@@ -2,7 +2,6 @@
 aliases:
   - "Delegated task instruction template"
 tags:
-  - TileMapToolKit
   - Standards
   - Meta
   - AIMindVault

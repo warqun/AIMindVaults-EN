@@ -1,6 +1,5 @@
 ---
 tags:
-  - TileMapToolKit
 type: plugin-standard
 plugin: juggl
 updated: 2026-03-05

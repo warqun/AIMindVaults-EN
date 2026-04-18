@@ -1,7 +1,6 @@
 ---
 type: standards
 tags:
-  - TileMapToolKit
   - AIMindVault
   - Meta
   - Standards

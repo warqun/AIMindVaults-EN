@@ -31,14 +31,13 @@ node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index build -r "{vault-path
 
 ## Routing Rules
 
-- Domain knowledge (Unity, CapCut, Notion, Git, etc.) → matching `Vaults/Domains_*/` vault.
-- Game design → `Vaults/Domains_Game/GameDesign/`.
+- Domain knowledge → matching `Vaults/Domains_<area>/` vault.
 - AI workspace design/operation → `Vaults/BasicVaults/AIHubVault/`.
-- Project work → matching `Vaults/Projects_*/` vault.
+- Project work → matching `Vaults/Projects_<area>/` vault.
 - No suitable vault? → ask the user before placing. Do not default to an unrelated vault.
 
 ## Reference Vault CLAUDE.md When Routing (Mandatory)
 
 - When category alone doesn't make the target clear, read the **scope and boundaries in each candidate vault's CLAUDE.md** before deciding.
-- Especially for adjacent-domain ambiguity (e.g. GameArt vs LightAndColor, AI vs AI_Coding), check the "What this vault does NOT collect" section.
+- Especially for adjacent-domain ambiguity between two vaults with overlapping subjects, check each candidate's "What this vault does NOT collect" section.
 - For vaults whose CLAUDE.md doesn't declare a scope, route by the "Role of this vault" line — and after the work, recommend adding an explicit scope declaration.

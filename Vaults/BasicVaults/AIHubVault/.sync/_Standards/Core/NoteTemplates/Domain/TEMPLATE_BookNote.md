@@ -1,7 +1,6 @@
 ---
 type: reference
 tags:
-  - TileMapToolKit
   - book
 created: <% tp.date.now("YYYY-MM-DD") %>
 status: reading

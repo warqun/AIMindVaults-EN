@@ -2,7 +2,6 @@
 aliases:
   - "Claude Token Lite Prompt"
 tags:
-  - TileMapToolKit
   - Standards
   - Template
   - AIMindVault

@@ -83,7 +83,7 @@ Build a cross-vault master index spanning every AIMindVaults vault. Use when sea
 node cli.js index master-build
 
 # refresh a single vault
-node cli.js index master-build --vault-name "Unity"
+node cli.js index master-build --vault-name "YourVault"
 ```
 
 ---
@@ -107,7 +107,7 @@ Cross-vault search against the master index.
 node cli.js index master-search -q "skill system"
 
 # search within one vault
-node cli.js index master-search -q "ECS" --vault "Unity"
+node cli.js index master-search -q "workflow" --vault "YourVault"
 
 # show the cross-vault concept map only
 node cli.js index master-search -c
@@ -211,7 +211,7 @@ Clone a new vault from BasicContentsVault. Use this instead of manual folder cop
 
 ```bash
 node cli.js clone \
-  -t "/path/to/Vaults/Domains_Game/NewVault" \
+  -t "/path/to/Vaults/Domains_<area>/NewVault" \
   -n "NewVault"
 ```
 
@@ -259,7 +259,7 @@ Bulk-empty each vault's `.trash/` folder.
 node cli.js trash-clean -d
 
 # clean specific vaults
-node cli.js trash-clean -v "Unity" "GameDesign"
+node cli.js trash-clean -v "VaultA" "VaultB"
 
 # actually delete
 node cli.js trash-clean
@@ -336,7 +336,7 @@ Given a task description, recommend an agent and a vault.
 | `-t, --task <description>` | Task description (required) |
 
 ```bash
-node cli.js route -t "Unity tilemap rendering optimization"
+node cli.js route -t "refactor shared notes across research vaults"
 ```
 
 ---

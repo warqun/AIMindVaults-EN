@@ -13,7 +13,7 @@ Rebuild `vault_index.json` for a single vault or for every active vault.
 ```
 /reindex              — incremental build for the current vault
 /reindex all          — iterate every active vault, incremental build
-/reindex Unity        — incremental build for a specific vault
+/reindex <YourVault>  — incremental build for a specific vault
 /reindex all --full   — full rebuild for every vault (ignore cache)
 ```
 
@@ -49,11 +49,11 @@ Iterate the `Vaults/` subdirectory to find the folder matching the name.
 ```
 === Vault Reindex Result ===
 AIHubVault    : 114 notes, 0.12s (incremental, 2 updated)
-Unity         : 183 notes, 0.21s (incremental, 0 updated)
-JissouGame    : 32 notes, 0.08s (incremental, 5 new)
-Search        : skipped (no indexer script)
+<VaultA>      : 183 notes, 0.21s (incremental, 0 updated)
+<VaultB>      : 32 notes, 0.08s (incremental, 5 new)
+<VaultC>      : skipped (no indexer script)
 ...
-Total: 15 vaults, 1 skipped, 0 failed, 1.2s total
+Total: N vaults, 1 skipped, 0 failed, 1.2s total
 ```
 
 ## References

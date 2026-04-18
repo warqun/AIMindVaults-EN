@@ -66,7 +66,7 @@ rmdir "<bomb-path>"; rmdir C:\TEMP_EMPTY
 
 ### Reference
 
-Full incident: Project_AIMindVaults `20260408_clone_vault_recursive_copy_bomb.md`.
+If a recursive-copy bomb occurs, log the incident in your project plan vault for future reference.
 
 ## Forbidden
 

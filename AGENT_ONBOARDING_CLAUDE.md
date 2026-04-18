@@ -121,24 +121,4 @@ Skill details: see `.claude/commands/MANIFEST.md`.
 Claude Code connects to external tools via MCP (Model Context Protocol) servers.
 Configure in `~/.claude/settings.json` or the per-project `.claude/settings.local.json`.
 
-### MCP servers commonly used in this environment
-
-| Server | Purpose | Details |
-|--------|---------|---------|
-| Serena | Semantic code analysis (C# symbol-based) | `.claude/rules/custom/serena-mcp.md` |
-| mcp-unity | Unity editor control | Not used (unity-cli preferred) |
-| Notion | Notion page read/write | `.claude/rules/custom/notion-sync.md` |
-| Blender | Blender 3D control | `.claude/rules/custom/blender-mcp.md` |
-| Google Calendar | Scheduling | — |
-| Gmail | Email | — |
-| Claude in Chrome | Browser automation | — |
-
-These are examples from a maintainer's environment. Users configure their own servers under `custom/`.
-
-### Unity Tool Priority (Mandatory)
-
-1. **unity-cli** — highest priority (`unity-cli console`, `unity-cli editor refresh --compile`).
-2. **Serena MCP** — C# symbol navigation/editing.
-3. **mcp-unity** — fallback only when unity-cli is unavailable.
-
-Details: `.claude/rules/custom/unity-tools.md`, `.claude/rules/custom/serena-mcp.md`.
+Users configure their own MCP servers. Document the server's usage policy under `.claude/rules/custom/<server-name>.md` so agents can look up what to prefer, what to avoid, and when the server takes priority over generic file tools.

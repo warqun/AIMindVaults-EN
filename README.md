@@ -15,7 +15,7 @@ Working with AI agents (Claude Code, Codex, Cursor) day to day, two problems kep
 AIMindVaults is a **local, file-based PKM system** that addresses both at once:
 
 - **Persistence** — everything agents need lives as plain files they can re-read next session.
-- **Multi-vault by purpose** (Domain / Project / Lab / Diary) — Obsidian stays fast, agent context stays narrow.
+- **Multi-vault by purpose** (domain knowledge / projects / labs / personal notes) — Obsidian stays fast, agent context stays narrow.
 - **Hub-and-spoke sync** — rules, tools, and standards are edited in one Hub vault and propagated to every satellite automatically.
 
 ---

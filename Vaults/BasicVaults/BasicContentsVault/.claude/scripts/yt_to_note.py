@@ -10,7 +10,7 @@ import subprocess
 import tempfile
 from datetime import datetime
 
-VAULT_PATH = "C:/Dev_Game/Obsidian/GameDesign/Projects_VamSurLike"
+VAULT_PATH = os.environ.get("AIMV_YT_VAULT_PATH", os.path.expanduser("~/AIMindVaults"))
 OUTPUT_DIR = os.path.join(VAULT_PATH, "References/YouTube")
 
 def get_video_info(url):

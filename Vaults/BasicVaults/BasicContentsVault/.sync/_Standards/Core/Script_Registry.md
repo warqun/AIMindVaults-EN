@@ -1,7 +1,6 @@
 ---
 type: standards
 tags:
-  - TileMapToolKit
   - Standards
   - AIMindVault
   - script-management
@@ -55,8 +54,8 @@ Scripts created for a specific migration or fix and not reused.
 
 | Script | Location | Purpose | Owner | Notes |
 |--------|----------|---------|-------|-------|
-| `fix_false_positives.ps1` | `.forge/staging/` | Fix false positives from an earlier rename script | codex | Done |
-| `rename_env_prefix.ps1` | `.forge/staging/` | Rename environment-prefix tokens | codex | Staging script |
+| `fix_false_positives.ps1` | `scripts/staging/` | Fix false positives from an earlier rename script | codex | Done |
+| `rename_env_prefix.ps1` | `scripts/staging/` | Rename environment-prefix tokens | codex | Staging script |
 
 ---
 

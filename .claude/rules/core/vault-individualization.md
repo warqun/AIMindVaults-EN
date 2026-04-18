@@ -28,7 +28,7 @@ After cloning, complete the **required decisions** and **required follow-ups** b
 
 - Use a name whose role is immediately obvious.
 - No URI-reserved characters (`#`, `%`, `&`, `?`, `+`) and no emoji.
-- Examples: `Unity`, `AppFlowy`, `Project_VamSurLike`.
+- Examples: `YourDomainVault`, `YourProject`.
 
 ### 2. Parent Category
 
@@ -36,14 +36,11 @@ Place under the right parent based on the vault's nature:
 
 | Category | Path | Criterion |
 |----------|------|-----------|
-| Domains_Game | `Vaults/Domains_Game/` | Game-related domain knowledge |
-| Domains_Video | `Vaults/Domains_Video/` | Video / media domain knowledge |
-| Domains_Infra | `Vaults/Domains_Infra/` | Infrastructure / tool domain knowledge |
-| Projects_GameTool | `Vaults/Projects_GameTool/` | Game-dev tool / toolkit project |
-| Projects_Game | `Vaults/Projects_Game/` | Game development project |
-| Projects_Infra | `Vaults/Projects_Infra/` | Infrastructure project artifacts |
-| Lab_Infra | `Vaults/Lab_Infra/` | Domain + project hybrid (e.g. plugin dev) |
+| Domains_<area> | `Vaults/Domains_<area>/` | Domain knowledge grouped by area (e.g. language, tool, topic) |
+| Projects_<area> | `Vaults/Projects_<area>/` | Project deliverables grouped by area |
+| Lab_<area> | `Vaults/Lab_<area>/` | Domain + project hybrid (e.g. plugin dev, research + build) |
 | Personal | `Vaults/Personal/` | Personal records |
+| References | `References/` | Readonly external references |
 | BasicVaults | `Vaults/BasicVaults/` | System vaults (Hub, distribution) |
 
 If a new category is needed, confirm with the user first.
@@ -54,7 +51,7 @@ Write a vault-specific CLAUDE.md:
 
 - **Role of this vault**: 1–2 lines, explicit.
 - **Scope**: what kinds of content belong here, and the criteria.
-- **What NOT to collect**: the boundary with adjacent vaults that could cause confusion. Name the neighboring vaults (e.g. "shader styling here; color theory → LightAndColor").
+- **What NOT to collect**: the boundary with adjacent vaults that could cause confusion. Name the neighboring vault explicitly (e.g. "shader styling here; color theory → `<YourArtTheoryVault>`").
 - **Directory layout**: the `Contents/` subfolder structure.
 - **Tag rule**: the vault identifier tag.
 - **Session entry rule**: must include mandatory pre-read of `_STATUS.md`.
@@ -69,7 +66,7 @@ Pick the right `Contents/` layout for the vault type:
 
 ### 5. Tag Rule
 
-- Pick one vault identifier tag (e.g. `Unity`, `AppFlowy`, `Project_VamSurLike`).
+- Pick one vault identifier tag (matching the vault name).
 - Every note's frontmatter `tags` must include this tag.
 
 ## Required Post-Creation Work

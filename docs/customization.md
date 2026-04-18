@@ -36,7 +36,7 @@ Choose the parent folder that matches the vault's nature.
 | Projects_* | `Vaults/Projects_<area>/` | Real project execution and task management |
 | Personal | `Vaults/Personal/` | Private logs — diary, retrospectives |
 
-Examples: Python language knowledge → `Vaults/Domains_Dev/Python/`; a game dev project → `Vaults/Projects_Game/MyGame/`.
+Examples: a language-knowledge vault → `Vaults/Domains_Dev/YourLanguageVault/`; a product project → `Vaults/Projects_<area>/YourProject/`.
 
 ### Required post-creation steps
 
@@ -171,7 +171,7 @@ Example — weekly-review skill (`weekly-review.md`):
 ```markdown
 # /weekly-review — Weekly retrospective
 
-Generate this week's retrospective note under Vaults/Personal/Diary/.
+Generate this week's retrospective note under `Vaults/Personal/<YourDiaryVault>/`.
 
 ## Procedure
 
@@ -202,9 +202,9 @@ Add a `## Tag rules` section to the vault's `CLAUDE.md` and the vault will use t
 ```markdown
 ## Tag rules
 
-- Use PascalCase (e.g. `GameDesign`, `SkillSystem`)
-- Allow hierarchical tags (e.g. `unity/dots`, `design/system`)
-- Vault-identifying tag: `GameDesign` (required on every note)
+- Use PascalCase (e.g. `MyDomain`, `SkillSystem`)
+- Allow hierarchical tags (e.g. `domain/subtopic`, `design/system`)
+- Vault-identifying tag: `<VaultName>` (required on every note)
 ```
 
 Without that section, the system default applies.

@@ -1,7 +1,6 @@
 ---
 type: retrospective
 tags:
-  - TileMapToolKit
   - retrospective
 created: <% tp.date.now("YYYY-MM-DD") %>
 period:
