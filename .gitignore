@@ -27,3 +27,10 @@ desktop.ini
 
 # Windows reserved device names (residue from a recursive-copy incident)
 nul
+
+# Creator personal settings (excluded from distribution)
+.claude/settings.local.json
+**/.claudian/sessions/
+**/.claudian/claudian-settings.json
+**/.claude/claudian-settings.json
+.serena/
