@@ -1,5 +1,6 @@
 ---
 tags:
+  - TileMapToolKit
 type: plugin-standard
 plugin: templater-obsidian
 updated: 2026-03-05
@@ -7,18 +8,19 @@ updated: 2026-03-05
 
 # Templater
 
-## Features
+## 기능
 
-- Auto-generate note templates
-- Inject default date / project / status values
+- 노트 템플릿 자동 생성
+- 날짜/프로젝트/상태 기본값 주입
 
-## Main uses
+## 주 사용 작업
 
-- Generate issue / meeting / spec documents
-- Standardize frontmatter
+- 이슈/회의록/스펙 문서 생성
+- frontmatter 표준화
 
-## Basic procedure
+## 기본 절차
 
-1. Pick a template under `_Standards/NoteTemplates`
-2. Create the note from the template
-3. Verify required fields (`type`, `status`, `updated`)
+1. `_Standards/NoteTemplates` 템플릿 선택
+2. 템플릿으로 노트 생성
+3. 필수 필드(`type`, `status`, `updated`) 확인
+

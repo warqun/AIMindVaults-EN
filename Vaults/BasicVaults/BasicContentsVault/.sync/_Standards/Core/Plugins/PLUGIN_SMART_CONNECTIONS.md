@@ -1,5 +1,6 @@
 ---
 tags:
+  - TileMapToolKit
 type: plugin-standard
 plugin: smart-connections
 updated: 2026-03-05
@@ -7,22 +8,23 @@ updated: 2026-03-05
 
 # Smart Connections
 
-## Features
+## 기능
 
-- Semantic similarity-based note search
-- Fill missing references via related-document suggestions
+- 의미 기반 유사 노트 탐색
+- 관련 문서 추천으로 누락 참조 보완
 
-## Main uses
+## 주 사용 작업
 
-- Gather prior material before drafting a new document
-- Detect duplicate documents
+- 새 문서 작성 전 선행 자료 수집
+- 중복 문서 탐지
 
-## Basic procedure
+## 기본 절차
 
-1. Open a note with the key keywords
-2. Review the suggestion list
-3. Explicitly link the notes you will reference
+1. 핵심 키워드가 있는 노트 열기
+2. 추천 노트 목록 확인
+3. 참조할 노트를 본문 링크로 명시
 
-## Notes
+## 주의
 
-- Suggestions are an auxiliary signal; finalize decisions via manual review.
+- 추천 결과는 보조 신호이므로 최종 판단은 수동 검토로 확정한다.
+

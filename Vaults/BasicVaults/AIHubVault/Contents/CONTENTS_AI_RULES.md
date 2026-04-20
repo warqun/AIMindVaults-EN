@@ -2,31 +2,31 @@
 type: standard
 tags:
   - domain
-updated: 2026-04-15
+updated: 2026-03-23
 ---
 
-# CONTENTS_AI_RULES — AIMindVault-specific AI work rules
+# CONTENTS_AI_RULES — AIMindVault 전용 AI 작업 규칙
 
-> Overrides/augments the rules in `_Standards/Core/`.
+> `_Standards/Core/` 규칙에 추가(override)된다.
 
-## Task priority
+## 작업 우선순위
 
-1. Read `_STATUS.md` first — identify the current focus of work.
-2. Use `_VAULT-INDEX.md` to locate relevant files.
-3. For broad scopes, consult the related guides under `_Standards/Core/`.
+1. `_STATUS.md` 먼저 확인 — 현재 집중 작업 파악
+2. `_VAULT-INDEX.md`로 관련 파일 위치 확인
+3. 작업 범위가 넓으면 `_Standards/Core/` 관련 가이드 참조
 
-## File modification rules
+## 파일 수정 규칙
 
-- Modifying files under `_Standards/Core/` affects every vault. Decide carefully.
-- Files under `_Standards/Contents/` are specific to this vault and may be modified freely.
+- `_Standards/Core/` 파일 수정은 모든 볼트에 영향. 신중하게 판단.
+- `_Standards/Contents/` 파일은 이 볼트 전용. 자유롭게 수정 가능.
 
-## Note creation notes
+## 노트 생성 시 주의
 
-- Frontmatter rules: see `_Standards/Core/NoteProperties.md`.
+- Frontmatter 규칙: `_Standards/Core/NoteProperties.md` 참조
 - `type`: `standard` | `template` | `guide` | `idea` | `plan` | `report`
-- Always include `AIMindVault` in `tags`.
-- Glossary: see [[CONTENTS_GLOSSARY]].
+- `tags`에 `AIMindVault` 필수 포함
+- 용어 정의: [[CONTENTS_GLOSSARY]] 참조
 
-## Prohibited
+## 금지 사항
 
-- No full bulk edits across `_Standards/Core/`.
+- `_Standards/Core/` 전체 bulk 수정 금지

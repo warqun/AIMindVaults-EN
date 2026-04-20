@@ -1,6 +1,7 @@
 ---
 type: retrospective
 tags:
+  - TileMapToolKit
   - retrospective
 created: <% tp.date.now("YYYY-MM-DD") %>
 period:
@@ -12,35 +13,35 @@ period:
 local: <% tp.file.title %>
 ```
 
-## Period
+## 기간
 
 -
 
-## Keep (what went well)
+## 잘한 것 (Keep)
 
 -
 
-## Improve
+## 개선할 것 (Improve)
 
 -
 
-## Start
+## 시작할 것 (Start)
 
 -
 
-## Stop
+## 멈출 것 (Stop)
 
 -
 
-## Action items
+## 다음 행동 (Action Items)
 
 - [ ]
 - [ ]
 
-## Linked milestones
+## 연결 마일스톤
 
 - [[]]
 
 ---
 
-*Retrospective written: <% tp.date.now("YYYY-MM-DD") %>*
+*회고 작성일: <% tp.date.now("YYYY-MM-DD") %>*

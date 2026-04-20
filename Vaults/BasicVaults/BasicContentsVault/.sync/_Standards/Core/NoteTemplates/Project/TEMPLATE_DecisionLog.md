@@ -1,6 +1,7 @@
 ---
 type: decision
 tags:
+  - TileMapToolKit
   - decision
 created: <% tp.date.now("YYYY-MM-DD") %>
 status: decided
@@ -12,36 +13,36 @@ status: decided
 local: <% tp.file.title %>
 ```
 
-## Decision summary
+## 결정 요약
 
-<!-- One sentence. What was decided and how. -->
+<!-- 한 문장. 무엇을 어떻게 결정했는가. -->
 
-## Background / problem
+## 배경 / 문제
 
 -
 
-## Options considered
+## 검토한 선택지
 
-| Option | Pros | Cons |
+| 선택지 | 장점 | 단점 |
 |--------|------|------|
 | A. | | |
 | B. | | |
 
-## Final decision
+## 최종 결정
 
-**Choice**: A / B / other
+**선택**: A / B / 기타
 
-**Reason**:
+**이유**:
 -
 
-## Expected outcome
+## 예상 결과
 
 -
 
-## Re-review triggers
+## 재검토 조건
 
-<!-- Situations that would warrant revisiting this decision. -->
+<!-- 이 결정을 다시 검토해야 하는 상황. -->
 
 ---
 
-*Decided: <% tp.date.now("YYYY-MM-DD") %>*
+*결정일: <% tp.date.now("YYYY-MM-DD") %>*

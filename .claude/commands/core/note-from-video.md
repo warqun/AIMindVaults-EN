@@ -1,95 +1,96 @@
-# /note-from-video — Video → Vault Note Pipeline
+# /note-from-video — 영상 → 볼트 노트 변환 파이프라인
 
-> A structured pipeline that takes a video URL and produces a well-formed note.
-> Targets yt-dlp-supported platforms (YouTube, Vimeo, etc.).
+> 영상 URL을 받아 구조화된 노트를 생성하는 정형화된 파이프라인.
+> YouTube, Vimeo 등 yt-dlp 지원 플랫폼 대상.
 
-Input: $ARGUMENTS
+입력: $ARGUMENTS
 
-## Pipeline Stages
+## 파이프라인 단계
 
-### Stage 1: Collect metadata
+### 1단계: 메타데이터 수집
 
-- Pull video metadata via yt-dlp (title, channel, duration, chapters).
-- Command: `yt-dlp --dump-json "URL" | jq '{title, channel, duration, chapters}'`
-- If there are no chapters, try extracting timestamps from the video description.
+- yt-dlp로 영상 메타데이터 추출 (제목, 채널, 길이, 챕터)
+- 명령: `yt-dlp --dump-json "URL" | jq '{title, channel, duration, chapters}'`
+- 챕터가 없으면 영상 설명란에서 타임스탬프 추출 시도
 
-### Stage 2: Acquire subtitles
+### 2단계: 자막 확보
 
-Try in priority order:
+우선순위대로 시도:
 
-1. **Manual subtitles (user's language)**: `yt-dlp --list-subs "URL"` → download if present.
-2. **Auto-generated (user's language)**: if no manual track, grab the auto-generated track.
-3. **Auto-generated (source language)**: if the user's language isn't available, fall back to the source language.
-4. **No subtitles**: use Chrome MCP to capture only the description, and report the limitation to the user.
+1. **수동 자막 (ko)**: `yt-dlp --list-subs "URL"` → `ko` 있으면 다운로드
+2. **자동생성 자막 (ko)**: 수동 없으면 자동생성 한국어 자막 다운로드
+3. **자동생성 자막 (en→ko)**: 한국어 없으면 영어 자막 다운로드
+4. **자막 없음**: Chrome MCP로 영상 페이지 설명란만 확보, 사용자에게 보고
 
-Download command:
+다운로드 명령:
 ```bash
-yt-dlp --write-sub --write-auto-sub --sub-lang en --sub-format srt --skip-download -o "$TEMP/aimind_yt_sub/%(id)s" "URL"
+yt-dlp --write-sub --write-auto-sub --sub-lang ko --sub-format srt --skip-download -o "$TEMP/aimind_yt_sub/%(id)s" "URL"
 ```
 
-### Stage 3: Clean the subtitles
+### 3단계: 자막 정제
 
-- Read the SRT, strip timecodes, merge duplicate lines.
-- Correct obvious mis-recognitions in auto-generated subtitles (only when context makes the intended word unambiguous).
-- Log the corrections at the bottom of the note (transparency).
+- SRT 파일을 읽으면서 타임코드 제거, 중복 문장 병합
+- 자동생성 자막의 명백한 오인식 보정 (맥락상 명확한 것만)
+  - 예: "세곤도" → "색온도", "안부" → "암부", "주강부" → "주광부"
+- 보정한 항목을 노트 하단에 기록 (투명성)
 
-### Stage 4: Route to a vault
+### 4단계: 볼트 라우팅
 
-- Choose the target vault based on topic keywords (see root `CLAUDE.md` entry protocol).
-- Use the user's specified vault if given.
-- If ambiguous, ask the user.
-- Place under `Contents/Domain/` of the target vault (use a topic sub-folder if one exists).
+- 영상 주제 키워드로 대상 볼트 판단 (루트 CLAUDE.md 볼트 진입 프로토콜 참조)
+- 사용자가 볼트를 지정했으면 그대로 사용
+- 모호하면 사용자에게 확인
+- 대상 볼트의 Contents/Domain/ 하위에 배치 (주제별 하위폴더 있으면 활용)
 
-### Stage 5: Structure the note
+### 5단계: 노트 구조화
 
-Organize around chapters, with these principles:
+챕터 기반으로 구조를 잡되, 아래 원칙 적용:
 
-- **H1**: `{core topic}` — refined to the key concept, not the raw video title.
-- **Summary**: compress the whole video into 3–5 lines (top of the note).
-- **Body**: split into H2 sections by chapter or topic transition.
-- **Each section**: concept → concrete explanation → table/comparison (if relevant).
-- **Closing**: related material, recommended resources, wikilinks.
+- **H1**: `{핵심 주제}` (영상 제목 그대로가 아니라 핵심 개념으로 정제)
+- **핵심 요약**: 영상 전체를 3~5줄로 압축 (노트 상단)
+- **본문**: 챕터 또는 주제 전환 기준으로 H2 섹션 분리
+- **각 섹션**: 핵심 개념 → 구체적 설명 → 표/비교 (해당 시) 순서
+- **마무리**: 관련 자료, 추천 리소스, 위키링크
 
 Frontmatter:
 ```yaml
 ---
 type: domain
 tags:
-  - [vault-tag]
-  - [topic-tags]
-source: [video URL]
-source_title: [original title]
-source_channel: [channel name]
+  - [볼트태그]
+  - [주제태그들]
+source: [영상URL]
+source_title: [영상 원제]
+source_channel: [채널명]
 created: YYYY-MM-DD
 agent: claude
 ---
 ```
 
-Include a Juggl embed (filename-based).
+Juggl 임베드 포함 (파일명 기반).
 
-### Stage 6: Quality check
+### 6단계: 품질 검증
 
-- Run post-edit review after writing.
-- Mark any parts rendered unclear by subtitle mis-recognition with `[?]`.
+- 노트 작성 후 post-edit review 실행
+- 자막 오인식에서 온 의미 불명확 부분이 있으면 `[?]` 표시
 
-### Stage 7: Cleanup
+### 7단계: 정리
 
-- Delete the `$TEMP/aimind_yt_sub/` temp files.
-- Report completion after deletion is confirmed.
+- `$TEMP/aimind_yt_sub/` 임시 파일 삭제
+- 삭제 확인 후 완료 보고
 
-## Beginner-Note Option
+## 초심자 노트 옵션
 
-If the user asks for "beginner-friendly" / "simple":
-- Add parenthetical definitions to technical terms.
-- Strengthen analogies and examples.
-- Bold the key takeaways.
-- Use tables and comparisons aggressively.
+사용자가 "초심자용", "쉽게" 등을 요청하면:
+- 전문 용어에 괄호 설명 추가
+- 비유/예시 보강
+- 핵심 포인트를 볼드로 강조
+- 표와 비교를 적극 활용
 
-## Failure Handling
+## 실패 시 대응
 
-| Situation | Response |
-|-----------|----------|
-| yt-dlp not installed | Guide the user through installation |
-| No subtitles | Organize from description + chapters; state the limit |
-| Video private/deleted | Report immediately |
-| SRT parse fail | Retry with VTT format |
+| 상황 | 대응 |
+|------|------|
+| yt-dlp 미설치 | 사용자에게 설치 안내 |
+| 자막 없음 | 설명란 + 챕터로 가능한 만큼 정리, 한계 명시 |
+| 영상 비공개/삭제 | 즉시 보고 |
+| SRT 파싱 실패 | VTT 포맷으로 재시도 |

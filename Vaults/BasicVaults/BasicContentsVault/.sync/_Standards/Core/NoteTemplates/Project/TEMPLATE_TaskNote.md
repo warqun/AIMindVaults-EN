@@ -1,6 +1,7 @@
 ---
 type: task
 tags:
+  - TileMapToolKit
   - task
 created: <% tp.date.now("YYYY-MM-DD") %>
 status: todo
@@ -13,30 +14,30 @@ priority: medium
 local: <% tp.file.title %>
 ```
 
-## Goal
+## 목표
 
-<!-- What changes once this task is done. -->
+<!-- 이 작업이 완료되면 무엇이 달라지는가. -->
 
-## Done criteria
+## 완료 조건 (Done Criteria)
 
 - [ ]
 - [ ]
 
-## Work items
+## 작업 내용
 
 -
 
-## Blocking / dependencies
+## 블로킹 / 의존
 
-- Blocking: [[]]
-- Prerequisite: [[]]
+- 블로킹: [[]]
+- 선행 필요: [[]]
 
-## Progress log
+## 진행 로그
 
-| Date | Entry |
-|------|-------|
-| <% tp.date.now("YYYY-MM-DD") %> | Started |
+| 날짜 | 내용 |
+|------|------|
+| <% tp.date.now("YYYY-MM-DD") %> | 작업 시작 |
 
 ---
 
-*Created: <% tp.date.now("YYYY-MM-DD") %>*
+*생성일: <% tp.date.now("YYYY-MM-DD") %>*

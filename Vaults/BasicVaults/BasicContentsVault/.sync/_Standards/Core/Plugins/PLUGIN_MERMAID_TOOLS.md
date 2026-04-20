@@ -1,5 +1,6 @@
 ---
 tags:
+  - TileMapToolKit
 type: plugin-standard
 plugin: mermaid-tools
 updated: 2026-03-05
@@ -7,17 +8,17 @@ updated: 2026-03-05
 
 # Mermaid Tools
 
-## Features
+## 기능
 
-- Authoring / editing aid for Mermaid code
-- Review diagram rendering
+- Mermaid 코드 작성/수정 보조
+- 다이어그램 렌더 검토
 
-## Main uses
+## 주 사용 작업
 
-- Document system flows, sequences, state transitions
-- Produce visuals for architecture decisions
+- 시스템 흐름도, 시퀀스, 상태 전이 문서화
+- 아키텍처 의사결정 시 시각 자료 생성
 
-## Basic syntax entry
+## 기본 문법 진입점
 
 ```mermaid
 flowchart TD
@@ -25,4 +26,5 @@ flowchart TD
   B --> C[Output]
 ```
 
-For detailed syntax, follow `MERMAID_JUGGL_SYNTAX.md`.
+상세 문법은 `MERMAID_JUGGL_SYNTAX.md`를 따른다.
+

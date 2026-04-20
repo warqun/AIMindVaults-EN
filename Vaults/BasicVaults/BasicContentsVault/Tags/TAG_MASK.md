@@ -1,42 +1,23 @@
 ---
 type: tag-mask
-updated: 2026-04-15
+tags:
+updated: (날짜)
 ---
 
-# TAG_MASK — Tag masking (legacy tag → canonical tag)
+# TAG_MASK — 태그 마스킹(기존 태그 → 정규 태그)
 
-> Purpose: gradually unify scattered tags into a canonical tag set.
-> Principle: automatic replacement is risky — default to **staged/manual review**.
+> 목적: 이미 흩어진 태그를 "정규 태그"로 점진적으로 통일한다.
+> 원칙: 자동 치환은 위험하니 **단계적/수동 검토**를 기본으로 한다.
 
-## Masking rules
+## 매핑 테이블
 
-1. Start with core documents (`_Standards/`, `Domain/`).
-2. Expand gradually to the rest of the folders.
-3. Agent memory files only when needed (optional).
+| 기존 태그 | 정규 태그 | 비고 |
+|----------|----------|------|
+| (필요 시 추가) | | |
 
----
+## 체크리스트 (마스킹 시)
 
-## Mapping table
-
-| Legacy tag | Canonical tag | Notes |
-|------------|---------------|-------|
-| `high` | `priority/high` | Priority |
-| `medium` | `priority/medium` | Priority |
-| `low` | `priority/low` | Priority |
-
-Add your own legacy→canonical mappings as your tag vocabulary evolves.
-
----
-
-## Checklist (when masking)
-
-- [ ] Verify which folder the note belongs to
-- [ ] Keep the existing `tags:` while adding the canonical tag (intermediate step)
-- [ ] Check via search that notes carrying only the legacy tag are decreasing
-- [ ] Decide when to remove the legacy tag (bulk deletion is the final step)
-
----
-
-## Migration log
-
-Record bulk tag migrations here with date, scope, and rationale.
+- [ ] 해당 노트가 어떤 폴더에 속하는지 확인
+- [ ] 기존 `tags:` 유지하면서 정규 태그 추가(중간 단계)
+- [ ] 검색으로 "옛 태그만 달린 노트"가 줄어드는지 확인
+- [ ] 어느 시점에 옛 태그 제거할지 결정(대량 삭제는 마지막)

@@ -1,6 +1,7 @@
 ---
 type: daily
 tags:
+  - TileMapToolKit
   - daily
   - <% tp.file.title %>
 created: <% tp.date.now("YYYY-MM-DD") %>
@@ -12,19 +13,19 @@ created: <% tp.date.now("YYYY-MM-DD") %>
 local: <% tp.file.title %>
 ```
 
-## What I did today
+## 오늘 한 일
 
 -
 
-## What I learned
+## 오늘 배운 것
 
 -
 
-## Thoughts / memos
+## 생각·메모
 
 -
 
-## Tomorrow
+## 내일 할 일
 
 -
 

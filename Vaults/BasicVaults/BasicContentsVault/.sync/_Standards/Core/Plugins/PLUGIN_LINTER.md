@@ -1,5 +1,6 @@
 ---
 tags:
+  - TileMapToolKit
 type: plugin-standard
 plugin: obsidian-linter
 updated: 2026-03-05
@@ -7,18 +8,19 @@ updated: 2026-03-05
 
 # Linter
 
-## Features
+## 기능
 
-- Auto-align / normalize document formatting
-- Unify frontmatter / heading / list styles
+- 문서 포맷 자동 정렬/정규화
+- frontmatter/헤더/목록 스타일 일관화
 
-## Main uses
+## 주 사용 작업
 
-- Tidy documents before a PR
-- Fix up formatting after document auto-generation
+- PR 전 문서 정리
+- 문서 자동 생성 후 포맷 보정
 
-## Basic procedure
+## 기본 절차
 
-1. Fix the ruleset
-2. Run lint against the target document
-3. Final check for broken links / code blocks
+1. 룰셋 확정
+2. 대상 문서에 Lint 실행
+3. 링크/코드블록 깨짐 여부 최종 확인
+

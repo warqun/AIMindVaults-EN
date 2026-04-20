@@ -1,5 +1,6 @@
 ---
 tags:
+  - TileMapToolKit
 type: plugin-standard
 plugin: dataview
 updated: 2026-03-05
@@ -7,17 +8,17 @@ updated: 2026-03-05
 
 # Dataview
 
-## Features
+## 기능
 
-- Dynamic lists / tables driven by frontmatter
-- Auto-aggregated status dashboards
+- frontmatter 기반 동적 목록/테이블 생성
+- 상태 대시보드 자동 집계
 
-## Main uses
+## 주 사용 작업
 
-- Issue status boards
-- Queries by priority / assignee / epic
+- 이슈 상태판
+- 우선순위/담당자/에픽 단위 조회
 
-## Basic syntax
+## 기본 문법
 
 ```dataview
 TABLE status, priority, updated
@@ -26,6 +27,7 @@ WHERE status != "done"
 SORT updated desc
 ```
 
-## Notes
+## 주의
 
-- Lock frontmatter key names to a standard for accurate results.
+- 정확한 결과를 위해 frontmatter 키 이름을 표준으로 고정한다.
+

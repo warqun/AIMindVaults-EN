@@ -1,6 +1,7 @@
 ---
 type: concept
 tags:
+  - TileMapToolKit
   - concept
 created: <% tp.date.now("YYYY-MM-DD") %>
 updated: <% tp.date.now("YYYY-MM-DD") %>
@@ -12,28 +13,28 @@ updated: <% tp.date.now("YYYY-MM-DD") %>
 local: <% tp.file.title %>
 ```
 
-## Definition
+## 정의
 
-<!-- In one sentence. -->
+<!-- 한 문장으로. -->
 
-## Key points
-
--
-
-## Related concepts
-
-- Parent: [[]]
-- Related: [[]]
-- Contrast: [[]]
-
-## Examples
+## 핵심 내용
 
 -
 
-## Source
+## 연결 개념
+
+- 상위: [[]]
+- 관련: [[]]
+- 대조: [[]]
+
+## 예시
+
+-
+
+## 출처
 
 -
 
 ---
 
-*First drafted: <% tp.date.now("YYYY-MM-DD") %>*
+*최초 작성: <% tp.date.now("YYYY-MM-DD") %>*

@@ -1,5 +1,6 @@
 ---
 tags:
+  - TileMapToolKit
 type: plugin-standard
 plugin: chatgpt-md
 updated: 2026-03-06
@@ -7,48 +8,48 @@ updated: 2026-03-06
 
 # ChatGPT MD
 
-## Features
+## 기능
 
-- Generate LLM chats / responses inside Obsidian notes
-- Connect to local LLM backends (Ollama / LM Studio, etc.)
-- Role separation via agent presets
+- Obsidian 노트 내부에서 LLM 대화/응답 생성
+- Ollama/LM Studio 등 로컬 LLM 백엔드 연결
+- Agent preset 기반 역할 분리 운용
 
-## Initial setup
+## 기본 설정 절차
 
-1. Install and enable `ChatGPT MD` from Obsidian Community Plugins
-2. In plugin Settings, choose Provider = `Ollama`
-3. Set Base URL: `http://localhost:11434`
-4. Pick a default model (e.g., a locally pulled model name)
-5. Verify with a test prompt
+1. Obsidian Community Plugins에서 `ChatGPT MD` 설치/활성화
+2. 플러그인 Settings에서 Provider를 `Ollama`로 선택
+3. Base URL 설정: `http://localhost:11434`
+4. 기본 모델 설정(예: 로컬에 pull된 모델명)
+5. 테스트 프롬프트로 응답 확인
 
-## Usage (execution order)
+## 플러그인 사용법 (실행 순서)
 
-1. Open the command palette (`Ctrl/Cmd + P`)
-2. `ChatGPT MD: Select Model` to pick a model
-3. Select a prompt sentence (or block) in the note
-4. Run `ChatGPT MD: Chat`
-5. Confirm the response is written to the note
-6. To reset the session: `ChatGPT MD: Clear Chat`
-7. Start a new template-based session: `ChatGPT MD: New Chat From Template`
+1. 커맨드 팔레트 열기 (`Ctrl/Cmd + P`)
+2. `ChatGPT MD: Select Model`로 모델 선택
+3. 노트에서 프롬프트 문장(또는 블록) 선택
+4. `ChatGPT MD: Chat` 실행
+5. 응답이 노트에 기록되는지 확인
+6. 세션 초기화가 필요하면 `ChatGPT MD: Clear Chat`
+7. 템플릿 기반 새 세션은 `ChatGPT MD: New Chat From Template`
 
-## Practice notes
+## 실습 노트
 
-- Quick test: `Notes/Temp_ChatGPTMD_Ollama_Sandbox.md`
-- Recommended: run Planner → Builder → Reviewer in the same note
+- 즉시 테스트용: `Notes/Temp_ChatGPTMD_Ollama_Sandbox.md`
+- 권장: Planner -> Builder -> Reviewer 순서로 같은 노트에서 실행
 
-## When to use
+## 작업 활용 기준
 
-- Draft / rewrite / summarize: ChatGPT MD alone
-- Multi-agent division of labor: split agent presets per task
-- Local-first policy: default to Ollama when possible
+- 초안 생성/재작성/요약: ChatGPT MD 단독 사용
+- 멀티 에이전트 분업: Agent preset을 작업별로 분리
+- 로컬 우선 정책: 가능하면 Ollama 연결을 기본값으로 사용
 
-## Recommended pattern
+## 권장 운영 패턴
 
-1. Planner Agent: decompose requirements / build a checklist
-2. Builder Agent: draft the body
-3. Reviewer Agent: check gaps / conflicts
+1. Planner Agent: 요구사항 분해/체크리스트 작성
+2. Builder Agent: 본문 초안 생성
+3. Reviewer Agent: 누락/충돌 검토
 
-## Cautions
+## 주의사항
 
-- Treat model responses as drafts; finalize per `_WORKFLOW.md`
-- When using tool calling, keep permissions minimal
+- 모델 응답은 초안으로 취급하고 최종 결정은 문서 규칙(`_WORKFLOW.md`)로 확정
+- Tool calling 사용 시 권한 범위를 최소로 유지

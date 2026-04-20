@@ -1,206 +1,224 @@
 # Essentials (Mandatory · Always Loaded)
 
-> Applies to every session regardless of task type.
-> Domain-specific rules are loaded on trigger via `_skill-router.md`.
-> See the originals in `.claude/rules-archive/` for full detail.
+> 모든 세션 상시 적용. 작업 유형과 무관하게 준수한다.
+> 도메인 전용 규칙은 `_skill-router.md`를 참조하여 트리거 시 로드한다.
+> 세부 규칙은 `.claude/rules-archive/` 원본 파일 참조.
 
-## 1. Report Language
+## 1. 보고 언어
 
-- All replies to the user are in **English by default**.
-- Keep code, filenames, paths, technical terms, and identifiers in their original form.
-- Respond in another language only when the user explicitly requests it.
-- Translation / rewrite deliverables for distribution (SellingVault) are written in the target language.
+- 사용자에게 하는 모든 보고·응답은 **한국어 기본**.
+- 코드, 파일명, 경로, 기술 용어, 식별자는 **영어 원문 유지**.
+- 다른 언어 요청 시에만 해당 언어로 응답.
+- 배포본(SellingVault) 문서 번역·리라이트 산출물은 대상 언어로 작성.
 
-## 2. Token Economy (Mandatory)
+## 2. 토큰 절약 (강제)
 
-### Content Indexer First (Mandatory)
+### 콘텐츠 인덱서 우선 (강제)
 
-When searching notes in a vault, **always use the indexer first**. Do not run full Grep/Glob scans without consulting the indexer.
-
-```bash
-node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index search -r "{vault-path}" -q "query"
-# -t <tag>, --type <type>, -f compact -n 5
-```
-
-Fallback conditions: `vault_index.json` missing / indexer returns 0 but existence is likely / non-content files (`.obsidian/`, `_tools/`).
-
-### Delegate Terminal Execution
-
-- Present a confident command → user executes → consume the result, move on.
-- No self-debugging loops (run → fail → retry).
-- Exception: user explicitly says "run it yourself."
-
-### Prohibited
-
-| Prohibited | Alternative |
-|------------|-------------|
-| Broad file searches (full scan) | Indexer → confirm path with user |
-| Reading large files whole | Only the required line range |
-| Re-reading the same file | Reuse the first read |
-| Self-debugging loops | Propose a fix, let the user run |
-| Unnecessary checks / confirmations | Skip what is already known |
-
-## 3. Vault Routing
-
-- Before creating a note / content, check the **root `_STATUS.md` vault registry** and pick the right vault.
-- Also consult the keyword-inference block in root `CLAUDE.md`.
-- **BasicContentsVault is off-limits**: it is the clone template for AIHubVault deployment. No direct content work. Use via `/create-vault` skill only.
-
-### Unregistered Vault
-
-Register it immediately in the root `_STATUS.md` vault registry (name, type, content description, path, working agent).
-
-### First Access to a Vault — Build Index (Mandatory)
-
-If `vault_index.json` is missing, build it:
+볼트 내 노트 탐색 시 **반드시 인덱서 먼저 사용**. 인덱서 없이 Grep/Glob 전면 스캔 금지.
 
 ```bash
-node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index build -r "{vault-path}"
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index search -r "{볼트경로}" -q "검색어"
+# -t <태그>, --type <타입>, -f compact -n 5
 ```
 
-### Consult Vault CLAUDE.md When Routing Is Ambiguous
+fallback 조건: `vault_index.json` 없음 / 인덱서 0건인데 존재 가능성 높음 / 비콘텐츠 파일(`.obsidian/`, `_tools/`).
 
-When the category alone is not enough, check the candidate vault's CLAUDE.md — "scope" and "not in scope" sections.
+### 터미널 실행 위임
 
-## 4. Edit Mode Separation (Critical)
+- 확신 코드를 제시 → 사용자 실행 → 결과 받아 다음 단계.
+- 자가 디버깅 반복 금지 (run → fail → retry).
+- 예외: 사용자가 "직접 실행해" 명시한 경우.
 
-Every edit belongs to **one of `[Contents]` or `[workspace]`**. No mixing.
+### 금지
 
-- `[Contents]` — `Contents/**` content only. No edits to `_Standards/`, `_tools/`, `.codex/`, `.claude/`, or vault-root files.
-- `[workspace]` — `_Standards/`, `_tools/`, `.codex/`, `.claude/`, or vault-root files only. No edits to `Contents/**`.
+| 금지 | 대안 |
+|------|------|
+| 광범위 파일 검색 (전체 스캔) | 인덱서 → 사용자에게 경로 확인 |
+| 대형 파일 전체 읽기 | 필요한 줄 범위만 |
+| 같은 파일 반복 읽기 | 첫 읽기 결과 재사용 |
+| 자가 디버깅 반복 | 수정안 제시 후 사용자 실행 |
+| 불필요한 확인/검증 | 이미 아는 정보 생략 |
 
-Within Contents mode: branch to `[Contents/Domain]` (knowledge) or `[Contents/Project]` (tasks).
+## 3. 볼트 라우팅
 
-### [workspace] mode — AIHubVault-Only (Mandatory)
+- 노트/콘텐츠 생성 전 **루트 `_STATUS.md` 볼트 레지스트리** 확인 → 적절한 볼트 선택.
+- 루트 `CLAUDE.md` 키워드 추론 블록도 참조.
+- **BasicContentsVault 금지**: AIHubVault 배포용 복제 볼트, 직접 콘텐츠 작업 금지. `/create-vault` 스킬 전용.
 
-- Workspace edits happen **only in AIHubVault**. Other vaults receive them via `node cli.js sync`.
-- `.obsidian/` changes are also workspace edits. Do not install plugins directly in individual vaults.
+### 미등록 볼트 발견 시
 
-**Workspace edit order (mandatory):**
-1. Modify the file.
-2. **Immediately** append a version entry in AIHubVault's `_WORKSPACE_VERSION.md` (at most +1 per day, `YYYYMMDDNNNN`).
-3. Then test / deploy / sync.
+루트 `_STATUS.md` 볼트 레지스트리에 즉시 등록 (볼트명, 타입, 콘텐츠 설명, 경로, 작업 에이전트).
 
-### Root-Level Edits — Version Log (Mandatory)
+### 볼트 첫 접근 시 인덱스 빌드 (강제)
 
-- Changes to multi-vault root (`.claude/`, `.antigravity/`, root configuration files) are logged in `_ROOT_VERSION.md`.
-- Format: `R` + 3-digit counter (`R001`).
-- Add to the top of the table.
-
-## 5. Post-Edit Review (Mandatory)
-
-Right after a note edit completes:
+`vault_index.json`이 없으면 빌드:
 
 ```bash
-node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" review -r "{vault-path}" -s Contents
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index build -r "{볼트경로}"
 ```
 
-- Do not report completion before `POST_EDIT_REVIEW_BAD=0`.
-- **A note task is done only after content indexing finishes.**
-  - Default path: on pass `review` calls `index build -i` automatically → confirm `POST_EDIT_INDEX_UPDATED=1`.
-  - If `POST_EDIT_INDEX_SKIPPED=1` or the index did not update, rebuild manually:
+### 라우팅 판단 시 볼트 CLAUDE.md 참조
+
+카테고리만으로 대상이 명확하지 않을 때, 후보 볼트 CLAUDE.md의 "수집 범위"와 "수집하지 않는 것"을 확인.
+
+## 4. 편집 모드 분리 (크리티컬)
+
+모든 편집은 **`[Contents]` 또는 `[workspace]` 중 하나**. 혼합 금지.
+
+- `[Contents]` — `Contents/**` 콘텐츠만. `_Standards/`, `_tools/`, `.codex/`, `.claude/`, 볼트 루트 파일 수정 금지.
+- `[workspace]` — `_Standards/`, `_tools/`, `.codex/`, `.claude/`, 볼트 루트만. `Contents/**` 수정 금지.
+
+Contents 모드 내부: `[Contents/Domain]`(지식) 또는 `[Contents/Project]`(작업) 분기.
+
+### [workspace] 모드 — 어느 Hub 에서 편집할지 (Multi-Hub 강제)
+
+**2026-04-20 Multi-Hub Phase 1 이후**: Hub 가 Core Hub (`CoreHub/`) + Preset Hub (`AIHubVault/`, hubId=default) 로 분리됨.
+
+| 편집 대상 | 편집 위치 | 전파 경로 |
+|----------|---------|---------|
+| Core 계층 (`.sync/_tools/`, `.sync/_Standards/Core/`, `.sync/schemas/`, Core 6 플러그인) | **CoreHub** 에서만 | CoreHub → Preset Hub (`core-sync-all`) → 위성 (`sync`) |
+| Custom 계층 (`.obsidian/plugins/` 중 Custom, `.claude/rules/custom/` 등) | **AIHubVault (Preset)** 에서 | Preset → 위성 (기존 sync) |
+| 루트 `.claude/rules/core/`, `.claude/commands/core/` | **AIMindVaults 루트** | Claude CWD ancestry 자동 상속 + `deploy` 로 SellingVault 배포 |
+| 볼트별 `CLAUDE.md`, `_STATUS.md` | 해당 볼트 | 전파 안 함 (볼트 개별) |
+
+**Core 편집 워크플로우 (강제):**
+1. CoreHub 에서 파일 수정
+2. **즉시** `node .sync/_tools/cli-node/bin/cli.js bump-version -m "변경 내용" --broadcast` 실행
+   - `--broadcast` 가 `core-sync-all` 자동 체인 → 모든 Preset Hub 에 Push
+   - **이 명령 실행 전 완료 보고 금지** (D1 강제)
+3. Preset Hub `_WORKSPACE_VERSION.md` 는 자동 갱신 안 됨 — 위성에 Preset 변경 알릴 때만 별도 `bump-version` 수동
+
+**Preset Hub (AIHubVault) workspace 편집 순서 (강제):**
+1. 파일 수정 (Custom 계층만)
+2. **즉시** AIHubVault 의 `_WORKSPACE_VERSION.md` 에 버전 기록 (`bump-version -m "..."`)
+3. 위성은 다음 pre-sync 시 수신
+
+**절대 금지:**
+- Core 계층 (CORE_PATHS) 을 Preset Hub 또는 위성에서 직접 편집. 반드시 CoreHub 에서.
+- 위성에서 `.sync/hub-marker.json` 또는 `.hub_marker` 수동 작성 (자기를 Hub 로 오판).
+
+### 루트 레벨 편집 — 버전 기록 (강제)
+
+- 멀티볼트 루트 (`.claude/`, `.antigravity/`, 루트 설정 파일) 변경 시 `_ROOT_VERSION.md`에 기록.
+- 형식: `R` + 순번 3자리 (`R001`).
+- 테이블 최상단에 추가.
+
+## 5. 편집 후 검증 (Post-Edit Review, 강제)
+
+노트 편집 완료 직후:
 
 ```bash
-node "{vault-path}/.sync/_tools/cli-node/bin/cli.js" index build -r "{vault-path}" -i
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" review -r "{볼트경로}" -s Contents
 ```
 
-Obsidian CLI first: for lookups / searches / history recovery, try `node cli.js bridge` before direct file parsing.
+- `POST_EDIT_REVIEW_BAD=0` 확인 전 완료 보고 금지.
+- **노트 작업은 콘텐츠 인덱싱까지 완료되어야 끝남.**
+  - 기본 경로: `review`가 통과 후 `index build -i` 자동 호출 → `POST_EDIT_INDEX_UPDATED=1` 확인
+  - `POST_EDIT_INDEX_SKIPPED=1` 또는 미업데이트면 수동 인덱싱:
 
-## 6. Note Writing (Frontmatter · H1 · Filename)
+```bash
+node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" index build -r "{볼트경로}" -i
+```
 
-### Frontmatter Required
+Obsidian CLI 우선: 조회/검색/히스토리 복구는 `node cli.js bridge` 먼저, 파일 직접 파싱은 CLI 결과 부족 시에만.
 
-- Every note begins with YAML frontmatter (`---`).
-- Required: `type`, `tags`, and `updated` or `created`.
-- `agent`: record the **accumulated** agents (not only latest). Multiple: `[claude, codex]`.
+## 6. 노트 작성 (Frontmatter · H1 · 파일명)
 
-### `type` Rules
+### Frontmatter 필수
 
-- **kebab-case**, **singular**, **no `-note` suffix** (`knowledge` OK / `knowledge-note` NO).
-- Core type list (canonical: `.claude/rules-archive/note-writing.md` § "Core Type List"):
-  - Content: `study-note`, `knowledge`, `design`, `plan`, `research`, `reference`, `report`, `spec`, `guide`, `concept`, `memo`
-  - Issues: `issue`, `issue-index`, `issue-spec`, `issue-design`, `issue-report`, `debug-design`
-  - Temporary: `temp-draft`, `temp-review`
-  - Structural: `standard`, `folder-index`
-- Declare vault-specific types in that vault's `CLAUDE.md`.
-- Do not invent unregistered types — propose to the user and register first.
+- 모든 노트는 YAML Frontmatter (`---`)로 시작.
+- 필수: `type`, `tags`, `updated` 또는 `created`.
+- `agent`: 작업 에이전트 **누적** 기록 (최신만 X). 복수는 `[claude, codex]`.
 
-### `tags` Rules (Default Format)
+### `type` 규칙
 
-- **Proper nouns**: keep original spelling (`Unity`, `AI`, `Obsidian`, `Claude`, `MCP`).
-- **Others**: kebab-case (`skill-system`, `plugin-dev`).
-- **Flat only**: no `/` hierarchy.
-- **Singular**: not `systems` → `system`.
-- Vault-identifier tags are discouraged (the indexer's `vault` field identifies).
-- If the vault's `CLAUDE.md` declares tag rules, those take precedence.
+- **kebab-case**, **단수형**, **`-note` 접미사 금지** (`knowledge` O / `knowledge-note` X).
+- 코어 타입 목록 (원문은 `.claude/rules-archive/note-writing.md` § "코어 타입 목록"):
+  - 콘텐츠: `study-note`, `knowledge`, `design`, `plan`, `research`, `reference`, `report`, `spec`, `guide`, `concept`, `memo`
+  - 이슈: `issue`, `issue-index`, `issue-spec`, `issue-design`, `issue-report`, `debug-design`
+  - 임시: `temp-draft`, `temp-review`
+  - 구조: `standard`, `folder-index`
+- 볼트 전용 타입은 해당 볼트 `CLAUDE.md`에 선언.
+- 미등록 타입 임의 사용 금지 → 사용자에게 제안 후 등록.
 
-### H1 Title · Filename (Mandatory)
+### `tags` 규칙 (기본 형식)
 
-- Reserved URI characters are banned: `#`, `%`, `&`, `?`, `+`.
-- No emojis.
-- Replacements: `C#` → `CSharp`, `C++` → `CPP`, `Q&A` → `QnA`.
-- Use frontmatter `aliases` for readability.
+- **고유명사**: 원래 표기 (`Unity`, `AI`, `Obsidian`, `Claude`, `MCP`).
+- **그 외**: kebab-case (`skill-system`, `plugin-dev`).
+- **Flat 전용**: `/` 계층 금지.
+- **단수형**: `systems` X → `system`.
+- 볼트 식별 태그 비권장 (인덱서 `vault` 필드로 식별).
+- 볼트 `CLAUDE.md`에 "태그 규칙" 선언 시 그것이 우선.
 
-### Wikilink Required (Mandatory)
+### H1 제목 · 파일명 (강제)
 
-- A new note must contain at least one `[[WikiLink]]` to a related note in the same vault.
-- Filenames drive resolution, so filename rules must be respected.
+- URI 예약문자 금지: `#`, `%`, `&`, `?`, `+`.
+- 이모지 금지.
+- 대체: `C#` → `CSharp`, `C++` → `CPP`, `Q&A` → `QnA`.
+- 가독성은 frontmatter `aliases`로.
 
-### Markdown Bold Rule
+### 위키링크 필수 (강제)
 
-- No `**text(parens)**` — Obsidian does not render `**` adjacent to `(`.
-- Place parentheses outside bold: `**text** (parens)` or `**text**: parens`.
+- 새 노트 생성 시 같은 볼트 내 관련 노트에 `[[위키링크]]` 1개 이상 포함.
+- 파일명 기반 해석이므로 파일명 규칙 준수가 전제.
 
-### Expression Rules
+### 마크다운 볼드 규칙
 
-- No metaphors / analogies. Task names and titles describe content directly.
-- Dates: `YYYY-MM-DD` only.
+- `**텍스트(괄호)**` 금지 — Obsidian에서 `**`가 렌더링되지 않음.
+- 괄호는 볼드 밖: `**텍스트** (괄호)` 또는 `**텍스트**: 괄호`.
 
-### Prohibited
+### 표현 규칙
 
-- Duplicating a conclusion within the same document.
-- Stating unresolved content as final.
+- 비유/은유 금지. 작업명·제목은 내용 직접 서술.
+- 날짜: `YYYY-MM-DD`만.
 
-## 7. Session Exit (Mandatory)
+### 금지
 
-### Update _STATUS.md (Required)
+- 동일 문서 내 중복 결론.
+- 미확정 내용을 확정으로 표현.
 
-At session end, update the working vault's `_STATUS.md` **directly**:
-- **Now**: finished / in-progress work
-- **Next**: next continuation task
-- **Blocked**: blockers (or "none")
-- **Decisions**: decisions made (`(YYYY-MM-DD)` format)
+## 7. 세션 종료 (강제)
 
-Also update the working-agent date for the vault in the root `_STATUS.md` registry (`agent / YYYY-MM-DD`). Add the entry if missing.
+### _STATUS.md 갱신 (필수)
 
-**Do not end a session without updating both vault and root.**
+세션 종료 시 작업한 볼트의 `_STATUS.md` **직접 갱신**:
+- **Now**: 완료/진행 중 작업
+- **Next**: 다음에 이어서 할 작업
+- **Blocked**: 막힌 사항 (없으면 "없음")
+- **Decisions**: 내린 결정 (`(YYYY-MM-DD)` 형식)
 
-### Session Handoff Note (Required)
+루트 `_STATUS.md` 볼트 레지스트리의 해당 볼트 작업 에이전트 날짜도 갱신 (`에이전트명 / YYYY-MM-DD`). 레지스트리에 없으면 추가.
+
+**볼트 + 루트 양쪽 갱신 없이 세션 종료 금지.**
+
+### 세션 핸드오프 노트 (필수)
 
 - Claude → `_SESSION_HANDOFF_CLAUDE.md`
 - Codex → `_SESSION_HANDOFF_CODEX.md`
 
-Each agent updates **only its own file**. Keep only the latest pass (no history accumulation).
+각 에이전트는 **자신의 파일만** 갱신. 최신 1회분만 유지 (이력 축적 X).
 
-Record: work summary (1–3 lines), per-vault changes (path-focused), decisions (`(YYYY-MM-DD)`), next-session first task, cautions.
+기록: 작업 요약 (1~3줄), 볼트별 변경 (경로 중심), 결정 (`(YYYY-MM-DD)`), 다음 세션 첫 작업, 주의.
 
-### Linking Per-Vault and Root Handoffs (Required)
+### 볼트별 핸드오프와 루트 핸드오프 연동 (필수)
 
-When writing a `_SESSION_HANDOFF_{agent}.md` in an individual vault, leave a reference in the root handoff's **per-vault changes** section:
+개별 볼트에 `_SESSION_HANDOFF_{에이전트}.md` 작성 시 루트 핸드오프 **볼트별 변경** 섹션에 참조 남김:
 
 ```markdown
-### {vault-name} (`{vault-path}`)
-- Detailed handoff: see `{vault-path}/_SESSION_HANDOFF_{agent}.md`
-- One-line summary
+### {볼트명} (`{볼트경로}`)
+- 상세 핸드오프: `{볼트경로}/_SESSION_HANDOFF_{에이전트}.md` 참조
+- 1줄 요약
 ```
 
-## 8. References (Source Rules)
+## 8. 참조 (원본 규칙)
 
-This document consolidates the always-loaded core. See originals for detail / background / incident rules:
+본 문서는 아래 규칙들을 통합한 상시 코어다. 세부 규정·배경·Incident Rule은 원본 참조:
 
-- `.claude/rules-archive/token-optimization.md` — token economy detail
-- `.claude/rules-archive/session-exit.md` — session exit detail
-- `.claude/rules-archive/note-writing.md` — full note writing (type list, tag rules, frontmatter details)
-- `.claude/rules-archive/vault-routing.md` — vault routing detail
-- `.claude/rules-archive/post-edit-review.md` — Post-Edit Review detail
-- `.claude/rules-archive/edit-mode-separation.md` — edit mode detail
+- `.claude/rules-archive/token-optimization.md` — 토큰 절약 상세
+- `.claude/rules-archive/session-exit.md` — 세션 종료 상세
+- `.claude/rules-archive/note-writing.md` — 노트 작성 전체 (타입 목록, 태그 규칙, Frontmatter 세부)
+- `.claude/rules-archive/vault-routing.md` — 라우팅 규칙 상세
+- `.claude/rules-archive/post-edit-review.md` — Post-Edit Review 상세
+- `.claude/rules-archive/edit-mode-separation.md` — 편집 모드 상세
+- `.claude/rules-archive/report-language.md` — 보고 언어 원문
