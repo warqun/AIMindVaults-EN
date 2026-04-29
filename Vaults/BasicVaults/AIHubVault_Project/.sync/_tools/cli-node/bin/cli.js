@@ -1,0 +1,367 @@
+#!/usr/bin/env node
+
+import { Command } from 'commander';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const pkg = JSON.parse(readFileSync(join(__dirname, '..', 'package.json'), 'utf8'));
+
+const program = new Command();
+
+program
+  .name('aimv')
+  .description('AIMindVaults cross-platform CLI tools')
+  .version(pkg.version);
+
+// Phase 2: index commands
+const index = program.command('index').description('Vault index operations');
+
+index
+  .command('build')
+  .description('Build vault content index (crawl Contents/ → JSON)')
+  .option('-r, --vault-root <path>', 'Vault root path (auto-detect if omitted)')
+  .option('-i, --incremental', 'Incremental build (skip unchanged files)')
+  .option('-v, --verbose', 'Verbose output')
+  .action(async (opts) => {
+    const { indexBuild } = await import('../src/commands/index-build.js');
+    await indexBuild({ vaultRoot: opts.vaultRoot, incremental: opts.incremental, verbose: opts.verbose });
+  });
+
+index
+  .command('search')
+  .description('Search vault index by keyword/tag/type')
+  .option('-r, --vault-root <path>', 'Vault root path')
+  .option('-q, --query <keyword>', 'Keyword search')
+  .option('-t, --tag <tag>', 'Filter by tag')
+  .option('--type <type>', 'Filter by frontmatter type')
+  .option('-f, --format <fmt>', 'Output format: table|compact', 'table')
+  .option('-n, --top <n>', 'Max results', '10')
+  .action(async (opts) => {
+    const { indexSearch } = await import('../src/commands/index-search.js');
+    await indexSearch({ vaultRoot: opts.vaultRoot, query: opts.query, tag: opts.tag, type: opts.type, format: opts.format, top: parseInt(opts.top) });
+  });
+
+index
+  .command('master-build')
+  .description('Build cross-vault master index')
+  .option('-r, --root <path>', 'AIMindVaults root path')
+  .option('--vault-name <name>', 'Partial update for single vault')
+  .action(async (opts) => {
+    const { masterIndexBuild } = await import('../src/commands/master-index-build.js');
+    await masterIndexBuild({ aimindvaultsRoot: opts.root, vaultName: opts.vaultName });
+  });
+
+index
+  .command('master-search')
+  .description('Search cross-vault master index')
+  .option('-r, --root <path>', 'AIMindVaults root path')
+  .option('-q, --query <keyword>', 'Keyword search')
+  .option('-t, --tag <tag>', 'Filter by tag')
+  .option('--vault <vault>', 'Filter by vault name')
+  .option('-f, --format <fmt>', 'Output format: table|compact', 'table')
+  .option('-n, --top <n>', 'Max results', '15')
+  .option('-c, --concepts-only', 'Show cross-vault concept map only')
+  .action(async (opts) => {
+    const { masterIndexSearch } = await import('../src/commands/master-index-search.js');
+    await masterIndexSearch({ aimindvaultsRoot: opts.root, query: opts.query, tag: opts.tag, vault: opts.vault, format: opts.format, top: parseInt(opts.top), conceptsOnly: opts.conceptsOnly });
+  });
+
+// Phase 3: review commands
+program
+  .command('review')
+  .description('Post-edit UTF-8 validation + auto index build')
+  .option('-r, --vault-root <path>', 'Vault root path (auto-detect if omitted)')
+  .option('-s, --scope <name>', 'Content scope folder (auto-detect: Contents/Project/docs)')
+  .option('-v, --verbose', 'Verbose output')
+  .action(async (opts) => {
+    const { postEditReview } = await import('../src/commands/post-edit-review.js');
+    await postEditReview({ vaultRoot: opts.vaultRoot, scope: opts.scope, verbose: opts.verbose });
+  });
+
+// Phase 4: sync commands
+program
+  .command('sync')
+  .description('Workspace sync between vault and Hub (Multi-Hub aware)')
+  .option('-r, --vault-root <path>', 'Vault root path (auto-detect from CWD)')
+  .option('--hub-path <path>', 'Hub vault path (priority: --hub-path > hub-source.json > .hub_marker scan)')
+  .option('-d, --dry-run', 'Preview changes without executing')
+  .option('--no-prune', 'Skip deleting target-only files')
+  .option('--verify-content', 'Force file hash verification even if versions match')
+  .action(async (opts) => {
+    const { syncWorkspace } = await import('../src/commands/sync-workspace.js');
+    await syncWorkspace({ vaultRoot: opts.vaultRoot, hubPath: opts.hubPath, dryRun: opts.dryRun, noPrune: opts.noPrune, verifyContent: opts.verifyContent });
+  });
+
+program
+  .command('pre-sync')
+  .description('Auto-update cli-node from Hub, then run sync')
+  .option('-r, --vault-root <path>', 'Vault root path')
+  .action(async (opts) => {
+    const { preSync } = await import('../src/commands/pre-sync.js');
+    await preSync({ vaultRoot: opts.vaultRoot });
+  });
+
+program
+  .command('sync-all')
+  .description('Run pre-sync across all vaults under an AIMindVaults root')
+  .option('-r, --root <path>', 'AIMindVaults root path (auto-detect if omitted)')
+  .option('-d, --dry-run', 'Preview without running npm install or pre-sync')
+  .option('--skip-npm', 'Do not run npm install when node_modules is missing')
+  .option('--no-install-launchers', 'Do not refresh Sync This Vault launchers')
+  .action(async (opts) => {
+    const { syncAll } = await import('../src/commands/sync-all.js');
+    await syncAll({
+      root: opts.root,
+      dryRun: opts.dryRun,
+      skipNpm: opts.skipNpm,
+      installLaunchers: opts.installLaunchers,
+    });
+  });
+
+program
+  .command('install-launchers')
+  .description('Install double-click sync launchers at root and vault .sync folders')
+  .option('-r, --root <path>', 'AIMindVaults root path (auto-detect if omitted)')
+  .option('--vault-root <path>', 'Install only for a single vault root')
+  .option('--root-only', 'Install only Sync All Vaults launchers')
+  .option('--vault-only', 'Install only Sync This Vault launchers')
+  .option('-d, --dry-run', 'Preview without copying files')
+  .action(async (opts) => {
+    const { installLaunchers } = await import('../src/commands/install-launchers.js');
+    await installLaunchers({
+      root: opts.root,
+      vaultRoot: opts.vaultRoot,
+      rootOnly: opts.rootOnly,
+      vaultOnly: opts.vaultOnly,
+      dryRun: opts.dryRun,
+    });
+  });
+
+program
+  .command('register-vaults')
+  .description('Bulk-register AIMindVaults satellites into Obsidian obsidian.json registry')
+  .option('-r, --root <path>', 'AIMindVaults root path (auto-detect if omitted)')
+  .option('--config-path <path>', 'Override obsidian.json path (testing)')
+  .option('--apply', 'Actually modify obsidian.json (default: dry-run)')
+  .option('--force', 'Proceed even if Obsidian is running (NOT recommended)')
+  .option('--skip-process-check', 'Skip Obsidian running check entirely')
+  .action(async (opts) => {
+    const { registerVaults } = await import('../src/commands/register-vaults.js');
+    await registerVaults({
+      root: opts.root,
+      configPath: opts.configPath,
+      apply: opts.apply,
+      force: opts.force,
+      skipProcessCheck: opts.skipProcessCheck,
+    });
+  });
+
+// Phase 5: clone/broadcast commands
+program
+  .command('clone')
+  .description('Clone vault to a new location (optionally bind to a specific Hub)')
+  .requiredOption('-t, --target-path <path>', 'Destination path for the new vault')
+  .option('-n, --project-name <name>', 'Display name (defaults to folder name)')
+  .option('-s, --source-path <path>', 'Source vault (auto-detect if omitted)')
+  .option('--hub <path>', 'Hub vault to bind (writes .sync/hub-source.json)')
+  .option('--hub-id <id>', 'Hub identifier (used when --hub Hub has no hub-marker.json)')
+  .action(async (opts) => {
+    const { cloneVault } = await import('../src/commands/clone-vault.js');
+    await cloneVault({
+      targetPath: opts.targetPath,
+      projectName: opts.projectName,
+      sourcePath: opts.sourcePath,
+      hub: opts.hub,
+      hubId: opts.hubId,
+    });
+  });
+
+// Multi-Hub commands (Phase 1)
+program
+  .command('create-hub')
+  .description('Create a Preset Hub derived from a Core Hub')
+  .requiredOption('-t, --target-path <path>', 'Destination path for the new Preset Hub')
+  .requiredOption('--hub-id <id>', 'Preset Hub identifier (e.g. "game-dev")')
+  .option('-f, --from <path>', 'Source Core Hub (auto-detect if omitted)')
+  .option('-n, --hub-name <name>', 'Display name')
+  .option('--description <text>', 'Short description')
+  .option('-d, --dry-run', 'Preview without executing')
+  .action(async (opts) => {
+    const { createHub } = await import('../src/commands/create-hub.js');
+    await createHub({
+      targetPath: opts.targetPath,
+      hubId: opts.hubId,
+      from: opts.from,
+      hubName: opts.hubName,
+      description: opts.description,
+      dryRun: opts.dryRun,
+    });
+  });
+
+program
+  .command('core-sync-all')
+  .description('Push Core layer from Core Hub to all Preset Hubs (D1 propagation)')
+  .option('-r, --core-hub-root <path>', 'Core Hub root (auto-detect if omitted)')
+  .option('--target <path>', 'Specific Preset Hub to target (default: all)')
+  .option('-d, --dry-run', 'Preview without executing')
+  .option('-f, --force', 'Ignore coreHubVersion compatibility mismatches (Phase 3)')
+  .action(async (opts) => {
+    const { coreSyncAll } = await import('../src/commands/core-sync-all.js');
+    await coreSyncAll({
+      coreHubRoot: opts.coreHubRoot,
+      target: opts.target,
+      dryRun: opts.dryRun,
+      force: opts.force,
+    });
+  });
+
+program
+  .command('bump-version')
+  .description('Bump _WORKSPACE_VERSION.md on Hub; --broadcast triggers core-sync-all')
+  .requiredOption('-m, --message <text>', 'Change description for the new version row')
+  .option('-r, --hub-root <path>', 'Hub root (auto-detect if omitted)')
+  .option('-b, --broadcast', 'After bump, trigger core-sync-all (Core Hub only)')
+  .option('-d, --dry-run', 'Preview without executing')
+  .action(async (opts) => {
+    const { bumpVersion } = await import('../src/commands/bump-version.js');
+    await bumpVersion({
+      hubRoot: opts.hubRoot,
+      message: opts.message,
+      broadcast: opts.broadcast,
+      dryRun: opts.dryRun,
+    });
+  });
+
+program
+  .command('rebase')
+  .description('Change a satellite vault\'s bound Hub (D3 · Phase 2)')
+  .requiredOption('--hub <path>', 'Path to new target Hub')
+  .option('-r, --vault-root <path>', 'Satellite vault root (auto-detect from CWD)')
+  .option('--hub-id <id>', 'Override hub-id check')
+  .option('-d, --dry-run', 'Preview without executing (REQUIRED before first rebase)')
+  .action(async (opts) => {
+    const { rebase } = await import('../src/commands/rebase.js');
+    await rebase({
+      hub: opts.hub,
+      vaultRoot: opts.vaultRoot,
+      hubId: opts.hubId,
+      dryRun: opts.dryRun,
+    });
+  });
+
+program
+  .command('install-hub')
+  .description('Clone a Hub (Core or Preset) from a git URL into Vaults/BasicVaults (Phase 3)')
+  .requiredOption('--url <git-url>', 'Git URL of the Hub repo')
+  .option('-t, --target <path>', 'Destination path (default: Vaults/BasicVaults/<repo-name>)')
+  .option('-b, --branch <name>', 'Git branch to check out')
+  .option('-d, --dry-run', 'Preview without git clone')
+  .option('--skip-compat-check', 'Skip coreHubVersion compatibility check')
+  .action(async (opts) => {
+    const { installHub } = await import('../src/commands/install-hub.js');
+    await installHub({
+      url: opts.url,
+      target: opts.target,
+      branch: opts.branch,
+      dryRun: opts.dryRun,
+      skipCompatCheck: opts.skipCompatCheck,
+    });
+  });
+
+program
+  .command('broadcast')
+  .description('Broadcast file from Hub .sync/ to all satellite vaults')
+  .requiredOption('-p, --relative-path <path>', 'Path relative to .sync/')
+  .option('-d, --dry-run', 'Preview without executing')
+  .option('-f, --force', 'Create file even if it does not exist in target')
+  .option('-e, --exclude <patterns...>', 'Vault name patterns to skip')
+  .option('--vaults-root <path>', 'Vaults/ folder path')
+  .action(async (opts) => {
+    const { hubBroadcast } = await import('../src/commands/hub-broadcast.js');
+    await hubBroadcast({ relativePath: opts.relativePath, dryRun: opts.dryRun, force: opts.force, exclude: opts.exclude, vaultsRoot: opts.vaultsRoot });
+  });
+
+// Phase 7: deploy commands
+program
+  .command('deploy')
+  .description('Deploy distribution to SellingVault (cross-platform)')
+  .requiredOption('-t, --target <path>', 'Target path (e.g. C:/SellingVault/Korean/AIMindVaults)')
+  .option('-s, --source <path>', 'Source AIMindVaults root (auto-detect from CWD)')
+  .option('-d, --dry-run', 'Preview changes without executing')
+  .option('-f, --force', 'Overwrite protected files (CLAUDE.md, _STATUS.md, etc.)')
+  .option('-v, --verbose', 'Show detailed file operations')
+  .option('--english-mode', 'Protect existing target files (skip overwrite). Use for English SellingVault where target is human-translated. Only new source files are copied; pruning disabled.')
+  .action(async (opts) => {
+    const { deployDist } = await import('../src/commands/deploy-dist.js');
+    await deployDist({ source: opts.source, target: opts.target, dryRun: opts.dryRun, force: opts.force, verbose: opts.verbose, englishMode: opts.englishMode });
+  });
+
+// Phase 6: utility commands
+program
+  .command('trash-clean')
+  .description('Clean .trash/ folders across vaults')
+  .option('-v, --vault <names...>', 'Filter by vault names')
+  .option('-d, --dry-run', 'Preview without deleting')
+  .option('--vaults-root <path>', 'Vaults/ folder path')
+  .action(async (opts) => {
+    const { trashClean } = await import('../src/commands/trash-clean.js');
+    await trashClean({ vault: opts.vault, dryRun: opts.dryRun, vaultsRoot: opts.vaultsRoot });
+  });
+
+program
+  .command('open')
+  .description('Pre-sync then open Obsidian vault')
+  .option('-r, --vault-root <path>', 'Vault root path')
+  .action(async (opts) => {
+    const { openVault } = await import('../src/commands/open-vault.js');
+    await openVault({ vaultRoot: opts.vaultRoot });
+  });
+
+program
+  .command('bridge')
+  .description('Obsidian CLI bridge')
+  .requiredOption('-a, --action <action>', 'Action: vault-info|search|read|open|append|create|history|plugins-list|post-review|...')
+  .option('-r, --vault-root <path>', 'Vault root path')
+  .option('--vault-name <name>', 'Vault name')
+  .option('-p, --path <path>', 'Note path')
+  .option('-q, --query <query>', 'Search query')
+  .option('-c, --content <text>', 'Content for append/create')
+  .option('--version <n>', 'History version', '1')
+  .option('--from <n>', 'Diff from version', '2')
+  .option('--to <n>', 'Diff to version', '1')
+  .option('-l, --limit <n>', 'Search result limit', '50')
+  .option('--plugin-id <id>', 'Plugin ID for install')
+  .option('-s, --scope <name>', 'Content scope folder')
+  .action(async (opts) => {
+    const { obsidianBridge } = await import('../src/commands/obsidian-bridge.js');
+    await obsidianBridge({
+      action: opts.action, vaultRoot: opts.vaultRoot, vaultName: opts.vaultName,
+      path: opts.path, query: opts.query, content: opts.content,
+      version: parseInt(opts.version), from: parseInt(opts.from), to: parseInt(opts.to),
+      limit: parseInt(opts.limit), pluginId: opts.pluginId, scope: opts.scope,
+    });
+  });
+
+program
+  .command('route')
+  .description('Task-to-agent routing')
+  .requiredOption('-t, --task <description>', 'Task description')
+  .action(async (opts) => {
+    const { taskRouter } = await import('../src/commands/task-router.js');
+    taskRouter({ task: opts.task });
+  });
+
+program
+  .command('standards')
+  .description('Display _Standards/ directory structure')
+  .option('-r, --vault-root <path>', 'Vault root path (auto-detect if omitted)')
+  .option('-d, --deep', 'Show subdirectories (NoteTemplates, VaultTypes, Domain)')
+  .action(async (opts) => {
+    const { checkStandards } = await import('../src/commands/check-standards.js');
+    checkStandards({ vaultRoot: opts.vaultRoot, deep: opts.deep });
+  });
+
+program.parse();

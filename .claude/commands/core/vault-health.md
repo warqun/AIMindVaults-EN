@@ -1,39 +1,39 @@
-# /vault-health — Vault 건강 진단
+# /vault-health — Vault Health Diagnosis
 
-> 지정한 볼트의 문서 상태를 점검하고 개선 사항을 제안.
-> 멀티볼트: 대상 볼트를 인자로 지정.
+> Inspect the document state of the given vault and propose improvements.
+> Multi-vault: pass the target vault as an argument.
 
-인자: $ARGUMENTS (볼트명)
+Argument: $ARGUMENTS (vault name)
 
-## 실행 순서
+## Execution Order
 
-1. **대상 볼트 결정** (인자 또는 사용자 확인)
+1. **Decide the target vault** (argument or user confirmation)
 
-2. **이슈 인덱스 상태 확인**
-   - `{볼트경로}/Contents/Domain/issues/ISSUE_INDEX.md` 읽기
-   - 🔴 미결 이슈 수 카운트
-   - 가장 오래된 미결 이슈 확인
+2. **Check the issue-index state**
+   - Read `{vault path}/Contents/Domain/issues/ISSUE_INDEX.md`
+   - Count 🔴 unresolved issues
+   - Identify the oldest unresolved issue
 
-3. **설계서-명세 동기화 확인**
-   - `{볼트경로}/Contents/Domain/02-design/` vs `{볼트경로}/Contents/Domain/03-spec/`
-   - 불일치 항목 있으면 목록 출력
+3. **Check design ↔ spec sync**
+   - Compare `{vault path}/Contents/Domain/02-design/` vs `{vault path}/Contents/Domain/03-spec/`
+   - List any mismatches
 
-4. **_VAULT-INDEX.md 최신성 확인**
-   - 실제 파일 구조와 _VAULT-INDEX 내용 비교
-   - 누락된 파일/섹션 있으면 표시
+4. **Check `_VAULT-INDEX.md` freshness**
+   - Compare actual file structure with `_VAULT-INDEX` content
+   - Flag missing files / sections
 
-5. **빈 또는 스텁 파일 확인**
-   - `Contents/Domain/` 하위에 내용이 거의 없는 파일 (5줄 미만) 탐지
+5. **Check empty / stub files**
+   - Detect near-empty files (under 5 lines) under `Contents/Domain/`
 
-6. **진단 결과 출력** (표 형식)
+6. **Print diagnosis** (table format)
 
    ```
-   | 항목 | 상태 | 조치 필요 |
-   |------|------|----------|
-   | 미결 이슈 수 | N개 | 다음 대상: HX |
-   | 설계서-명세 동기화 | ✅/⚠️ | - |
-   | _VAULT-INDEX 최신성 | ✅/⚠️ | - |
-   | 스텁 파일 | N개 | 목록 표시 |
+   | Item | State | Action |
+   |------|-------|--------|
+   | Unresolved issues | N | next target: HX |
+   | Design ↔ spec sync | ✅/⚠️ | - |
+   | _VAULT-INDEX freshness | ✅/⚠️ | - |
+   | Stub files | N | listed |
    ```
 
-7. **우선순위 액션 1가지 제안**
+7. **Propose one priority action**

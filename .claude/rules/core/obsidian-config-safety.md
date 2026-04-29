@@ -1,26 +1,26 @@
-# Obsidian 설정 파일 안전 편집 (Mandatory)
+# Safe Editing of Obsidian Config Files (Mandatory)
 
-> 모든 볼트에 동일 적용.
+> Applied uniformly to every vault.
 
-## 규칙
+## Rules
 
-- `.obsidian/` 하위 파일(플러그인 설정, `community-plugins.json` 등)은 **workspace 편집**이다.
-- workspace 편집 규칙에 따라 **AIHubVault에서만 수행** → `node cli.js sync`로 전파한다.
+- Files under `.obsidian/` (plug-in settings, `community-plugins.json`, etc.) are **workspace edits**.
+- Per the workspace-edit rules, edits happen **only in the AIHubVault** → propagation via `node cli.js sync`.
 
-## .obsidian/ JSON 파일 편집 — 안전 규칙
+## `.obsidian/` JSON Editing — Safety Rules
 
-- **PowerShell의 `ConvertFrom-Json` → `ConvertTo-Json` 파이프라인을 사용하지 않는다.**
-  - 배열 원소 1개일 때 문자열로 변환되는 버그, 인코딩 손상 위험이 있다.
-- `.obsidian/` 설정 파일 편집은 **Read → Edit(텍스트 직접 수정)** 방식만 사용한다.
-- 전체 덮어쓰기(`Write`)는 내용을 직접 작성할 때만 허용한다.
+- **Do not use the PowerShell `ConvertFrom-Json` → `ConvertTo-Json` pipeline.**
+  - Has a known bug where a single-element array becomes a string, plus encoding-corruption risk.
+- Edit `.obsidian/` config files using **Read → Edit (direct text edit)** only.
+- Full overwrites (`Write`) are allowed only when you author the content yourself.
 
-## 버전 기록 (강제)
+## Version Recording (Mandatory)
 
-- `.obsidian/` 하위 파일을 수정한 경우, **반드시** AIHubVault `_WORKSPACE_VERSION.md`에 버전을 기록한다.
-- 버전 기록 없이 작업 완료 보고 금지.
-- 이 규칙은 플러그인 설치, 설정 변경, JSON 편집 등 `.obsidian/` 관련 **모든** workspace 편집에 적용된다.
+- After any edit under `.obsidian/`, **always** record the version in the AIHubVault `_WORKSPACE_VERSION.md`.
+- Do not report task completion without the version record.
+- This applies to **all** workspace edits related to `.obsidian/` — plug-in installs, setting changes, JSON edits, etc.
 
-## 플러그인 설치/삭제
+## Plug-In Install / Removal
 
-- 플러그인 설치·삭제·설정 변경은 `install-plugin` 스킬을 사용한다.
-- 스킬 없이 수동 설치 시에도 이 규칙의 안전 수칙을 따른다.
+- Use the `install-plugin` skill to install / remove plug-ins or change their settings.
+- Even when installing manually without the skill, follow the safety items above.

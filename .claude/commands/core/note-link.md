@@ -1,38 +1,38 @@
-# /note-link — 노트 간 의미적 연결 생성
+# /note-link — Create Semantic Links Between Notes
 
-> 지정한 노트와 관련있는 기존 문서를 찾아 [[내부 링크]]로 연결.
-> Smart Connections 없이 Claude가 직접 의미 분석으로 수행.
-> 멀티볼트: 파일 경로에서 볼트를 자동 판별.
+> Find existing documents related to the given note and connect them via `[[internal links]]`.
+> Performed by Claude's direct semantic analysis (no Smart Connections required).
+> Multi-vault: the vault is auto-detected from the file path.
 
-대상 파일: $ARGUMENTS (파일명 또는 경로)
+Target file: $ARGUMENTS (filename or path)
 
-## 실행 순서
+## Execution Order
 
-1. **대상 노트 읽기**
-   - 파일 경로에서 볼트 판별
-   - 핵심 주제·개념 3~5개 추출
+1. **Read the target note**
+   - Determine the vault from the file path
+   - Extract 3–5 core topics / concepts
 
-2. **관련 문서 탐색** (해당 볼트 내에서, 이 순서로)
-   - `Contents/Domain/02-design/` 설계서들
-   - `Contents/Domain/03-spec/` 명세서들
+2. **Search for related documents** (within the same vault, in this order)
+   - Designs under `Contents/Domain/02-design/`
+   - Specs under `Contents/Domain/03-spec/`
    - `Contents/Domain/issues/ISSUE_INDEX.md`
-   - `Contents/Domain/04-debug/` 디버그 설계
+   - Debug designs under `Contents/Domain/04-debug/`
 
-3. **유사도 판단**
-   - **높음**: 같은 시스템 직접 다룸 → [[링크]] 추가
-   - **중간**: 관련 개념 포함 → [[링크]] 추가 (후보 표시)
-   - **낮음**: 표면 키워드만 일치 → 제외
+3. **Similarity judgement**
+   - **High**: directly addresses the same system → add the `[[link]]`
+   - **Medium**: contains related concepts → add the `[[link]]` (mark as candidate)
+   - **Low**: only surface keywords match → exclude
 
-4. **링크 삽입**
-   - 대상 노트 하단 "## 관련 문서" 섹션에 추가
-   - 역방향: 연결된 노트에도 대상 노트 링크 추가
+4. **Insert links**
+   - Add to a "## Related" section at the bottom of the target note
+   - Reverse: also add a link back to the target note in each connected note
 
-5. **결과 보고**
+5. **Result report**
    ```
-   연결된 노트 (N개):
-   - [[파일명]] — 이유
-   - [[파일명]] — 이유
+   Linked notes (N):
+   - [[filename]] — reason
+   - [[filename]] — reason
 
-   건너뜀 (낮음):
-   - [[파일명]] — 이유
+   Skipped (low):
+   - [[filename]] — reason
    ```

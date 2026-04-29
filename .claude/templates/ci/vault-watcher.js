@@ -5,7 +5,7 @@
 // Run as a background process alongside Obsidian (e.g. via Obsidian Shell
 // Commands plugin startup hook, PM2, or a systemd/launchd unit).
 //
-// Source: deep research 2026-04-21 (`20260421_nul_파일_누적_생성_이슈_리서치.md`)
+// Source: deep research 2026-04-21 (cumulative `nul`-file generation issue)
 
 const fs = require("node:fs");
 const path = require("node:path");

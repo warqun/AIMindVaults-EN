@@ -1,14 +1,15 @@
 <#
 .SYNOPSIS
-    볼트 콘텐츠 인덱서 — Contents/ 크롤링 → JSON 인덱스 생성
+    Vault content indexer - crawls Contents/ -> produces a JSON index
 .DESCRIPTION
-    현재 볼트의 Contents/**/*.md 파일에서 frontmatter, 제목, 헤딩, 요약,
-    WikiLink를 추출하여 _tools/data/vault_index.json으로 저장한다.
-    AI 에이전트가 관련 노트를 빠르게 찾을 수 있는 메타데이터 인덱스.
+    Extracts frontmatter, titles, headings, summary, and WikiLinks from
+    the current vault's Contents/**/*.md files and writes them to
+    _tools/data/vault_index.json. A metadata index that lets AI agents
+    quickly locate related notes.
 .PARAMETER Incremental
-    증분 빌드 — mtime/hash 비교 후 변경분만 재파싱 (기본: 전체 빌드)
+    Incremental build - re-parse only changes after mtime/hash compare (default: full build)
 .PARAMETER Verbose
-    상세 로그 출력
+    Verbose log output
 .EXAMPLE
     .\vault_index_build.ps1
     .\vault_index_build.ps1 -Incremental
@@ -22,7 +23,7 @@ param(
 $ErrorActionPreference = "Continue"
 $startTime = Get-Date
 
-# ── 경로 자동탐지 ──
+# -- Path auto-detection --
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $VaultRoot = (Resolve-Path (Join-Path $ScriptDir "..\..")).Path
 $ContentsDir = Join-Path $VaultRoot "Contents"

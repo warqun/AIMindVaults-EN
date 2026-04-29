@@ -23,17 +23,17 @@ if ($code) {
     Write-Warning "VSCode 'code' command not found. Install VSCode or enable the 'code' CLI."
 }
 
-<# 
-AntiGravity 런처 (사용자 설정 필요)
+<#
+AntiGravity launcher (user configuration required)
 
-아래 둘 중 하나를 선택해서 설정하세요.
+Pick one of the following options.
 
-1) URL 방식 (웹/IDE):
-   - `tools/antigravity.url.txt` 파일에 URL 1줄로 저장
+1) URL form (web / IDE):
+   - Save the URL on a single line in `tools/antigravity.url.txt`.
 
-2) 실행파일 방식 (데스크탑 IDE):
-   - `tools/antigravity.exe.txt` 파일에 exe 경로 1줄로 저장
-   - (선택) `tools/antigravity.args.txt` 파일에 args를 한 줄로 저장
+2) Executable form (desktop IDE):
+   - Save the exe path on a single line in `tools/antigravity.exe.txt`.
+   - (Optional) Save args on a single line in `tools/antigravity.args.txt`.
 #>
 
 $antiGravityUrlPath = Join-Path $PSScriptRoot "antigravity.url.txt"
@@ -52,4 +52,3 @@ if (Test-Path $antiGravityExePathFile) {
     Start-Process -FilePath $exe -ArgumentList $agArgs | Out-Null
     exit 0
 }
-

@@ -1,20 +1,20 @@
 ﻿<#
 .SYNOPSIS
-    볼트 간 작업환경 동기화 스크립트 (Hub-Sync)
+    Workspace synchronization script across vaults (Hub-Sync)
 .DESCRIPTION
-    현재 볼트의 _WORKSPACE_VERSION.md 최상단 버전과
-    AIHubVault의 최상단 버전을 비교하여 동기화를 수행합니다.
-    - AIHubVault가 최신 → Pull: AIHubVault → 현재 볼트
-    - 현재 볼트가 최신 → Push: 현재 볼트 → AIHubVault
-    - 동일 → "최신 상태" 보고
+    Compares the top version of the current vault's _WORKSPACE_VERSION.md
+    with the top version on AIHubVault and performs sync accordingly.
+    - AIHubVault newer -> Pull: AIHubVault -> current vault
+    - Current vault newer -> Push: current vault -> AIHubVault
+    - Equal -> reports "up to date"
 .PARAMETER HubPath
-    AIHubVault 경로 (미지정 시 자동 탐지)
+    AIHubVault path (auto-detected when omitted)
 .PARAMETER DryRun
-    실제 복사 없이 동기화 대상만 출력
+    Print sync targets only; do not copy
 .PARAMETER NoPrune
-    소스에 없고 타겟에만 있는 파일 삭제를 비활성화 (기본: 삭제 활성)
+    Disable deletion of files that exist only on the target (default: deletion enabled)
 .PARAMETER VerifyContent
-    버전 번호가 동일해도 파일 해시 비교를 강제 수행
+    Force a file-hash comparison even when version numbers match
 .EXAMPLE
     .\sync_workspace.ps1
     .\sync_workspace.ps1 -DryRun

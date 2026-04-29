@@ -1,81 +1,81 @@
-# /note-from-article — 웹 글/텍스트 → 볼트 노트 변환 파이프라인
+# /note-from-article — Web Article / Text → Vault-Note Conversion Pipeline
 
-> 웹 글, 블로그, 문서 URL 또는 사용자가 붙여넣은 텍스트를 구조화된 노트로 변환.
+> Convert a web article, blog, or document URL — or text the user pastes — into a structured note.
 
-입력: $ARGUMENTS
+Input: $ARGUMENTS
 
-## 파이프라인 단계
+## Pipeline
 
-### 1단계: 콘텐츠 확보
+### Step 1: Acquire content
 
-URL이 주어진 경우 우선순위대로 시도:
+If a URL is given, try in order:
 
-1. **WebFetch**: URL + 프롬프트로 본문 추출
-2. **Chrome MCP**: WebFetch 실패 시 → navigate → get_page_text
-3. **사용자 붙여넣기**: 위 모두 실패 시 사용자에게 본문 붙여넣기 요청
+1. **WebFetch**: extract the body via URL + prompt
+2. **Chrome MCP**: if WebFetch fails → navigate → get_page_text
+3. **User paste**: if the above fail, ask the user to paste the body
 
-텍스트가 직접 주어진 경우 → 1단계 건너뜀.
+If text is given directly → skip step 1.
 
-메타데이터 추출:
-- 제목, 저자/출처, 게시일, URL
+Metadata to extract:
+- Title, author / source, publication date, URL
 
-### 2단계: 핵심 내용 파악
+### Step 2: Identify the core content
 
-- 원문을 읽고 **핵심 주장/개념을 3~5개로 압축**
-- 부수적 내용(광고, 자기소개, CTA)과 핵심 내용 분리
-- 원문의 구조(섹션, 소제목)가 있으면 참고하되 그대로 복사하지 않음
+- Read the source and **distill 3–5 main claims / concepts**.
+- Separate ancillary content (ads, self-introduction, CTAs) from core content.
+- Reference the source's structure (sections, subheadings) but do not copy verbatim.
 
-### 3단계: 볼트 라우팅
+### Step 3: Vault routing
 
-- 글의 주제 키워드로 대상 볼트 판단
-- 사용자가 볼트를 지정했으면 그대로 사용
-- 모호하면 사용자에게 확인
-- 대상 볼트의 Contents/Domain/ 하위에 배치
+- Decide the target vault by topic keywords.
+- Use the vault the user specified, if any.
+- If ambiguous, confirm with the user.
+- Place under the target vault's `Contents/Domain/`.
 
-### 4단계: 노트 구조화
+### Step 4: Structure the note
 
-- **H1**: 핵심 개념으로 정제된 제목 (원문 제목 그대로가 아님)
-- **핵심 요약**: 글 전체를 3~5줄로 압축 (노트 상단)
-- **본문**: 주제별 H2 섹션. 원문을 요약·재구성하되, 저작권 준수
-  - 원문 직접 인용은 15단어 이내 1건만 허용
-  - 나머지는 자체 표현으로 재서술
-- **비교/표**: 대조 가능한 내용은 표로 정리
-- **관련 자료**: 위키링크, 원문 링크
+- **H1**: the title refined to a core concept (not the original title verbatim).
+- **Key summary**: condense the whole article into 3–5 lines (top of the note).
+- **Body**: H2 sections per topic. Summarize and reorganize while respecting copyright.
+  - Allow at most one direct quote of up to 15 words.
+  - Re-state the rest in your own words.
+- **Comparison / table**: turn comparable items into a table.
+- **Related**: wikilinks and the source URL.
 
 Frontmatter:
 ```yaml
 ---
 type: domain
 tags:
-  - [볼트태그]
-  - [주제태그들]
-source: [URL 또는 출처]
-source_title: [원문 제목]
-source_author: [저자/매체]
+  - [vault tag]
+  - [topic tags]
+source: [URL or source]
+source_title: [original title]
+source_author: [author / outlet]
 created: YYYY-MM-DD
 agent: claude
 ---
 ```
 
-Juggl 임베드 포함.
+Include a Juggl embed.
 
-### 5단계: 품질 검증
+### Step 5: Quality verification
 
-- post-edit review 실행
-- 원문 대비 핵심 누락 여부 자체 점검
+- Run post-edit review.
+- Self-check whether any core point from the source is missing.
 
-## 저작권 규칙
+## Copyright Rules
 
-- 원문을 그대로 옮기지 않는다
-- 노트는 **원문의 핵심 개념을 자체 표현으로 재구성**한 것
-- 인용은 15단어 이내, 인용부호 사용, 1건 제한
-- 30단어 이상의 연속 패러프레이즈 금지
+- Do not transfer the source verbatim.
+- The note is a **re-expression of the source's core ideas** in your own words.
+- Quotes: at most 15 words, with quotation marks, max one quote.
+- Do not paraphrase 30+ consecutive words.
 
-## 실패 시 대응
+## On Failure
 
-| 상황 | 대응 |
-|------|------|
-| 페이지 로그인 필요 | 사용자에게 본문 붙여넣기 요청 |
-| 페이지 JS 렌더링 필수 | Chrome MCP로 전환 |
-| 내용이 너무 짧음 | 그대로 정리, 보강 필요 시 사용자에게 보고 |
-| 다국어 콘텐츠 | 한국어로 번역하되 핵심 용어는 원문 병기 |
+| Situation | Response |
+|-----------|----------|
+| Page requires login | Ask the user to paste the body |
+| JS-rendered page required | Switch to Chrome MCP |
+| Content too short | Take what you have; report if reinforcement needed |
+| Multilingual content | Translate to the user's language; keep core technical terms in the original alongside |

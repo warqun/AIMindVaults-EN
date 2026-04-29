@@ -1,63 +1,63 @@
-# /sync-all — 전체 위성 볼트 워크스페이스 동기화
+# /sync-all — Bulk-Sync Workspace Across All Satellite Vaults
 
-AIHubVault 기준으로 모든 위성 볼트의 워크스페이스를 최신 상태로 동기화한다.
-각 볼트에서 `aimv sync`를 순차 실행하는 일괄 동기화.
+Brings every satellite vault's workspace up to date relative to the AIHubVault.
+This is the bulk version of running `aimv sync` in each vault.
 
-## 사용법
+## Usage
 
 ```
-/sync-all [옵션]
+/sync-all [options]
 ```
 
-예시:
-- `/sync-all` — 전체 위성 볼트 동기화
-- `/sync-all --dry-run` — 미리보기만 (실제 동기화 없음)
-- `/sync-all --exclude TestVault` — 특정 볼트 제외
+Examples:
+- `/sync-all` — sync every satellite vault
+- `/sync-all --dry-run` — preview only (no actual sync)
+- `/sync-all --exclude TestVault` — exclude specific vaults
 
-## 실행 절차
+## Procedure
 
-### 1. 전체 동기화 실행
+### 1. Run the bulk sync
 
-각 위성 볼트 디렉토리에서 Node.js CLI를 순차 실행:
+In each satellite vault directory, run the Node.js CLI sequentially:
 
 ```bash
-# 각 위성 볼트에 대해:
-node "{볼트경로}/.sync/_tools/cli-node/bin/cli.js" sync -r "{볼트경로}"
+# For each satellite vault:
+node "{vault path}/.sync/_tools/cli-node/bin/cli.js" sync -r "{vault path}"
 ```
 
-또는 Glob으로 `cli.js`를 가진 볼트를 자동 탐지하여 순회한다. AIHubVault는 소스이므로 제외.
+Or auto-discover vaults that have `cli.js` via Glob and iterate. Skip the AIHubVault (it is the source).
 
-### 2. 결과 확인
+### 2. Verify results
 
-- 각 볼트마다 `SYNC_RESULT=` 로그가 출력된다.
-- `SYNC_RESULT=OK` 또는 `SYNC_RESULT=ALREADY_LATEST` → 정상
-- `SYNC_RESULT=ERROR` → 해당 볼트 개별 확인 필요
+- Each vault prints a `SYNC_RESULT=` log.
+- `SYNC_RESULT=OK` or `SYNC_RESULT=ALREADY_LATEST` → success.
+- `SYNC_RESULT=ERROR` → inspect that vault individually.
 
-## 파라미터
+## Parameters
 
-| 파라미터 | 용도 | 기본값 |
-|---------|------|--------|
-| `--dry-run` | DryRun 플래그를 각 `aimv sync`에 전달 | false |
-| `--exclude <볼트명>` | 지정 볼트 건너뛰기 (복수 가능) | 없음 |
+| Parameter | Purpose | Default |
+|-----------|---------|---------|
+| `--dry-run` | Forward DryRun to each `aimv sync` | false |
+| `--exclude <vault>` | Skip the named vault (repeatable) | none |
 
-## hub-broadcast와의 차이
+## vs. hub-broadcast
 
-| 항목 | /sync-all | /hub-broadcast |
+| Item | /sync-all | /hub-broadcast |
 |------|-----------|----------------|
-| 범위 | 전체 workspace (모든 sync 대상 파일) | 특정 파일 1개 |
-| 방식 | 버전 비교 기반 양방향 | Hub → 위성 단방향 강제 복사 |
-| 용도 | 정기 전체 최신화 | 특정 파일 긴급 전파 |
-| 속도 | 느림 (볼트당 버전 비교 + 해시 체크) | 빠름 (단순 복사) |
+| Scope | Whole workspace (every sync target) | A single specific file |
+| Mode | Bidirectional, version-compared | Hub → satellite forced copy |
+| Use case | Routine bulk refresh | Urgent propagation of one file |
+| Speed | Slow (per-vault version compare + hash check) | Fast (simple copy) |
 
-## 동작 규칙
+## Behavior
 
-- AIHubVault는 소스이므로 자신에게 동기화하지 않는다.
-- 각 볼트의 `_WORKSPACE_VERSION.md`를 Hub과 비교하여 차이가 있는 볼트만 실제 파일 복사가 발생한다.
-- 이미 최신인 볼트는 `ALREADY_LATEST`로 빠르게 건너뛴다.
-- 동기화 후 각 볼트의 `_WORKSPACE_VERSION.md`가 Hub 버전으로 갱신된다.
+- The AIHubVault is the source and is not synced to itself.
+- Each vault's `_WORKSPACE_VERSION.md` is compared with the Hub's; only mismatching vaults perform actual file copies.
+- Already-current vaults are skipped quickly as `ALREADY_LATEST`.
+- After syncing, each vault's `_WORKSPACE_VERSION.md` is updated to the Hub version.
 
-## 권장 사용 시점
+## When to Use
 
-- Hub에서 workspace 편집 완료 후 전체 반영할 때
-- 새 볼트를 여러 개 생성한 후 일괄 초기화할 때
-- 오랜만에 동기화 상태를 점검할 때
+- After completing a workspace edit on the Hub and you want to propagate it to everyone.
+- After creating multiple new vaults and you want to initialize them in bulk.
+- A periodic check-up of the sync state.

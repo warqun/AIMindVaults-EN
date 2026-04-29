@@ -14,7 +14,7 @@ Rationale (2026-04-21 incident, AIMindVaults):
 
 This hook is a deterministic guardrail — LLM prompt rules alone are advisory.
 
-Source: deep research 2026-04-21 (`20260421_nul_파일_누적_생성_이슈_리서치.md`).
+Source: deep research 2026-04-21 (cumulative `nul`-file generation issue).
 """
 
 import json

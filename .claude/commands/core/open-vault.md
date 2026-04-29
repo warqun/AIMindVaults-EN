@@ -1,39 +1,37 @@
 ---
-description: "Obsidian 볼트 열기"
+description: "Open an Obsidian vault"
 ---
 
-# /open-vault — Obsidian 볼트 열기
+# /open-vault — Open an Obsidian Vault
 
-## 용도
+## Purpose
 
-지정한 Obsidian 볼트를 열어 활성화한다.
+Open and activate the specified Obsidian vault.
 
-## 실행 절차
+## Execution
 
-1. **볼트명 확인**
-   - 인자로 볼트명이 주어지면 사용
-   - 없으면 루트 `CLAUDE.md` 볼트 레지스트리에서 확인 후 사용자에게 질문
+1. **Identify the vault**
+   - If a vault name is given as an argument, use it.
+   - Otherwise, look it up in the root `CLAUDE.md` vault registry and ask the user.
 
-2. **볼트 열기**
+2. **Open the vault**
    ```powershell
-   Start-Process 'obsidian://open?vault=볼트명'
+   Start-Process 'obsidian://open?vault=<vault-name>'
    ```
 
-3. **열림 확인**
-   - 사용자에게 볼트가 열렸는지 확인
-   - 실패 시 볼트명 오류 가능성 안내
+3. **Verify**
+   - Ask the user whether the vault opened.
+   - On failure, mention a possible vault-name typo.
 
-## 사용 예시
+## Examples
 
 ```
-/open-vault Unity
-/open-vault AIHubVault
-/open-vault ObsidianDev
+/open-vault <vault-name>
 ```
 
-## 주의사항
+## Cautions
 
-- 볼트명은 Obsidian에 등록된 이름과 정확히 일치해야 함
-- 볼트가 Obsidian에 등록되어 있지 않으면 실패
-- **미등록 볼트를 열어야 하는 경우**: `obsidian://open?path=` URI를 사용하지 않는다. 사용자에게 직접 볼트 매니저에서 등록하도록 안내:
-  > Obsidian 볼트 매니저 → "보관함 폴더 열기" → `{볼트 경로}` 선택
+- The vault name must match the name registered in Obsidian exactly.
+- Fails if the vault is not registered in Obsidian.
+- **If you must open an unregistered vault**: do not use `obsidian://open?path=`. Instead, ask the user to register it via the vault manager:
+  > Obsidian vault manager → "Open vault folder" → select `{vault path}`

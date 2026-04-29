@@ -4,7 +4,7 @@
 # The DEBUG trap sees BASH_COMMAND before execution, unlike PROMPT_COMMAND which only
 # runs between interactive prompts and misses non-interactive agent calls.
 #
-# Source: deep research 2026-04-21 (`20260421_nul_파일_누적_생성_이슈_리서치.md`)
+# Source: deep research 2026-04-21 (cumulative `nul`-file generation issue)
 block_nul_redir() {
   local re='(^|[[:space:];|&])(1?>|2>|>>|1>>|2>>|&>)[[:space:]]*[Nn][Uu][Ll]([[:space:];|&]|$)'
   if [[ $BASH_COMMAND =~ $re ]]; then

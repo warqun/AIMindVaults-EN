@@ -1,33 +1,33 @@
 <#
 .SYNOPSIS
-    Obsidian 볼트를 안전하게 여는 런처
+    Safely open an Obsidian vault.
 .DESCRIPTION
-    1. pre_sync.ps1 실행 (스크립트 최신화 + workspace 동기화)
-    2. 동기화 완료 후 Obsidian 볼트 열기
-    Obsidian이 꺼진 상태에서 실행해야 community-plugins.json 변경이 정상 반영됨.
+    1. Run pre_sync.ps1 (script update + workspace sync).
+    2. Open the Obsidian vault after the sync completes.
+    Run while Obsidian is closed so that community-plugins.json changes apply correctly.
 .EXAMPLE
     .\open_vault.ps1
 #>
 
 $ErrorActionPreference = "Continue"
 
-# ── 경로 탐지 ──
+# -- Path detection --
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $VaultRoot = (Resolve-Path "$ScriptDir\..\..").Path
 
-# 볼트명 추출 (폴더명)
+# Vault name (folder name)
 $VaultName = Split-Path -Leaf $VaultRoot
 
-# ── pre_sync 실행 ──
+# -- Run pre_sync --
 $preSyncScript = Join-Path $ScriptDir "pre_sync.ps1"
 if (Test-Path $preSyncScript) {
-    Write-Host "=== Pre-Sync 실행 ===" -ForegroundColor Cyan
+    Write-Host "=== Running Pre-Sync ===" -ForegroundColor Cyan
     & $preSyncScript
     Write-Host ""
 } else {
-    Write-Host "[WARN] pre_sync.ps1을 찾을 수 없습니다." -ForegroundColor DarkYellow
+    Write-Host "[WARN] pre_sync.ps1 not found." -ForegroundColor DarkYellow
 }
 
-# ── Obsidian 볼트 열기 ──
-Write-Host "=== Obsidian 볼트 열기: $VaultName ===" -ForegroundColor Green
+# -- Open the Obsidian vault --
+Write-Host "=== Opening Obsidian vault: $VaultName ===" -ForegroundColor Green
 Start-Process "obsidian://open?vault=$VaultName"

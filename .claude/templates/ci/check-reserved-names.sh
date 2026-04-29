@@ -8,7 +8,7 @@
 #   - If invoked from a Git hook context (stdin closed, $GIT_DIR set), scan staged diff.
 #   - Otherwise scan the whole working tree.
 #
-# Source: deep research 2026-04-21 (`20260421_nul_파일_누적_생성_이슈_리서치.md`)
+# Source: deep research 2026-04-21 (cumulative `nul`-file generation issue)
 set -euo pipefail
 
 python3 - <<'PY'

@@ -9,7 +9,7 @@ updated: 2026-04-20
 
 # Core Version Log
 
-> Core 계층 변경이 Preset Hub 들에 **전파된 이력** (추적/감사 전용).
+> Propagation history of Core layer changes to Preset Hubs (tracking/audit only).
 > **sync 판단에는 사용되지 않음** — sync 는 `_WORKSPACE_VERSION.md` 기준 (단방향 Push 라 버전 비교 불필요).
 > `core-sync-all` 실행 시 자동 append.
 > 상세 변경 내용은 `_WORKSPACE_VERSION.md` 참조.
